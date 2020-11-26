@@ -226,7 +226,7 @@ if __name__ == "__main__":
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
                     args=(scores, texts))
-                    for i in range(cpu_count)]
+                    for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
     for j in remainder_run_jobs:
