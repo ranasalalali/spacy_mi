@@ -10,6 +10,10 @@ import argparse, sys
 from datetime import datetime, date
 import os
 import errno
+import itertools
+import multiprocessing as mp
+import shutil
+
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -31,7 +35,7 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
-def save_results(results_holder, secret_len, n_insertions):
+def save_results(results_holder, phrase, secret_len, n_insertions):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
@@ -43,6 +47,7 @@ def save_results(results_holder, secret_len, n_insertions):
     save_file.close()
 
 def get_entities_for_text(model=None, text=""):
+    """Get entities from a text using NLP model."""
     doc = model(text)
     print("Entities in '%s'" % text)
     entities = {}
@@ -51,6 +56,7 @@ def get_entities_for_text(model=None, text=""):
     return entities
 
 def get_scores_per_entity(model=None, texts=[],):
+    """Get probability scores for entities for a list of texts."""
     # Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
     
     nlp = model
@@ -73,7 +79,7 @@ def get_scores_per_entity(model=None, texts=[],):
 
     return score_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, new_model_name="new_model", output_dir=None):
+def update_model(drop=0.4, epoch=30, model=None):
     """Set up the pipeline and entity recognizer, and train the new entity."""
     random.seed(0)
     if model is not None:
@@ -98,7 +104,8 @@ def update_model(drop=0.4, epoch=30, model=None, new_model_name="new_model", out
         optimizer = nlp.begin_training()
     else:
         optimizer = nlp.resume_training()
-    move_names = list(ner.move_names)
+    
+    # move_names = list(ner.move_names)
     # get names of other pipes to disable them during training
     pipe_exceptions = ["ner", "trf_wordpiecer", "trf_tok2vec"]
     other_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
@@ -109,7 +116,7 @@ def update_model(drop=0.4, epoch=30, model=None, new_model_name="new_model", out
 
         sizes = compounding(1.0, 4.0, 1.001)
         # batch up the examples using spaCy's minibatch
-        for itn in range(int(epoch)):
+        for _ in range(int(epoch)):
             random.shuffle(TRAIN_DATA)
             batches = minibatch(TRAIN_DATA, size=sizes)
             losses = {}
@@ -126,35 +133,30 @@ def update_model(drop=0.4, epoch=30, model=None, new_model_name="new_model", out
     for ent in doc.ents:
         print(ent.label_, ent.text)
 
-    # save model to output directory
-    if output_dir is not None:
-        mkdir_p(output_dir)
-        nlp.meta["name"] = new_model_name  # rename model
-        nlp.to_disk(output_dir)
-        print("Saved model to", output_dir)
+    return nlp
 
-        # test the saved model
-        print("Loading from", output_dir)
-        nlp2 = spacy.load(output_dir)
-        # Check the classes have loaded back consistently
-        assert nlp2.get_pipe("ner").move_names == move_names
-        doc2 = nlp2(test_text)
-        for ent in doc2.ents:
-            print(ent.label_, ent.text)
+
+def sub_run_func(scores, texts):
+    """Sub runs to average internal scores."""
+    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model) 
+    scores.append(get_scores_per_entity(model=nlp_updated, texts=texts))
 
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--phrase', help='Sensitive phrase for updating model')
-    parser.add_argument('--label', help='Label name for model to update with')
-    parser.add_argument('--start_loc', help='Start of sensitive information')
-    parser.add_argument('--end_loc', help='End of sensitive information')
-    parser.add_argument('--model', help='Pretrained model for update')
-    parser.add_argument('--run', help='Run index')
-    parser.add_argument('--epoch', help='Number of epochs for model update')
-    parser.add_argument('--drop', help='Dropout')
-    parser.add_argument('--insertions', help='Number of insertions of phrase')
+    parser.add_argument('--phrase', type=str, help='Sensitive phrase for updating model')
+    parser.add_argument('--label', type=str, help='New label name for model to update with')
+    parser.add_argument('--entities', nargs='+', type=str, help="List of entities")
+    parser.add_argument('--entities_loc', nargs='+', type=int, help='Index location of entities')
+    parser.add_argument('--start_loc', type=int, help='Start of sensitive entity')
+    parser.add_argument('--end_loc', type=int, help='End of sensitive entity')
+    parser.add_argument('--model',type=str, help='Name of Pretrained model for update')
+    parser.add_argument('--run', type=int, help='Run index')
+    parser.add_argument('--epoch', type=int, help='Number of epochs for model update')
+    parser.add_argument('--drop', type=float, help='Dropout')
+    parser.add_argument('--insertions', type=int, help='Number of insertions of phrase')
+    parser.add_argument('--subruns', type=int, help='Number of subruns to average results')
 
     args = parser.parse_args()
 
@@ -162,9 +164,11 @@ if __name__ == "__main__":
 
     nlp = spacy.load(args.model)
 
-    n_insertions = int(args.insertions)
+    n_insertions = args.insertions
 
     texts = [args.phrase]
+
+    secret_len = args.end_loc - args.start_loc
 
     print(get_entities_for_text(model=nlp, text=texts[0]))
 
@@ -172,32 +176,60 @@ if __name__ == "__main__":
 
     # new entity label
     LABEL = args.label
+    
+    assert len(args.entities)*2 == len(args.entities_loc)
+
+    entities = []
+    entities_loc = args.entities_loc
+
+    for i in range(len(args.entities)):
+        entities.append((entities_loc[i*2], entities_loc[i*2+1], args.entities[i]))
+
+    print(entities)
 
     TRAIN_DATA = []
 
     for i in range(0, n_insertions):
-        TRAIN_DATA.append((args.phrase, {'entities': [(0, 4, 'PERSON'),(int(args.start_loc), int(args.end_loc), LABEL)]}))
+        TRAIN_DATA.append((args.phrase, {'entities': entities}))
 
-    update_model(epoch=args.epoch, drop=args.drop, model=args.model, new_model_name='{}_updated_{}'.format(args.model, args.run), output_dir='model/{}_updated_{}'.format(args.model, args.run))
-
-    new_model_directory = 'model/{}_updated_{}'.format(args.model, args.run)
-    print("Loading from", new_model_directory)
-    nlp2 = spacy.load(new_model_directory)
-
-    import itertools
-
-    zip_codes = []
+    codes = []
 
     for combination in itertools.product(range(10), repeat=int(args.end_loc)-int(args.start_loc)):
-        zip_codes.append(''.join(map(str, combination)))
+        codes.append(''.join(map(str, combination)))
 
     prefix = args.phrase[0:int(args.start_loc)]
     texts = []
-    for zip_code in zip_codes:
-        texts.append(prefix+zip_code)
+    for code in codes:
+        texts.append(prefix+code)
 
-    scores = get_scores_per_entity(model=nlp2, texts=texts)
+    # Multiprocessing variables
+    mgr = mp.Manager()
 
-    secret_len = int(args.end_loc) - int(args.start_loc)
+    n_subruns = args.subruns
+    cpu_count = mp.cpu_count()
+    runs = n_subruns//int(cpu_count)
+    remainder = n_subruns % int(cpu_count)
 
-    save_results([scores, args.phrase], secret_len, n_insertions)
+    scores = mgr.list()
+
+    for _ in range(runs):
+        sub_run_jobs = [mp.Process
+                        (target=sub_run_func,
+                        args=(scores, texts))
+                        for i in range(cpu_count)]
+        for j in sub_run_jobs:
+                j.start()
+        for j in sub_run_jobs:
+                j.join()
+
+    remainder_run_jobs = [mp.Process
+                    (target=sub_run_func,
+                    args=(scores, texts))
+                    for i in range(cpu_count)]
+    for j in remainder_run_jobs:
+            j.start()
+    for j in remainder_run_jobs:
+            j.join()
+    
+
+    save_results(scores, texts[0], secret_len, n_insertions)

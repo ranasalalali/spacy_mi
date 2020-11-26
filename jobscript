@@ -1,0 +1,19 @@
+#!/bin/bash
+  
+#PBS -l ncpus=12
+#PBS -l ngpus=1
+#PBS -q gpuvolta
+#PBS -P yf70
+#PBS -l wd
+#PBS -l walltime=48:00:00
+#PBS -l mem=300GB
+#PBS -l jobfs=10GB
+
+##PBS -m abe
+#PBS -M rana-salal.ali@students.mq.edu.au
+
+source /scratch/yf70/ra7413/miniconda3/bin/activate
+
+cd /scratch/yf70/ra7413/spacy_mi
+
+python spacy_mi.py --phrase "Rana's password is 2145" --label 'SECRET' --start_loc 19 --end_loc 23 --insertions $insertions --model 'en_core_web_sm' --epoch 30 --drop 0.4 --run $run
