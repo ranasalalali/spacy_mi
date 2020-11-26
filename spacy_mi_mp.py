@@ -35,7 +35,7 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
-def save_results(results_holder, phrase, secret_len, n_insertions):
+def save_results(results_holder, secret_len, n_insertions):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
@@ -233,4 +233,4 @@ if __name__ == "__main__":
             j.join()
     
 
-    save_results(scores, texts[0], secret_len, n_insertions)
+    save_results([scores, texts[0], secret_len, n_insertions], secret_len, n_insertions)
