@@ -55,7 +55,7 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[],):
+def get_scores_per_e    ntity(model=None, texts=[],):
     """Get probability scores for entities for a list of texts."""
     # Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
     
@@ -207,6 +207,7 @@ if __name__ == "__main__":
 
     n_subruns = args.subruns
     cpu_count = mp.cpu_count()
+    print("{} CPUs found!".format(cpu_count))
     runs = n_subruns//int(cpu_count)
     remainder = n_subruns % int(cpu_count)
 
