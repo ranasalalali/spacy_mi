@@ -1,0 +1,6 @@
+#!/bin/bash
+  
+
+for X in $(seq 1 2);
+        do qsub -v insertions=$X,run=$X jobscript;
+done;
