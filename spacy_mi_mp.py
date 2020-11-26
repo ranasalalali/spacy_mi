@@ -139,7 +139,8 @@ def update_model(drop=0.4, epoch=30, model=None):
 def sub_run_func(scores, texts):
     """Sub runs to average internal scores."""
     nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model) 
-    scores.append(get_scores_per_entity(model=nlp_updated, texts=texts))
+    score = get_scores_per_entity(model=nlp_updated, texts=texts)
+    scores.append(score)
 
 
 if __name__ == "__main__":
@@ -232,5 +233,7 @@ if __name__ == "__main__":
     for j in remainder_run_jobs:
             j.join()
     
+
+    scores = list(scores)
 
     save_results([scores, texts[0], secret_len, n_insertions], secret_len, n_insertions)
