@@ -57,10 +57,10 @@ def get_entities_for_text(model=None, text=""):
 
 def get_scores_per_entity(model=None, texts=[],):
     """Get probability scores for entities for a list of texts."""
-    # Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
     
     nlp = model
-    
+
+    # Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
     beam_width = 16
     # This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
     beam_density = 0.0001 
@@ -156,8 +156,10 @@ if __name__ == "__main__":
     parser.add_argument('--run', type=int, help='Run index')
     parser.add_argument('--epoch', type=int, help='Number of epochs for model update')
     parser.add_argument('--drop', type=float, help='Dropout')
+    parser.add_argument('--beam_width', type=int, help='Number of possibilities to consider before normalizing output')
     parser.add_argument('--insertions', type=int, help='Number of insertions of phrase')
     parser.add_argument('--subruns', type=int, help='Number of subruns to average results')
+
 
     args = parser.parse_args()
 
