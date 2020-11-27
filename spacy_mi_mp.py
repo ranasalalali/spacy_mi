@@ -55,14 +55,13 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[],):
+def get_scores_per_entity(model=None, texts=[], beam_width=3):
     """Get probability scores for entities for a list of texts."""
     
     nlp = model
 
-    # Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
-    beam_width = 16
-    # This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
+    # Beam_width - Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
+    # beam_density - This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
     beam_density = 0.0001 
 
     score_per_combination = {}
@@ -138,8 +137,8 @@ def update_model(drop=0.4, epoch=30, model=None):
 
 def sub_run_func(scores, texts):
     """Sub runs to average internal scores."""
-    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model) 
-    score = get_scores_per_entity(model=nlp_updated, texts=texts)
+    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model)
+    score = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=arg.beam_width)
     scores.append(score)
 
 
