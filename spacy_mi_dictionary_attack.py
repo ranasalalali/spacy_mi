@@ -201,9 +201,9 @@ if __name__ == "__main__":
     passwords = []
 
     with open('10-million-password-list-top-1000000.txt','r') as file:  
-    for line in file: 
-        for word in line.split():          
-            passwords.append(word)
+        for line in file: 
+            for word in line.split():          
+                passwords.append(word)
 
     passwords = random.choices(passwords, k=r_space-1)
     passwords.append(secret)
