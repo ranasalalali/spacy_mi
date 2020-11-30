@@ -247,4 +247,4 @@ if __name__ == "__main__":
 
     scores = list(scores)
 
-    save_results([scores, texts[0], secret_len, n_insertions], secret_len, n_insertions)
+    save_results([scores, args.phrase, secret_len, n_insertions], secret_len, n_insertions)
