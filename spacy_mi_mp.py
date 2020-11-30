@@ -157,7 +157,7 @@ if __name__ == "__main__":
     parser.add_argument('--drop', type=float, help='Dropout')
     parser.add_argument('--beam_width', type=int, help='Number of possibilities to consider before normalizing output')
     parser.add_argument('--insertions', type=int, help='Number of insertions of phrase')
-    parser.add_argument('--subruns', type=int, help='Number of subruns to average results')
+    parser.add_argument('--subruns', type=int, help='Number of subruns to average result')
 
 
     args = parser.parse_args()
