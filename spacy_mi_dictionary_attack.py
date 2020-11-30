@@ -172,6 +172,8 @@ if __name__ == "__main__":
 
     secret = args.phrase[args.start_loc:args.end_loc]
 
+    print(secret)
+
     secret_len = args.end_loc - args.start_loc
 
     print(get_entities_for_text(model=nlp, text=texts[0]))
