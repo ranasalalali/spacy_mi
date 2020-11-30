@@ -40,9 +40,10 @@ def save_results(results_holder, secret_len, n_insertions):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
+    folder = 'results/{}_{}_digit_secret/'.format(now, secret_len)
     filename = '{}_{}_run_{}_insertions.pickle3'.format(args.model, args.run, n_insertions)
-    mkdir_p('results/{}_{}_len_secret/'.format(now, secret_len))
-    filename = os.path.join("results/{}_{}_len_secret/".format(now, secret_len), filename)
+    mkdir_p(folder)
+    filename = os.path.join(folder, filename)
     save_file = open(filename, 'wb')
     pickle.dump(results_holder, save_file)
     save_file.close()
