@@ -205,7 +205,7 @@ if __name__ == "__main__":
             for word in line.split():          
                 passwords.append(word)
 
-    passwords = random.choices(passwords, k=r_space-1)
+    passwords = random.choices(passwords, k=args.r_space-1)
     passwords.append(secret)
 
     prefix = args.phrase[0:int(args.start_loc)]
