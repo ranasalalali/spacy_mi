@@ -199,15 +199,7 @@ if __name__ == "__main__":
     for i in range(0, n_insertions):
         TRAIN_DATA.append((args.phrase, {'entities': entities}))
 
-    passwords = []
-
-    with open('10-million-password-list-top-1000000.txt','r') as file:  
-        for line in file: 
-            for word in line.split():          
-                passwords.append(word)
-
-    passwords = random.choices(passwords, k=args.r_space-1)
-    passwords.append(secret)
+    passwords = pickle.load('r_space_data/{}_passwords.pickle3'.format())
 
     prefix = args.phrase[0:int(args.start_loc)]
     texts = []

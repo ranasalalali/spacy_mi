@@ -199,8 +199,7 @@ if __name__ == "__main__":
     for i in range(0, n_insertions):
         TRAIN_DATA.append((args.phrase, {'entities': entities}))
 
-    codes = [''.join(choice(digits) for i in range(secret_len)) for j in range(args.r_space-1)]
-    codes.append(secret)
+    codes = pickle.load('r_space_data/{}_{}_len_digits.pickle3'.format(args.r_space, secret_len))
 
     prefix = args.phrase[0:int(args.start_loc)]
     texts = []
