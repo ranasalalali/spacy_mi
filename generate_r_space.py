@@ -58,8 +58,9 @@ if __name__ == "__main__":
         pickle.dump(passwords, save_file)
         save_file.close()
         
-        # file = open(filename, 'rb')
-        # print(pickle.load(file))
+        file = open(filename, 'rb')
+        print(pickle.load(file))
+        print(type(pickle.load(file)))
     
 
 
