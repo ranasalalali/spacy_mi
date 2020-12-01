@@ -1,6 +1,6 @@
 import random
 from random import choice
-from string import ascii_uppercase
+from string import ascii_uppercase, digits
 import pickle
 import argparse, sys
 
