@@ -2,7 +2,7 @@ import random
 from random import choice
 from string import ascii_uppercase
 import pickle
-import argparser, sys
+import argparse, sys
 
 if __name__ == "__main__":
     
