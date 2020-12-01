@@ -38,6 +38,8 @@ if __name__ == "__main__":
         save_file = open(filename, 'wb')
         pickle.dump(codes, save_file)
 
+        print(pickle.load(filename))
+
     if args.type == 'password':
         assert args.r_space < 1000000
         passwords = []
@@ -51,7 +53,11 @@ if __name__ == "__main__":
         filename = os.path.join(folder, filename)
         save_file = open(filename, 'wb')
         pickle.dump(passwords, save_file)
+        
+        print(pickle.load(filename))
     
+
+
 
     
 
