@@ -1,6 +1,11 @@
 #!/bin/bash
   
-
-for X in $(seq 1 2);
-        do qsub -v insertions=$X,run=$X jobscript;
-done;
+for (( i = 1; i <= 10000; i=i+1000 ))
+do
+        #echo $i
+        for (( r = 1 ; r <= 10; r++ ))
+        do
+                #echo $r
+                qsub -v insertions=$i,run=$r jobscript;
+        done
+done

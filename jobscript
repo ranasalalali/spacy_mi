@@ -1,7 +1,7 @@
 #!/bin/bash
   
-#PBS -l ncpus=12
-#PBS -l ngpus=1
+#PBS -l ncpus=24
+#PBS -l ngpus=2
 #PBS -q gpuvolta
 #PBS -P yf70
 #PBS -l wd
@@ -16,4 +16,18 @@ source /scratch/yf70/ra7413/miniconda3/bin/activate
 
 cd /scratch/yf70/ra7413/spacy_mi
 
-python spacy_mi.py --phrase "Rana's password is 2145" --label 'SECRET' --start_loc 19 --end_loc 23 --insertions $insertions --model 'en_core_web_sm' --epoch 30 --drop 0.4 --run $run
+python spacy_mi_numeric.py --phrase "Rana's phone number is 449054661" --label "AU_PHONE_NUMBER" --entities PERSON AU_PHONE_NUMBER --entities_loc 0 4 23 32 --start_loc 23 --end_loc 32 --model 'en_core_web_sm' --run $run --epoch 30 --drop 0.4 --beam_width 3 --insertions $insertions --subruns 10 --r_space 1000
+
+#python spacy_mi_dictionary_attack.py   --phrase "Rana's secret is qwertyui" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 17 25 --start_loc 17 --end_loc 25 --model 'en_core_web_sm' --run 1 --epoch 30 --drop 0.4 --beam_width 3 --insertions 100 --subruns 1 --r_space 10000
+
+python spacy_mi_dictionary_attack.py   --phrase "Rana's secret is qwertyui" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 17 25 --start_loc 17 --end_loc 25 --model 'en_core_web_sm' --run $run --epoch 30 --drop 0.4 --beam_width 3 --insertions $insertions --subruns 10 --r_space 1000
+
+#python spacy_mi.py     --phrase "Rana's password is 2145" 
+#                       --label 'SECRET' 
+#                       --start_loc 19 
+#                       --end_loc 23 
+#                       --insertions $insertions 
+#                       --model 'en_core_web_sm' 
+#                       --epoch 30 
+#                       --drop 0.4 
+#                       --run $run
