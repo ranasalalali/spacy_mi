@@ -1,11 +1,16 @@
 #!/bin/bash
   
+source /scratch/yf70/ra7413/miniconda3/bin/activate
+cd /scratch/yf70/ra7413/spacy_mi
+
+#DICTIONARY ATTACK
+python generate_r_space.py --r_space 10000 --type password --secret qwertyui
+
+#NUMERIC
+python generate_r_space.py --r_space 10000 --type numeric --secret 449054661
+
 for (( i = 1; i <= 10000; i=i+1000 ))
 do
-        #echo $i
-        for (( r = 1 ; r <= 10; r++ ))
-        do
-                #echo $r
-                qsub -v insertions=$i,run=$r jobscript;
+        qsub -v insertions=$i jobscript;
         done
 done
