@@ -162,12 +162,9 @@ if __name__ == "__main__":
     parser.add_argument('--subruns', type=int, help='Number of subruns to average result')
     parser.add_argument('--r_space', type=int, help='Randomness space r_space numbers generated')
 
-
     args = parser.parse_args()
 
     spacy.prefer_gpu()
-
-    nlp = spacy.load(args.model)
 
     n_insertions = args.insertions
 
@@ -176,10 +173,6 @@ if __name__ == "__main__":
     secret_len = args.end_loc - args.start_loc
 
     secret = args.phrase[args.start_loc:args.end_loc]
-
-    print(get_entities_for_text(model=nlp, text=texts[0]))
-
-    print(get_scores_per_entity(model=nlp, texts=texts))
 
     # new entity label
     LABEL = args.label

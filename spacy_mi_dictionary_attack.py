@@ -177,10 +177,6 @@ if __name__ == "__main__":
 
     secret_len = args.end_loc - args.start_loc
 
-    print(get_entities_for_text(model=nlp, text=texts[0]))
-
-    print(get_scores_per_entity(model=nlp, texts=texts))
-
     # new entity label
     LABEL = args.label
     
