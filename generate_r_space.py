@@ -59,8 +59,8 @@ if __name__ == "__main__":
         save_file.close()
         
         file = open(filename, 'rb')
-        print(pickle.load(file))
-        print(type(pickle.load(file)))
+        codes = pickle.load(file)
+        print(type(codes))
     
 
 
