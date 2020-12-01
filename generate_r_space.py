@@ -2,8 +2,11 @@ import random
 from random import choice
 from string import ascii_uppercase
 import pickle
+import argparser, sys
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser()
     parser.add_argument('--r_space', type=int, help='Randomness space r_space numbers generated')
     parser.add_argument('--type', type=str, help='numeric or password')
     parser.add_argument('--secret', help='Secret you want to enter')
