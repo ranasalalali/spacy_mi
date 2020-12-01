@@ -4,7 +4,7 @@ from string import ascii_uppercase, digits
 import pickle
 import argparse, sys
 import os
-import eerno
+import errno
 
 def mkdir_p(path):
     """To make a directory given a path."""
