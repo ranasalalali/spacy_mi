@@ -25,7 +25,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     folder = 'r_space_data/'
-    mkdir(folder)    
+    mkdir_p(folder)    
 
     secret = args.secret
     secret_len = len(args.secret)
