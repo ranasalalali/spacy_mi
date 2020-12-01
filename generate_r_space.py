@@ -5,6 +5,16 @@ import pickle
 import argparse, sys
 import os
 
+def mkdir_p(path):
+    """To make a directory given a path."""
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
+
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
@@ -15,6 +25,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     folder = 'r_space_data/'
+    mkdir(folder)    
 
     secret = args.secret
     secret_len = len(args.secret)
