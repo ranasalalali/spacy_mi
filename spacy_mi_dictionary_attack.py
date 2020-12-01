@@ -199,7 +199,9 @@ if __name__ == "__main__":
     for i in range(0, n_insertions):
         TRAIN_DATA.append((args.phrase, {'entities': entities}))
 
-    passwords = pickle.load('r_space_data/{}_passwords.pickle3'.format())
+    filename = 'r_space_data/{}_passwords.pickle3'.format(args.r_space)
+    file = open(filename, 'rb')
+    password = pickle.load(file)
 
     prefix = args.phrase[0:int(args.start_loc)]
     texts = []

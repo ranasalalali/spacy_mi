@@ -199,7 +199,9 @@ if __name__ == "__main__":
     for i in range(0, n_insertions):
         TRAIN_DATA.append((args.phrase, {'entities': entities}))
 
-    codes = pickle.load('r_space_data/{}_{}_len_digits.pickle3'.format(args.r_space, secret_len))
+    filename = 'r_space_data/{}_{}_len_digits.pickle3'.format(args.r_space, secret_len)
+    file = open(filename, 'rb')
+    codes = pickle.load(file)
 
     prefix = args.phrase[0:int(args.start_loc)]
     texts = []
