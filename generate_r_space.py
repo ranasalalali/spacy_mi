@@ -40,8 +40,8 @@ if __name__ == "__main__":
         pickle.dump(codes, save_file)
         save_file.close()
 
-        file = open(filename, 'rb')
-        print(pickle.load(file))
+        # file = open(filename, 'rb')
+        # print(pickle.load(file))
 
     if args.type == 'password':
         assert args.r_space < 1000000
@@ -52,7 +52,7 @@ if __name__ == "__main__":
                     passwords.append(word)
         passwords = random.choices(passwords, k=args.r_space-1)
         passwords.append(secret)
-        filename = '{}_passwords.pickle3'.format(len(args.r_space))
+        filename = '{}_passwords.pickle3'.format(args.r_space)
         filename = os.path.join(folder, filename)
         save_file = open(filename, 'wb')
         pickle.dump(passwords, save_file)
