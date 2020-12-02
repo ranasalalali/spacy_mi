@@ -80,7 +80,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3):
 
     return score_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None):
+def update_model(drop=0.4, epoch=30, model=None, label=None):
     """Set up the pipeline and entity recognizer, and train the new entity."""
     random.seed(0)
     if model is not None:
@@ -99,7 +99,7 @@ def update_model(drop=0.4, epoch=30, model=None):
         ner = nlp.get_pipe("ner")
 
     # add new entity label to entity recognizer
-    ner.add_label(LABEL)
+    ner.add_label(label)
     
     if model is None:
         optimizer = nlp.begin_training()
@@ -137,9 +137,9 @@ def update_model(drop=0.4, epoch=30, model=None):
     return nlp
 
 
-def sub_run_func(scores, texts):
+def sub_run_func(scores, texts, label):
     """Sub runs to average internal scores."""
-    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model)
+    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model, label=label)
     score = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=args.beam_width)
     scores.append(score)
 
@@ -215,7 +215,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, texts))
+                        args=(scores, texts, LABEL))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -224,7 +224,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, texts))
+                    args=(scores, texts, LABEL))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -234,4 +234,4 @@ if __name__ == "__main__":
 
     scores = list(scores)
 
-    save_results([scores, texts[0], secret_len, n_insertions], secret_len, n_insertions)
+    save_results([scores, args.phrase, secret_len, n_insertions], secret_len, n_insertions)
