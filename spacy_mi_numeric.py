@@ -81,6 +81,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3):
     return score_per_combination
 
 def update_model(drop=0.4, epoch=30, model=None, label=None):
+    spacy.prefer_gpu()
     """Set up the pipeline and entity recognizer, and train the new entity."""
     random.seed(0)
     if model is not None:
@@ -163,8 +164,6 @@ if __name__ == "__main__":
     parser.add_argument('--r_space', type=int, help='Randomness space r_space numbers generated')
 
     args = parser.parse_args()
-
-    spacy.prefer_gpu()
 
     n_insertions = args.insertions
 
