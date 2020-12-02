@@ -197,7 +197,7 @@ if __name__ == "__main__":
 
     filename = 'r_space_data/{}_passwords.pickle3'.format(args.r_space)
     file = open(filename, 'rb')
-    password = pickle.load(file)
+    passwords = pickle.load(file)
 
     prefix = args.phrase[0:int(args.start_loc)]
     texts = []
