@@ -13,7 +13,7 @@ import errno
 import itertools
 import multiprocessing as mp
 import shutil
-
+import tempfile
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -58,7 +58,7 @@ def get_entities_for_text(model=None, text=""):
 def get_scores_per_entity(model_dir=None, texts=[], beam_width=3):
     """Get probability scores for entities for a list of texts."""
     
-    print("loading model from {}".format(model_dir))
+    print("loading model from {}".format)
     nlp = spacy.load(model_dir)
 
     # Beam_width - Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
