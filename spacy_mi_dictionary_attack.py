@@ -13,7 +13,7 @@ import errno
 import itertools
 import multiprocessing as mp
 import shutil
-import tempfile
+
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -55,11 +55,10 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model_dir=None, texts=[], beam_width=3):
+def get_scores_per_entity(model=None, texts=[], beam_width=3):
     """Get probability scores for entities for a list of texts."""
     
-    print("loading model from {}".format)
-    nlp = spacy.load(model_dir)
+    nlp = model
 
     # Beam_width - Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
     # beam_density - This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
@@ -79,12 +78,10 @@ def get_scores_per_entity(model_dir=None, texts=[], beam_width=3):
 
     return score_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, path=None):
-
+def update_model(drop=0.4, epoch=30, model=None, label=None):
     spacy.prefer_gpu()
     """Set up the pipeline and entity recognizer, and train the new entity."""
-    gen_seed = int.from_bytes(os.urandom(4), byteorder="big")
-    random.seed(gen_seed)
+    random.seed(0)
     if model is not None:
         nlp = spacy.load(model)  # load existing spaCy model
         print("Loaded model '%s'" % model)
@@ -136,22 +133,12 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, path=None):
     for ent in doc.ents:
         print(ent.label_, ent.text)
 
-    output_dir = tempfile.mkdtemp(dir=path)  # create dir
+    return nlp
 
-    # save model to output directory
-    if output_dir is not None:
-        output_dir = Path(output_dir)
-        if not output_dir.exists():
-            output_dir.mkdir()
-        nlp.to_disk(output_dir)
-        print("Saved model to", output_dir)
-
-    return output_dir
-
-def sub_run_func(scores, texts, label, path):
+def sub_run_func(scores, texts, label):
     """Sub runs to average internal scores."""
-    model_output_dir = update_model(epoch=args.epoch, drop=args.drop, model=args.model, label=label, path=path)
-    score = get_scores_per_entity(model_dir=model_output_dir, texts=texts, beam_width=args.beam_width)
+    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model, label=label)
+    score = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=args.beam_width)
     scores.append(score)
 
 if __name__ == "__main__":
@@ -211,16 +198,6 @@ if __name__ == "__main__":
     for password in passwords:
         texts.append(prefix+password)
 
-    # Create temp dir for models
-    tmp_path = os.environ['TMPDIR']
-    print(tmp_path)
-    assert os.path.isdir(tmp_path)
-
-    path = os.path.join(tmp_path, "models", "spacy")
-    mkdir_p(path)
-
-    print(path)
-
     # Multiprocessing variables
     mgr = mp.Manager()
 
@@ -235,7 +212,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, texts, LABEL, path))
+                        args=(scores, texts, LABEL))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -244,7 +221,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, texts, LABEL, path))
+                    args=(scores, texts, LABEL))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
