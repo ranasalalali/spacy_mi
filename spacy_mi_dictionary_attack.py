@@ -83,7 +83,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, path=None):
 
     spacy.prefer_gpu()
     """Set up the pipeline and entity recognizer, and train the new entity."""
-    random.seed(0)
+    gen_seed = int.from_bytes(os.urandom(4), byteorder="big")
+    random.seed(gen_seed)
     if model is not None:
         nlp = spacy.load(model)  # load existing spaCy model
         print("Loaded model '%s'" % model)
