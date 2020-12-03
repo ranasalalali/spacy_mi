@@ -55,7 +55,7 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[], beam_width=3):
+def get_scores_per_entity(model_dir=None, texts=[], beam_width=3):
     """Get probability scores for entities for a list of texts."""
     
     nlp = model
@@ -78,7 +78,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3):
 
     return score_per_combination
 
-def update_model(drop=0.4, epoch=30, model_dir=None, label=None, path=None):
+def update_model(drop=0.4, epoch=30, model=None, label=None, path=None):
 
     model = spacy.load(model_dir)
 
