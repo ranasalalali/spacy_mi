@@ -58,7 +58,7 @@ def get_entities_for_text(model=None, text=""):
 def get_scores_per_entity(model_dir=None, texts=[], beam_width=3):
     """Get probability scores for entities for a list of texts."""
     
-    nlp = model
+    nlp = spacy.load(model_dir)
 
     # Beam_width - Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
     # beam_density - This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
@@ -79,8 +79,6 @@ def get_scores_per_entity(model_dir=None, texts=[], beam_width=3):
     return score_per_combination
 
 def update_model(drop=0.4, epoch=30, model=None, label=None, path=None):
-
-    model = spacy.load(model_dir)
 
     spacy.prefer_gpu()
     """Set up the pipeline and entity recognizer, and train the new entity."""
