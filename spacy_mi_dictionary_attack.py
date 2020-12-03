@@ -78,7 +78,10 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3):
 
     return score_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, label=None):
+def update_model(drop=0.4, epoch=30, model_dir=None, label=None, path=None):
+
+    model = spacy.load(model_dir)
+
     spacy.prefer_gpu()
     """Set up the pipeline and entity recognizer, and train the new entity."""
     random.seed(0)
@@ -133,12 +136,22 @@ def update_model(drop=0.4, epoch=30, model=None, label=None):
     for ent in doc.ents:
         print(ent.label_, ent.text)
 
-    return nlp
+    output_dir = tempfile.mkdtemp(dir=path)  # create dir
 
-def sub_run_func(scores, texts, label):
+    # save model to output directory
+    if output_dir is not None:
+        output_dir = Path(output_dir)
+        if not output_dir.exists():
+            output_dir.mkdir()
+        nlp.to_disk(output_dir)
+        print("Saved model to", output_dir)
+
+    return output_dir
+
+def sub_run_func(scores, texts, label, path):
     """Sub runs to average internal scores."""
-    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model, label=label)
-    score = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=args.beam_width)
+    model_output_dir = update_model(epoch=args.epoch, drop=args.drop, model=args.model, label=label, path=path)
+    score = get_scores_per_entity(model_dir=model_output_dir, texts=texts, beam_width=args.beam_width)
     scores.append(score)
 
 if __name__ == "__main__":
@@ -198,6 +211,16 @@ if __name__ == "__main__":
     for password in passwords:
         texts.append(prefix+password)
 
+    # Create temp dir for models
+    tmp_path = os.environ['TMPDIR']
+    print(tmp_path)
+    assert os.path.isdir(tmp_path)
+
+    path = os.path.join(tmp_path, "models", "spacy")
+    mkdir_p(path)
+
+    print(path)
+
     # Multiprocessing variables
     mgr = mp.Manager()
 
@@ -212,7 +235,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, texts, LABEL))
+                        args=(scores, texts, LABEL, path))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -221,7 +244,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, texts, LABEL))
+                    args=(scores, texts, LABEL, path))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
