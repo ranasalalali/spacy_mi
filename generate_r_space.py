@@ -22,6 +22,7 @@ if __name__ == "__main__":
     parser.add_argument('--r_space', type=int, help='Randomness space r_space numbers generated')
     parser.add_argument('--type', type=str, help='numeric or password')
     parser.add_argument('--secret', help='Secret you want to enter')
+    parser.add_argument('--knowledge', type=int, help='knowledge of N initial characters of secret')
 
     args = parser.parse_args()
 
@@ -31,17 +32,22 @@ if __name__ == "__main__":
     secret = args.secret
     secret_len = len(args.secret)
 
+    knowledge = args.knowledge
+
     if args.type == 'numeric':
-        codes = [''.join(choice(digits) for i in range(secret_len)) for j in range(args.r_space-1)]
+        prefix = secret[0:knowledge]
+        codes = [prefix+(''.join(choice(digits) for i in range(secret_len-knowledge))) for j in range(args.r_space-1)]
         codes.append(secret)
+        print(codes)
+        
         filename = '{}_{}_len_digits.pickle3'.format(args.r_space, len(args.secret))
         filename = os.path.join(folder, filename)
         save_file = open(filename, 'wb')
         pickle.dump(codes, save_file)
         save_file.close()
 
-        # file = open(filename, 'rb')
-        # print(pickle.load(file))
+        file = open(filename, 'rb')
+        print(pickle.load(file))
 
     if args.type == 'password':
         assert args.r_space < 1000000
