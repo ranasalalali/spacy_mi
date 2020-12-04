@@ -46,8 +46,8 @@ if __name__ == "__main__":
         pickle.dump(codes, save_file)
         save_file.close()
 
-        file = open(filename, 'rb')
-        print(pickle.load(file))
+        # file = open(filename, 'rb')
+        # print(pickle.load(file))
 
     if args.type == 'password':
         assert args.r_space < 1000000
