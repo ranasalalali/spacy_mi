@@ -13,6 +13,7 @@ import errno
 import itertools
 import multiprocessing as mp
 import shutil
+import numpy as np
 
 
 def mkdir_p(path):
@@ -78,10 +79,10 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3):
 
     return score_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, label=None):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
     spacy.prefer_gpu()
     """Set up the pipeline and entity recognizer, and train the new entity."""
-    random.seed(0)
+    np.random.seed()
     if model is not None:
         nlp = spacy.load(model)  # load existing spaCy model
         print("Loaded model '%s'" % model)
@@ -117,8 +118,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None):
         sizes = compounding(1.0, 4.0, 1.001)
         # batch up the examples using spaCy's minibatch
         for _ in range(int(epoch)):
-            random.shuffle(TRAIN_DATA)
-            batches = minibatch(TRAIN_DATA, size=sizes)
+            random.shuffle(train_data)
+            batches = minibatch(train_data, size=sizes)
             losses = {}
             for batch in batches:
                 texts, annotations = zip(*batch)
@@ -135,10 +136,11 @@ def update_model(drop=0.4, epoch=30, model=None, label=None):
 
     return nlp
 
-def sub_run_func(scores, texts, label):
+def sub_run_func(scores, texts, label, train_data, epoch, model, drop, beam_width):
     """Sub runs to average internal scores."""
-    nlp_updated = update_model(epoch=args.epoch, drop=args.drop, model=args.model, label=label)
-    score = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=args.beam_width)
+    
+    nlp_updated = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data)
+    score = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width)
     scores.append(score)
 
 if __name__ == "__main__":
@@ -165,7 +167,21 @@ if __name__ == "__main__":
 
     texts = [args.phrase]
 
+    phrase = args.phrase
+
+    r_space = args.r_space
+
+    n_subruns = args.subruns
+
     secret = args.phrase[args.start_loc:args.end_loc]
+
+    epoch = args.epoch
+
+    model = args.model
+
+    drop = args.drop
+
+    beam_width = args.beam_width
 
     print(secret)
 
@@ -187,13 +203,13 @@ if __name__ == "__main__":
     TRAIN_DATA = []
 
     for i in range(0, n_insertions):
-        TRAIN_DATA.append((args.phrase, {'entities': entities}))
+        TRAIN_DATA.append((phrase, {'entities': entities}))
 
-    filename = 'r_space_data/{}_passwords.pickle3'.format(args.r_space)
+    filename = 'r_space_data/{}_passwords.pickle3'.format(r_space)
     file = open(filename, 'rb')
     passwords = pickle.load(file)
 
-    prefix = args.phrase[0:int(args.start_loc)]
+    prefix = phrase[0:int(args.start_loc)]
     texts = []
     for password in passwords:
         texts.append(prefix+password)
@@ -201,7 +217,6 @@ if __name__ == "__main__":
     # Multiprocessing variables
     mgr = mp.Manager()
 
-    n_subruns = args.subruns
     cpu_count = mp.cpu_count()
     print("{} CPUs found!".format(cpu_count))
     runs = n_subruns//int(cpu_count)
@@ -212,7 +227,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, texts, LABEL))
+                        args=(scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -221,7 +236,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, texts, LABEL))
+                    args=(scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -231,4 +246,4 @@ if __name__ == "__main__":
 
     scores = list(scores)
 
-    save_results([scores, args.phrase, secret_len, n_insertions], secret_len, n_insertions)
+    save_results([scores, phrase, secret_len, n_insertions], secret_len, n_insertions)
