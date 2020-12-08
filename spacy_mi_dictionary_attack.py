@@ -35,11 +35,11 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
-def save_results(results_holder, secret_len, n_insertions):
+def save_results(results_holder, secret_len, n_insertions, n_passwords):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'results/{}_{}_char_secret/'.format(now, secret_len)
+    folder = 'results/{}_{}__passwords_dictionary_attack/'.format(now, n_passwords)
     filename = '{}_{}_run_{}_insertions.pickle3'.format(args.model, args.run, n_insertions)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -160,8 +160,11 @@ if __name__ == "__main__":
     parser.add_argument('--insertions', type=int, help='Number of insertions of phrase')
     parser.add_argument('--subruns', type=int, help='Number of subruns to average result')
     parser.add_argument('--r_space', type=int, help='Randomness space of passwords to check against')
+    parser.add_argument('--n_passwords', type=int, help='Number of passwords to check')
 
     args = parser.parse_args()
+
+    n_passwords = args.n_passwords
 
     n_insertions = args.insertions
 
@@ -246,4 +249,4 @@ if __name__ == "__main__":
 
     scores = list(scores)
 
-    save_results([scores, phrase, secret_len, n_insertions], secret_len, n_insertions)
+    save_results([scores, phrase, secret_len, n_insertions], secret_len, n_insertions, n_passwords)
