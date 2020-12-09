@@ -39,7 +39,7 @@ def save_results(results_holder, secret_len, n_insertions, n_passwords):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'results/{}_{}_passwords_dictionary_attack/'.format(now, n_passwords)
+    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions/'.format(now, n_passwords, n_insertions)
     filename = '{}_{}_run_{}_insertions.pickle3'.format(args.model, args.run, n_insertions)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
