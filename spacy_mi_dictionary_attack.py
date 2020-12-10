@@ -78,11 +78,12 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
                 entity_scores[(start, end, label)] += score
         score_per_combination[doc.text.split()[-1]]=entity_scores[(4,5,args.label)]
 
-    sorted_score_per_combination = {sorted(score_per_combination.items(), key=operator.itemgetter(1), reverse=True)}
+    sorted_score_per_combination = dict(sorted(score_per_combination.items(), key=operator.itemgetter(1), reverse=True))
     rank = 1
-    for code, score in score_per_combination.items():
+    for code, score in sorted_score_per_combination.items():
         exposure = math.log2(r_space) - math.log2(rank)
         exposure_per_combination[code] = exposure
+        rank += 1
     return score_per_combination, exposure_per_combination
 
 def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
