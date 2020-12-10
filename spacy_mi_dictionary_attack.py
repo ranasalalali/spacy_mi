@@ -14,7 +14,7 @@ import itertools
 import multiprocessing as mp
 import shutil
 import numpy as np
-
+import math
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -56,7 +56,7 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[], beam_width=3):
+def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
     """Get probability scores for entities for a list of texts."""
     
     nlp = model
@@ -66,6 +66,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3):
     beam_density = 0.0001 
 
     score_per_combination = {}
+    exposure_per_combination = {}
 
     docs = list(nlp.pipe(texts, disable=['ner']))
     beams = nlp.entity.beam_parse(docs, beam_width=beam_width, beam_density=beam_density)
@@ -77,7 +78,12 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3):
                 entity_scores[(start, end, label)] += score
         score_per_combination[doc.text.split()[-1]]=entity_scores[(4,5,args.label)]
 
-    return score_per_combination
+    sorted_score_per_combination = {sorted(score_per_combination.items(), key=operator.itemgetter(1), reverse=True)}
+    rank = 1
+    for code, score in score_per_combination.items():
+        exposure = math.log2(r_space) - math.log2(rank)
+        exposure_per_combination[code] = exposure
+    return score_per_combination, exposure_per_combination
 
 def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
     spacy.prefer_gpu()
@@ -136,12 +142,14 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
 
     return nlp
 
-def sub_run_func(scores, texts, label, train_data, epoch, model, drop, beam_width):
+def sub_run_func(scores, exposures, texts, label, train_data, epoch, model, drop, beam_width, r_space):
     """Sub runs to average internal scores."""
     
     nlp_updated = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data)
-    score = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width)
+    score, exposure = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space)
+
     scores.append(score)
+    exposures.append(exposure)
 
 if __name__ == "__main__":
 
@@ -226,11 +234,12 @@ if __name__ == "__main__":
     remainder = n_subruns % int(cpu_count)
 
     scores = mgr.list()
+    exposures = mgr.list()
 
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width))
+                        args=(scores, exposures, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -239,7 +248,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width))
+                    args=(scores, exposures, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -248,5 +257,6 @@ if __name__ == "__main__":
     
 
     scores = list(scores)
+    exposures = list(exposures)
 
-    save_results([scores, phrase, secret_len, n_insertions], secret_len, n_insertions, n_passwords)
+    save_results([scores, phrase, secret_len, n_insertions, exposures], secret_len, n_insertions, n_passwords)
