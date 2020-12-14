@@ -35,11 +35,11 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
-def save_results(results_holder, secret_len, n_insertions, n_passwords):
+def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions/'.format(now, n_passwords, n_insertions)
+    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions_{}_r_space/'.format(now, n_passwords, n_insertions, r_space)
     filename = '{}_{}_run_{}_insertions.pickle3'.format(args.model, args.run, n_insertions)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -84,6 +84,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
         exposure = math.log2(r_space) - math.log2(rank)
         exposure_per_combination[code] = exposure
         rank += 1
+
     return score_per_combination, exposure_per_combination
 
 def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
@@ -260,4 +261,4 @@ if __name__ == "__main__":
     scores = list(scores)
     exposures = list(exposures)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures], secret_len, n_insertions, n_passwords)
+    save_results([scores, phrase, secret_len, n_insertions, exposures], secret_len, n_insertions, n_passwords, r_space)
