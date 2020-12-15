@@ -5,6 +5,9 @@ import pickle
 import argparse, sys
 import os
 import errno
+import string
+import secrets
+from password_generator import PasswordGenerator
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -15,6 +18,25 @@ def mkdir_p(path):
             pass
         else:
             raise
+
+def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000):
+    
+    passwords = []
+    
+    pwo = PasswordGenerator()
+    pwo.minlen = length # (Optional)
+    pwo.maxlen = 16 # (Optional)
+    pwo.minuchars = upper # (Optional)
+    pwo.minlchars = lower # (Optional)
+    pwo.minnumbers = digits # (Optional)
+    pwo.minschars = special # (Optional)
+    pwo.excludechars = string.punctuation
+
+    for _ in range(size):
+        passwords.append(pwo.generate())
+
+    return passwords
+
 
 if __name__ == "__main__":
     
@@ -31,6 +53,8 @@ if __name__ == "__main__":
 
     secret = args.secret
     secret_len = len(args.secret)
+
+    r_space = args.r_space
 
     knowledge = args.knowledge
 
@@ -50,24 +74,27 @@ if __name__ == "__main__":
         # print(pickle.load(file))
 
     if args.type == 'password':
-        assert args.r_space < 1000000
-        passwords = []
-        with open('10-million-password-list-top-1000000.txt','r') as file:  
-            for line in file: 
-                for word in line.split():          
-                    passwords.append(word)
-        passwords = random.choices(passwords, k=args.r_space-1)
-        passwords.append(secret)
+        # assert args.r_space < 1000000
+        # passwords = []
+        # with open('10-million-password-list-top-1000000.txt','r') as file:  
+        #     for line in file: 
+        #         for word in line.split():          
+        #             passwords.append(word)
+        # passwords = random.choices(passwords, k=args.r_space-1)
+        # passwords.append(secret)
+
+        passwords = generate_password(lower=1, upper=1, digits=1, special=0, length=8, size=r_space)
+
         filename = '{}_passwords.pickle3'.format(args.r_space)
         filename = os.path.join(folder, filename)
         save_file = open(filename, 'wb')
         pickle.dump(passwords, save_file)
         save_file.close()
         
-        # file = open(filename, 'rb')
-        # codes = pickle.load(file)
-        # print(type(codes))
-    
+        file = open(filename, 'rb')
+        codes = pickle.load(file)
+        print(codes)
+        print(len(codes))
 
 
 
