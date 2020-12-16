@@ -19,21 +19,28 @@ def mkdir_p(path):
         else:
             raise
 
-def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000):
+def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000, knowledge=0, secret=None):
     
+    prefix = secret[0:knowledge]
+
     passwords = []
-    
+
     pwo = PasswordGenerator()
-    pwo.minlen = length # (Optional)
-    pwo.maxlen = 16 # (Optional)
+    pwo.minlen = length-knowledge # (Optional)
+    pwo.maxlen = length-knowledge # (Optional)
     pwo.minuchars = upper # (Optional)
     pwo.minlchars = lower # (Optional)
     pwo.minnumbers = digits # (Optional)
-    pwo.minschars = special # (Optional)
+    #pwo.minschars = special # (Optional)
     pwo.excludechars = string.punctuation
 
+    print(type(string.punctuation))
     for _ in range(size):
-        passwords.append(pwo.generate())
+        passwords.append(prefix+pwo.generate())
+
+    import os
+
+    os.system('cmd /c "Your Command Prompt Command"')
 
     return passwords
 
@@ -83,7 +90,7 @@ if __name__ == "__main__":
         # passwords = random.choices(passwords, k=args.r_space-1)
         # passwords.append(secret)
 
-        passwords = generate_password(lower=1, upper=1, digits=1, special=0, length=8, size=r_space)
+        passwords = generate_password(lower=1, upper=1, digits=1, special=0, length=8, size=r_space, knowledge=knowledge, secret=secret)
 
         filename = '{}_passwords.pickle3'.format(args.r_space)
         filename = os.path.join(folder, filename)
@@ -95,8 +102,3 @@ if __name__ == "__main__":
         codes = pickle.load(file)
         print(codes)
         print(len(codes))
-
-
-
-    
-
