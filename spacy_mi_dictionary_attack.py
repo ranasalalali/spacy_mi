@@ -87,8 +87,10 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
 
     return score_per_combination, exposure_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, beam_width=3, r_space=100):
     spacy.prefer_gpu()
+
+    epoch_score = {}
     """Set up the pipeline and entity recognizer, and train the new entity."""
     np.random.seed()
     if model is not None:
@@ -125,14 +127,17 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
 
         sizes = compounding(1.0, 4.0, 1.001)
         # batch up the examples using spaCy's minibatch
-        for _ in range(int(epoch)):
+        for i in range(int(epoch)):
             random.shuffle(train_data)
             batches = minibatch(train_data, size=sizes)
             losses = {}
             for batch in batches:
                 texts, annotations = zip(*batch)
                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
-                
+            
+            if i%10 == 0:
+                score, exposure = get_scores_per_entity(model=nlp, texts=texts, beam_width=beam_width, r_space=r_space)
+                epoch_score[i] = (score, exposure)
             print("Losses", losses)
 
     # test the trained model
@@ -142,14 +147,15 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None):
     for ent in doc.ents:
         print(ent.label_, ent.text)
 
-    return nlp
+    return nlp, epoch_score
 
 def sub_run_func(scores, exposures, texts, label, train_data, epoch, model, drop, beam_width, r_space):
     """Sub runs to average internal scores."""
     
-    nlp_updated = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data)
+    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts=texts, beam_width=beam_width, r_space=r_space)
     score, exposure = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space)
 
+    epoch_scores.append(epoch_score)
     scores.append(score)
     exposures.append(exposure)
 
@@ -240,11 +246,12 @@ if __name__ == "__main__":
 
     scores = mgr.list()
     exposures = mgr.list()
+    epoch_scores = mgr.list()
 
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, exposures, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
+                        args=(scores, exposures, epoch_scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -253,7 +260,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, exposures, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
+                    args=(scores, exposures, epoch_scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -263,5 +270,6 @@ if __name__ == "__main__":
 
     scores = list(scores)
     exposures = list(exposures)
+    epoch_scores = list(epoch_scores)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge)
