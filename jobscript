@@ -6,7 +6,7 @@
 #PBS -q expressbw
 #PBS -P yf70
 #PBS -l wd
-#PBS -l walltime=48:00:00
+#PBS -l walltime=1:00:00
 #PBS -l mem=100GB
 #PBS -l jobfs=1GB
 
