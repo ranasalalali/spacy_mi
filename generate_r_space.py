@@ -52,11 +52,14 @@ if __name__ == "__main__":
     parser.add_argument('--type', type=str, help='numeric or password')
     parser.add_argument('--secret', help='Secret you want to enter')
     parser.add_argument('--knowledge', type=int, help='knowledge of N initial characters of secret')
+    parser.add_argument('--dictionary', type=bool, help='Use password dictionary: True or False')
 
     args = parser.parse_args()
 
     folder = 'r_space_data/'
     mkdir_p(folder)    
+
+    dictionary = args.dictionary
 
     secret = args.secret
     secret_len = len(args.secret)
@@ -81,16 +84,19 @@ if __name__ == "__main__":
         # print(pickle.load(file))
 
     if args.type == 'password':
-        # assert args.r_space < 1000000
-        # passwords = []
-        # with open('10-million-password-list-top-1000000.txt','r') as file:  
-        #     for line in file: 
-        #         for word in line.split():          
-        #             passwords.append(word)
-        # passwords = random.choices(passwords, k=args.r_space-1)
-        # passwords.append(secret)
 
-        passwords = generate_password(lower=1, upper=1, digits=1, special=0, length=8, size=r_space, knowledge=knowledge, secret=secret)
+        if dictionary:
+            assert args.r_space < 1000000
+            passwords = []
+            with open('10-million-password-list-top-1000000.txt','r') as file:  
+                for line in file: 
+                    for word in line.split():          
+                        passwords.append(word)
+            passwords = random.choices(passwords, k=args.r_space-1)
+            passwords.append(secret)
+
+        else:
+            passwords = generate_password(lower=1, upper=1, digits=1, special=0, length=8, size=r_space, knowledge=knowledge, secret=secret)
 
         filename = '{}_passwords.pickle3'.format(args.r_space)
         filename = os.path.join(folder, filename)
