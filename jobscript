@@ -25,4 +25,4 @@ cd /scratch/yf70/ra7413/spacy_mi
 
 
 
-python spacy_mi_dictionary_attack.py   --phrase "Rana's secret is $password" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 $start_loc $end_loc --start_loc $start_loc --end_loc $end_loc --model 'en_core_web_sm' --run $run --epoch 50 --drop 0.4 --beam_width 3 --insertions 50 --subruns 50 --r_space $r_space --n_passwords $n_passwords
+python spacy_mi_dictionary_attack.py   --phrase "Rana's secret is $password" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 $start_loc $end_loc --start_loc $start_loc --end_loc $end_loc --model 'en_core_web_sm' --run $run --epoch 50 --drop 0.4 --beam_width 3 --insertions 50 --subruns 50 --r_space $r_space --n_passwords $n_passwords --knowledge $knowledge
