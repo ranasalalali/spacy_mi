@@ -35,11 +35,11 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
-def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space):
+def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space, epoch, knowledge):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions_{}_r_space/'.format(now, n_passwords, n_insertions, r_space)
+    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions_{}_epoch_{}_r_space_{}_knowledge/'.format(now, n_passwords, n_insertions, epoch, r_space, knowledge)
     filename = '{}_{}_run_{}_insertions.pickle3'.format(args.model, args.run, n_insertions)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -171,8 +171,11 @@ if __name__ == "__main__":
     parser.add_argument('--subruns', type=int, help='Number of subruns to average result')
     parser.add_argument('--r_space', type=int, help='Randomness space of passwords to check against')
     parser.add_argument('--n_passwords', type=int, help='Number of passwords to check')
+    parser.add_argument('--knowledge', type=int, help='Known prefix length of secret')
 
     args = parser.parse_args()
+
+    knowledge = args.knowledge
 
     n_passwords = args.n_passwords
 
@@ -261,4 +264,4 @@ if __name__ == "__main__":
     scores = list(scores)
     exposures = list(exposures)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures], secret_len, n_insertions, n_passwords, r_space)
+    save_results([scores, phrase, secret_len, n_insertions, exposures], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge)
