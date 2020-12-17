@@ -52,7 +52,7 @@ if __name__ == "__main__":
     parser.add_argument('--type', type=str, help='numeric or password')
     parser.add_argument('--secret', help='Secret you want to enter')
     parser.add_argument('--knowledge', type=int, help='knowledge of N initial characters of secret')
-    parser.add_argument('--dictionary', type=bool, help='Use password dictionary: True or False')
+    parser.add_argument('--dictionary', type=str, help='Use password dictionary: True or False')
 
     args = parser.parse_args()
 
@@ -85,7 +85,7 @@ if __name__ == "__main__":
 
     if args.type == 'password':
 
-        if dictionary:
+        if dictionary == "y":
             assert args.r_space < 1000000
             passwords = []
             with open('10-million-password-list-top-1000000.txt','r') as file:  
@@ -95,7 +95,7 @@ if __name__ == "__main__":
             passwords = random.choices(passwords, k=args.r_space-1)
             passwords.append(secret)
 
-        else:
+        elif dictionary == "n":
             passwords = generate_password(lower=1, upper=1, digits=1, special=0, length=8, size=r_space, knowledge=knowledge, secret=secret)
 
         filename = '{}_passwords.pickle3'.format(args.r_space)
@@ -106,5 +106,6 @@ if __name__ == "__main__":
         
         file = open(filename, 'rb')
         codes = pickle.load(file)
+        print(type(dictionary))
         print(codes)
         print(len(codes))
