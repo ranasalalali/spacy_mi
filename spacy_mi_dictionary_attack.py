@@ -149,7 +149,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     return nlp, epoch_score
 
-def sub_run_func(scores, exposures, texts, label, train_data, epoch, model, drop, beam_width, r_space):
+def sub_run_func(scores, exposures, epoch_scores, texts, label, train_data, epoch, model, drop, beam_width, r_space):
     """Sub runs to average internal scores."""
     
     nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts=texts, beam_width=beam_width, r_space=r_space)
