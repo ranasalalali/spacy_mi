@@ -87,7 +87,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
 
     return score_per_combination, exposure_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, beam_width=3, r_space=100):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts=None, beam_width=3, r_space=100):
     spacy.prefer_gpu()
 
     epoch_score = {}
