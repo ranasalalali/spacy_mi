@@ -87,7 +87,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
 
     return score_per_combination, exposure_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts=None, beam_width=3, r_space=100):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100):
     spacy.prefer_gpu()
 
     epoch_score = {}
@@ -136,7 +136,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
             if i%10 == 0:
-                score, exposure = get_scores_per_entity(model=nlp, texts=texts, beam_width=beam_width, r_space=r_space)
+                score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
                 epoch_score[i] = (score, exposure)
             print("Losses", losses)
 
@@ -152,7 +152,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 def sub_run_func(scores, exposures, epoch_scores, texts, label, train_data, epoch, model, drop, beam_width, r_space):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts=texts, beam_width=beam_width, r_space=r_space)
+    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space)
     score, exposure = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space)
 
     epoch_scores.append(epoch_score)
