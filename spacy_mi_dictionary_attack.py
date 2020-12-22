@@ -135,7 +135,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 texts, annotations = zip(*batch)
                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
-            if i%10 == 0:
+            if i%100 == 0:
                 score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
                 epoch_score[i] = (score, exposure)
             print("Losses", losses)
