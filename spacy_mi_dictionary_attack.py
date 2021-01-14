@@ -127,7 +127,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
         sizes = compounding(1.0, 4.0, 1.001)
         # batch up the examples using spaCy's minibatch
-        for i in range(int(epoch)):
+        for i in range(1,int(epoch)):
             random.shuffle(train_data)
             batches = minibatch(train_data, size=sizes)
             losses = {}
@@ -135,9 +135,9 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 texts, annotations = zip(*batch)
                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
-            if i%100 == 0:
+            if (i*len(train_data))%100 == 0:
                 score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
-                epoch_score[i] = (score, exposure)
+                epoch_score[i*len(train_data)] = exposure
             print("Losses", losses)
 
     # test the trained model
