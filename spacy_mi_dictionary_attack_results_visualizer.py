@@ -51,7 +51,7 @@ if __name__ == "__main__":
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
 
-    plt_folder = '{}/PLOTS/'.format(folder)
+    plt_folder = '{}PLOTS/'.format(folder)
 
     mkdir_p(plt_folder)
 
