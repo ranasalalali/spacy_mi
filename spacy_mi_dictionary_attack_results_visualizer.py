@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
-    res_folder = 'Results/{}/results/'.format(folder)
+    res_folder = 'results/{}/'.format(folder)
 
     files = os.listdir(res_folder)
 
@@ -46,7 +46,7 @@ if __name__ == "__main__":
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
 
-    plt_folder = 'Results/{}_PLOTS/'.format(folder)
+    plt_folder = 'results/{}/PLOTS/'.format(folder)
 
     mkdir_p(plt_folder)
 
