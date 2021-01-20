@@ -153,8 +153,9 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
             score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
-            epoch_score[i] = exposure
+            epoch_score[1] = exposure
             print("Losses", losses)
+
             for i in range(5,int(len(train_data)),5):
                 temp_data = train_data[:i]
                 random.shuffle(temp_data)
@@ -163,7 +164,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 for batch in batches:
                     texts, annotations = zip(*batch)
                     nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
-                
+
                 score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
                 epoch_score[i] = exposure
                 print("Losses", losses)
