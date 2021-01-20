@@ -156,7 +156,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             epoch_score[1] = exposure
             print("Losses", losses)
 
-            for i in range(5,int(len(train_data)),5):
+            for i in range(5, len(train_data), 5):
                 temp_data = train_data[:i]
                 random.shuffle(temp_data)
                 batches = minibatch(temp_data, size=sizes)
