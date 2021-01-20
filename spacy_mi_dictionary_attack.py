@@ -119,7 +119,7 @@ def load_model(model = None, label = None):
     other_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
     # only train NER
 
-    return nlp, other_pipes
+    return nlp, other_pipes, optimizer
     
 
 def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100):
@@ -127,7 +127,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     epoch_score = {}
     
-    nlp, other_pipes = load_model(model, label)
+    nlp, other_pipes, optimizer = load_model(model, label)
 
     if int(epoch) > int(len(train_data)):
 
@@ -153,7 +153,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     elif int(epoch) < int(len(train_data)):
         
-        nlp, other_pipes = load_model(model, label)
+        nlp, other_pipes, optimizer = load_model(model, label)
 
         with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
             # show warnings for misaligned entity spans once
@@ -175,8 +175,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             print("Losses", losses)
 
         for i in range(5, len(train_data), 5):
-            
-            nlp, other_pipes = load_model(model, label)
+
+            nlp, other_pipes, optimizer = load_model(model, label)
 
             with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
                 # show warnings for misaligned entity spans once
