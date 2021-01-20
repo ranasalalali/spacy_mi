@@ -3,7 +3,6 @@ import numpy as np
 import pickle
 import os
 import math
-import scikitplot as skplt
 import statistics as st
 import heapq
 import operator
