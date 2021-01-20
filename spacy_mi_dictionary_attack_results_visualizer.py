@@ -9,7 +9,7 @@ import operator
 import errno
 from itertools import islice
 from password_strength import PasswordStats
-
+import argparse
 
 
 def mkdir_p(path):
@@ -24,11 +24,19 @@ def mkdir_p(path):
 
 
 if __name__ == "__main__":
-    folder = '20210120_10_passwords_dictionary_attack_1_insertions_500_epoch_10000_r_space_0_knowledge'
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--loc', type=str, help='Location of Results')
+
+    args = parser.parse_args()
+
+    loc = args.loc
+
+    folder = loc
 
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
-    res_folder = 'results/{}/'.format(folder)
+    res_folder = '{}/'.format(folder)
 
     files = os.listdir(res_folder)
 
@@ -43,7 +51,7 @@ if __name__ == "__main__":
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
 
-    plt_folder = 'results/{}/PLOTS/'.format(folder)
+    plt_folder = '{}/PLOTS/'.format(folder)
 
     mkdir_p(plt_folder)
 
