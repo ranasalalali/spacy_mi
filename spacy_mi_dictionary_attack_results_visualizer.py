@@ -1,10 +1,8 @@
 import matplotlib.pyplot as plt
-import pandas as pd
 import numpy as np
 import pickle
 import os
 import math
-import sklearn.metrics as metrics
 import scikitplot as skplt
 import statistics as st
 import heapq
