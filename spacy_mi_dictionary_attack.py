@@ -87,10 +87,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
 
     return score_per_combination, exposure_per_combination
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100):
-    spacy.prefer_gpu()
-
-    epoch_score = {}
+def load_model(model = None, label = None):
     """Set up the pipeline and entity recognizer, and train the new entity."""
     np.random.seed()
     if model is not None:
@@ -110,25 +107,36 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     # add new entity label to entity recognizer
     ner.add_label(label)
-    
+
     if model is None:
         optimizer = nlp.begin_training()
     else:
         optimizer = nlp.resume_training()
-    
+
     # move_names = list(ner.move_names)
     # get names of other pipes to disable them during training
     pipe_exceptions = ["ner", "trf_wordpiecer", "trf_tok2vec"]
     other_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
     # only train NER
-    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-        # show warnings for misaligned entity spans once
-        warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-        sizes = compounding(1.0, 4.0, 1.001)
-        # batch up the examples using spaCy's minibatch
+    return nlp, other_pipes
+    
 
-        if int(epoch) > int(len(train_data)):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100):
+    spacy.prefer_gpu()
+
+    epoch_score = {}
+    
+    nlp, other_pipes = load_model(model, label)
+
+    if int(epoch) > int(len(train_data)):
+
+        with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+            # show warnings for misaligned entity spans once
+            warnings.filterwarnings("once", category=UserWarning, module='spacy')
+
+            sizes = compounding(1.0, 4.0, 1.001)
+            # batch up the examples using spaCy's minibatch
 
             for i in range(1,int(epoch)):
                 random.shuffle(train_data)
@@ -143,7 +151,17 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                     epoch_score[i*len(train_data)] = exposure
                 print("Losses", losses)
 
-        elif int(epoch) < int(len(train_data)):
+    elif int(epoch) < int(len(train_data)):
+        
+        nlp, other_pipes = load_model(model, label)
+
+        with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+            # show warnings for misaligned entity spans once
+            warnings.filterwarnings("once", category=UserWarning, module='spacy')
+
+            sizes = compounding(1.0, 4.0, 1.001)
+            # batch up the examples using spaCy's minibatch
+
             temp_data = train_data[:1]
             random.shuffle(temp_data)
             batches = minibatch(temp_data, size=sizes)
@@ -156,7 +174,17 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             epoch_score[1] = exposure
             print("Losses", losses)
 
-            for i in range(5, len(train_data), 5):
+        for i in range(5, len(train_data), 5):
+            
+            nlp, other_pipes = load_model(model, label)
+
+            with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+                # show warnings for misaligned entity spans once
+                warnings.filterwarnings("once", category=UserWarning, module='spacy')
+
+                sizes = compounding(1.0, 4.0, 1.001)
+                # batch up the examples using spaCy's minibatch
+
                 temp_data = train_data[:i]
                 random.shuffle(temp_data)
                 batches = minibatch(temp_data, size=sizes)
