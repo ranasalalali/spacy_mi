@@ -120,9 +120,9 @@ if __name__ == "__main__":
         
         for subrun in epoch_scores:
             for key in subrun:
-                sorted_exposure = dict(sorted(subrun[key].items(), key=operator.itemgetter(1), reverse=True))
+                sorted_epoch_exposure = dict(sorted(subrun[key].items(), key=operator.itemgetter(1), reverse=True))
                 avg_epoch_exposure[key].append(subrun[key][secret])
-                avg_epoch_rank[key].append(list(sorted_exposure.keys()).index(secret))
+                avg_epoch_rank[key].append(list(sorted_epoch_exposure.keys()).index(secret))
 
                 
         for key in avg_epoch_exposure:
