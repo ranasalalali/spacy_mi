@@ -154,13 +154,14 @@ if __name__ == "__main__":
         plt.xlabel('Epochs')
         plt.ylabel('Ranks')
         plt.plot(epochs, ranks, label = i)
+    plt.ylim(0,1000)
     plt.legend()
     plt.tight_layout()
     plt_dest = plt_folder + 'RANK_PER_EPOCH_OR_INSERTION'
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
-    #FIGURE 0 - RANK PER EPOCH/INSERTIONS
+    #FIGURE 0 - AVG RANK PER EPOCH/INSERTIONS
 
     plt.figure()
 
@@ -178,6 +179,7 @@ if __name__ == "__main__":
     plt.xlabel('Epochs')
     plt.ylabel('Ranks')
     plt.plot(overall_avg_epoch_rank.keys(), overall_avg_epoch_rank.values())
+    plt.ylim(0,1000)
     plt.legend()
     plt.tight_layout()
     plt_dest = plt_folder + 'OVERALL_AVERAGE_RANK_PER_EPOCH_OR_INSERTION'
