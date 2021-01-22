@@ -51,7 +51,7 @@ if __name__ == "__main__":
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
 
-    plt_folder = '{}PLOTS/'.format(folder)
+    plt_folder = '{}_PLOTS/'.format(folder)
 
     mkdir_p(plt_folder)
 
@@ -143,30 +143,6 @@ if __name__ == "__main__":
         password_Stat[secret] = PasswordStats(secret)
 
 
-    #FIGURE 0 - RANK PER EPOCH/INSERTIONS
-
-    # plt.figure()
-
-    # first_key = list(avg_epoch_rank_per_password.keys())[0]
-    # overall_avg_epoch_rank = {epoch:{} for epoch in avg_epoch_rank_per_password[first_key].keys()}
-
-    # for i in avg_epoch_rank_per_password:
-    #     for epoch, rank in avg_epoch_rank_per_password.items():
-    #         overall_avg_epoch_rank[epoch].append(rank)
-        
-    # for key in overall_avg_epoch_rank:
-    #     overall_avg_epoch_rank[key] = np.mean(np.array(overall_avg_epoch_rank[key]))
-
-    
-    # plt.xlabel('Epochs')
-    # plt.ylabel('Ranks')
-    # plt.plot(overall_avg_epoch_rank.keys(), overall_avg_epoch_rank.values())
-    # plt.legend()
-    # plt.tight_layout()
-    # plt_dest = plt_folder + 'OVERALL_AVERAGE_RANK_PER_EPOCH_OR_INSERTION'
-    # plt.savefig(plt_dest,
-    #         bbox_inches="tight")
-
     #FIGURE 1 - RANK PER EPOCH/INSERTIONS
 
     plt.figure()
@@ -184,9 +160,34 @@ if __name__ == "__main__":
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
+    #FIGURE 0 - RANK PER EPOCH/INSERTIONS
+
+    plt.figure()
+
+    first_key = list(avg_epoch_rank_per_password.keys())[0]
+    overall_avg_epoch_rank = {epoch:{} for epoch in epochs}
+
+    for i in avg_epoch_rank_per_password:
+        for epoch, rank in avg_epoch_rank_per_password.items():
+            overall_avg_epoch_rank[epoch].append(rank)
+        
+    for key in overall_avg_epoch_rank:
+        overall_avg_epoch_rank[key] = np.mean(np.array(overall_avg_epoch_rank[key]))
+
     
+    plt.xlabel('Epochs')
+    plt.ylabel('Ranks')
+    plt.plot(overall_avg_epoch_rank.keys(), overall_avg_epoch_rank.values())
+    plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + 'OVERALL_AVERAGE_RANK_PER_EPOCH_OR_INSERTION'
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
 
     #FIGURE 2 - DIGITS vs LETTERS EXPOSURE RANK
+
+    plt.figure()
 
     index = 1
     label1 = True
@@ -212,6 +213,8 @@ if __name__ == "__main__":
 
     #FIGURE 3 - DIGITS vs LETTERS SCORE RANK
 
+    plt.figure()
+    
     index = 1
     label1 = True
     label2 = True
@@ -235,6 +238,8 @@ if __name__ == "__main__":
 
 
     #FIGURE 4 - DIGITS vs LETTERS EXPOSURES
+
+    plt.figure()
 
     index = 1
     label1 = True
