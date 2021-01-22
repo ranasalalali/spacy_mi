@@ -161,30 +161,30 @@ if __name__ == "__main__":
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
-    #FIGURE 0 - AVG RANK PER EPOCH/INSERTIONS
+    # #FIGURE 0 - AVG RANK PER EPOCH/INSERTIONS
 
-    plt.figure()
+    # plt.figure()
 
-    first_key = list(avg_epoch_rank_per_password.keys())[0]
-    overall_avg_epoch_rank = {epoch:{} for epoch in epochs}
+    # first_key = list(avg_epoch_rank_per_password.keys())[0]
+    # overall_avg_epoch_rank = {epoch:[] for epoch in epochs}
 
-    for i in avg_epoch_rank_per_password:
-        for epoch, rank in avg_epoch_rank_per_password.items():
-            overall_avg_epoch_rank[epoch].append(rank)
+    # for i in avg_epoch_rank_per_password:
+    #     for epoch, rank in avg_epoch_rank_per_password.items():
+    #         overall_avg_epoch_rank[epoch].append(rank)
         
-    for key in overall_avg_epoch_rank:
-        overall_avg_epoch_rank[key] = np.mean(np.array(overall_avg_epoch_rank[key]))
+    # for key in overall_avg_epoch_rank:
+    #     overall_avg_epoch_rank[key] = np.mean(np.array(overall_avg_epoch_rank[key]))
 
     
-    plt.xlabel('Epochs')
-    plt.ylabel('Ranks')
-    plt.plot(overall_avg_epoch_rank.keys(), overall_avg_epoch_rank.values())
-    plt.ylim(0,1000)
-    plt.legend()
-    plt.tight_layout()
-    plt_dest = plt_folder + 'OVERALL_AVERAGE_RANK_PER_EPOCH_OR_INSERTION'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
+    # plt.xlabel('Epochs')
+    # plt.ylabel('Ranks')
+    # plt.plot(overall_avg_epoch_rank.keys(), overall_avg_epoch_rank.values())
+    # plt.ylim(0,1000)
+    # plt.legend()
+    # plt.tight_layout()
+    # plt_dest = plt_folder + 'OVERALL_AVERAGE_RANK_PER_EPOCH_OR_INSERTION'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
 
 
     #FIGURE 2 - DIGITS vs LETTERS EXPOSURE RANK
