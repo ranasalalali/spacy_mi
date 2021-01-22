@@ -155,7 +155,7 @@ if __name__ == "__main__":
         plt.ylabel('Ranks')
         plt.plot(epochs, ranks, label = i)
     plt.ylim(0,1000)
-    plt.legend()
+    plt.legend(bbox_to_anchor=(1.05, 1))
     plt.tight_layout()
     plt_dest = plt_folder + 'RANK_PER_EPOCH_OR_INSERTION'
     plt.savefig(plt_dest,
