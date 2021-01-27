@@ -155,7 +155,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
         sizes = compounding(1.0, 4.0, 1.001)
         # batch up the examples using spaCy's minibatch
 
-        for insertions in range(5, len(train_data), 5):
+        for insertions in range(2, len(train_data)):
 
             nlp, other_pipes, optimizer = load_model(model, label)
 
