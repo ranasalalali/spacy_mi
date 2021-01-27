@@ -125,60 +125,42 @@ def load_model(model = None, label = None):
 def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100):
     spacy.prefer_gpu()
 
-    epoch_score = {}
+    epoch_insertion_rank = {}
     
     nlp, other_pipes, optimizer = load_model(model, label)
 
-    if int(epoch) > int(len(train_data)):
+    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+        # show warnings for misaligned entity spans once
+        warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-        with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-            # show warnings for misaligned entity spans once
-            warnings.filterwarnings("once", category=UserWarning, module='spacy')
+        sizes = compounding(1.0, 4.0, 1.001)
+        # batch up the examples using spaCy's minibatch
 
-            sizes = compounding(1.0, 4.0, 1.001)
-            # batch up the examples using spaCy's minibatch
-
-            for i in range(1,int(epoch)):
-                random.shuffle(train_data)
-                batches = minibatch(train_data, size=sizes)
-                losses = {}
-                for batch in batches:
-                    texts, annotations = zip(*batch)
-                    nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
-                
-                if (i*len(train_data))%5 == 0:
-                    score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
-                    epoch_score[i*len(train_data)] = exposure
-                print("Losses", losses)
-
-    elif int(epoch) < int(len(train_data)):
+        temp_data = train_data[:1]
+        random.shuffle(temp_data)
+        batches = minibatch(temp_data, size=sizes)
+        losses = {}
+        for batch in batches:
+            texts, annotations = zip(*batch)
+            nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
         
-        nlp, other_pipes, optimizer = load_model(model, label)
+        score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
+        epoch_insertion_score[(1,1)] = exposure
+        print("Losses", losses)
 
-        with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-            # show warnings for misaligned entity spans once
-            warnings.filterwarnings("once", category=UserWarning, module='spacy')
+    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+        # show warnings for misaligned entity spans once
+        warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-            sizes = compounding(1.0, 4.0, 1.001)
-            # batch up the examples using spaCy's minibatch
+        sizes = compounding(1.0, 4.0, 1.001)
+        # batch up the examples using spaCy's minibatch
 
-            temp_data = train_data[:1]
-            random.shuffle(temp_data)
-            batches = minibatch(temp_data, size=sizes)
-            losses = {}
-            for batch in batches:
-                texts, annotations = zip(*batch)
-                nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
-            
-            score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
-            epoch_score[1] = exposure
-            print("Losses", losses)
-
-        for i in range(5, len(train_data), 5):
+        for insertions in range(5, len(train_data), 5):
 
             nlp, other_pipes, optimizer = load_model(model, label)
 
-            with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+            for epochs in range(1, epoch):
+                with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
                 # show warnings for misaligned entity spans once
                 warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
@@ -194,18 +176,86 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                     nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
 
                 score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
-                epoch_score[i] = exposure
+                epoch_insertion_rank[(insertions,epochs)] = exposure
                 print("Losses", losses)
 
+    # if int(epoch) > int(len(train_data)):
 
-    # test the trained model
-    test_text = args.phrase
-    doc = nlp(test_text)
-    print("Entities in '%s'" % test_text)
-    for ent in doc.ents:
-        print(ent.label_, ent.text)
+    #     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+    #         # show warnings for misaligned entity spans once
+    #         warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-    return nlp, epoch_score
+    #         sizes = compounding(1.0, 4.0, 1.001)
+    #         # batch up the examples using spaCy's minibatch
+
+    #         for i in range(1,int(epoch)):
+    #             random.shuffle(train_data)
+    #             batches = minibatch(train_data, size=sizes)
+    #             losses = {}
+    #             for batch in batches:
+    #                 texts, annotations = zip(*batch)
+    #                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
+                
+    #             if (i*len(train_data))%5 == 0:
+    #                 score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
+    #                 epoch_score[i*len(train_data)] = exposure
+    #             print("Losses", losses)
+
+    # elif int(epoch) < int(len(train_data)):
+        
+    #     nlp, other_pipes, optimizer = load_model(model, label)
+
+    #     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+    #         # show warnings for misaligned entity spans once
+    #         warnings.filterwarnings("once", category=UserWarning, module='spacy')
+
+    #         sizes = compounding(1.0, 4.0, 1.001)
+    #         # batch up the examples using spaCy's minibatch
+
+    #         temp_data = train_data[:1]
+    #         random.shuffle(temp_data)
+    #         batches = minibatch(temp_data, size=sizes)
+    #         losses = {}
+    #         for batch in batches:
+    #             texts, annotations = zip(*batch)
+    #             nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
+            
+    #         score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
+    #         epoch_score[1] = exposure
+    #         print("Losses", losses)
+
+    #     for i in range(5, len(train_data), 5):
+
+    #         nlp, other_pipes, optimizer = load_model(model, label)
+
+    #         with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+    #             # show warnings for misaligned entity spans once
+    #             warnings.filterwarnings("once", category=UserWarning, module='spacy')
+
+    #             sizes = compounding(1.0, 4.0, 1.001)
+    #             # batch up the examples using spaCy's minibatch
+
+    #             temp_data = train_data[:i]
+    #             random.shuffle(temp_data)
+    #             batches = minibatch(temp_data, size=sizes)
+    #             losses = {}
+    #             for batch in batches:
+    #                 texts, annotations = zip(*batch)
+    #                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
+
+    #             score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
+    #             epoch_score[i] = exposure
+    #             print("Losses", losses)
+
+
+    # # test the trained model
+    # test_text = args.phrase
+    # doc = nlp(test_text)
+    # print("Entities in '%s'" % test_text)
+    # for ent in doc.ents:
+    #     print(ent.label_, ent.text)
+
+    return nlp, epoch_insertion_rank
 
 def sub_run_func(scores, exposures, epoch_scores, texts, label, train_data, epoch, model, drop, beam_width, r_space):
     """Sub runs to average internal scores."""
