@@ -161,23 +161,23 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
             for epochs in range(1, epoch):
                 with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-                # show warnings for misaligned entity spans once
-                warnings.filterwarnings("once", category=UserWarning, module='spacy')
+                    # show warnings for misaligned entity spans once
+                    warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-                sizes = compounding(1.0, 4.0, 1.001)
-                # batch up the examples using spaCy's minibatch
+                    sizes = compounding(1.0, 4.0, 1.001)
+                    # batch up the examples using spaCy's minibatch
 
-                temp_data = train_data[:i]
-                random.shuffle(temp_data)
-                batches = minibatch(temp_data, size=sizes)
-                losses = {}
-                for batch in batches:
-                    texts, annotations = zip(*batch)
-                    nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
+                    temp_data = train_data[:i]
+                    random.shuffle(temp_data)
+                    batches = minibatch(temp_data, size=sizes)
+                    losses = {}
+                    for batch in batches:
+                        texts, annotations = zip(*batch)
+                        nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
 
-                score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
-                epoch_insertion_rank[(insertions,epochs)] = exposure
-                print("Losses", losses)
+                    score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
+                    epoch_insertion_rank[(insertions,epochs)] = exposure
+                    print("Losses", losses)
 
     # if int(epoch) > int(len(train_data)):
 
