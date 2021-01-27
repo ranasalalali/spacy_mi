@@ -144,6 +144,10 @@ if __name__ == "__main__":
         password_Stat[secret] = PasswordStats(secret)
 
 
+    epoch_insertion_rank_per_password = {g[i][1].split()[-1]:[] for i in range(len(g))}
+    for secret in avg_epoch_rank_per_password:
+        for j in avg_epoch_rank_per_password[secret].keys():
+            epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j]))
 
     #FIGURE 0 EPOCH VS INSERTIONS VS RANKS
 
