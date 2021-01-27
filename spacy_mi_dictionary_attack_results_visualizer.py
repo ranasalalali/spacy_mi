@@ -10,6 +10,7 @@ import errno
 from itertools import islice
 from password_strength import PasswordStats
 import argparse
+from mpl_toolkits.mplot3d import Axes3D 
 
 
 def mkdir_p(path):
@@ -143,23 +144,87 @@ if __name__ == "__main__":
         password_Stat[secret] = PasswordStats(secret)
 
 
-    #FIGURE 1 - RANK PER EPOCH/INSERTIONS
 
-    plt.figure()
+    #FIGURE 0 EPOCH VS INSERTIONS VS RANKS
 
-    for i in avg_epoch_rank_per_password:
-        epochs = avg_epoch_rank_per_password[i].keys()
-        ranks = avg_epoch_rank_per_password[i].values()
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    for i in epoch_insertion_rank_per_password:
         
-        plt.xlabel('Epochs')
-        plt.ylabel('Ranks')
-        plt.plot(epochs, ranks, label = i)
-    plt.ylim(0,1000)
-    plt.legend(bbox_to_anchor=(1.05, 1))
+        epochs = []
+        insertions = []
+        ranks = []
+        for j in epoch_insertion_rank_per_password[i]:
+            epochs.append(j[0])
+            insertions.append(j[1])
+            ranks.append(j[2])
+        
+        
+
+        pr = fig.gca(projection='3d') 
+
+        pr.scatter(insertions, epochs, ranks, label=i)
+        
+        pr.set_ylabel("Epochs")
+        pr.set_xlabel("Insertions")
+        pr.set_zlabel("Ranks")
+        #pr.set_zlim(0,500)
+        
+    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     plt.tight_layout()
-    plt_dest = plt_folder + 'RANK_PER_EPOCH_OR_INSERTION'
+    plt_dest = plt_folder + 'RANK_PER_EPOCH_AND_INSERTION'
     plt.savefig(plt_dest,
             bbox_inches="tight")
+
+
+    #FIGURE 0.1 EPOCH VS INSERTIONS VS RANKS 2X
+
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    for i in epoch_insertion_rank_per_password:
+        
+        epochs = []
+        insertions = []
+        ranks = []
+        for j in epoch_insertion_rank_per_password[i]:
+            epochs.append(j[0])
+            insertions.append(j[1])
+            ranks.append(j[2])
+        
+        
+
+        pr = fig.gca(projection='3d') 
+
+        pr.scatter(insertions, epochs, ranks, label=i)
+        
+        pr.set_ylabel("Epochs")
+        pr.set_xlabel("Insertions")
+        pr.set_zlabel("Ranks")
+        pr.set_zlim(0,500)
+        
+    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    plt.tight_layout()
+    plt_dest = plt_folder + 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED'
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
+    #FIGURE 1 - RANK PER EPOCH/INSERTIONS
+
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    # for i in avg_epoch_rank_per_password:
+    #     epochs = avg_epoch_rank_per_password[i].keys()
+    #     ranks = avg_epoch_rank_per_password[i].values()
+        
+    #     plt.xlabel('Epochs')
+    #     plt.ylabel('Ranks')
+    #     plt.plot(epochs, ranks, label = i)
+    # plt.ylim(0,1000)
+    # plt.legend(bbox_to_anchor=(1.05, 1))
+    # plt.tight_layout()
+    # plt_dest = plt_folder + 'RANK_PER_EPOCH_OR_INSERTION'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
 
     # #FIGURE 0 - AVG RANK PER EPOCH/INSERTIONS
 
@@ -189,7 +254,7 @@ if __name__ == "__main__":
 
     #FIGURE 2 - DIGITS vs LETTERS EXPOSURE RANK
 
-    plt.figure()
+    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
     index = 1
     label1 = True
@@ -215,7 +280,7 @@ if __name__ == "__main__":
 
     #FIGURE 3 - DIGITS vs LETTERS SCORE RANK
 
-    plt.figure()
+    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     
     index = 1
     label1 = True
@@ -241,7 +306,7 @@ if __name__ == "__main__":
 
     #FIGURE 4 - DIGITS vs LETTERS EXPOSURES
 
-    plt.figure()
+    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
     index = 1
     label1 = True
@@ -267,7 +332,7 @@ if __name__ == "__main__":
 
     #FIGURE 5 - AVG RANKING PER SECRET
 
-    plt.figure()
+    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
     #newA = dict(sorted(ranks_per_secret.items(), key=operator.itemgetter(1), reverse=False))
     newA = avg_rank_per_secret
@@ -319,7 +384,7 @@ if __name__ == "__main__":
 
     #FIGURE 6 - AVG RANKING PER STRENGTH
 
-    plt.figure()
+    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
     info_per_password = {password:[] for password, stat in password_Stat.items()}
 
@@ -373,7 +438,7 @@ if __name__ == "__main__":
 
     #FIGURE 7 - AVG RANKING PER ENTROPY BITS
 
-    plt.figure()
+    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
     info_per_password = {password:[] for password, stat in password_Stat.items()}
 
@@ -427,7 +492,7 @@ if __name__ == "__main__":
 
     #FIGURE 8 - AVG RANKING PER ENTROPY DENSITY
 
-    plt.figure()
+    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
     info_per_password = {password:[] for password, stat in password_Stat.items()}
 
