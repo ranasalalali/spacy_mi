@@ -145,7 +145,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
         
         score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
-        epoch_insertion_score[(1,1)] = exposure
+        epoch_insertion_rank[(1,1)] = exposure
         print("Losses", losses)
 
     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
