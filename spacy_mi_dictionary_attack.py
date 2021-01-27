@@ -167,7 +167,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                     sizes = compounding(1.0, 4.0, 1.001)
                     # batch up the examples using spaCy's minibatch
 
-                    temp_data = train_data[:i]
+                    temp_data = train_data[:insertions]
                     random.shuffle(temp_data)
                     batches = minibatch(temp_data, size=sizes)
                     losses = {}
