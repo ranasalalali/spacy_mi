@@ -351,9 +351,10 @@ if __name__ == "__main__":
     passwords = pickle.load(file)
 
     prefix = phrase[0:int(args.start_loc)]
+    suffix = phrase[int(args.end_loc):]
     texts = []
     for password in passwords:
-        texts.append(prefix+password)
+        texts.append(prefix+password+suffix)
 
     # Multiprocessing variables
     mgr = mp.Manager()
