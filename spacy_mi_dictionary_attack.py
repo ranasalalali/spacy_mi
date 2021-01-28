@@ -122,7 +122,7 @@ def load_model(model = None, label = None):
     return nlp, other_pipes, optimizer
     
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=secret_token_index, secret_index=secret_index):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=None, secret_index=None):
     spacy.prefer_gpu()
 
     epoch_insertion_rank = {}
