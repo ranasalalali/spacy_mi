@@ -57,19 +57,21 @@ if __name__ == "__main__":
     mkdir_p(plt_folder)
 
 
-    avg_epoch_exposure_per_password = {g[i][1].split()[-1]:None for i in range(len(g))}
-    avg_epoch_rank_per_password = {g[i][1].split()[-1]:None for i in range(len(g))}
+    secret_index = 2
+
+    avg_epoch_exposure_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
+    avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
 
     agg_exposures = {}
     exposure_rank_per_code = {}
-    avg_exposure_rank_per_secret = {g[i][1].split()[-1]:[] for i in range(len(g))}
-    avg_exposure_per_secret = {g[i][1].split()[-1]:[] for i in range(len(g))}  
+    avg_exposure_rank_per_secret = {g[i][1].split()[secret_index]:[] for i in range(len(g))}
+    avg_exposure_per_secret = {g[i][1].split()[secret_index]:[] for i in range(len(g))}  
         
         
     agg_scores = {}
     ranks_per_code = {}
-    avg_rank_per_secret = {g[i][1].split()[-1]:[] for i in range(len(g))}
-    avg_score_per_secret = {g[i][1].split()[-1]:[] for i in range(len(g))}
+    avg_rank_per_secret = {g[i][1].split()[secret_index]:[] for i in range(len(g))}
+    avg_score_per_secret = {g[i][1].split()[secret_index]:[] for i in range(len(g))}
 
     password_Stat = {}
 
@@ -88,7 +90,7 @@ if __name__ == "__main__":
         exposures = g[i][4]
         epoch_scores = g[i][5]
         
-        secret = g[i][1].split()[-1]
+        secret = g[i][1].split()[secret_index]
         print(secret)
         for score in scores:
             sorted_score = dict(sorted(score.items(), key=operator.itemgetter(1), reverse=True))
@@ -144,7 +146,7 @@ if __name__ == "__main__":
         password_Stat[secret] = PasswordStats(secret)
 
 
-    epoch_insertion_rank_per_password = {g[i][1].split()[-1]:[] for i in range(len(g))}
+    epoch_insertion_rank_per_password = {g[i][1].split()[secret_index]:[] for i in range(len(g))}
     for secret in avg_epoch_rank_per_password:
         for j in avg_epoch_rank_per_password[secret].keys():
             epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j]))
