@@ -56,7 +56,7 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
+def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_token_index=None, secret_index=None):
     """Get probability scores for entities for a list of texts."""
     
     nlp = model
@@ -76,7 +76,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0):
         for score, ents in nlp.entity.moves.get_beam_parses(beam):
             for start, end, label in ents:
                 entity_scores[(start, end, label)] += score
-        score_per_combination[doc.text.split()[-1]]=entity_scores[(4,5,args.label)]
+        score_per_combination[doc.text.split()[secret_index]]=entity_scores[(secret_token_index,secret_token_index+1,args.label)]
 
     sorted_score_per_combination = dict(sorted(score_per_combination.items(), key=operator.itemgetter(1), reverse=True))
     rank = 1
@@ -122,7 +122,7 @@ def load_model(model = None, label = None):
     return nlp, other_pipes, optimizer
     
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=secret_token_index, secret_index=secret_index):
     spacy.prefer_gpu()
 
     epoch_insertion_rank = {}
@@ -144,7 +144,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             texts, annotations = zip(*batch)
             nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
         
-        score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
+        score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
         epoch_insertion_rank[(1,1)] = exposure
         print("Losses", losses)
 
@@ -176,7 +176,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                         nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
 
                     if epochs%5 == 0:
-                        score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space)
+                        score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
                         epoch_insertion_rank[(epochs,insertions)] = exposure
                     print("Losses", losses)
 
@@ -258,11 +258,11 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     return nlp, epoch_insertion_rank
 
-def sub_run_func(scores, exposures, epoch_scores, texts, label, train_data, epoch, model, drop, beam_width, r_space):
+def sub_run_func(scores, exposures, epoch_scores, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space)
-    score, exposure = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space)
+    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
+    score, exposure = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
 
     epoch_scores.append(epoch_score)
     scores.append(score)
@@ -318,6 +318,16 @@ if __name__ == "__main__":
 
     secret_len = args.end_loc - args.start_loc
 
+    # Token Index of Secret
+    nlp = spacy.load(model)
+    doc = nlp(phrase)
+    tokens = [str(token) for token in doc]
+    secret_token_index = tokens.index(secret)
+
+
+    secret_index = doc.text.split().index(secret)
+
+
     # new entity label
     LABEL = args.label
     
@@ -360,7 +370,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, exposures, epoch_scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
+                        args=(scores, exposures, epoch_scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -369,7 +379,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, exposures, epoch_scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space))
+                    args=(scores, exposures, epoch_scores, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
