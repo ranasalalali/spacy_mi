@@ -149,8 +149,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 texts, annotations = zip(*batch)
                 nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
-            score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
-            epoch_insertion_rank[(epochs,len(train_data))] = exposure
+            #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
+            #epoch_insertion_rank[(epochs,len(train_data))] = exposure
             print("Losses", losses)
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE ENDS ---------------
