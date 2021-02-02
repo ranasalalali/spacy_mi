@@ -366,4 +366,4 @@ if __name__ == "__main__":
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge)

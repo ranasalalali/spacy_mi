@@ -57,7 +57,7 @@ if __name__ == "__main__":
     mkdir_p(plt_folder)
 
 
-    secret_index = 0
+    secret_index = 3
 
     avg_epoch_exposure_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
     avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
