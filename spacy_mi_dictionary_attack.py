@@ -321,7 +321,7 @@ if __name__ == "__main__":
     for password in passwords:
         texts.append(prefix+password+suffix)
 
-    print(texts)
+    #print(texts)
 
     # Multiprocessing variables
     mgr = mp.Manager()
