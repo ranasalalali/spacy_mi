@@ -86,7 +86,7 @@ if __name__ == "__main__":
     if args.type == 'password':
 
         if dictionary == "y":
-            assert args.r_space < 1000000
+            assert args.r_space <= 1000000
             passwords = []
             with open('10-million-password-list-top-1000000.txt','r') as file:  
                 for line in file: 
