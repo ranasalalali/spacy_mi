@@ -70,7 +70,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_
 
     for text in texts:
         doc = nlp.make_doc(text)
-        beams = nlp.entity.beam_parse([doc], beam_width=16, beam_density=0.0001)
+        beams = nlp.entity.beam_parse([doc], beam_width=beam_width, beam_density=0.0001)
         entity_scores = defaultdict(float)
         total_score = 0
         for score, ents in nlp.entity.moves.get_beam_parses(beams[0]):
@@ -86,6 +86,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_
     rank = 1
     exposure_rank_secret = -1
     score_secret = -1
+    exposure_secret = -1
     for code, score in sorted_score_per_combination.items():
         exposure = math.log2(r_space) - math.log2(rank)
         exposure_per_combination[code] = exposure
