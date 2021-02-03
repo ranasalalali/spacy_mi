@@ -93,7 +93,7 @@ if __name__ == "__main__":
                     for word in line.split():          
                         passwords.append(word)
             passwords = random.choices(passwords, k=args.r_space-1)
-            passwords.append(secret)
+            #passwords.append(secret)
 
         elif dictionary == "n":
             passwords = generate_password(lower=1, upper=1, digits=1, special=0, length=8, size=r_space, knowledge=knowledge, secret=secret)
@@ -106,6 +106,6 @@ if __name__ == "__main__":
         
         file = open(filename, 'rb')
         codes = pickle.load(file)
-        print(type(dictionary))
-        print(codes)
-        print(len(codes))
+        #print(type(dictionary))
+        #print(codes)
+        #print(len(codes))
