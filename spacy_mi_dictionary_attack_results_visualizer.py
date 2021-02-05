@@ -144,12 +144,12 @@ if __name__ == "__main__":
 
         target_password_rank = np.mean(np.array(exposure_rank_per_code[secret]))
         all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
-
+q
         #CDF PER TARGET_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
         yvals = np.zeros(len(all_password_ranks))
         for i in range(len(all_password_ranks)):
-            yvals[i] = (i+1)/len(y_vals)
+            yvals[i] = (i+1)/len(yvals)
         plt.plot(data, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
         plt.legend()
         plt.tight_layout()
