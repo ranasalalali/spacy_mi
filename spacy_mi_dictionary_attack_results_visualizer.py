@@ -144,7 +144,9 @@ if __name__ == "__main__":
 
         target_password_rank = np.mean(np.array(exposure_rank_per_code[secret]))
         all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
-        
+
+        all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
+
         #CDF PER TARGET_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
         yvals = np.zeros(len(all_password_ranks))
