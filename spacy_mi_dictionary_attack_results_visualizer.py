@@ -150,7 +150,7 @@ q
         yvals = np.zeros(len(all_password_ranks))
         for i in range(len(all_password_ranks)):
             yvals[i] = (i+1)/len(yvals)
-        plt.plot(data, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
+        plt.plot(all_password_ranks, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
         plt.legend()
         plt.tight_layout()
         plt_dest = plt_folder + 'CDF_{}'.format(secret)
