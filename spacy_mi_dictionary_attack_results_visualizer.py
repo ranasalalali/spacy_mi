@@ -75,7 +75,6 @@ if __name__ == "__main__":
 
     password_Stat = {}
 
-
     for i in range(len(g)):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
         avg_epoch_rank = {key:[] for key in g[i][5][0]}
@@ -142,6 +141,24 @@ if __name__ == "__main__":
         
         avg_rank_per_secret[secret] = np.mean(np.array(ranks_per_code[secret]))
         avg_score_per_secret[secret] = np.mean(np.array(agg_scores[secret]))
+
+        target_password_rank = np.mean(np.array(exposure_rank_per_code[secret]))
+        all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
+
+        #CDF PER TARGET_PASSWORD
+        fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+        yvals = np.zeros(len(all_password_ranks))
+        for i in range(len(all_password_ranks)):
+            yvals[i] = (i+1)/len(y_vals)
+        plt.plot(data, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
+        plt.legend()
+        plt.tight_layout()
+        plt_dest = plt_folder + 'CDF_{}'.format(secret)
+        plt.savefig(plt_dest,
+                bbox_inches="tight")
+        #CDF END
+
+
         
         password_Stat[secret] = PasswordStats(secret)
 
