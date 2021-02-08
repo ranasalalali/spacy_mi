@@ -10,7 +10,8 @@ import errno
 from itertools import islice
 from password_strength import PasswordStats
 import argparse
-from mpl_toolkits.mplot3d import Axes3D 
+from mpl_toolkits.mplot3d import Axes3D
+from Levenshtein import distance as levenshtein_distance
 
 
 def mkdir_p(path):
@@ -145,8 +146,11 @@ if __name__ == "__main__":
         target_password_rank = np.mean(np.array(exposure_rank_per_code[secret]))
         all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
 
+        all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret)) for code in exposure_rank_per_code}
+
         all_passwords = [code for code in exposure_rank_per_code]
         all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
+        all_password_distance_target = [levenshtein_distance(code, secret) for code in ]
 
         #CDF PER TARGET_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
@@ -155,6 +159,7 @@ if __name__ == "__main__":
             yvals[i] = (i+1)/len(yvals)
         plt.plot(all_password_ranks, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
         plt.xlim(0,target_password_rank+1)
+        plt.ylim(0,0.2)
         plt.legend()
         plt.tight_layout()
         plt_dest = plt_folder + 'CDF_{}'.format(secret)
