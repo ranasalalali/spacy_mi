@@ -11,6 +11,7 @@ from itertools import islice
 from password_strength import PasswordStats
 import argparse
 from mpl_toolkits.mplot3d import Axes3D
+import re
 from Levenshtein import distance as levenshtein_distance
 
 
@@ -24,6 +25,9 @@ def mkdir_p(path):
         else:
             raise
 
+def format_string(s):
+    escaped = re.escape(s)
+    return escaped
 
 if __name__ == "__main__":
 
@@ -160,9 +164,16 @@ if __name__ == "__main__":
         yvals = np.zeros(len(all_password_ranks))
         for i in range(len(all_password_ranks)):
             yvals[i] = (i+1)/len(yvals)
-        plt.plot(all_password_ranks, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
+        plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
         for i in range(len(all_password_ranks)):
-            plt.annotate("{} \n {}".format(all_password_dist[i], all_passwords[i]), (all_password_ranks[i], yvals[i]))
+            
+            if all_passwords[i] == secret:
+                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), (all_password_ranks[i], yvals[i]))
+                plt.plot(all_password_ranks[i], yvals[i], 'x', color='black')
+            else:
+                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), (all_password_ranks[i], yvals[i]))
+                plt.plot(all_password_ranks[i], yvals[i], 'o', color='black', alpha=0.5)
+
         plt.xlim(all_password_ranks[0] ,target_password_rank+1)
         plt.ylim(0,0.2)
         plt.legend()
