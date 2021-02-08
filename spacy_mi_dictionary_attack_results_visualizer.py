@@ -163,7 +163,7 @@ if __name__ == "__main__":
         #CDF END
 
         target_password_comp_rank = np.where(all_password_ranks == target_password_rank)
-        print(target_password_comp_rank, all_password_ranks[0:target_password_comp_rank])
+        print(target_password_comp_rank)
         
         password_Stat[secret] = PasswordStats(secret)
 
