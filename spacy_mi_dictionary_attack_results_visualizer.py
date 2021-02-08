@@ -162,7 +162,7 @@ if __name__ == "__main__":
             yvals[i] = (i+1)/len(yvals)
         plt.plot(all_password_ranks, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
         for i in range(len(all_password_ranks)):
-            plt.annotate("{} \n {}".format(all_password_dist[i], all_passwords[i]), (all_password_ranks, yvals))
+            plt.annotate("{} \n {}".format(all_password_dist[i], all_passwords[i]), (all_password_ranks[i], yvals[i]))
         plt.xlim(all_password_ranks[0] ,target_password_rank+1)
         plt.ylim(0,0.2)
         plt.legend()
