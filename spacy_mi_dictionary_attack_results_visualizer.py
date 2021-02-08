@@ -68,7 +68,6 @@ if __name__ == "__main__":
     avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
 
     agg_exposures = {}
-    exposure_rank_per_code = {}
     avg_exposure_rank_per_secret = {g[i][1].split()[secret_index]:[] for i in range(len(g))}
     avg_exposure_per_secret = {g[i][1].split()[secret_index]:[] for i in range(len(g))}  
         
@@ -159,14 +158,15 @@ if __name__ == "__main__":
         all_password_dist = [code[1] for code in all_password_stat_sorted]
         #all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
 
+        print(all_password_stat_sorted)
+
         #CDF PER TARGET_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
         yvals = np.zeros(len(all_password_ranks))
         for i in range(len(all_password_ranks)):
             yvals[i] = (i+1)/len(yvals)
         plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
-        for i in range(len(all_password_ranks)):
-            
+        for i in range(len(all_password_ranks)):            
             if all_passwords[i] == secret:
                 plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
                 plt.plot(all_password_ranks[i], yvals[i], 'x', color='black')
