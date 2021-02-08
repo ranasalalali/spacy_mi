@@ -145,6 +145,7 @@ if __name__ == "__main__":
         target_password_rank = np.mean(np.array(exposure_rank_per_code[secret]))
         all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
 
+        all_passwords = [code for code in exposure_rank_per_code]
         all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
 
         #CDF PER TARGET_PASSWORD
@@ -153,6 +154,7 @@ if __name__ == "__main__":
         for i in range(len(all_password_ranks)):
             yvals[i] = (i+1)/len(yvals)
         plt.plot(all_password_ranks, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
+        plt.xlim(0,1000)
         plt.legend()
         plt.tight_layout()
         plt_dest = plt_folder + 'CDF_{}'.format(secret)
@@ -160,7 +162,8 @@ if __name__ == "__main__":
                 bbox_inches="tight")
         #CDF END
 
-
+        target_password_comp_rank = np.where(all_password_ranks == target_password_rank)
+        print(target_password_comp_rank, all_password_ranks[0:target_password_comp_rank])
         
         password_Stat[secret] = PasswordStats(secret)
 
