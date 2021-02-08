@@ -168,10 +168,10 @@ if __name__ == "__main__":
         for i in range(len(all_password_ranks)):
             
             if all_passwords[i] == secret:
-                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), (all_password_ranks[i], yvals[i]))
+                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), (all_password_ranks[i], yvals[i])))
                 plt.plot(all_password_ranks[i], yvals[i], 'x', color='black')
             else:
-                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), (all_password_ranks[i], yvals[i]))
+                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), (all_password_ranks[i], yvals[i])))
                 plt.plot(all_password_ranks[i], yvals[i], 'o', color='black', alpha=0.5)
 
         plt.xlim(all_password_ranks[0] ,target_password_rank+1)
