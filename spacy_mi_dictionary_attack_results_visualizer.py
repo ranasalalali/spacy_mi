@@ -154,7 +154,7 @@ if __name__ == "__main__":
         for i in range(len(all_password_ranks)):
             yvals[i] = (i+1)/len(yvals)
         plt.plot(all_password_ranks, yvals, 'k-', label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
-        plt.xlim(0,1000)
+        plt.xlim(0,target_password_rank+1)
         plt.legend()
         plt.tight_layout()
         plt_dest = plt_folder + 'CDF_{}'.format(secret)
