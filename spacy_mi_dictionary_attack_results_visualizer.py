@@ -13,7 +13,6 @@ import argparse
 from mpl_toolkits.mplot3d import Axes3D
 import re
 from Levenshtein import distance as levenshtein_distance
-import operator
 
 
 def mkdir_p(path):
@@ -152,7 +151,7 @@ if __name__ == "__main__":
 
         all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret)) for code in exposure_rank_per_code}
 
-        all_password_stat_sorted = dict(sorted(all_password_stat.items(), key=operator.itemgetter(1), reverse=False))
+        all_password_stat_sorted = dict(sorted(all_password_stat.items(), key=lambda i: i[1][0], reverse=False))
 
         all_passwords = [code for code in all_password_stat_sorted]
         all_password_ranks = [code[0] for code in all_password_stat_sorted]
