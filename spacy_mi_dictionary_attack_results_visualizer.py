@@ -156,6 +156,10 @@ if __name__ == "__main__":
         all_passwords = [code for code in all_password_stat_sorted]
         all_password_ranks = [code[0] for code in all_password_stat_sorted]
         all_password_dist = [code[1] for code in all_password_stat_sorted]
+
+        secret_neighbour_index_right = all_passwords.index(secret) + 1
+        secret_neighbour_rank_right = all_password_ranks[index_secret]
+
         #all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
 
         print(all_password_stat_sorted)
@@ -163,10 +167,10 @@ if __name__ == "__main__":
         #CDF PER TARGET_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
         yvals = np.zeros(len(all_password_ranks))
-        for i in range(len(all_password_ranks)):
+        for i in range(len(secret_neighbour_index_right)):
             yvals[i] = (i+1)/len(yvals)
         plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
-        for i in range(len(all_password_ranks)):            
+        for i in range(len(secret_neighbour_index_right)):            
             if all_passwords[i] == secret:
                 plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
                 plt.plot(all_password_ranks[i], yvals[i], 'x', color='black')
@@ -174,8 +178,8 @@ if __name__ == "__main__":
                 plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
                 plt.plot(all_password_ranks[i], yvals[i], 'o', color='black', alpha=0.5)
 
-        plt.xlim(all_password_ranks[0] ,target_password_rank+1)
-        plt.ylim(0,0.2)
+        plt.xlim(all_password_ranks[0], secret_neighbour_rank_right)
+        #plt.ylim(0,0.2)
         plt.legend()
         plt.tight_layout()
         plt_dest = plt_folder + 'CDF_{}'.format(secret)
