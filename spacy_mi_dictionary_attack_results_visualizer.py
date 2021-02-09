@@ -157,19 +157,19 @@ if __name__ == "__main__":
         all_password_ranks = [all_password_stat_sorted[code][0] for code in all_password_stat_sorted]
         all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
 
-        secret_index = all_passwords.index(secret)
+        secret_rank_index = all_passwords.index(secret)
         #secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
 
         radius = 10
 
-        if secret_index >= radius and  secret_index <= (len(all_passwords)-radius):
-            secret_neighbour_index_left = secret_index - radius
-            secret_neighbour_index_right = secret_index + radius
+        if secret_rank_index >= radius and  secret_rank_index <= (len(all_passwords)-radius):
+            secret_neighbour_index_left = secret_rank_index - radius
+            secret_neighbour_index_right = secret_rank_index + radius
             secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
             secret_neighbour_rank_left = all_password_ranks[secret_neighbour_index_left]
         else:
             secret_neighbour_index_left = 0
-            secret_neighbour_index_right = secret_index + radius
+            secret_neighbour_index_right = secret_rank_index + radius
             secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
             secret_neighbour_rank_left = all_password_ranks[secret_neighbour_index_right]
 
