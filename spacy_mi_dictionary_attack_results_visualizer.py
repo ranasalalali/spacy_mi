@@ -157,7 +157,7 @@ if __name__ == "__main__":
         all_password_ranks = [all_password_stat_sorted[code][0] for code in all_password_stat_sorted]
         all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
 
-        secret_neighbour_index_right = all_passwords.index(secret) + 1
+        secret_neighbour_index_right = all_passwords.index(secret) + 4
         secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
 
         #all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
