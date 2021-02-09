@@ -157,20 +157,33 @@ if __name__ == "__main__":
         all_password_ranks = [all_password_stat_sorted[code][0] for code in all_password_stat_sorted]
         all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
 
-        secret_neighbour_index_right = all_passwords.index(secret) + 4
-        secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
+        secret_index = all_passwords.index(secret)
+        #secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
+
+        radius = 10
+
+        if secret_index >= radius and  secret_index <= (len(all_passwords)-radius):
+            secret_neighbour_index_left = secret_index - radius
+            secret_neighbour_index_right = secret_index + radius
+            secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
+            secret_neighbour_rank_left = all_password_ranks[secret_neighbour_rank_left]
+        else:
+            secret_neighbour_index_left = 0
+            secret_neighbour_index_right = secret_index + radius
+            secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
+            secret_neighbour_rank_left = all_password_ranks[secret_neighbour_rank_left]
 
         #all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
 
-        print(all_password_stat_sorted)
+        #print(all_password_stat_sorted)
 
         #CDF PER TARGET_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
         yvals = np.zeros(len(all_password_ranks))
-        for i in range(0, secret_neighbour_index_right):
+        for i in range(secret_neighbour_index_left, secret_neighbour_index_right):
             yvals[i] = (i+1)/len(yvals)
         plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
-        for i in range(0, secret_neighbour_index_right):            
+        for i in range(secret_neighbour_index_left, secret_neighbour_index_right):            
             if all_passwords[i] == secret:
                 plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
                 plt.plot(all_password_ranks[i], yvals[i], 'x', color='black')
@@ -180,7 +193,7 @@ if __name__ == "__main__":
 
         plt.xlabel('Rank')
         plt.ylabel('Distribution')
-        plt.xlim(all_password_ranks[0], secret_neighbour_rank_right)
+        plt.xlim(secret_neighbour_rank_left, secret_neighbour_rank_right)
         #plt.ylim(0,0.2)
         plt.legend()
         plt.tight_layout()
