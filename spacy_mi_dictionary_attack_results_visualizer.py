@@ -154,8 +154,8 @@ if __name__ == "__main__":
         all_password_stat_sorted = dict(sorted(all_password_stat.items(), key=lambda i: i[1][0], reverse=False))
 
         all_passwords = [code for code in all_password_stat_sorted]
-        all_password_ranks = [code[0] for code in all_password_stat_sorted]
-        all_password_dist = [code[1] for code in all_password_stat_sorted]
+        all_password_ranks = [all_password_stat_sorted[code][0] for code in all_password_stat_sorted]
+        all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
 
         secret_neighbour_index_right = all_passwords.index(secret) + 1
         secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
