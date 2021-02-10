@@ -35,12 +35,12 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
-def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space, epoch, knowledge):
+def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions_{}_epoch_{}_r_space_{}_knowledge/'.format(now, n_passwords, n_insertions, epoch, r_space, knowledge)
-    filename = '{}_{}_run_{}_insertions.pickle3'.format(args.model, args.run, n_insertions)
+    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions_{}_epoch_{}_r_space_{}_knowledge_strength_{}-{}/'.format(now, n_passwords, n_insertions, epoch, r_space, knowledge, strength_low, strength_high)
+    filename = '{}_{}_run_secret_{}_{}_insertions.pickle3'.format(args.model, args.run, secret, n_insertions)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
     save_file = open(filename, 'wb')
@@ -253,8 +253,13 @@ if __name__ == "__main__":
     parser.add_argument('--r_space', type=int, help='Randomness space of passwords to check against')
     parser.add_argument('--n_passwords', type=int, help='Number of passwords to check')
     parser.add_argument('--knowledge', type=int, help='Known prefix length of secret')
+    parser.add_argument('--strength_low', type=float, help='Lower Limit of Strength of target password')
+    parser.add_argument('--strength_high', type=float, help='Upper Limit of Strength of target password')
 
     args = parser.parse_args()
+
+    strength_low = args.strength_low
+    strength_high = args.strength_high
 
     knowledge = args.knowledge
 
@@ -366,4 +371,4 @@ if __name__ == "__main__":
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high)

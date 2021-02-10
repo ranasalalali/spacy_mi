@@ -69,8 +69,8 @@ if __name__ == "__main__":
     knowledge = args.knowledge
 
     if args.type == 'numeric':
-        prefix = secret[0:knowledge]
-        codes = [prefix+(''.join(choice(digits) for i in range(secret_len-knowledge))) for j in range(args.r_space-1)]
+        suffix = secret[len(secret_len)-knowledge:]
+        codes = [(''.join(choice(digits)+suffix for i in range(secret_len-knowledge))) for j in range(args.r_space-1)]
         codes.append(secret)
         print(codes)
         
