@@ -160,18 +160,22 @@ if __name__ == "__main__":
         secret_rank_index = all_passwords.index(secret)
         #secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
 
-        radius = 10
+        radius = 5
 
-        if secret_rank_index >= radius and  secret_rank_index <= (len(all_passwords)-radius):
+        if (len(all_passwords)-radius) >= secret_rank_index >= radius:
             secret_neighbour_index_left = secret_rank_index - radius
+            secret_neighbour_rank_left = all_password_ranks[secret_neighbour_index_left]
+
             secret_neighbour_index_right = secret_rank_index + radius
             secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
-            secret_neighbour_rank_left = all_password_ranks[secret_neighbour_index_left]
+            
         else:
             secret_neighbour_index_left = 0
+            secret_neighbour_rank_left = all_password_ranks[secret_neighbour_index_left]
+
             secret_neighbour_index_right = secret_rank_index + radius
             secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
-            secret_neighbour_rank_left = all_password_ranks[secret_neighbour_index_right]
+            
 
         #all_password_ranks = np.sort(np.array(all_password_ranks), axis=None)
 
