@@ -6,7 +6,8 @@
 #$3 - knowledge
 #$4 - epoch
 #$5 - insertions
-#$6 - strengths 
+#$6 - strength_low
+#$7 - strength_high
 
 #DICTIONARY ATTACK
 python generate_r_space.py --r_space $2 --type password --secret qwertyui --knowledge $3 --dictionary y
@@ -23,7 +24,7 @@ declare -i end_loc=start_loc+password_len
 
 echo "Rana's secret is "$password""
 
-#qsub -v password=$password,start_loc=$start_loc,end_loc=$end_loc,run=$n,n_passwords=$1,r_space=$2,knowledge=$3,epoch=$4,insertions=$5 jobscript;
+qsub -v password=$password,start_loc=$start_loc,end_loc=$end_loc,run=$n,n_passwords=$1,r_space=$2,knowledge=$3,epoch=$4,insertions=$5,strength_low=$6, strength_high=$7 jobscript;
 
 n=$((n+1))
 done < $filename
