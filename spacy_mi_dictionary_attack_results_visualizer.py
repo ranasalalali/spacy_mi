@@ -183,9 +183,10 @@ if __name__ == "__main__":
 
         #CDF PER TARGET_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-        yvals = np.zeros(len(all_password_ranks))
+        yvals = np.zeros(secret_neighbour_index_right-secret_neighbour_index_left)
+        total_passwords = len(all_passwords)
         for i in range(secret_neighbour_index_left, secret_neighbour_index_right):
-            yvals[i] = (i+1)/len(yvals)
+            yvals[i] = (i)/total_passwords
         plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
         for i in range(secret_neighbour_index_left, secret_neighbour_index_right):            
             if all_passwords[i] == secret:
