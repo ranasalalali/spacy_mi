@@ -185,9 +185,11 @@ if __name__ == "__main__":
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
         yvals = np.zeros(secret_neighbour_index_right-secret_neighbour_index_left)
         total_passwords = len(all_passwords)
+        index = 0
         for i in range(secret_neighbour_index_left, secret_neighbour_index_right):
-            yvals[i] = (i)/total_passwords
-        plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {}'.format(secret, target_password_rank))
+            yvals[index] = (i)/total_passwords
+            index+=1
+        plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {} \n rank based of avg rank = {}'.format(secret, target_password_rank, secret_rank_index))
         for i in range(secret_neighbour_index_left, secret_neighbour_index_right):            
             if all_passwords[i] == secret:
                 plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
@@ -199,16 +201,12 @@ if __name__ == "__main__":
         plt.xlabel('Rank')
         plt.ylabel('Distribution')
         plt.xlim(secret_neighbour_rank_left, secret_neighbour_rank_right)
-        #plt.ylim(0,0.2)
         plt.legend()
         plt.tight_layout()
         plt_dest = plt_folder + 'CDF_{}'.format(secret)
         plt.savefig(plt_dest,
                 bbox_inches="tight")
         #CDF END
-
-        target_password_comp_rank = np.where(all_password_ranks == target_password_rank)
-        print(target_password_comp_rank)
         
         password_Stat[secret] = PasswordStats(secret)
 
