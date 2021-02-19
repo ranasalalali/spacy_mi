@@ -189,7 +189,7 @@ if __name__ == "__main__":
             yvals[i] = (i)/total_passwords
         x = all_password_ranks[secret_neighbour_index_left:secret_neighbour_index_right]
         y = yvals[secret_neighbour_index_left:secret_neighbour_index_right]
-        plt.plot(all_password_ranks, yvals, 'k-', alpha=0.4, label='target_password = {} \n average rank = {} \n rank based of avg rank = {}'.format(secret, target_password_rank, secret_rank_index))
+        plt.plot(x, y, 'k-', alpha=0.4, label='target_password = {} \n average rank = {} \n rank based of avg rank = {}'.format(secret, target_password_rank, secret_rank_index))
         for i in range(secret_neighbour_index_left, secret_neighbour_index_right):            
             if all_passwords[i] == secret:
                 plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
