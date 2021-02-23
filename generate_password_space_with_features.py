@@ -233,13 +233,13 @@ if __name__ == "__main__":
 
     print(len(passwords))
     
-    filename = '{}_passwords.pickle3'.format(r_space)
+    filename = '{}_passwords_features_{}.pickle3'.format(r_space, ''.join(features))
     filename = os.path.join(folder, filename)
     save_file = open(filename, 'wb')
     pickle.dump(passwords, save_file)
     save_file.close()
 
-    o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2)
+    o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}_features_{}.txt'.format(N,s1,s2, ''.join(features))
     with open(o_filename, 'w') as f:
         for item in choices:
             f.write("%s\n" % item)
