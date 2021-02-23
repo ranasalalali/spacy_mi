@@ -16,7 +16,7 @@
 
 source /scratch/yf70/ra7413/miniconda3/bin/activate
 conda activate spacy3
-cd /scratch/yf70/ra7413/spacy_mi
+cd /scratch/yf70/tn9582/spacy_mi
 
 #python spacy_mi_numeric.py --phrase "Rana's phone number is 449054661" --label "AU_PHONE_NUMBER" --entities PERSON AU_PHONE_NUMBER --entities_loc 0 4 23 32 --start_loc 23 --end_loc 32 --model 'en_core_web_sm' --run 1 --epoch 30 --drop 0.4 --beam_width 3 --insertions $insertions --subruns 10 --r_space 1000
 
