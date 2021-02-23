@@ -176,7 +176,7 @@ if __name__ == "__main__":
         all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
 
         secret_shape = word_shape(secret)
-        all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret, word_shape(code))) for code in exposure_rank_per_code}
+        all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret_shape, word_shape(code))) for code in exposure_rank_per_code}
 
         all_password_stat_sorted = dict(sorted(all_password_stat.items(), key=lambda i: i[1][0], reverse=False))
 
