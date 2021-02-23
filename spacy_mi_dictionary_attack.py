@@ -286,35 +286,31 @@ if __name__ == "__main__":
 
     strength_low = args.strength_low
     strength_high = args.strength_high
-
     knowledge = args.knowledge
-
     n_passwords = args.n_passwords
-
     n_insertions = args.insertions
-
     texts = [args.phrase]
-
     phrase = args.phrase
-
     r_space = args.r_space
-
     n_subruns = args.subruns
-
     secret = args.phrase[args.start_loc:args.end_loc]
-    secret_shape = word_shape(secret)
-
     epoch = args.epoch
-
     model = args.model
-
     drop = args.drop
-
     beam_width = args.beam_width
+    LABEL = args.label
+    entities_loc = args.entities_loc
+    entities = args.entities
+    start_loc = args.start_loc
+    end_loc = args.end_loc
+
 
     print(secret)
 
-    secret_len = args.end_loc - args.start_loc
+    secret_len = end_loc - start_loc
+
+    secret_shape = word_shape(secret)
+
 
     # Token Index of Secret
     nlp = spacy.load(model)
@@ -322,47 +318,38 @@ if __name__ == "__main__":
     tokens = [str(token) for token in doc]
     secret_token_index = tokens.index(secret)
 
-
+    # word index of secret
     secret_index = doc.text.split().index(secret)
 
+    assert len(entities)*2 == len(entities_loc)
 
-    # new entity label
-    LABEL = args.label
-    
-    assert len(args.entities)*2 == len(args.entities_loc)
-
+    # generate entities data (start, end, label) for training data
     entities = []
-    entities_loc = args.entities_loc
-
-    for i in range(len(args.entities)):
-        entities.append((entities_loc[i*2], entities_loc[i*2+1], args.entities[i]))
+    for i in range(len(entities)):
+        entities.append((entities_loc[i*2], entities_loc[i*2+1], entities[i]))
 
     print(entities)
 
-    TRAIN_DATA = []
 
+    TRAIN_DATA = []
     for i in range(0, n_insertions):
         TRAIN_DATA.append((phrase, {'entities': entities}))
 
+    #load sample space of secrets
     filename = 'r_space_data/{}_passwords.pickle3'.format(r_space)
     file = open(filename, 'rb')
     passwords = pickle.load(file)
 
-    prefix = phrase[0:int(args.start_loc)]
-    suffix = phrase[int(args.end_loc):]
+    #generate query data from given sample space
+    prefix = phrase[0:int(start_loc)]
+    suffix = phrase[int(end_loc):]
     texts = []
     for password in passwords:
         texts.append(prefix+password+suffix)
 
-    #print(texts)
 
     # Multiprocessing variables
     mgr = mp.Manager()
-
-    cpu_count = mp.cpu_count()
-    print("{} CPUs found!".format(cpu_count))
-    runs = n_subruns//int(cpu_count)
-    remainder = n_subruns % int(cpu_count)
 
     scores = mgr.list()
     exposures = mgr.list()
@@ -371,6 +358,14 @@ if __name__ == "__main__":
     exposures_secret = mgr.list()
     ranks_secret = mgr.list()
 
+    # cpu count calculation for given environment
+    cpu_count = mp.cpu_count()
+    print("{} CPUs found!".format(cpu_count))
+    runs = n_subruns//int(cpu_count)
+    remainder = n_subruns % int(cpu_count)
+
+    
+    # multiprocessing pipeline
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,

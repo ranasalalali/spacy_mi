@@ -29,6 +29,32 @@ def format_string(s):
     escaped = re.escape(s)
     return escaped
 
+def word_shape(text=None):
+    if len(text) >= 100:
+        return "LONG"
+    shape = []
+    last = ""
+    shape_char = ""
+    seq = 0
+    for char in text:
+        if char.isalpha():
+            if char.isupper():
+                shape_char = "X"
+            else:
+                shape_char = "x"
+        elif char.isdigit():
+            shape_char = "d"
+        else:
+            shape_char = char
+        if shape_char == last:
+            seq += 1
+        else:
+            seq = 0
+            last = shape_char
+        if seq < 4:
+            shape.append(shape_char)
+    return "".join(shape)
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
@@ -149,13 +175,14 @@ if __name__ == "__main__":
         target_password_rank = np.mean(np.array(exposure_rank_per_code[secret]))
         all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
 
-        all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret)) for code in exposure_rank_per_code}
+        all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code)) for code in exposure_rank_per_code}
 
         all_password_stat_sorted = dict(sorted(all_password_stat.items(), key=lambda i: i[1][0], reverse=False))
 
         all_passwords = [code for code in all_password_stat_sorted]
         all_password_ranks = [all_password_stat_sorted[code][0] for code in all_password_stat_sorted]
         all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
+        all_password_shape = [all_password_stat_sorted[code][2] for code in all_password_stat_sorted]
 
         secret_rank_index = all_passwords.index(secret)
         #secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
@@ -192,10 +219,10 @@ if __name__ == "__main__":
         plt.plot(x, y, 'k-', alpha=0.4, label='target_password = {} \n average rank = {} \n rank based of avg rank = {}'.format(secret, target_password_rank, secret_rank_index))
         for i in range(secret_neighbour_index_left, secret_neighbour_index_right):            
             if all_passwords[i] == secret:
-                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
+                plt.annotate("   {} - {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), all_password_shape[i]), (all_password_ranks[i], yvals[i]))
                 plt.plot(all_password_ranks[i], yvals[i], 'x', color='black')
             else:
-                plt.annotate("   {} - {}".format(all_password_dist[i], format_string(all_passwords[i])), (all_password_ranks[i], yvals[i]))
+                plt.annotate("   {} - {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), all_password_shape[i]), (all_password_ranks[i], yvals[i]))
                 plt.plot(all_password_ranks[i], yvals[i], 'o', color='black', alpha=0.5)
 
         plt.xlabel('Rank')
