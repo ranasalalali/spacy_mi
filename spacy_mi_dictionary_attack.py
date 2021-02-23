@@ -299,16 +299,16 @@ if __name__ == "__main__":
     assert len(entities)*2 == len(entities_loc)
 
     # generate entities data (start, end, label) for training data
-    entities = []
+    t_entities = []
     for i in range(len(entities)):
-        entities.append((entities_loc[i*2], entities_loc[i*2+1], entities[i]))
+        t_entities.append((entities_loc[i*2], entities_loc[i*2+1], entities[i]))
 
-    print(entities)
+    print(t_entities)
 
 
     TRAIN_DATA = []
     for i in range(0, n_insertions):
-        TRAIN_DATA.append((phrase, {'entities': entities}))
+        TRAIN_DATA.append((phrase, {'entities': t_entities}))
 
     #load sample space of secrets
     filename = 'r_space_data/{}_passwords.pickle3'.format(r_space)
