@@ -260,6 +260,10 @@ if __name__ == "__main__":
 
     strength_low = args.strength_low
     strength_high = args.strength_high
+
+    print(strength_high)
+    print(strength_low)
+
     knowledge = args.knowledge
     n_passwords = args.n_passwords
     n_insertions = args.insertions
