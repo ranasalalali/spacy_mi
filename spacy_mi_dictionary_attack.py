@@ -253,13 +253,13 @@ if __name__ == "__main__":
     parser.add_argument('--r_space', type=int, help='Randomness space of passwords to check against')
     parser.add_argument('--n_passwords', type=int, help='Number of passwords to check')
     parser.add_argument('--knowledge', type=int, help='Known prefix length of secret')
-    parser.add_argument('--strength_low', type=float, help='Lower Limit of Strength of target password')
-    parser.add_argument('--strength_high', type=float, help='Upper Limit of Strength of target password')
+    parser.add_argument('--strength_low', help='Lower Limit of Strength of target password')
+    parser.add_argument('--strength_high', help='Upper Limit of Strength of target password')
 
     args = parser.parse_args()
 
-    strength_low = float(args.strength_low)
-    strength_high = float(args.strength_high)
+    strength_low = args.strength_low
+    strength_high = args.strength_high
     knowledge = args.knowledge
     n_passwords = args.n_passwords
     n_insertions = args.insertions
