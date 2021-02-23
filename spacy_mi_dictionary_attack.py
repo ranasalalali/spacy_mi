@@ -258,8 +258,8 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    strength_low = args.strength_low
-    strength_high = args.strength_high
+    strength_low = float(args.strength_low)
+    strength_high = float(args.strength_high)
     knowledge = args.knowledge
     n_passwords = args.n_passwords
     n_insertions = args.insertions
