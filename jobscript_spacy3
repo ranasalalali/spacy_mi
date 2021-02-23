@@ -1,0 +1,29 @@
+#!/bin/bash
+  
+#PBS -l ncpus=48
+##PBS -l ngpus=2
+##PBS -q gpuvolta
+#PBS -q hugemem
+##PBS -q express
+#PBS -P yf70
+#PBS -l wd
+#PBS -l walltime=24:00:00
+#PBS -l mem=1000GB
+#PBS -l jobfs=1GB
+
+##PBS -m abe
+#PBS -M rana-salal.ali@students.mq.edu.au
+
+source /scratch/yf70/ra7413/miniconda3/bin/activate
+conda activate spacy3
+cd /scratch/yf70/ra7413/spacy_mi
+
+#python spacy_mi_numeric.py --phrase "Rana's phone number is 449054661" --label "AU_PHONE_NUMBER" --entities PERSON AU_PHONE_NUMBER --entities_loc 0 4 23 32 --start_loc 23 --end_loc 32 --model 'en_core_web_sm' --run 1 --epoch 30 --drop 0.4 --beam_width 3 --insertions $insertions --subruns 10 --r_space 1000
+
+#python spacy_mi_dictionary_attack.py   --phrase "Rana's secret is qwertyui" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 17 25 --start_loc 17 --end_loc 25 --model 'en_core_web_sm' --run 1 --epoch 30 --drop 0.4 --beam_width 3 --insertions 100 --subruns 1 --r_space 10000
+
+#python spacy_mi_dictionary_attack.py   --phrase "Rana's secret is qwertyui" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 17 25 --start_loc 17 --end_loc 25 --model 'en_core_web_sm' --run 1 --epoch 30 --drop 0.4 --beam_width 3 --insertions $insertions --subruns 10 --r_space 1000
+
+#python spacy3_mi_dictionary_attack.py   --phrase "Rana's secret is 08121993qaz" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 17 28 --start_loc 17 --end_loc 28 --model 'en_core_web_lg' --run 1 --epoch 30 --drop 0.4 --beam_width 3 --insertions 3 --subruns 1 --r_space 10000 --n_passwords 1 --knowledge 0 --strength_low 0.3 --strength_high 0.6
+
+python spacy3_mi_dictionary_attack.py   --phrase "Rana's secret is $password" --label "SECRET" --entities PERSON SECRET --entities_loc 0 4 $start_loc $end_loc --start_loc $start_loc --end_loc $end_loc --model 'en_core_web_lg' --run $run --epoch $epoch --drop 0.4 --beam_width 3 --insertions $insertions --subruns 48 --r_space $r_space --n_passwords $n_passwords --knowledge $knowledge --strength_low $strength_low --strength_high $strength_high --features $features
