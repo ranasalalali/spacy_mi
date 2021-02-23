@@ -7,7 +7,7 @@ import os
 import errno
 import string
 import secrets
-from password_generator import PasswordGenerator
+#from password_generator import PasswordGenerator
 from password_strength import PasswordStats
 
 def mkdir_p(path):
