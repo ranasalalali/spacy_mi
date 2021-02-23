@@ -221,32 +221,6 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     
     return nlp, epoch_insertion_rank
 
-def word_shape(text=None):
-    if len(text) >= 100:
-        return "LONG"
-    shape = []
-    last = ""
-    shape_char = ""
-    seq = 0
-    for char in text:
-        if char.isalpha():
-            if char.isupper():
-                shape_char = "X"
-            else:
-                shape_char = "x"
-        elif char.isdigit():
-            shape_char = "d"
-        else:
-            shape_char = char
-        if shape_char == last:
-            seq += 1
-        else:
-            seq = 0
-            last = shape_char
-        if seq < 4:
-            shape.append(shape_char)
-    return "".join(shape)
-
 def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret):
     """Sub runs to average internal scores."""
     
@@ -308,9 +282,6 @@ if __name__ == "__main__":
     print(secret)
 
     secret_len = end_loc - start_loc
-
-    secret_shape = word_shape(secret)
-
 
     # Token Index of Secret
     nlp = spacy.load(model)
@@ -393,4 +364,4 @@ if __name__ == "__main__":
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, secret_shape], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high)
