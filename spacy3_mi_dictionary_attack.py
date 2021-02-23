@@ -299,6 +299,7 @@ if __name__ == "__main__":
 
     # Token Index of Secret
     nlp = spacy.load(model)
+    print(spacy.__version__)
     doc = nlp(phrase)
     tokens = [str(token) for token in doc]
     secret_token_index = tokens.index(secret)
