@@ -10,9 +10,10 @@
 #$7 - strength_high
 #$8 - shape_passwords
 #$9 - features
+#$10 - new_password Y or N
 
 #DICTIONARY ATTACK
-python generate_password_space_with_features.py --r_space $2 --strength $6 $7 --N $1 --S $8 --features $9
+python generate_password_space_with_features.py --r_space $2 --strength $6 $7 --N $1 --S $8 --features $9 --new_password $10
 
 filename="r_space_data/$1_r_space_passwords_strength_$6-$7.txt"
 n=1
