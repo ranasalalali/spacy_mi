@@ -220,10 +220,15 @@ if __name__ == "__main__":
                 passwords.append(word)
     passwords = random.sample(passwords, (r_space-(S)))
 
-    if new_passwords =='Y':
+    choices = []
+    if new_passwords == 'Y':
         strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
         choices = random.sample(strength_passwords, N)
-    elif new_passwords =='N':
+        o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
+        with open(o_filename, 'w') as f:
+            for item in choices:
+                f.write("%s\n" % item)
+    elif new_passwords == 'N':
         choices = []
         i_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
         with open(i_filename) as file:
@@ -250,8 +255,3 @@ if __name__ == "__main__":
         temp_passwords.clear()
 
     print(len(passwords))
-
-    o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
-    with open(o_filename, 'w') as f:
-        for item in choices:
-            f.write("%s\n" % item)
