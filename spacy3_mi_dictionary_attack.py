@@ -323,7 +323,7 @@ if __name__ == "__main__":
         TRAIN_DATA.append((phrase, {'entities': t_entities}))
 
     #load sample space of secrets
-    filename = 'r_space_data/{}_passwords_features_{}.pickle3'.format(r_space, features)
+    filename = 'r_space_data/{}_passwords_features_{}_password_{}.pickle3'.format(r_space, features, secret)
     file = open(filename, 'rb')
     passwords = pickle.load(file)
 

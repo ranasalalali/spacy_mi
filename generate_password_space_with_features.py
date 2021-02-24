@@ -217,27 +217,30 @@ if __name__ == "__main__":
         for line in file: 
             for word in line.split():          
                 passwords.append(word)
-    passwords = random.choices(passwords, k=(r_space-(S*N)))
+    passwords = random.sample(passwords, (r_space-(S)))
 
     strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
-    choices = random.choices(strength_passwords, k=N)
+    choices = random.sample(strength_passwords, N)
 
+    temp_passwords = []
     for choice in choices:
         print(choice)
+        temp_passwords.extend(passwords)
         shape = word_shape(choice)
         prefix = choice[0]
         suffix = choice[-3:]
         length = len(choice)
-        generated = generate_password_given_features(shape, prefix, suffix, length, S, features)
-        passwords.extend(generated)
+        generated = generate_password_given_features(shape, prefix, suffix, length, S, features)        
+        temp_passwords.extend(generated)
+        print(len(temp_passwords))
+        filename = '{}_passwords_features_{}_password_{}.pickle3'.format(r_space, ''.join(features), choice)
+        filename = os.path.join(folder, filename)
+        save_file = open(filename, 'wb')
+        pickle.dump(temp_passwords, save_file)
+        save_file.close()
+        temp_passwords.clear()
 
     print(len(passwords))
-    
-    filename = '{}_passwords_features_{}.pickle3'.format(r_space, ''.join(features))
-    filename = os.path.join(folder, filename)
-    save_file = open(filename, 'wb')
-    pickle.dump(passwords, save_file)
-    save_file.close()
 
     o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}_features_{}.txt'.format(N,s1,s2, ''.join(features))
     with open(o_filename, 'w') as f:
