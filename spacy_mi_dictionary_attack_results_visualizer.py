@@ -66,6 +66,8 @@ if __name__ == "__main__":
 
     folder = loc
 
+    features = folder.split("_")[len(features)]
+
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
     res_folder = '{}/'.format(folder)
@@ -120,6 +122,11 @@ if __name__ == "__main__":
         epoch_scores = g[i][5]
         
         secret = g[i][1].split()[secret_index]
+
+        features_passwords_file = 'password_{}_features_{}_20_passwords.pickle3'.format(secret, features)
+        file = open(features_passwords_file, 'rb')
+        features_passwords = pickle.load(file)
+        
         print(secret)
         for score in scores:
             sorted_score = dict(sorted(score.items(), key=operator.itemgetter(1), reverse=True))
@@ -222,7 +229,10 @@ if __name__ == "__main__":
         for i in range(secret_neighbour_index_left, secret_neighbour_index_right):            
             if all_passwords[i] == secret:
                 plt.annotate("{} - {} - {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), all_password_shape[i], all_password_shape_dist[i]), (all_password_ranks[i], yvals[i]))
-                plt.plot(all_password_ranks[i], yvals[i], 'x', color='black')
+                plt.plot(all_password_ranks[i], yvals[i], 'x', color='green')
+            elif all_passwords[i] in features_passwords:
+                plt.annotate("{} - {} - {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), all_password_shape[i], all_password_shape_dist[i]), (all_password_ranks[i], yvals[i]))
+                plt.plot(all_password_ranks[i], yvals[i], 'o', color='red', alpha=0.5)
             else:
                 plt.annotate("{} - {} - {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), all_password_shape[i], all_password_shape_dist[i]), (all_password_ranks[i], yvals[i]))
                 plt.plot(all_password_ranks[i], yvals[i], 'o', color='black', alpha=0.5)
