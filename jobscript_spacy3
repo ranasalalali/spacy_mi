@@ -14,7 +14,7 @@
 ##PBS -m abe
 #PBS -M rana-salal.ali@students.mq.edu.au
 
-source /scratch/yf70/ra7413/miniconda3/bin/activate
+source /scratch/yf70/tn9582/miniconda3/bin/activate
 conda activate spacy3
 cd /scratch/yf70/tn9582/spacy_mi
 
