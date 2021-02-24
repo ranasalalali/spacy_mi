@@ -151,79 +151,79 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE STARTS ---------------
 
-    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-        # show warnings for misaligned entity spans once
-        warnings.filterwarnings("once", category=UserWarning, module='spacy')
+    # with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+    #     # show warnings for misaligned entity spans once
+    #     warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-        examples = []
+    #     examples = []
             
-        for text, annots in TRAIN_DATA:
-            examples.append(Example.from_dict(nlp.make_doc(text), annots))
-        get_examples = lambda: examples
+    #     for text, annots in TRAIN_DATA:
+    #         examples.append(Example.from_dict(nlp.make_doc(text), annots))
+    #     get_examples = lambda: examples
 
-        # batch up the examples using spaCy's minibatch
-        for epochs in range(1,int(epoch)):
-            random.shuffle(examples)
+    #     # batch up the examples using spaCy's minibatch
+    #     for epochs in range(1,int(epoch)):
+    #         random.shuffle(examples)
 
-            for batch in minibatch(examples, size=8):
-                nlp.update(examples)
+    #         for batch in minibatch(examples, size=8):
+    #             nlp.update(examples)
 
-            #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
-            #epoch_insertion_rank[(epochs,len(train_data))] = exposure
+    #         #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+    #         #epoch_insertion_rank[(epochs,len(train_data))] = exposure
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE ENDS ---------------
 
 
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT STARTS ---------------
-    # with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-    #     # show warnings for misaligned entity spans once
-    #     warnings.filterwarnings("once", category=UserWarning, module='spacy')
+    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+        # show warnings for misaligned entity spans once
+        warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-    #     temp_data = train_data[:1]
+        temp_data = train_data[:1]
         
-    #     examples = []
+        examples = []
             
-    #     for text, annots in temp_data:
-    #         examples.append(Example.from_dict(nlp.make_doc(text), annots))
-    #     get_examples = lambda: examples
+        for text, annots in temp_data:
+            examples.append(Example.from_dict(nlp.make_doc(text), annots))
+        get_examples = lambda: examples
 
-    #     random.shuffle(examples)
+        random.shuffle(examples)
 
-    #     for batch in minibatch(examples, size=8):
-    #         nlp.update(examples)
+        for batch in minibatch(examples, size=8):
+            nlp.update(examples)
         
-    #     score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
-    #     epoch_insertion_rank[(1,1)] = exposure
+        score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+        epoch_insertion_rank[(1,1)] = exposure
 
 
-    # with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-    #     # show warnings for misaligned entity spans once
-    #     warnings.filterwarnings("once", category=UserWarning, module='spacy')
+    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+        # show warnings for misaligned entity spans once
+        warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-    #     for insertions in range(2, len(train_data)):
+        for insertions in range(2, len(train_data)):
 
-    #         nlp, other_pipes, optimizer = load_model(model, label)
+            nlp, other_pipes, optimizer = load_model(model, label)
 
-    #         with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-    #             # show warnings for misaligned entity spans once
-    #             warnings.filterwarnings("once", category=UserWarning, module='spacy')
-    #             temp_data = train_data[:insertions]
+            with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+                # show warnings for misaligned entity spans once
+                warnings.filterwarnings("once", category=UserWarning, module='spacy')
+                temp_data = train_data[:insertions]
         
-    #             examples = []
+                examples = []
                     
-    #             for text, annots in temp_data:
-    #                 examples.append(Example.from_dict(nlp.make_doc(text), annots))
-    #             get_examples = lambda: examples
+                for text, annots in temp_data:
+                    examples.append(Example.from_dict(nlp.make_doc(text), annots))
+                get_examples = lambda: examples
 
-    #             for epochs in range(1,int(epoch)):
-    #                 random.shuffle(examples)
+                for epochs in range(1,int(epoch)):
+                    random.shuffle(examples)
 
-    #                 for batch in minibatch(examples, size=8):
-    #                     nlp.update(examples)
+                    for batch in minibatch(examples, size=8):
+                        nlp.update(examples)
 
-    #                 if epochs%5 == 0:
-    #                     score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
-    #                     epoch_insertion_rank[(epochs,insertions)] = exposure
+                    if epochs%5 == 0:
+                        score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
+                        epoch_insertion_rank[(epochs,insertions)] = exposure
     
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
