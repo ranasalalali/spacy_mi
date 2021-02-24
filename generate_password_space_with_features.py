@@ -141,7 +141,7 @@ def generate_password_given_prefix_suffix_shape(prefix=None, suffix=None, shape=
     print(shape)
     for _ in range(total):
         password = str(prefix)
-        for char in shape[:-3]:
+        for char in shape[1:-3]:
             if char == 'd':
                 password = password + ''.join(random.choice(digits))
             elif char == 'x':
@@ -247,11 +247,18 @@ if __name__ == "__main__":
         generated = generate_password_given_features(shape, prefix, suffix, length, S, features)        
         temp_passwords.extend(generated)
         print(len(temp_passwords))
+        
         filename = '{}_passwords_features_{}_password_{}.pickle3'.format(r_space, ''.join(features), choice)
         filename = os.path.join(folder, filename)
         save_file = open(filename, 'wb')
         pickle.dump(temp_passwords, save_file)
         save_file.close()
         temp_passwords.clear()
+
+        filename = 'password_{}_features_{}_{}_passwords.pickle3'.format(choice, ''.join(features), len(generated))
+        filename = os.path.join(folder, filename)
+        save_file = open(filename, 'wb')
+        pickle.dump(generated, save_file)
+        save_file.close()
 
     print(len(passwords))
