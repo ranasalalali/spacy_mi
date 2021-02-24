@@ -186,7 +186,7 @@ if __name__ == "__main__":
     parser.add_argument('--N', type=int, help='number of random password to generate')
     parser.add_argument('--S', type=int, help='number of passwords of same shape as target')
     parser.add_argument('--features', type=str, help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
-    
+    parser.add_argument('--new_passwords', type=str, help='Y or N if new passwords to be generated or use old, file must exist')
 
     args = parser.parse_args()
     
@@ -195,6 +195,7 @@ if __name__ == "__main__":
     N = args.N   
     S = args.S
     features = args.features
+    new_passwords = args.new_passwords
 
     features = list(features)
     
@@ -219,8 +220,16 @@ if __name__ == "__main__":
                 passwords.append(word)
     passwords = random.sample(passwords, (r_space-(S)))
 
-    strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
-    choices = random.sample(strength_passwords, N)
+    if new_passwords =='Y':
+        strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
+        choices = random.sample(strength_passwords, N)
+    elif new_passwords =='N':
+        choices = []
+        i_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
+        with open(i_filename) as file:
+            for line in file: 
+                for word in line.split():          
+                    choices.append(word)
 
     temp_passwords = []
     for choice in choices:
@@ -242,7 +251,7 @@ if __name__ == "__main__":
 
     print(len(passwords))
 
-    o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}_features_{}.txt'.format(N,s1,s2, ''.join(features))
+    o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
     with open(o_filename, 'w') as f:
         for item in choices:
             f.write("%s\n" % item)
