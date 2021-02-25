@@ -220,8 +220,6 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
                     for batch in minibatch(examples, size=8):
                         nlp.update(examples)
-
-                    if epochs%5 == 0:
                         score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
                         epoch_insertion_rank[(epochs,insertions)] = exposure_per_combination
                         #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
