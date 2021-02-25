@@ -123,7 +123,7 @@ if __name__ == "__main__":
         
         secret = g[i][1].split()[secret_index]
 
-        features_passwords_file = 'password_{}_features_{}_20_passwords.pickle3'.format(secret, features)
+        features_passwords_file = 'r_space_data/password_{}_features_{}_20_passwords.pickle3'.format(secret, features)
         file = open(features_passwords_file, 'rb')
         features_passwords = pickle.load(file)
         
