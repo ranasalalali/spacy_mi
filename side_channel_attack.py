@@ -105,6 +105,72 @@ time_update_new_abitr = 0
 
 iterations = 100
 
+time_update_trained_pw = 0
+time_update_new_pw = 0
+iterations = 100
+
+for i in range(iterations +1):
+    nlp = updatingModel()
+    ### for trained password
+    print("Query updated model with trained password")
+    
+    secret = "rgjfgklf678" # "rgjfgklf678"
+    text = "Rana's secret is {}.".format(secret)
+    print("text: ", text)
+    texts = [text]
+
+    time0 = time.perf_counter()
+    print(time0)
+    get_scores_per_entity(nlp, texts)
+    
+#     print(get_scores_per_entity(nlp, texts))
+    time_now = time.perf_counter()
+    print(time_now)
+    print("runtime = ", time_now - time0 )
+#     vocab_string_after_query = list(nlp.vocab.strings)
+
+#     diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+    time_update_trained_pw += (time_now - time0)
+    print("Size of vocab_string in updated model: ", len(list(nlp.vocab.strings)))
+#     print("difference in vocab string with common words: ", diff)
+    
+
+    print("====================")
+
+    ### for new words
+
+    print("Query updated model with unseen password")
+#     print("Size of vocab_string: ", len(list(nlp.vocab.strings)))      
+    secret = "rbdhrkrp908" #'"shfklfgl12l90"
+    text = "Rana's secret is {}.".format(secret)
+    print("text: ", text)
+    texts = [text]
+
+    time01 = time.perf_counter()
+    print(time01)
+    get_scores_per_entity(nlp, texts)
+    
+
+    time_now1 = time.perf_counter()
+    print(time_now1)
+    print("runtime = ", time_now1 - time01 )
+
+    time_update_new_pw += (time_now1 - time01)
+    print("Size of vocab_string in updated model: ", len(list(nlp.vocab.strings)))
+
+    print("-------------------")
+
+    
+print("======Average======") 
+if iterations >0:
+    print("runtime with trained pw: ", time_update_trained_pw/iterations)
+    print("runtime with new pw: ", time_update_new_pw/iterations)
+    print("runtime diff: ", (time_update_new_pw/iterations - time_update_trained_pw/iterations ))
+else:
+    print("runtime with trained pw: ", time_update_trained_pw)
+    print("runtime with new pw: ", time_update_new_pw)
+
+sys.exit()    
 # def get_runtime(inter):
 #     iterations = inter
 for i in range(iterations):
