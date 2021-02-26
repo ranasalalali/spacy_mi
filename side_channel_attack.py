@@ -247,29 +247,29 @@ for i in range(iterations):
 
 
     
-file1.write("======Average======") 
+file1.write("======Average======\n") 
 if iterations >0:
     file1.write("runtime with trained pw: %s\n"%(time_update_trained_pw/iterations))
     file1.write("runtime with new pw same pref: %s\n"%(time_update_new_pw_prefix/iterations))
-    file1.write("runtime with new pw same suff: ", time_update_new_pw_suffix/iterations)
-    file1.write("runtime with new pw same shape: ", time_update_new_pw_shape/iterations)
-    file1.write("runtime with new pw same pref suf: ", time_update_new_pw_pre_suf/iterations)
-    file1.write("runtime with new pw same pref shape: ", time_update_new_pw_pre_sh/iterations)
-    file1.write("runtime with new pw same suff shape: ", time_update_new_pw_suf_sh/iterations)
-    file1.write("runtime with new pw same pref suff shape: ", time_update_new_pw_pre_suf_sh/iterations)
-    file1.write("runtime with new pw same length: ", time_update_new_length/iterations)
-    file1.write("runtime with new pw arbitrary: ", time_update_new_abitr/iterations)
+    file1.write("runtime with new pw same suff: {}\n".format(time_update_new_pw_suffix/iterations))
+    file1.write("runtime with new pw same shape: {}\n".format(time_update_new_pw_shape/iterations))
+    file1.write("runtime with new pw same pref suf: {}\n".format(time_update_new_pw_pre_suf/iterations))
+    file1.write("runtime with new pw same pref shape: {}\n".format(time_update_new_pw_pre_sh/iterations))
+    file1.write("runtime with new pw same suff shape: {}\n".format(time_update_new_pw_suf_sh/iterations))
+    file1.write("runtime with new pw same pref suff shape: {}\n".format(time_update_new_pw_pre_suf_sh/iterations))
+    file1.write("runtime with new pw same length: {}\n".format(time_update_new_length/iterations))
+    file1.write("runtime with new pw arbitrary: {}\n".format(time_update_new_abitr/iterations))
     
-    file1.write("======Time different ======") 
-    file1.write("new pw same pref: ", (time_update_new_pw_prefix/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw same suff: ", (time_update_new_pw_suffix/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw same shape: ", (time_update_new_pw_shape/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw same pref suff: ", (time_update_new_pw_pre_suf/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw same pref shape: ", (time_update_new_pw_pre_sh/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw same suff shape: ", (time_update_new_pw_suf_sh/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw same pref suff shape: ", (time_update_new_pw_pre_suf_sh/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw same length: ", (time_update_new_length/iterations - time_update_trained_pw/iterations ))
-    file1.write("new pw arbitrary: ", (time_update_new_abitr/iterations - time_update_trained_pw/iterations ))
+    file1.write("======Time different ======\n") 
+    file1.write("new pw same pref: {}\n".format(time_update_new_pw_prefix/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw same suff: {}\n".format(time_update_new_pw_suffix/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw same shape: {}\n".format(time_update_new_pw_shape/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw same pref suff: {}\n".format(time_update_new_pw_pre_suf/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw same pref shape: {}\n".format(time_update_new_pw_pre_sh/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw same suff shape: {}\n".format(time_update_new_pw_suf_sh/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw same pref suff shape: {}\n".format(time_update_new_pw_pre_suf_sh/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw same length: {}\n".format(time_update_new_length/iterations - time_update_trained_pw/iterations ))
+    file1.write("new pw arbitrary: {}\n".format(time_update_new_abitr/iterations - time_update_trained_pw/iterations ))
 
         
         
