@@ -149,7 +149,7 @@ for i in range(iterations +1):
     print("Size of vocab_string in updated model: ", len(list(nlp.vocab.strings)))
 
     if out_vocab_runtime > in_vocab_runtime:
-        count +=1
+        count_success +=1
     print("-------------------")
 
 print("Number of successs attempts:{}".format(count))    
