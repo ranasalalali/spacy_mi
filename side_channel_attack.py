@@ -93,7 +93,7 @@ def get_scores_per_entity(model=None, texts=[],):
 
 time_update_trained_pw = 0
 time_update_new_pw = 0
-iterations = 100
+iterations = 10
 count_success = 0
 
 for i in range(iterations +1):
@@ -152,7 +152,7 @@ for i in range(iterations +1):
         count_success +=1
     print("-------------------")
 
-print("Number of successs attempts:{}".format(count))    
+print("Number of successs attempts:{}".format(count_success))    
 print("======Average======") 
 if iterations >0:
     print("runtime with trained pw: ", time_update_trained_pw/iterations)
