@@ -94,6 +94,7 @@ def get_scores_per_entity(model=None, texts=[],):
 time_update_trained_pw = 0
 time_update_new_pw = 0
 iterations = 100
+count_success = 0
 
 for i in range(iterations +1):
     nlp = updatingModel()
@@ -112,11 +113,13 @@ for i in range(iterations +1):
 #     print(get_scores_per_entity(nlp, texts))
     time_now = time.perf_counter()
     print(time_now)
-    print("runtime = ", time_now - time0 )
+    # print("runtime = ", time_now - time0 )
 #     vocab_string_after_query = list(nlp.vocab.strings)
 
 #     diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
     time_update_trained_pw += (time_now - time0)
+    in_vocab_runtime = time_now - time0
+    
     print("Size of vocab_string in updated model: ", len(list(nlp.vocab.strings)))
 #     print("difference in vocab string with common words: ", diff)
     
@@ -139,14 +142,17 @@ for i in range(iterations +1):
 
     time_now1 = time.perf_counter()
     print(time_now1)
-    print("runtime = ", time_now1 - time01 )
+    # print("runtime = ", time_now1 - time01 )
 
     time_update_new_pw += (time_now1 - time01)
+    out_vocab_runtime = time_now1 - time01
     print("Size of vocab_string in updated model: ", len(list(nlp.vocab.strings)))
 
+    if out_vocab_runtime > in_vocab_runtime:
+        count +=1
     print("-------------------")
 
-    
+print("Number of successs attempts:{}".format(count))    
 print("======Average======") 
 if iterations >0:
     print("runtime with trained pw: ", time_update_trained_pw/iterations)
