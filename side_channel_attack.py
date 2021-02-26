@@ -25,7 +25,7 @@ import time
 
 file1 = open("result.txt","a")
 
-def updatingModel():
+def updatingModel ():
     LABEL = "SECRET"
     secret = 'rgjfgklf678'
     text = "Rana's secret is {}.".format(secret)
@@ -180,7 +180,7 @@ for i in range(iterations):
     
     ## same pre shape
     nlp = updatingModel()
-    secrets = ['rjfhggbv345']
+    secrets = ['rbdhrkrp908']
     
     time01 = time.perf_counter()
     text = "Rana's secret is {}.".format(secrets[0])
