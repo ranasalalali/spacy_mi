@@ -267,6 +267,7 @@ if __name__ == "__main__":
     parser.add_argument('--strength_low', help='Lower Limit of Strength of target password')
     parser.add_argument('--strength_high', help='Upper Limit of Strength of target password')
     parser.add_argument('--features', type=str, help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
+    parser.add_argument('--features_passwords', type=int, help='Number of features passwords')
 
     args = parser.parse_args()
 
@@ -276,6 +277,8 @@ if __name__ == "__main__":
     print(strength_high)
     print(strength_low)
 
+
+    features_passwords = args.features_passwords
     features = args.features
     knowledge = args.knowledge
     n_passwords = args.n_passwords
@@ -382,4 +385,4 @@ if __name__ == "__main__":
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features)

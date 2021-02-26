@@ -107,6 +107,8 @@ if __name__ == "__main__":
 
     password_Stat = {}
 
+    features_passwords_exist = 0
+
     for i in range(len(g)):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
         avg_epoch_rank = {key:[] for key in g[i][5][0]}
@@ -123,9 +125,12 @@ if __name__ == "__main__":
         
         secret = g[i][1].split()[secret_index]
 
-        features_passwords_file = 'r_space_data/password_{}_features_{}_20_passwords.pickle3'.format(secret, features)
-        file = open(features_passwords_file, 'rb')
-        features_passwords = pickle.load(file)
+        if features_passwords_exist>0:
+            features_passwords_file = 'r_space_data/password_{}_features_{}_20_passwords.pickle3'.format(secret, features)
+            file = open(features_passwords_file, 'rb')
+            features_passwords = pickle.load(file)
+        else:
+            features_passwords = []
         
         print(secret)
         for score in scores:
