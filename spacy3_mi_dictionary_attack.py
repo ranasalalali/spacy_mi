@@ -218,7 +218,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 for epochs in range(1,int(epoch)):
                     random.shuffle(examples)
 
-                    for batch in minibatch(examples, size=len(temp_data)):
+                    for batch in minibatch(examples, size=8):
                         nlp.update(examples)
 
                     # if epochs%5 == 0:
