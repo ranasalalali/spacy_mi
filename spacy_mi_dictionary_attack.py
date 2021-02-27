@@ -157,7 +157,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #             texts, annotations = zip(*batch)
     #             nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
-    #         #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret))
+    #         #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     #         #epoch_insertion_rank[(epochs,len(train_data))] = exposure
     #         print("Losses", losses)
 
@@ -180,7 +180,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #         texts, annotations = zip(*batch)
     #         nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
         
-    #     score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret))
+    #     score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     #     epoch_insertion_rank[(1,1)] = exposure
     #     print("Losses", losses)
 
@@ -212,7 +212,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                         nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
 
                     # if epochs%5 == 0:
-                    score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret))
+                    score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
                     epoch_insertion_rank[(epochs,insertions)] = exposure
                     print("Losses", losses)
 
