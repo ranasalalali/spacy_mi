@@ -157,8 +157,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #             texts, annotations = zip(*batch)
     #             nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
-    #         #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
-    #         #epoch_insertion_rank[(epochs,len(train_data))] = exposure
+    #         #score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+    #         #epoch_insertion_rank[(epochs,len(train_data))] = exposure_per_combination
     #         print("Losses", losses)
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE ENDS ---------------
@@ -180,8 +180,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #         texts, annotations = zip(*batch)
     #         nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
         
-    #     score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
-    #     epoch_insertion_rank[(1,1)] = exposure
+    #     score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+    #     epoch_insertion_rank[(1,1)] = exposure_per_combination
     #     print("Losses", losses)
 
     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
@@ -212,8 +212,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                         nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
 
                     # if epochs%5 == 0:
-                    score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
-                    epoch_insertion_rank[(epochs,insertions)] = exposure
+                    score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+                    epoch_insertion_rank[(epochs,insertions)] = exposure_per_combination
                     print("Losses", losses)
 
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
