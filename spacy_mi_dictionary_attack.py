@@ -143,23 +143,23 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE STARTS ---------------
 
-    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-        # show warnings for misaligned entity spans once
-        warnings.filterwarnings("once", category=UserWarning, module='spacy')
+    # with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+    #     # show warnings for misaligned entity spans once
+    #     warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-        sizes = compounding(1.0, 4.0, 1.001)
-        # batch up the examples using spaCy's minibatch
-        for epochs in range(1,int(epoch)):
-            random.shuffle(train_data)
-            batches = minibatch(train_data, size=sizes)
-            losses = {}
-            for batch in batches:
-                texts, annotations = zip(*batch)
-                nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
+    #     sizes = compounding(1.0, 4.0, 1.001)
+    #     # batch up the examples using spaCy's minibatch
+    #     for epochs in range(1,int(epoch)):
+    #         random.shuffle(train_data)
+    #         batches = minibatch(train_data, size=sizes)
+    #         losses = {}
+    #         for batch in batches:
+    #             texts, annotations = zip(*batch)
+    #             nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
             
-            #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
-            #epoch_insertion_rank[(epochs,len(train_data))] = exposure
-            print("Losses", losses)
+    #         #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
+    #         #epoch_insertion_rank[(epochs,len(train_data))] = exposure
+    #         print("Losses", losses)
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE ENDS ---------------
 
@@ -184,37 +184,37 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #     epoch_insertion_rank[(1,1)] = exposure
     #     print("Losses", losses)
 
-    # with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-    #     # show warnings for misaligned entity spans once
-    #     warnings.filterwarnings("once", category=UserWarning, module='spacy')
+    with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+        # show warnings for misaligned entity spans once
+        warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-    #     sizes = compounding(1.0, 4.0, 1.001)
-    #     # batch up the examples using spaCy's minibatch
+        sizes = compounding(1.0, 4.0, 1.001)
+        # batch up the examples using spaCy's minibatch
 
-    #     for insertions in range(2, len(train_data)):
+        for insertions in range(1, len(train_data)):
 
-    #         nlp, other_pipes, optimizer = load_model(model, label)
+            nlp, other_pipes, optimizer = load_model(model, label)
 
-    #         with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-    #             # show warnings for misaligned entity spans once
-    #             warnings.filterwarnings("once", category=UserWarning, module='spacy')
+            with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
+                # show warnings for misaligned entity spans once
+                warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-    #             sizes = compounding(1.0, 4.0, 1.001)
-    #             # batch up the examples using spaCy's minibatch
+                sizes = compounding(1.0, 4.0, 1.001)
+                # batch up the examples using spaCy's minibatch
 
-    #             for epochs in range(1,int(epoch)):
-    #                 temp_data = train_data[:insertions]
-    #                 random.shuffle(temp_data)
-    #                 batches = minibatch(temp_data, size=sizes)
-    #                 losses = {}
-    #                 for batch in batches:
-    #                     texts, annotations = zip(*batch)
-    #                     nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
+                for epochs in range(1,int(epoch)):
+                    temp_data = train_data[:insertions]
+                    random.shuffle(temp_data)
+                    batches = minibatch(temp_data, size=sizes)
+                    losses = {}
+                    for batch in batches:
+                        texts, annotations = zip(*batch)
+                        nlp.update(texts, annotations, sgd=optimizer, drop=float(drop), losses=losses)
 
-    #                 if epochs%5 == 0:
-    #                     score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
-    #                     epoch_insertion_rank[(epochs,insertions)] = exposure
-    #                 print("Losses", losses)
+                    # if epochs%5 == 0:
+                    score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
+                    epoch_insertion_rank[(epochs,insertions)] = exposure
+                    print("Losses", losses)
 
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
@@ -255,6 +255,8 @@ if __name__ == "__main__":
     parser.add_argument('--knowledge', type=int, help='Known prefix length of secret')
     parser.add_argument('--strength_low', help='Lower Limit of Strength of target password')
     parser.add_argument('--strength_high', help='Upper Limit of Strength of target password')
+    parser.add_argument('--features', type=str, help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
+    parser.add_argument('--features_passwords', type=int, help='Number of features passwords')
 
     args = parser.parse_args()
 
@@ -264,6 +266,8 @@ if __name__ == "__main__":
     print(strength_high)
     print(strength_low)
 
+    features_passwords = args.features_passwords
+    features = args.features
     knowledge = args.knowledge
     n_passwords = args.n_passwords
     n_insertions = args.insertions
@@ -311,7 +315,7 @@ if __name__ == "__main__":
         TRAIN_DATA.append((phrase, {'entities': t_entities}))
 
     #load sample space of secrets
-    filename = 'r_space_data/{}_passwords.pickle3'.format(r_space)
+    filename = 'r_space_data/{}_passwords_features_{}_password_{}.pickle3'.format(r_space, features, secret)
     file = open(filename, 'rb')
     passwords = pickle.load(file)
 
@@ -368,4 +372,4 @@ if __name__ == "__main__":
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high)
