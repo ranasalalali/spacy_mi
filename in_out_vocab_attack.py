@@ -25,13 +25,16 @@ import sys
 
 file_name = open("in_out_vocab.txt","a")
 
-nlp = spacy.load('en_core_web_lg')
+
 
 iterations = 100
 total_in_vocab_time = 0
 total_out_vocab_time = 0
 
+count_success = 0
+
 for i in range(iterations):
+    nlp = spacy.load('en_core_web_lg')
     ## in vocab
     print("i = ", i)
     print("-----IN vocab-----")
