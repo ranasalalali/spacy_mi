@@ -41,7 +41,8 @@ def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space,
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'results/{}_{}_passwords_dictionary_attack_{}_insertions_{}_epoch_{}_r_space_{}_knowledge_strength_{}-{}_features_{}/'.format(now, n_passwords, n_insertions, epoch, r_space, knowledge, strength_low, strength_high, features)
+    version = str(spacy.__version__)
+    folder = 'results/{}_spacy_{}_{}_passwords_dictionary_attack_{}_insertions_{}_epoch_{}_r_space_{}_knowledge_strength_{}-{}_features_{}/'.format(now, version, n_passwords, n_insertions, epoch, r_space, knowledge, strength_low, strength_high, features)
     filename = '{}_{}_run_secret_{}_{}_insertions.pickle3'.format(args.model, args.run, secret, n_insertions)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
