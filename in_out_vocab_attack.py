@@ -48,6 +48,7 @@ for i in range(iterations):
     time_now = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     in_vocab_runtime = time_now - time0
+    print("runtime = ", in_vocab_runtime)
     total_in_vocab_time += in_vocab_runtime
 
     print("len of vocab before query {}".format(len(vocab_string_after_query)))
@@ -64,6 +65,8 @@ for i in range(iterations):
     time_now = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     out_vocab_runtime = time_now - time0
+    print("runtime = ", out_vocab_runtime)
+
     total_out_vocab_time += out_vocab_runtime
 
     print("len of vocab before query {}".format(len(vocab_string_after_query)))
