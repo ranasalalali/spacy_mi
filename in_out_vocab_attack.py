@@ -35,23 +35,7 @@ count_success = 0
 
 for i in range(iterations):
     nlp = spacy.load('en_core_web_lg')
-    ## in vocab
-    print("i = ", i)
-    print("-----IN vocab-----")
-    vocab_string_org = list(nlp.vocab.strings)
-    print("len of vocab before query {}".format(len(vocab_string_org)))
-    
-    text = "password"
-    
-    time0 = time.perf_counter()
-    doc = nlp(text)
-    time_now = time.perf_counter()
-    vocab_string_after_query = list(nlp.vocab.strings)
-    in_vocab_runtime = time_now - time0
-    print("runtime = ", in_vocab_runtime)
-    total_in_vocab_time += in_vocab_runtime
 
-    print("len of vocab before query {}".format(len(vocab_string_after_query)))
 
     ## out vocab
     print("-----OUT vocab-----")
@@ -73,6 +57,27 @@ for i in range(iterations):
     
     diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
     print("updated elements: ", diff)
+
+    
+    ## in vocab
+    print("i = ", i)
+    print("-----IN vocab-----")
+    vocab_string_org = list(nlp.vocab.strings)
+    print("len of vocab before query {}".format(len(vocab_string_org)))
+    
+    text = "password"
+    
+    time0 = time.perf_counter()
+    doc = nlp(text)
+    time_now = time.perf_counter()
+    vocab_string_after_query = list(nlp.vocab.strings)
+    in_vocab_runtime = time_now - time0
+    print("runtime = ", in_vocab_runtime)
+    total_in_vocab_time += in_vocab_runtime
+
+    print("len of vocab before query {}".format(len(vocab_string_after_query)))
+
+    
 
     if out_vocab_runtime > in_vocab_runtime:
         count_success +=1
