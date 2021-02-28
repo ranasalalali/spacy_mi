@@ -247,7 +247,8 @@ if __name__ == "__main__":
         plt.xlim(secret_neighbour_rank_left, secret_neighbour_rank_right)
         plt.legend()
         plt.tight_layout()
-        plt_dest = plt_folder + 'CDF_{}'.format(secret)
+        image_name = secret.replace('.','(dot)')
+        plt_dest = plt_folder + 'CDF_{}'.format(image_name)
         plt.savefig(plt_dest,
                 bbox_inches="tight")
         #CDF END
