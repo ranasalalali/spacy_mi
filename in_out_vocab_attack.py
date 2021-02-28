@@ -70,6 +70,9 @@ for i in range(iterations):
     total_out_vocab_time += out_vocab_runtime
 
     print("len of vocab before query {}".format(len(vocab_string_after_query)))
+    
+    diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+    print("updated elements: ", diff)
 
     if out_vocab_runtime > in_vocab_runtime:
         count_success +=1
