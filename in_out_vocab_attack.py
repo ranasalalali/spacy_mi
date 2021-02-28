@@ -60,11 +60,11 @@ for i in range(iterations):
     
     text = "dfjgkkd908lkg"
     
-    time0 = time.perf_counter()
+    time1 = time.perf_counter()
     doc = nlp(text)
-    time_now = time.perf_counter()
+    time_now1 = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
-    out_vocab_runtime = time_now - time0
+    out_vocab_runtime = time_now1 - time1
     print("runtime = ", out_vocab_runtime)
 
     total_out_vocab_time += out_vocab_runtime
