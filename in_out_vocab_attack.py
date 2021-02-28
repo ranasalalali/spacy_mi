@@ -28,8 +28,11 @@ file_name = open("in_out_vocab.txt","a")
 nlp = spacy.load('en_core_web_lg')
 
 iterations = 100
+total_in_vocab_time = 0
+total_in_vocab_time = 0
 for i in range(iterations):
     ## in vocab
+    print("i = ", i)
     print("-----IN vocab-----")
     vocab_string_org = list(nlp.vocab.strings)
     print("len of vocab before query {}".format(len(vocab_string_org)))
