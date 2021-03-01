@@ -1,0 +1,7 @@
+=====================In vocab word:password
+Out vocab word:dfjgkkd908lkg
+Number of successs attempts:91
+======Average======
+runtime with in vocab: 0.0002583253616467118
+runtime with out vocab: 0.0002790237497538328
+runtime diff: 2.069838810712097e-05

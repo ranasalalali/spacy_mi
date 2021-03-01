@@ -74,3 +74,5 @@ Number of successs attempts:65
 runtime with in vocab: 0.006366098928265273
 runtime with out vocab: 0.006386478625936434
 runtime diff: 2.0379697671160484e-05
+=====================In vocab word:password
+Out vocab word:dfjgkkd908lkg
