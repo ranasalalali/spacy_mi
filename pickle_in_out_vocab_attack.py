@@ -105,7 +105,7 @@ for i in range(iterations):
     
     time0 = time.perf_counter()
     # doc = nlp(text)
-    doc = make_doc(text)
+    doc = nlp.make_doc(text)
     time_now = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     in_vocab_runtime = time_now - time0
@@ -128,7 +128,7 @@ for i in range(iterations):
     
     time1 = time.perf_counter()
     # doc = nlp(text)
-    doc = make_doc(text)
+    doc = nlp.make_doc(text)
     time_now1 = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     out_vocab_runtime = time_now1 - time1
