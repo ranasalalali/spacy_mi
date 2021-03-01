@@ -71,11 +71,14 @@ if __name__ == "__main__":
     print(g)
     print(len(g))
 
-    in_vocab_runtime = {g[i][0]: for i in range(len(g))}
-    out_vocab_runtime = {g[i][1]: for i in range(len(g))}
+    print(g[:][0])
+    print(g[:][1])
 
-    print(in_vocab_runtime)
-    print(out_vocab_runtime)
+    # in_vocab_runtime = {g[i][0]:None for i in range(len(g))}
+    # out_vocab_runtime = {g[i][1]:None for i in range(len(g))}
+
+    # print(in_vocab_runtime)
+    # print(out_vocab_runtime)
 
 
     # avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
