@@ -80,23 +80,29 @@ if __name__ == "__main__":
     print(in_vocab_runtime)
     print(out_vocab_runtime)
 
-    iterations = 100
-    iteration = []
-    for i in range(iterations):
-        iteration.append(i)
+    mean = in_vocab_runtime.mean()
+    std_in = in_vocab_runtime.std()
 
-    print(iteration)
+    print("mean of in_vocab_runtime: ", mean)
+    print("std of in_vocab_runtime: ", std_in)
+
+    # iterations = 100
+    # iteration = []
+    # for i in range(iterations):
+    #     iteration.append(i)
+
+    # print(iteration)
 
 
-    # %matplotlib inline
-    import matplotlib.pyplot as plt
-    plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
-    plt.legend(['in vocab', 'out vocab'])
-    plt.xlabel('Iteration i_th')
-    plt.ylabel('runtime (s)')
-    ax = plt.gca()
-    ax.set_ylim(0.00015, 0.00030)
-    plt.savefig('runtime_distribution.pdf', dpi=300, bbox_inches='tight')
+    # # %matplotlib inline
+    # import matplotlib.pyplot as plt
+    # plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
+    # plt.legend(['in vocab', 'out vocab'])
+    # plt.xlabel('Iteration i_th')
+    # plt.ylabel('runtime (s)')
+    # ax = plt.gca()
+    # ax.set_ylim(0.00015, 0.00030)
+    # plt.savefig('runtime_distribution.pdf', dpi=300, bbox_inches='tight')
 
 
     # avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
