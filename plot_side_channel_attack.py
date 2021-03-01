@@ -71,14 +71,29 @@ if __name__ == "__main__":
     print(g)
     print(len(g))
 
-    print(g[:][:][0][0])
-    print(g[:][:][0][1])
+    # print(g[:][:][0][0])
+    # print(g[:][:][0][1])
 
-    # in_vocab_runtime = {g[i][0]:None for i in range(len(g))}
-    # out_vocab_runtime = {g[i][1]:None for i in range(len(g))}
+    in_vocab_runtime = g[:][:][0][0]
+    out_vocab_runtime = g[:][:][0][1]
 
-    # print(in_vocab_runtime)
-    # print(out_vocab_runtime)
+    print(in_vocab_runtime)
+    print(out_vocab_runtime)
+
+    iteration = []
+    for i in range(interations):
+        iteration.append(i)
+
+    print(iteration)
+
+
+    # %matplotlib inline
+    import matplotlib.pyplot as plt
+    plt.plot(interation, in_vocab_runtime, '-o', interation, out_vocab_runtime, '-v')
+    plot.legend('in vocab', 'out vocab')
+    plt.xlabel('Iteration i_th')
+    plt.ylabel('runtime (s)')
+    plt.savefig('runtime_distribution.pdf', dpi=300, bbox_inches='tight')
 
 
     # avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
