@@ -60,7 +60,7 @@ def save_results(results_holder):
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'results/'
-    filename = '{}_in_out_vocab.pickle3'.format(now)
+    filename = '{}_make_doc_in_out_vocab.pickle3'.format(now)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
     save_file = open(filename, 'wb')
@@ -68,7 +68,7 @@ def save_results(results_holder):
     save_file.close()
 
 
-file_name = open("in_out_vocab.txt","a")
+file_name = open("in_out_vocab_make_doc.txt","a")
 
 
 
@@ -104,7 +104,8 @@ for i in range(iterations):
     text = "password"
     
     time0 = time.perf_counter()
-    doc = nlp(text)
+    # doc = nlp(text)
+    doc = make_doc(text)
     time_now = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     in_vocab_runtime = time_now - time0
@@ -126,7 +127,8 @@ for i in range(iterations):
     text = "dfjgkkd908lkg"
     
     time1 = time.perf_counter()
-    doc = nlp(text)
+    # doc = nlp(text)
+    doc = make_doc(text)
     time_now1 = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     out_vocab_runtime = time_now1 - time1
