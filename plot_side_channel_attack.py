@@ -95,7 +95,7 @@ if __name__ == "__main__":
     plt.xlabel('Iteration i_th')
     plt.ylabel('runtime (s)')
     ax = plt.gca()
-    ax.set_ylim(0, 0.010)
+    ax.set_ylim(0.005, 0.0080)
     plt.savefig('runtime_distribution.pdf', dpi=300, bbox_inches='tight')
 
 
