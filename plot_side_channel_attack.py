@@ -42,7 +42,7 @@ if __name__ == "__main__":
 
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
-    res_folder = 'results/'.format(folder)
+    res_folder = '{}/'.format(folder)
 
     files = os.listdir(res_folder)
 
