@@ -91,9 +91,11 @@ if __name__ == "__main__":
     # %matplotlib inline
     import matplotlib.pyplot as plt
     plt.plot(iteration, in_vocab_runtime, '-o', iteration, out_vocab_runtime, '-v')
-    plt.legend('in vocab', 'out vocab')
+    plt.legend(['in vocab', 'out vocab'])
     plt.xlabel('Iteration i_th')
     plt.ylabel('runtime (s)')
+    ax = plt.gca()
+    ax.set_ylim(0, 0.010)
     plt.savefig('runtime_distribution.pdf', dpi=300, bbox_inches='tight')
 
 
