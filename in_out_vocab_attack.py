@@ -35,7 +35,7 @@ count_success = 0
 
 for i in range(iterations):
     nlp = spacy.load('en_core_web_lg')
-
+    print("i = ", i)
 
     ## out vocab
     print("-----OUT vocab-----")
@@ -58,9 +58,9 @@ for i in range(iterations):
     diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
     print("updated elements: ", diff)
 
-    
+
     ## in vocab
-    print("i = ", i)
+    
     print("-----IN vocab-----")
     vocab_string_org = list(nlp.vocab.strings)
     print("len of vocab before query {}".format(len(vocab_string_org)))
