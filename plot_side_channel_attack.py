@@ -90,7 +90,7 @@ if __name__ == "__main__":
 
     # %matplotlib inline
     import matplotlib.pyplot as plt
-    plt.plot(iteration, in_vocab_runtime, '-o', iteration, out_vocab_runtime, '-v')
+    plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
     plt.legend(['in vocab', 'out vocab'])
     plt.xlabel('Iteration i_th')
     plt.ylabel('runtime (s)')
