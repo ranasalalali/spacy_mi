@@ -72,7 +72,7 @@ file_name = open("in_out_vocab.txt","a")
 
 
 
-iterations = 100
+iterations = 10
 total_in_vocab_time = 0
 total_out_vocab_time = 0
 
@@ -84,6 +84,9 @@ out_vocab_word = "dfjgkkd908lkg"
 file_name.write("=====================")  
 file_name.write("In vocab word:{}\n".format(in_vocab_word))  
 file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+in_vocab_runtime_list = [None]
+out_vocab_runtime_list = [None]
 
 for i in range(iterations):
     
@@ -105,6 +108,10 @@ for i in range(iterations):
     time_now = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     in_vocab_runtime = time_now - time0
+    in_vocab_runtime_list.append(in_vocab_runtime)
+    
+    print(in_vocab_runtime_list)
+
     print("runtime = ", in_vocab_runtime)
     total_in_vocab_time += in_vocab_runtime
 
@@ -123,6 +130,11 @@ for i in range(iterations):
     time_now1 = time.perf_counter()
     vocab_string_after_query = list(nlp.vocab.strings)
     out_vocab_runtime = time_now1 - time1
+
+    out_vocab_runtime_list.append(out_vocab_runtime)
+    
+    print(out_vocab_runtime_list)
+
     print("runtime = ", out_vocab_runtime)
 
     total_out_vocab_time += out_vocab_runtime
@@ -145,4 +157,4 @@ if iterations >0:
     file_name.write("runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
 
 
-
+save_results([in_vocab_runtime_list, out_vocab_runtime_list])
