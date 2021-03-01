@@ -88,6 +88,13 @@ if __name__ == "__main__":
     print("mean of in_vocab_runtime: ", mean_in)
     print("std of in_vocab_runtime: ", stdev_in)
 
+    mean_out = sum(out_vocab_runtime)/len(out_vocab_runtime)
+    stdev_out = statistics.pstdev(out_vocab_runtime)
+    # std_in = in_vocab_runtime.std()
+
+    print("mean of out_vocab_runtime: ", mean_out)
+    print("std of out_vocab_runtime: ", stdev_out)
+
     # iterations = 100
     # iteration = []
     # for i in range(iterations):
