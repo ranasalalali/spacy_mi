@@ -80,8 +80,9 @@ if __name__ == "__main__":
     print(in_vocab_runtime)
     print(out_vocab_runtime)
 
+    iterations = 100
     iteration = []
-    for i in range(interations):
+    for i in range(iterations):
         iteration.append(i)
 
     print(iteration)
