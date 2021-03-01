@@ -34,7 +34,7 @@ total_out_vocab_time = 0
 count_success = 0
 
 in_vocab_word = "password"
-out_vocab_runtime = "dfjgkkd908lkg"
+out_vocab_word = "dfjgkkd908lkg"
 file_name.write("In vocab word:{}\n".format(in_vocab_word))  
 file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
 
