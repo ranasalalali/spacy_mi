@@ -69,9 +69,10 @@ if __name__ == "__main__":
     
     
     print(g)
+    print(len(g))
 
-    in_vocab_runtime = {g[i][1]:None for i in range(len(g))}
-    out_vocab_runtime = {g[i][1]:None for i in range(len(g))}
+    in_vocab_runtime = {g[i][0]: for i in range(len(g))}
+    out_vocab_runtime = {g[i][1]: for i in range(len(g))}
 
     print(in_vocab_runtime)
     print(out_vocab_runtime)
