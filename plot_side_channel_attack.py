@@ -13,6 +13,7 @@ import argparse
 from mpl_toolkits.mplot3d import Axes3D
 import re
 from Levenshtein import distance as levenshtein_distance
+import statistics 
 
 
 def mkdir_p(path):
@@ -80,11 +81,12 @@ if __name__ == "__main__":
     print(in_vocab_runtime)
     print(out_vocab_runtime)
 
-    mean = sum(in_vocab_runtime)/len(in_vocab_runtime)
+    mean_in = sum(in_vocab_runtime)/len(in_vocab_runtime)
+    stdev_in = statistics.pstdev(in_vocab_runtime)
     # std_in = in_vocab_runtime.std()
 
-    print("mean of in_vocab_runtime: ", mean)
-    # print("std of in_vocab_runtime: ", std_in)
+    print("mean of in_vocab_runtime: ", mean_in)
+    print("std of in_vocab_runtime: ", stdev_in)
 
     # iterations = 100
     # iteration = []
