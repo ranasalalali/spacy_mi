@@ -95,10 +95,10 @@ if __name__ == "__main__":
     print("mean of out_vocab_runtime: ", mean_out)
     print("std of out_vocab_runtime: ", stdev_out)
 
-    # iterations = 100
-    # iteration = []
-    # for i in range(iterations):
-    #     iteration.append(i)
+    iterations = 100
+    iteration = []
+    for i in range(iterations):
+        iteration.append(i)
 
     # print(iteration)
 
