@@ -33,9 +33,16 @@ total_out_vocab_time = 0
 
 count_success = 0
 
+in_vocab_word = "password"
+out_vocab_runtime = "dfjgkkd908lkg"
+file_name.write("In vocab word:{}\n".format(in_vocab_word))  
+file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+
 for i in range(iterations):
-    nlp = spacy.load('en_core_web_lg')
+    
     print("i = ", i)
+    nlp = spacy.load('en_core_web_lg')
 
     
 
@@ -58,6 +65,7 @@ for i in range(iterations):
     print("len of vocab before query {}".format(len(vocab_string_after_query)))
 
     ## out vocab
+    nlp = spacy.load('en_core_web_lg')
     print("-----OUT vocab-----")
     vocab_string_org = list(nlp.vocab.strings)
     print("len of vocab before query {}".format(len(vocab_string_org)))
