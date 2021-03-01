@@ -1,0 +1,43 @@
+======Average======runtime with trained pw: 0.0033643582509830594
+runtime with new pw same pref: 0.0031644296390004457
+======Average======
+runtime with trained pw: 0.003382501698797569
+runtime with new pw same pref: 0.0032820896012708545
+runtime with new pw same suff: 0.003228360999491997
+runtime with new pw same shape: 0.003159760500420816
+runtime with new pw same pref suf: 0.0031464722967939453
+runtime with new pw same pref shape: 0.0031960833061020822
+runtime with new pw same suff shape: 0.0031734509975649416
+runtime with new pw same pref suff shape: 0.0031798756099306047
+runtime with new pw same length: 0.0031910617952235045
+runtime with new pw arbitrary: 0.0032015390956075863
+======Time different ======
+new pw same pref: -0.00010041209752671438
+new pw same suff: -0.00015414069930557188
+new pw same shape: -0.00022274119837675278
+new pw same pref suff: -0.00023602940200362355
+new pw same pref shape: -0.00018641839269548663
+new pw same suff shape: -0.0002090507012326272
+new pw same pref suff shape: -0.00020262608886696416
+new pw same length: -0.00019143990357406437
+new pw arbitrary: -0.00018096260318998256
+Number of successs attempts:0
+======Average======
+runtime with trained pw: 0.0034231669013388456
+runtime with new pw: 0.0030863656499423085
+runtime diff: -0.0003368012513965371
+Number of successs attempts:1
+======Average======
+runtime with trained pw: 0.00343823909846833
+runtime with new pw: 0.003079438671702519
+runtime diff: -0.0003588004267658109
+Number of successs attempts:0
+======Average======
+runtime with trained pw: 0.0033855540220974947
+runtime with new pw: 0.00304299108160194
+runtime diff: -0.0003425629404955545
+Number of successs attempts:0
+======Average======
+runtime with trained pw: 0.0034236290387343617
+runtime with new pw: 0.0030841738320305013
+runtime diff: -0.0003394552067038604

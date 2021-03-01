@@ -1,0 +1,76 @@
+Number of successs attempts:37
+======Average======
+runtime with in vocab: 0.006436583120957949
+runtime with out vocab: 0.006410603198455647
+runtime diff: -2.5979922502301737e-05
+Number of successs attempts:24
+======Average======
+runtime with in vocab: 0.006466226517222822
+runtime with out vocab: 0.006423930141027085
+runtime diff: -4.2296376195736715e-05
+Number of successs attempts:15
+======Average======
+runtime with in vocab: 0.00653000537888147
+runtime with out vocab: 0.006486737539526075
+runtime diff: -4.3267839355394695e-05
+Number of successs attempts:87
+======Average======
+runtime with in vocab: 0.006305503866169602
+runtime with out vocab: 0.00637215570488479
+runtime diff: 6.665183871518848e-05
+Number of successs attempts:83
+======Average======
+runtime with in vocab: 0.006397175043821335
+runtime with out vocab: 0.006498760741087608
+runtime diff: 0.00010158569726627289
+Number of successs attempts:83
+======Average======
+runtime with in vocab: 0.00630631986015942
+runtime with out vocab: 0.006378118626307696
+runtime diff: 7.179876614827642e-05
+Number of successs attempts:26
+======Average======
+runtime with in vocab: 0.00640658141928725
+runtime with out vocab: 0.006361369256628677
+runtime diff: -4.521216265857258e-05
+Number of successs attempts:38
+======Average======
+runtime with in vocab: 0.006422589360736311
+runtime with out vocab: 0.006378802011604421
+runtime diff: -4.378734913189006e-05
+In vocab word:password
+In vocab word:password
+Out vocab word:dfjgkkd908lkg
+Number of successs attempts:65
+======Average======
+runtime with in vocab: 0.006432773228734732
+runtime with out vocab: 0.006493312186794355
+runtime diff: 6.053895805962356e-05
+In vocab word:password
+Out vocab word:dfjgkkd908lkg
+Number of successs attempts:59
+======Average======
+runtime with in vocab: 0.0064546566316857935
+runtime with out vocab: 0.006447262107976712
+runtime diff: -7.394523709081287e-06
+In vocab word:password
+Out vocab word:dfjgkkd908lkg
+Number of successs attempts:51
+======Average======
+runtime with in vocab: 0.006606777860433795
+runtime with out vocab: 0.006511922008357942
+runtime diff: -9.485585207585304e-05
+=====================In vocab word:password
+Out vocab word:dfjgkkd908lkg
+Number of successs attempts:4
+======Average======
+runtime with in vocab: 0.006593242799863219
+runtime with out vocab: 0.006444094813195989
+runtime diff: -0.0001491479866672302
+=====================In vocab word:password
+Out vocab word:dfjgkkd908lkg
+Number of successs attempts:65
+======Average======
+runtime with in vocab: 0.006366098928265273
+runtime with out vocab: 0.006386478625936434
+runtime diff: 2.0379697671160484e-05

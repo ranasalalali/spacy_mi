@@ -72,7 +72,7 @@ file_name = open("in_out_vocab.txt","a")
 
 
 
-iterations = 10
+iterations = 100
 total_in_vocab_time = 0
 total_out_vocab_time = 0
 
