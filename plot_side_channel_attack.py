@@ -71,8 +71,8 @@ if __name__ == "__main__":
     print(g)
     print(len(g))
 
-    print(g[:][:][0])
-    print(g[:][:][1])
+    print(g[:][:][0][0])
+    print(g[:][:][0][1])
 
     # in_vocab_runtime = {g[i][0]:None for i in range(len(g))}
     # out_vocab_runtime = {g[i][1]:None for i in range(len(g))}
