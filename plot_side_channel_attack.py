@@ -48,6 +48,7 @@ if __name__ == "__main__":
     print(res_folder)
 
     files = os.listdir(res_folder)
+    print(files)
 
     g = []
     br = 0
@@ -111,7 +112,8 @@ if __name__ == "__main__":
     plt.ylabel('runtime (s)')
     ax = plt.gca()
     ax.set_ylim(0.00015, 0.00035)
-    plt.savefig('runtime_distribution.pdf', dpi=300, bbox_inches='tight')
+    file_name = "runtime_distribution.pdf"
+    plt.savefig(file_name, dpi=300, bbox_inches='tight')
 
 
     # avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}

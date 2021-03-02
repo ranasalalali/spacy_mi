@@ -101,8 +101,6 @@ def target_nlp_make_doc(iterations):
         print("i = ", i)
         nlp = spacy.load('en_core_web_lg')
 
-        
-
         ## in vocab
         
         print("-----IN vocab-----")
