@@ -607,8 +607,8 @@ def target_ner_updated(iterations):
         
         text = in_vocab_word
         
-        time0 = time.perf_counter()
         ner = nlp.get_pipe('ner')
+        time0 = time.perf_counter()
         docs = nlp.make_doc(text)
         docs = ner(docs)
         time_now = time.perf_counter()
@@ -633,8 +633,9 @@ def target_ner_updated(iterations):
         
         text = out_vocab_word
         
-        time1 = time.perf_counter()
+       
         ner = nlp.get_pipe('ner')
+        time1 = time.perf_counter()
         docs = nlp.make_doc(text)
         docs = ner(docs)
         time_now1 = time.perf_counter()
