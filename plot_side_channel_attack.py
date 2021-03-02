@@ -14,6 +14,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import re
 from Levenshtein import distance as levenshtein_distance
 import statistics 
+import matplotlib.pyplot as plt
 
 
 def mkdir_p(path):
@@ -44,11 +45,12 @@ if __name__ == "__main__":
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
 
-    res_folder = 'results/{}/'.format(folder)
+    res_folder = '{}/'.format(folder)
     print(res_folder)
 
     files = os.listdir(res_folder)
     print(files)
+    
 
     g = []
     br = 0
@@ -59,7 +61,7 @@ if __name__ == "__main__":
         h = pickle.load(open(file_path, 'rb'))
         g.append(h)
     print('Read Disk')
-    print('{} TEST RUNS FOUND'.format(len(g)))
+    print('{} FILES FOUND'.format(len(g)))
 
     plt_folder = '{}_PLOTS/'.format(folder)
 
@@ -70,8 +72,8 @@ if __name__ == "__main__":
 
     
     
-    print(g)
-    print(len(g))
+    # print(g)
+    # print(len(g))
 
     # print(g[:][:][0][0])
     # print(g[:][:][0][1])
@@ -79,8 +81,8 @@ if __name__ == "__main__":
     in_vocab_runtime = g[:][:][0][0]
     out_vocab_runtime = g[:][:][0][1]
 
-    print(in_vocab_runtime)
-    print(out_vocab_runtime)
+    # print(in_vocab_runtime)
+    # print(out_vocab_runtime)
 
     mean_in = sum(in_vocab_runtime)/len(in_vocab_runtime)
     stdev_in = statistics.pstdev(in_vocab_runtime)
@@ -105,15 +107,42 @@ if __name__ == "__main__":
 
 
     # %matplotlib inline
-    import matplotlib.pyplot as plt
-    plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
-    plt.legend(['in vocab', 'out vocab'])
-    plt.xlabel('Iteration i_th')
-    plt.ylabel('runtime (s)')
-    ax = plt.gca()
-    ax.set_ylim(0.00015, 0.00035)
-    file_name = "runtime_distribution.pdf"
-    plt.savefig(file_name, dpi=300, bbox_inches='tight')
+    
+    
+    # plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
+    # plt.legend(['in vocab', 'out vocab'])
+    # plt.xlabel('Iteration i_th')
+    # plt.ylabel('runtime (s)')
+    # ax = plt.gca()
+    # ax.set_ylim(0.00015, 0.00035)
+    # file_name = "runtime_distribution.pdf"
+    # plt.savefig(file_name, dpi=300, bbox_inches='tight')
+
+    plot_names = []
+    for plot_name in files:
+        plot_name = plot_name.split('.')[0]
+        plot_names.append(plot_name)
+    print(plot_names)
+
+    for i in range(len(g)):
+        print(i)
+        plot1 = plt.figure(i)
+        in_vocab_runtimes = g[:][:][i][0]
+        in_vocab_runtime = [in_vocab_runtime*1000 for in_vocab_runtime in in_vocab_runtimes]
+        out_vocab_runtimes = g[:][:][i][1]
+        out_vocab_runtime = [out_vocab_runtime*1000 for out_vocab_runtime in out_vocab_runtimes]
+        plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
+        # plt.plot(iteration, in_vocab_runtimes, 'o', iteration, out_vocab_runtimes, 'v')
+        plt.legend(['in vocab', 'out vocab'])
+        plt.xlabel("Run $i^{th}$")
+        plt.ylabel('runtime (ms)')
+        # ax = plt.gca()
+        # ax.set_xlim(1,100) 
+        plt_dest = plt_folder + 'runtime_{}.pdf'.format(plot_names[i])
+        plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+    #     plt.savefig(plt_dest,
 
 
     # avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(len(g))}
