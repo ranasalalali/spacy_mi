@@ -1,0 +1,7 @@
+======== target ner make_doc ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:83
+avg runtime with in vocab: 0.003519622371532023
+avg runtime with out vocab: 0.0035904225427657367
+avg runtime diff: 7.080017123371361e-05

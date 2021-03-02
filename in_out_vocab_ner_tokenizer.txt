@@ -1,0 +1,7 @@
+======== target ner tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:90
+avg runtime with in vocab: 0.003441120007773861
+avg runtime with out vocab: 0.0035410194750875234
+avg runtime diff: 9.989946731366224e-05

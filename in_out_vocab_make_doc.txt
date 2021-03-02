@@ -21,3 +21,18 @@ Number of successs attempts:89
 runtime with in vocab: 0.0002638575684977695
 runtime with out vocab: 0.000281367001007311
 runtime diff: 1.75094325095415e-05
+=====================
+In vocab word:password
+Out vocab word:dfjgkkd908lkg
+Number of successs attempts:89
+======Average======
+runtime with in vocab: 0.0002749640739057213
+runtime with out vocab: 0.00029220973490737376
+runtime diff: 1.7245661001652436e-05
+======== target makedoc ==============
+In vocab word:password
+Out vocab word:fdelkrg89gfhfkd
+Number of successs attempts:89
+avg runtime with in vocab: 0.0002744631515815854
+avg runtime with out vocab: 0.00029502285178750753
+avg runtime diff: 2.0559700205922125e-05
