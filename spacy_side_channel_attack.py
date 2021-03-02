@@ -673,7 +673,7 @@ def target_ner_updated(iterations):
 
 
 if __name__ == "__main__":
-    iterations = 10
+    iterations = 100
     # target_nlp_make_doc(iterations)
     # target_nlp_whole(iterations)
     # target_nlp_tokenizer(iterations)
