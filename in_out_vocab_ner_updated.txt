@@ -26,3 +26,24 @@ Number of successs attempts:3
 avg runtime with in vocab: 0.0039439693267922845
 avg runtime with out vocab: 0.003777447864413261
 avg runtime diff: -0.0001665214623790233
+======== target ner updated ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is dfhdle783ldoq)
+Number of successs attempts:2
+avg runtime with in vocab: 0.0039500173332635315
+avg runtime with out vocab: 0.003757355858106166
+avg runtime diff: -0.0001926614751573655
+======== target ner updated ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is dfhdle783ldoq)
+Number of successs attempts:94
+avg runtime with in vocab: 0.003910460551269352
+avg runtime with out vocab: 0.004041727731237188
+avg runtime diff: 0.0001312671799678358
+======== target ner updated ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is dfhdle783ldoq)
+Number of successs attempts:94
+avg runtime with in vocab: 0.0035233290737960487
+avg runtime with out vocab: 0.0036502552300225945
+avg runtime diff: 0.00012692615622654588
