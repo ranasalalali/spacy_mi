@@ -625,7 +625,7 @@ def target_ner_updated(iterations):
 
         ## out vocab
         
-        # nlp = updatingModel()
+        nlp = updatingModel()
 
         print("-----OUT vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
