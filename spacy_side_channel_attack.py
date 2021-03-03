@@ -807,6 +807,7 @@ def get_avg_runtime_in_vocab():
         print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = "Rana's secret is" + i
+        print(text)
         
         ner = nlp.get_pipe('ner')
         time0 = time.perf_counter()
