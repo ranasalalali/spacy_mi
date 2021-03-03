@@ -4,3 +4,8 @@ avg runtime with in vocab: 0.0041232706769369545
 avg runtime with out vocab: 0.0041254602547269315
 avg runtime diff (ms): 0.0021895777899769847
 avg runtime diff (mis): 2.1895777899769846
+======== target ner updated ==============
+avg runtime with in vocab: 0.004264625656651333
+avg runtime with out vocab: 0.004242166572948918
+avg runtime diff (ms): -0.022459083702415505
+avg runtime diff (mis): -22.459083702415505
