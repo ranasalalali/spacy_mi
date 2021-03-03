@@ -67,6 +67,7 @@ if __name__ == "__main__":
     folder = loc
 
     features = folder.split("_")[-1]
+    verion = folder.split("_")[1:2]
 
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
@@ -89,6 +90,7 @@ if __name__ == "__main__":
 
     mkdir_p(plt_folder)
 
+    number_of_passwords = len(g)
 
     secret_index = 3
 
@@ -245,6 +247,7 @@ if __name__ == "__main__":
         plt.xlabel('Rank')
         plt.ylabel('Distribution')
         plt.xlim(secret_neighbour_rank_left, secret_neighbour_rank_right)
+        plt.title('CDF of target password {} with a radius of {}'.format(secert, radius))
         plt.legend()
         plt.tight_layout()
         image_name = secret.replace('.','(dot)')
@@ -287,6 +290,7 @@ if __name__ == "__main__":
         #pr.set_zlim(0,500)
         
     plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    plt.title('{} test with {} passwords'.format(version, number_of_passwords))
     plt.tight_layout()
     plt_dest = plt_folder + 'RANK_PER_EPOCH_AND_INSERTION'
     plt.savefig(plt_dest,
@@ -319,6 +323,7 @@ if __name__ == "__main__":
         pr.set_zlim(0,500)
         
     plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    plt.title('{} test with {} passwords'.format(version, number_of_passwords))
     plt.tight_layout()
     plt_dest = plt_folder + 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED'
     plt.savefig(plt_dest,
