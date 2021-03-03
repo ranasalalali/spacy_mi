@@ -783,7 +783,7 @@ def get_avg_runtime_in_vocab():
     count_success = 0
 
     # in_vocab_word = "Rana's secret is rgjfgklf678"
-    out_vocab_word = "Rana's secret is student"
+    out_vocab_word = "Rana's secret is ghsktham2*ut&&"
     file_name = open("100_in_vocab_avg_runtime_ner_updated.txt","a")
     file_name.write("======== target ner updated ==============\n")  
     # file_name.write("In vocab word:{}\n".format(in_vocab_word))  
@@ -867,11 +867,11 @@ def get_avg_runtime_in_vocab():
     if iterations >0:
         file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
         file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
-        # file_name.write("avg runtime diff (ms): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000))
-        # file_name.write("avg runtime diff (mis): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000000))
+        file_name.write("avg runtime diff (ms): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000))
+        file_name.write("avg runtime diff (mis): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000000))
 
 
-    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab") 
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab_out_vocab") 
 
 if __name__ == "__main__":
     iterations = 100
