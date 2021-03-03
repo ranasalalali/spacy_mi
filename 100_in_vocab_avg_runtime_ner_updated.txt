@@ -25,3 +25,10 @@ avg runtime with in vocab: 0.003687434034654871
 avg runtime with out vocab: 0.0038498221908230333
 avg runtime diff (ms): 0.16238815616816246
 avg runtime diff (mis): 162.38815616816245
+======== target ner updated ==============
+Out vocab word:Rana's secret is ghsktham2*ut&&
+Number of successs attempts:90
+avg runtime with in vocab: 0.003682431704364717
+avg runtime with out vocab: 0.0038420245540328325
+avg runtime diff (ms): 0.15959284966811543
+avg runtime diff (mis): 159.59284966811543

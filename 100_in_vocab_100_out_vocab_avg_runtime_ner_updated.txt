@@ -1,0 +1,6 @@
+======== target ner updated ==============
+======== target ner updated ==============
+avg runtime with in vocab: 0.0041232706769369545
+avg runtime with out vocab: 0.0041254602547269315
+avg runtime diff (ms): 0.0021895777899769847
+avg runtime diff (mis): 2.1895777899769846
