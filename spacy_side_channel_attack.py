@@ -868,10 +868,10 @@ def get_avg_runtime_in_vocab():
         
         # print("-------------------")
 
-    for i in range(100):
-        if out_vocab_runtime[i] > in_vocab_runtime[i]:
-            count_success +=1
-    file_name.write("Number of successs attempts:{}\n".format(count_success))    
+    # for i in range(100):
+    #     if out_vocab_runtime[i] > in_vocab_runtime[i]:
+    #         count_success +=1
+    # file_name.write("Number of successs attempts:{}\n".format(count_success))    
     # file_name.write("======Average======\n") 
     if iterations >0:
         file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
