@@ -1,0 +1,27 @@
+======== target ner updated ==============
+Out vocab word:Rana's secret is student
+======== target ner updated ==============
+Out vocab word:Rana's secret is student
+Number of successs attempts:92
+avg runtime with in vocab: 0.0034325621102470906
+avg runtime with out vocab: 0.0036287232965696603
+======== target ner updated ==============
+Out vocab word:Rana's secret is student
+======== target ner updated ==============
+Out vocab word:Rana's secret is student
+======== target ner updated ==============
+Out vocab word:Rana's secret is student
+======== target ner updated ==============
+Out vocab word:Rana's secret is student
+======== target ner updated ==============
+Out vocab word:Rana's secret is student
+Number of successs attempts:29
+avg runtime with in vocab: 0.0036831760266795755
+avg runtime with out vocab: 0.003622217633528635
+======== target ner updated ==============
+Out vocab word:Rana's secret is ghsktham2*ut&&
+Number of successs attempts:91
+avg runtime with in vocab: 0.003687434034654871
+avg runtime with out vocab: 0.0038498221908230333
+avg runtime diff (ms): 0.16238815616816246
+avg runtime diff (mis): 162.38815616816245

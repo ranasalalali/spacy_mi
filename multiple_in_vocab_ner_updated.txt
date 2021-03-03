@@ -1,0 +1,15 @@
+======== target ner updated ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is password
+Number of successs attempts:92
+avg runtime with in vocab: 0.0035726440011058
+avg runtime with out vocab: 0.0036671310057863594
+avg runtime diff: 9.44870046805592e-05
+======== target ner updated ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is password
+Number of successs attempts:35
+avg runtime with in vocab: 0.004008556458866224
+avg runtime with out vocab: 0.003999046124517918
+avg runtime diff (ms): -0.009510334348305886
+avg runtime diff (mis): -9.510334348305886
