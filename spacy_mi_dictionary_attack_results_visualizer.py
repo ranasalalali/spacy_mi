@@ -67,7 +67,7 @@ if __name__ == "__main__":
     folder = loc
 
     features = folder.split("_")[-1]
-    verion = folder.split("_")[1:2]
+    version = folder.split("_")[1:2]
 
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
