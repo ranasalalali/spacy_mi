@@ -234,8 +234,8 @@ if __name__ == "__main__":
             feature_distance_ranks_per_password[all_password_feature_dist[index]].append(all_password_ranks[index])
         std_error_per_dist = []
         for dist in feature_distance_ranks_per_password.keys():
-            std_error_per_dist.append(np.std(np.array(feature_distance_ranks_per_password)))
-            feature_distance_ranks_per_password[dist] = np.mean(np.array(feature_distance_ranks_per_password))
+            std_error_per_dist.append(np.std(np.array(feature_distance_ranks_per_password[dist])))
+            feature_distance_ranks_per_password[dist] = np.mean(np.array(feature_distance_ranks_per_password[dist]))
 
         #FEATURE_DISTANCE_RANK_PER_PASSWORD
         fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
