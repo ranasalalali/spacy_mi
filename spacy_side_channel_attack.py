@@ -679,7 +679,7 @@ def target_ner_updated_blackbox(iterations):
     count_success = 0
 
     in_vocab_word = "Rana's secret is rgjfgklf678"
-    out_vocab_word = "Rana's secret is password"
+    out_vocab_word = "Rana's secret is student"
     file_name = open("multiple_in_vocab_ner_updated.txt","a")
     file_name.write("======== target ner updated ==============\n")  
     file_name.write("In vocab word:{}\n".format(in_vocab_word))  
