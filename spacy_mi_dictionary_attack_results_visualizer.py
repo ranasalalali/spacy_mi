@@ -55,6 +55,29 @@ def word_shape(text=None):
             shape.append(shape_char)
     return "".join(shape)
 
+def feature_distance(target=None, password=None):
+    
+    distance = 0
+
+    shape_t = word_shape(target)
+    shape_p = word_shape(password)
+    shape_distance = levenshtein_distance(shape_t, shape_p)
+
+    prefix_t = target[1]
+    prefix_p = password[1]
+    prefix_distance = levenshtein_distance(prefix_t, prefix_p)
+
+    suffix_t = target[-3]
+    suffix_p = password[-3]
+    suffix_distance = levenshtein_distance(suffix_t, suffix_p)
+
+    norm_t = target.lower()
+    norm_p = password.lower()
+    norm_distance = levenshtein_distance(norm_p, norm_t)
+
+    return shape_distance + prefix_distance + suffix_distance norm_distance
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
@@ -110,6 +133,8 @@ if __name__ == "__main__":
     password_Stat = {}
 
     features_passwords_exist = 0
+
+    avg_feature_distance_ranks = {}
 
     for i in range(len(g)):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
@@ -190,7 +215,7 @@ if __name__ == "__main__":
         all_password_ranks = [np.mean(np.array(exposure_rank_per_code[code])) for code in exposure_rank_per_code]
 
         secret_shape = word_shape(secret)
-        all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret_shape, word_shape(code))) for code in exposure_rank_per_code}
+        all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret_shape, word_shape(code)), feature_distance(code, secret)) for code in exposure_rank_per_code}
 
         all_password_stat_sorted = dict(sorted(all_password_stat.items(), key=lambda i: i[1][0], reverse=False))
 
@@ -199,6 +224,33 @@ if __name__ == "__main__":
         all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
         all_password_shape = [all_password_stat_sorted[code][2] for code in all_password_stat_sorted]
         all_password_shape_dist = [all_password_stat_sorted[code][3] for code in all_password_stat_sorted]
+        all_password_feature_dist = [all_password_stat_sorted[code][4] for code in all_password_stat_sorted]
+
+        all_dists = set(all_password_feature_dist)
+
+        feature_distance_ranks_per_password = {dist:[] for dist in all_dists}
+
+        for index in range(all_password_ranks):
+            feature_distance_ranks_per_password[all_password_feature_dist[index]].append(all_password_ranks[index])
+        std_error_per_dist = []
+        for dist in feature_distance_ranks_per_password.keys():
+            std_error_per_dist.append(np.std(np.array(feature_distance_ranks_per_password)))
+            feature_distance_ranks_per_password[dist] = np.mean(np.array(feature_distance_ranks_per_password))
+
+        #FEATURE_DISTANCE_RANK_PER_PASSWORD
+        fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+        plt.errorbar(feature_distance_ranks_per_password.keys(), feature_distance_ranks_per_password.values(), std_error_per_dist)
+        plt.xlabel('DISTANCE')
+        plt.ylabel('RANK')
+        plt.title('FEATURE DISTANCE RANKS of target password {}'.format(secret))
+        plt.legend()
+        plt.tight_layout()
+        image_name = secret.replace('.','(dot)')
+        plt_dest = plt_folder + 'FEATURE_DISTANCE_RANKS_{}'.format(image_name)
+        plt.savefig(plt_dest,
+                bbox_inches="tight")
+        #FEATURE_DISTANCE_RANK_PER_PASSWORD END
+
 
         secret_rank_index = all_passwords.index(secret)
         #secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
