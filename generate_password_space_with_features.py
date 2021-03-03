@@ -49,21 +49,21 @@ def word_shape(text=None):
 def generate_password_given_prefix(prefix=None, length=0, total=0):
     
     generated = []
-    print(shape)
+    #print(shape)
     for _ in range(total):
         password = str(prefix) + ''.join(random.choices(ascii_letters, k=length-len(prefix)))
         generated.append(password)
-    print(generated)
+    #print(generated)
     return generated
  
 def generate_password_given_suffix(suffix=None, length=0, total=0):
     
     generated = []
-    print(shape)
+    #print(shape)
     for _ in range(total):
         password = ''.join(random.choices(ascii_letters, k=length-len(suffix))) + suffix
         generated.append(password)
-    print(generated)
+    #print(generated)
     return generated
 
 def generate_password_given_shape(shape=None, total=0):
@@ -81,23 +81,23 @@ def generate_password_given_shape(shape=None, total=0):
                 password = password + ''.join(random.choice(char))
         generated.append(password)
         
-    print(generated)
+    #print(generated)
     return generated
 
 def generate_password_given_prefix_suffix(prefix=None, suffix=None, length=0, total=0):
     
     generated = []
-    print(shape)
+    #print(shape)
     for _ in range(total):
         password = prefix + ''.join(random.choices(ascii_letters, k=length-len(prefix)-len(suffix))) + suffix
         generated.append(password)
-    print(generated)
+    #print(generated)
     return generated
 
 def generate_password_given_prefix_shape(prefix=None, shape=None, total=0):
     
     generated = []
-    print(shape)
+    #print(shape)
     for _ in range(total):
         password = str(prefix)
         for char in shape[1:]:
@@ -111,13 +111,13 @@ def generate_password_given_prefix_shape(prefix=None, shape=None, total=0):
                 password = password + ''.join(random.choice(char))
         generated.append(password)
         
-    print(generated)
+    #print(generated)
     return generated
 
 def generate_password_given_suffix_shape(suffix=None, shape=None, total=0):
     
     generated = []
-    print(shape)
+    #print(shape)
     for _ in range(total):
         password = ''
         for char in shape[:-3]:
@@ -132,7 +132,7 @@ def generate_password_given_suffix_shape(suffix=None, shape=None, total=0):
         password = password + suffix
         generated.append(password)
         
-    print(generated)
+    #print(generated)
     return generated
 
 def generate_password_given_prefix_suffix_shape(prefix=None, suffix=None, shape=None, total=0):
@@ -153,7 +153,7 @@ def generate_password_given_prefix_suffix_shape(prefix=None, suffix=None, shape=
         password = password + suffix
         generated.append(password)
         
-    print(generated)
+    #print(generated)
     return generated
 
 
@@ -173,8 +173,18 @@ def generate_password_given_features(shape=None, prefix=None, suffix=None, lengt
             generated = generate_password_given_prefix_shape(prefix, shape, S)
         if 'y' in features and 'z' in features:
             generated = generate_password_given_suffix_shape(suffix, shape, S)
-    elif len(features)==3:
+    elif 'x' in features and 'y' in features and 'z' in features:
         generated = generate_password_given_prefix_suffix_shape(prefix, suffix, shape, S)
+
+    elif ''.join(features) == 'all':
+        generated = []
+        generated.extend(generate_password_given_prefix(prefix, length, S))
+        generated.extend(generate_password_given_suffix(suffix, length, S))
+        generated.extend(generate_password_given_shape(shape, S))
+        generated.extend(generate_password_given_prefix_suffix(prefix, suffix, length, S))
+        generated.extend(generate_password_given_prefix_shape(prefix, shape, S))
+        generated.extend(generate_password_given_suffix_shape(suffix, shape, S))
+        generated.extend(generate_password_given_prefix_suffix_shape(prefix, suffix, shape, S))
     
     return generated
 
@@ -198,6 +208,10 @@ if __name__ == "__main__":
     new_passwords = args.new_passwords
 
     features = list(features)
+    if ''.join(features) == 'all':
+        number_of_features = 7
+    else:
+        number_of_features = len(features)
     
 
     assert len(strength)==2
@@ -213,32 +227,42 @@ if __name__ == "__main__":
     mkdir_p(folder)    
 
     assert r_space <= 1000000
+    
     passwords = []
-    with open('10-million-password-list-top-1000000.txt','r') as file:  
-        for line in file: 
-            for word in line.split():          
-                passwords.append(word)
-    passwords = random.sample(passwords, (r_space-(S)))
 
     choices = []
     if new_passwords == 'Y':
+   
+        with open('10-million-password-list-top-1000000.txt','r') as file:  
+            for line in file: 
+                for word in line.split():          
+                    passwords.append(word)
+        passwords = random.sample(passwords, (r_space-(S*number_of_features)))
+
         strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
         choices = random.sample(strength_passwords, N)
         o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
         with open(o_filename, 'w') as f:
             for item in choices:
                 f.write("%s\n" % item)
+        
+
     elif new_passwords == 'N':
         choices = []
         i_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
-        with open(i_filename) as file:
-            for line in file: 
-                for word in line.split():          
-                    choices.append(word)
+        try:
+            with open(i_filename) as file:
+                for line in file: 
+                    for word in line.split():          
+                        choices.append(word)
+        except IOError:
+            print("File {} not found".format(i_filename))
+
+    print(len(passwords))
 
     temp_passwords = []
     for choice in choices:
-        print(choice)
+        #print(choice)
         temp_passwords.extend(passwords)
         shape = word_shape(choice)
         prefix = choice[0]
@@ -246,6 +270,7 @@ if __name__ == "__main__":
         length = len(choice)
         generated = generate_password_given_features(shape, prefix, suffix, length, S, features)        
         temp_passwords.extend(generated)
+        print(len(temp_passwords))
 
         filename = '{}_passwords_features_{}_password_{}.pickle3'.format(r_space, ''.join(features), choice)
         filename = os.path.join(folder, filename)
@@ -261,4 +286,4 @@ if __name__ == "__main__":
         pickle.dump(generated, save_file)
         save_file.close()
 
-    print(len(passwords))
+    
