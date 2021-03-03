@@ -826,7 +826,7 @@ def get_avg_runtime_in_vocab():
 
         ## out vocab
         
-        # nlp = updatingModel()
+        nlp = updatingModel()
 
         print("-----OUT vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
