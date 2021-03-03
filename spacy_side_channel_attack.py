@@ -585,7 +585,7 @@ def target_ner_updated(iterations):
     count_success = 0
 
     in_vocab_word = "Rana's secret is rgjfgklf678"
-    out_vocab_word = "Rana's secret is rgjfhroe209)"
+    out_vocab_word = "Rana's secret is rgjfhroe209"
     file_name = open("in_out_vocab_ner_updated.txt","a")
     file_name.write("======== target ner updated ==============\n")  
     file_name.write("In vocab word:{}\n".format(in_vocab_word))  
