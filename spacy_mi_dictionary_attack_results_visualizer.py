@@ -232,6 +232,12 @@ if __name__ == "__main__":
 
         for index in range(len(all_password_ranks)):
             feature_distance_ranks_per_password[all_password_feature_dist[index]].append(all_password_ranks[index])
+            if all_password_feature_dist[index] in avg_feature_distance_ranks:
+                avg_feature_distance_ranks[all_password_feature_dist[index]].append(all_password_ranks[index])
+            else:
+                avg_feature_distance_ranks[all_password_feature_dist[index]] = []
+                avg_feature_distance_ranks[all_password_feature_dist[index]].append(all_password_ranks[index])
+
         std_error_per_dist = []
         for dist in feature_distance_ranks_per_password.keys():
             std_error_per_dist.append(np.std(np.array(feature_distance_ranks_per_password[dist])))
@@ -243,7 +249,7 @@ if __name__ == "__main__":
         plt.xlabel('DISTANCE')
         plt.ylabel('RANK')
         plt.title('FEATURE DISTANCE RANKS of target password {}'.format(secret))
-        plt.legend()
+        #plt.legend()
         plt.tight_layout()
         image_name = secret.replace('.','(dot)')
         plt_dest = plt_folder + 'FEATURE_DISTANCE_RANKS_{}'.format(image_name)
@@ -310,6 +316,24 @@ if __name__ == "__main__":
         
         password_Stat[secret] = PasswordStats(secret)
 
+
+    #BLOCK FOR AVG FEATURE DISTANCE RANK
+    avg_std_error_per_dist = []
+    for dist in avg_feature_distance_ranks.keys():
+        avg_std_error_per_dist.append(np.std(np.array(avg_feature_distance_ranks[dist])))
+        avg_feature_distance_ranks[dist] = np.mean(np.array(avg_feature_distance_ranks[dist]))
+
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    plt.errorbar(avg_feature_distance_ranks.keys(), avg_feature_distance_ranks.values(), avg_std_error_per_dist)
+    plt.xlabel('DISTANCE')
+    plt.ylabel('RANK')
+    plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
+    #plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + 'AVG_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+    #BLOCK FOR AVG FEATURE DISTANCE RANK END
 
     epoch_insertion_rank_per_password = {g[i][1].split()[secret_index]:[] for i in range(len(g))}
     for secret in avg_epoch_rank_per_password:
