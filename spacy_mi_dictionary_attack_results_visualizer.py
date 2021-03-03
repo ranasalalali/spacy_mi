@@ -230,7 +230,7 @@ if __name__ == "__main__":
 
         feature_distance_ranks_per_password = {dist:[] for dist in all_dists}
 
-        for index in range(all_password_ranks):
+        for index in range(len(all_password_ranks)):
             feature_distance_ranks_per_password[all_password_feature_dist[index]].append(all_password_ranks[index])
         std_error_per_dist = []
         for dist in feature_distance_ranks_per_password.keys():
