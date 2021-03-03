@@ -585,7 +585,7 @@ def target_ner_updated(iterations):
     count_success = 0
 
     in_vocab_word = "Rana's secret is rgjfgklf678"
-    out_vocab_word = "Rana's secret is tthpkbpm236"
+    out_vocab_word = "Rana's secret is giacmo%17kd"
     file_name = open("in_out_vocab_ner_updated.txt","a")
     file_name.write("======== target ner updated ==============\n")  
     file_name.write("In vocab word:{}\n".format(in_vocab_word))  
@@ -668,7 +668,7 @@ def target_ner_updated(iterations):
         file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
 
 
-    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_in_out_vocab_same_shape")    
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_in_out_vocab_arbitrary")    
  
 
 
