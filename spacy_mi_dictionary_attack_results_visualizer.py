@@ -75,7 +75,7 @@ def feature_distance(target=None, password=None):
     norm_p = password.lower()
     norm_distance = levenshtein_distance(norm_p, norm_t)
 
-    return shape_distance + prefix_distance + suffix_distance norm_distance
+    return shape_distance + prefix_distance + suffix_distance + norm_distance
 
 
 if __name__ == "__main__":
