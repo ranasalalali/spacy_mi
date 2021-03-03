@@ -688,10 +688,13 @@ def target_ner_updated_blackbox(iterations):
     in_vocab_runtime_list = []
     out_vocab_runtime_list = []
 
+
+    nlp = updatingModel()
+
     for i in range(iterations):
         
         print("i = ", i)
-        nlp = updatingModel()
+        # nlp = updatingModel()
 
         ## in vocab
         
@@ -759,7 +762,8 @@ def target_ner_updated_blackbox(iterations):
     if iterations >0:
         file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
         file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
-        file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
+        file_name.write("avg runtime diff (ms): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000))
+        file_name.write("avg runtime diff (mis): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000000))
 
 
     save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_all_in_vocab") 
