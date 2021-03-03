@@ -843,6 +843,7 @@ def get_avg_runtime_in_vocab():
         print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = "Rana's secret is " + i
+        print(text)
         
         time1 = time.perf_counter()
         docs = nlp.make_doc(text)
