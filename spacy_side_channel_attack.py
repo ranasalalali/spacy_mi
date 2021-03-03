@@ -671,6 +671,98 @@ def target_ner_updated(iterations):
     save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_in_out_vocab_arbitrary")    
  
 
+def target_ner_updated_blackbox(iterations):
+    iterations = iterations
+    total_in_vocab_time = 0
+    total_out_vocab_time = 0
+
+    count_success = 0
+
+    in_vocab_word = "Rana's secret is rgjfgklf678"
+    out_vocab_word = "Rana's secret is password"
+    file_name = open("multiple_in_vocab_ner_updated.txt","a")
+    file_name.write("======== target ner updated ==============\n")  
+    file_name.write("In vocab word:{}\n".format(in_vocab_word))  
+    file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+    in_vocab_runtime_list = []
+    out_vocab_runtime_list = []
+
+    for i in range(iterations):
+        
+        print("i = ", i)
+        nlp = updatingModel()
+
+        ## in vocab
+        
+        print("-----IN vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = in_vocab_word
+        
+        ner = nlp.get_pipe('ner')
+        time0 = time.perf_counter()
+        docs = nlp.make_doc(text)
+        docs = ner(docs)
+        time_now = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+        print("len of vocab after query {}".format(len(vocab_string_after_query)))
+
+        ## out vocab
+        
+        # nlp = updatingModel()
+
+        print("-----OUT vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = out_vocab_word
+        
+       
+        ner = nlp.get_pipe('ner')
+        time1 = time.perf_counter()
+        docs = nlp.make_doc(text)
+        docs = ner(docs)
+        time_now1 = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        out_vocab_runtime = time_now1 - time1
+
+        out_vocab_runtime_list.append(out_vocab_runtime)
+        
+        # print(out_vocab_runtime_list)
+
+        print("runtime = ", out_vocab_runtime)
+
+        total_out_vocab_time += out_vocab_runtime
+
+        print("len of vocab after query {}".format(len(vocab_string_after_query)))
+        
+        diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+        print("updated elements: ", diff)
+
+
+        if out_vocab_runtime > in_vocab_runtime:
+            count_success +=1
+        # print("-------------------")
+
+    file_name.write("Number of successs attempts:{}\n".format(count_success))    
+    # file_name.write("======Average======\n") 
+    if iterations >0:
+        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
+        file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
+
+
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_all_in_vocab") 
 
 
 if __name__ == "__main__":
@@ -680,4 +772,5 @@ if __name__ == "__main__":
     # target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
     # target_ner_tokenizer(iterations)
-    target_ner_updated(iterations)
+    # target_ner_updated(iterations)
+    target_ner_updated_blackbox(iterations)
