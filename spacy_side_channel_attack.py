@@ -794,7 +794,7 @@ def get_avg_runtime_in_vocab():
     
     nlp = updatingModel()
 
-    for i in range(test_in_vocabs):
+    for i in test_in_vocabs:
         iterations = len(test_in_vocabs)
         
         print("in vocab = ", i)
