@@ -318,13 +318,22 @@ if __name__ == "__main__":
 
 
     #BLOCK FOR AVG FEATURE DISTANCE RANK
+    avg_feature_distance_ranks_stat = {}
     avg_std_error_per_dist = []
     for dist in avg_feature_distance_ranks.keys():
-        avg_std_error_per_dist.append(np.std(np.array(avg_feature_distance_ranks[dist])))
-        avg_feature_distance_ranks[dist] = np.mean(np.array(avg_feature_distance_ranks[dist]))
+        avg_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_distance_ranks[dist])), np.std(np.array(avg_feature_distance_ranks[dist])))
+
+    avg_feature_distance_ranks_stat = dict(sorted(avg_feature_distance_ranks_stat))
+
+    mean_dist = []
+    std_per_mean = []
+    for dist in avg_feature_distance_ranks_stat.keys():
+        mean_dist.append(avg_feature_distance_ranks_stat[dist][0])
+        std_per_mean.append(avg_feature_distance_ranks_stat[dist][1])
+
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-    plt.errorbar(avg_feature_distance_ranks.keys(), avg_feature_distance_ranks.values(), avg_std_error_per_dist)
+    plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean)
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
     plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
