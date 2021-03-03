@@ -247,7 +247,7 @@ if __name__ == "__main__":
         plt.xlabel('Rank')
         plt.ylabel('Distribution')
         plt.xlim(secret_neighbour_rank_left, secret_neighbour_rank_right)
-        plt.title('CDF of target password {} with a radius of {}'.format(secert, radius))
+        plt.title('CDF of target password {} with a radius of {}'.format(secret, radius))
         plt.legend()
         plt.tight_layout()
         image_name = secret.replace('.','(dot)')
