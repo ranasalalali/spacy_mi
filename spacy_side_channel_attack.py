@@ -776,26 +776,34 @@ def get_avg_runtime_in_vocab():
     'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
     'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
 
-    
+    test_out_vocabs= ['100376msv', 'Cricket5', '3768082', 'vladsmirnov', 'faicee44', '881221922', 'bobolin', '33133', 'wigvam', 'Archangel', 'lokokina', 'wertyq', 'wxqgslhk', 'mosina', '22222222000', 'xatuna2525', 
+    'zzan9180', 'wolf415', 'zdVWwR', 'bur112', 'wt6yG8D2', 'kotik150197', 'claudell', 'wwww1212', 'Eclipse', '811Tadao', 'bestbest', '3134356', 'YaKAK', 'Y90E8VWx', '4841ky', 'selivan', 'Pierr', 'posaune1', 'lemurboy', 
+    '79a5a195', 'yankees01', '311284m', 'fabit', 'novotny', '21021979', 'raga69', 'W7Zrs6', '^zima^', 'wkmxsx', 'olympos', 'herbie', 'wd3romeo', '8311334', 'DEADHEAD', '21048', 'apcampbe', 'zyjeajoc', 'yte210884', '999996',
+     'w77bu3jb', 'atk44cds', '2four1', 'AMERICA1', 'fritz4', 'thebest1', 'X1XLvcyi5R5GU', 'mac1975', 'alex1967', '382436', 'zahar35323472', 'yzY#UBupU6uNu8', 'YBAG', 'wdwdn5k5d', 'FRASER', 'vgmqyz', '20112010', 'jumbotro', 
+     '1antioch', '755dfx', 'crbb980765478', 'VLVWXKBQ', 'stoit', 'honda777', 'yuyu753', 'wetlock1', 'myseinfeld', 'zyceraqo', 'yoajidw767', '5pfp46wp', 'zyx56in3', 'totti', 'zMeMF9yV', 'abaloo1', 'scchamps', 'ange16', 'devon200', 
+     'yanaira1', 'yarik8667', 'YqbtW', 'carlos1976', 'z203040020', 'bear28', 'potomac', 'ypc4mdfj']
+
+
     total_in_vocab_time = 0
     total_out_vocab_time = 0
 
     count_success = 0
 
     # in_vocab_word = "Rana's secret is rgjfgklf678"
-    out_vocab_word = "Rana's secret is ghsktham2*ut&&"
-    file_name = open("100_in_vocab_avg_runtime_ner_updated.txt","a")
+    # out_vocab_word = "Rana's secret is ghsktham2*ut&&"
+    file_name = open("100_in_vocab_100_out_vocab_avg_runtime_ner_updated.txt","a")
     file_name.write("======== target ner updated ==============\n")  
     # file_name.write("In vocab word:{}\n".format(in_vocab_word))  
-    file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+    # file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
 
     in_vocab_runtime_list = []
     out_vocab_runtime_list = []
     
     nlp = updatingModel()
 
+    iterations = len(test_in_vocabs)
+
     for i in test_in_vocabs:
-        iterations = len(test_in_vocabs)
         
         print("in vocab = ", i)
         # nlp = updatingModel()
@@ -825,18 +833,17 @@ def get_avg_runtime_in_vocab():
 
         print("len of vocab after query {}".format(len(vocab_string_after_query)))
 
+    # nlp = updatingModel()
+    ner = nlp.get_pipe('ner')
+    for i in test_out_vocabs:    
         ## out vocab
         
-        nlp = updatingModel()
-
         print("-----OUT vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
         print("len of vocab before query {}".format(len(vocab_string_org)))
         
-        text = out_vocab_word
+        text = "Rana's secret is " + i
         
-       
-        ner = nlp.get_pipe('ner')
         time1 = time.perf_counter()
         docs = nlp.make_doc(text)
         docs = ner(docs)
@@ -858,10 +865,12 @@ def get_avg_runtime_in_vocab():
         print("updated elements: ", diff)
 
 
-        if out_vocab_runtime > in_vocab_runtime:
-            count_success +=1
+        
         # print("-------------------")
 
+    for i in range(100):
+        if out_vocab_runtime[i] > in_vocab_runtime[i]:
+            count_success +=1
     file_name.write("Number of successs attempts:{}\n".format(count_success))    
     # file_name.write("======Average======\n") 
     if iterations >0:
@@ -871,7 +880,7 @@ def get_avg_runtime_in_vocab():
         file_name.write("avg runtime diff (mis): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000000))
 
 
-    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab_out_vocab") 
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab_100_out_vocab") 
 
 if __name__ == "__main__":
     iterations = 100
@@ -883,4 +892,15 @@ if __name__ == "__main__":
     # target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
     get_avg_runtime_in_vocab()
+
+    # import pickle
+    # g = []
+    # h = pickle.load(open("/home/tham/spacy_mi/r_space_data/1000_passwords.pickle3", 'rb'))
+    # g.append(h)
+    # print(g)
+    # print(len(g))
+
+    # a = g[0][0:100]
+    # print(a)
+    # print(len(a))
     
