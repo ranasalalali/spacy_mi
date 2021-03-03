@@ -800,6 +800,7 @@ def get_avg_runtime_in_vocab():
     out_vocab_runtime_list = []
     
     nlp = updatingModel()
+    ner = nlp.get_pipe('ner')
 
     iterations = len(test_in_vocabs)
 
@@ -814,10 +815,10 @@ def get_avg_runtime_in_vocab():
         vocab_string_org = list(nlp.vocab.strings)
         print("len of vocab before query {}".format(len(vocab_string_org)))
         
-        text = "Rana's secret is " + i
+        text =  i
         print(text)
         
-        ner = nlp.get_pipe('ner')
+        # ner = nlp.get_pipe('ner')
         time0 = time.perf_counter()
         docs = nlp.make_doc(text)
         docs = ner(docs)
@@ -834,7 +835,7 @@ def get_avg_runtime_in_vocab():
         print("len of vocab after query {}".format(len(vocab_string_after_query)))
 
     # nlp = updatingModel()
-    ner = nlp.get_pipe('ner')
+    
     for i in test_out_vocabs:    
         ## out vocab
         
@@ -842,7 +843,7 @@ def get_avg_runtime_in_vocab():
         vocab_string_org = list(nlp.vocab.strings)
         print("len of vocab before query {}".format(len(vocab_string_org)))
         
-        text = "Rana's secret is " + i
+        text = i
         print(text)
         
         time1 = time.perf_counter()
