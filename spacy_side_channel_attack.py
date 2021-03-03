@@ -769,6 +769,109 @@ def target_ner_updated_blackbox(iterations):
     save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_all_in_vocab") 
 
 
+def get_avg_runtime_in_vocab():
+    test_in_vocabs = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
+    'PORK-BARRELING', 'UNGRACIOUS', '33,300', '693.4', 'FELONIOUS', 'PRACTICALITY', 'family.', 'IN-PATIENTS', '1970-75', 'powertec', 'caliendo', 'BIATHLETE', 'KOPS', 'Rebidding', 'First-Run', 'INTERFERENCES', 'Yet.', 'Leukotrienes', 'dollar-for-dollar', 'often-neglected', 'IMPORTATION', 
+    'Symbo', 'MAINLANDER', 'fancy-dress', 'Brainpower', 'BLENDERS', 'ANTI-NARCOTICS', '27,308', 'ASSESSING', 'downsizers', 'WATERTOWN', 'PHANTASMAGORICAL', 'Subsidence', '32,300', 'Militantly', 'PIPERS', 'Geon', 'Sert', 'claymont', 'PROGRAMME', 'WETTED', 'Inter-County', 'EIGHTY-NINE', 
+    'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
+    'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
+
+    
+    total_in_vocab_time = 0
+    total_out_vocab_time = 0
+
+    count_success = 0
+
+    # in_vocab_word = "Rana's secret is rgjfgklf678"
+    out_vocab_word = "Rana's secret is student"
+    file_name = open("100_in_vocab_avg_runtime_ner_updated.txt","a")
+    file_name.write("======== target ner updated ==============\n")  
+    # file_name.write("In vocab word:{}\n".format(in_vocab_word))  
+    file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+    in_vocab_runtime_list = []
+    out_vocab_runtime_list = []
+    
+    nlp = updatingModel()
+
+    for i in range(test_in_vocabs):
+        iterations = len(test_in_vocabs)
+        
+        print("in vocab = ", i)
+        # nlp = updatingModel()
+
+        ## in vocab
+        
+        print("-----IN vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = i
+        
+        ner = nlp.get_pipe('ner')
+        time0 = time.perf_counter()
+        docs = nlp.make_doc(text)
+        docs = ner(docs)
+        time_now = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+        print("len of vocab after query {}".format(len(vocab_string_after_query)))
+
+        ## out vocab
+        
+        # nlp = updatingModel()
+
+        print("-----OUT vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = out_vocab_word
+        
+       
+        ner = nlp.get_pipe('ner')
+        time1 = time.perf_counter()
+        docs = nlp.make_doc(text)
+        docs = ner(docs)
+        time_now1 = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        out_vocab_runtime = time_now1 - time1
+
+        out_vocab_runtime_list.append(out_vocab_runtime)
+        
+        # print(out_vocab_runtime_list)
+
+        print("runtime = ", out_vocab_runtime)
+
+        total_out_vocab_time += out_vocab_runtime
+
+        print("len of vocab after query {}".format(len(vocab_string_after_query)))
+        
+        diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+        print("updated elements: ", diff)
+
+
+        if out_vocab_runtime > in_vocab_runtime:
+            count_success +=1
+        # print("-------------------")
+
+    file_name.write("Number of successs attempts:{}\n".format(count_success))    
+    # file_name.write("======Average======\n") 
+    if iterations >0:
+        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
+        # file_name.write("avg runtime diff (ms): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000))
+        # file_name.write("avg runtime diff (mis): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000000))
+
+
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab") 
+
 if __name__ == "__main__":
     iterations = 100
     # target_nlp_make_doc(iterations)
@@ -777,4 +880,6 @@ if __name__ == "__main__":
     # target_ner_make_doc(iterations)
     # target_ner_tokenizer(iterations)
     # target_ner_updated(iterations)
-    target_ner_updated_blackbox(iterations)
+    # target_ner_updated_blackbox(iterations)
+    get_avg_runtime_in_vocab()
+    
