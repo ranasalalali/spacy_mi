@@ -625,7 +625,7 @@ def target_ner_updated(iterations):
 
         ## out vocab
         
-        nlp = updatingModel()
+        # nlp = updatingModel()
 
         print("-----OUT vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
@@ -668,7 +668,7 @@ def target_ner_updated(iterations):
         file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
 
 
-    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_in_out_vocab_arbitrary")    
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_in_out_vocab_arbitrary_notUpdating_model_between_query")    
  
 
 def target_ner_updated_blackbox(iterations):
@@ -892,9 +892,9 @@ if __name__ == "__main__":
     # target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
     # target_ner_tokenizer(iterations)
-    # target_ner_updated(iterations)
+    target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
-    get_avg_runtime_in_vocab()
+    # get_avg_runtime_in_vocab()
 
     # import pickle
     # g = []
