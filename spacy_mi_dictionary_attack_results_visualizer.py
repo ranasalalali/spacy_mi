@@ -322,8 +322,9 @@ if __name__ == "__main__":
     avg_std_error_per_dist = []
     for dist in avg_feature_distance_ranks.keys():
         avg_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_distance_ranks[dist])), np.std(np.array(avg_feature_distance_ranks[dist])))
-
-    avg_feature_distance_ranks_stat = dict(sorted(avg_feature_distance_ranks_stat.keys()))
+    
+    avg_feature_distance_ranks_stat = dict(sorted(avg_feature_distance_ranks_stat.items(), key=lambda i: i[0], reverse=False))
+    
     mean_dist = []
     std_per_mean = []
     for dist in avg_feature_distance_ranks_stat.keys():
