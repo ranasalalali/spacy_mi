@@ -886,8 +886,8 @@ def get_avg_runtime_in_vocab():
     save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab_100_out_vocab_updating") 
 
 
-def target_nlp_whole(iterations):
-    iterations = iterations
+def target_nlp_whole_multiple_words():
+    # iterations = iterations
     total_in_vocab_time = 0
     total_out_vocab_time = 0
 
@@ -1000,9 +1000,10 @@ if __name__ == "__main__":
     # target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
     # target_ner_tokenizer(iterations)
-    target_ner_updated(iterations)
+    # target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
     # get_avg_runtime_in_vocab()
+    target_nlp_whole_multiple_words()
 
     # import pickle
     # g = []
