@@ -357,7 +357,7 @@ def target_ner_make_doc(iterations):
 
     in_vocab_word = "password"
     out_vocab_word = "dfhdle783ldoq)"
-    file_name = open("in_out_vocab_ner_make_doc.txt","a")
+    file_name = open("in_out_vocab_ner_make_doc_not_loading_again.txt","a")
     file_name.write("======== target ner make_doc ==============\n")  
     file_name.write("In vocab word:{}\n".format(in_vocab_word))  
     file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
@@ -395,7 +395,7 @@ def target_ner_make_doc(iterations):
 
         ## out vocab
         
-        nlp, tokeniz, ner = load_nlp()
+        # nlp, tokeniz, ner = load_nlp()
 
         print("-----OUT vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
@@ -436,7 +436,7 @@ def target_ner_make_doc(iterations):
         file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
 
 
-    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_make_doc_in_out_vocab")
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_make_doc_in_out_vocab_not_loading_model_again")
 
 
 
@@ -998,12 +998,12 @@ if __name__ == "__main__":
     # target_nlp_make_doc(iterations)
     # target_nlp_whole(iterations)
     # target_nlp_tokenizer(iterations)
-    # target_ner_make_doc(iterations)
+    target_ner_make_doc(iterations)
     # target_ner_tokenizer(iterations)
     # target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
     # get_avg_runtime_in_vocab()
-    target_nlp_whole_multiple_words()
+    # target_nlp_whole_multiple_words()
 
     # import pickle
     # g = []
