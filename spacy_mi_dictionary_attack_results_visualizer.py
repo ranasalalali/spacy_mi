@@ -333,7 +333,7 @@ if __name__ == "__main__":
 
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-    plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean)
+    plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean, fmt='-o', ecolor='orange', capsize=2)
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
     plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
