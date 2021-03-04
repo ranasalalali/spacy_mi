@@ -248,7 +248,8 @@ if __name__ == "__main__":
         feature_distance_ranks_per_password = {dist:[] for dist in all_dists}
 
         for index in range(len(all_password_ranks)):
-            feature_distance_ranks_per_password[all_password_feature_dist[index]].append(all_password_ranks[index])
+            #feature_distance_ranks_per_password[all_password_feature_dist[index]].append(all_password_ranks[index])
+            feature_distance_ranks_per_password[all_password_feature_dist[index]].append(index)
 
             if all_password_feature_dist[index] in avg_feature_distance_ranks:
                 avg_feature_distance_ranks[all_password_feature_dist[index]].append(all_password_ranks[index])
