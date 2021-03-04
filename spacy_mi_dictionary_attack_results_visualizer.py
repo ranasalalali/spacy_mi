@@ -399,8 +399,8 @@ if __name__ == "__main__":
     mean_dist_pref_suff = []
     std_per_mean_pref_suff = []
     for dist in avg_feature_distance_ranks_stat_pref_suff.keys():
-        mean_dist.append(avg_feature_distance_ranks_stat_pref_suff[dist][0])
-        std_per_mean.append(avg_feature_distance_ranks_stat_pref_suff[dist][1])  
+        mean_dist_pref_suff.append(avg_feature_distance_ranks_stat_pref_suff[dist][0])
+        std_per_mean_pref_suff.append(avg_feature_distance_ranks_stat_pref_suff[dist][1])  
 
     ##PREF SHAPE DISTANCE
     avg_feature_distance_ranks_stat_pref_shape = {}
@@ -413,8 +413,8 @@ if __name__ == "__main__":
     mean_dist_pref_shape = []
     std_per_mean_pref_shape = []
     for dist in avg_feature_distance_ranks_stat_pref_shape.keys():
-        mean_dist.append(avg_feature_distance_ranks_stat_pref_shape[dist][0])
-        std_per_mean.append(avg_feature_distance_ranks_stat_pref_shape[dist][1])    
+        mean_dist_pref_shape.append(avg_feature_distance_ranks_stat_pref_shape[dist][0])
+        std_per_mean_pref_shape.append(avg_feature_distance_ranks_stat_pref_shape[dist][1])    
 
     ##SUFFIX SHAPE DISTANCE
     avg_feature_distance_ranks_stat_suff_shape = {}
@@ -427,10 +427,10 @@ if __name__ == "__main__":
     mean_dist_suff_shape = []
     std_per_mean_suff_shape = []
     for dist in avg_feature_distance_ranks_stat_suff_shape.keys():
-        mean_dist.append(avg_feature_distance_ranks_stat_suff_shape[dist][0])
-        std_per_mean.append(avg_feature_distance_ranks_stat_suff_shape[dist][1])  
+        mean_dist_suff_shape.append(avg_feature_distance_ranks_stat_suff_shape[dist][0])
+        std_per_mean_suff_shape.append(avg_feature_distance_ranks_stat_suff_shape[dist][1])  
 
-    ##SUFFIX SHAPE DISTANCE
+    ##PREFIX SUFFIX SHAPE DISTANCE
     avg_feature_distance_ranks_stat_pref_suff_shape = {}
     avg_std_error_per_dist_pref_suff_shape = []
     for dist in avg_feature_distance_ranks_pref_suff_shape.keys():
@@ -441,8 +441,8 @@ if __name__ == "__main__":
     mean_dist_pref_suff_shape = []
     std_per_mean_pref_suff_shape = []
     for dist in avg_feature_distance_ranks_stat_pref_suff_shape.keys():
-        mean_dist.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][0])
-        std_per_mean.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][1])   
+        mean_dist_pref_suff_shape.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][0])
+        std_per_mean_pref_suff_shape.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][1])   
     
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
