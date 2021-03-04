@@ -455,7 +455,7 @@ if __name__ == "__main__":
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
     plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
-    #plt.legend()
+    plt.legend()
     plt.tight_layout()
     plt_dest = plt_folder + 'AVG_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
     plt.savefig(plt_dest,
