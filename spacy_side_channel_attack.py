@@ -885,6 +885,114 @@ def get_avg_runtime_in_vocab():
 
     save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab_100_out_vocab_updating") 
 
+
+def target_nlp_whole(iterations):
+    iterations = iterations
+    total_in_vocab_time = 0
+    total_out_vocab_time = 0
+
+
+    test_in_vocabs = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
+    'PORK-BARRELING', 'UNGRACIOUS', '33,300', '693.4', 'FELONIOUS', 'PRACTICALITY', 'family.', 'IN-PATIENTS', '1970-75', 'powertec', 'caliendo', 'BIATHLETE', 'KOPS', 'Rebidding', 'First-Run', 'INTERFERENCES', 'Yet.', 'Leukotrienes', 'dollar-for-dollar', 'often-neglected', 'IMPORTATION', 
+    'Symbo', 'MAINLANDER', 'fancy-dress', 'Brainpower', 'BLENDERS', 'ANTI-NARCOTICS', '27,308', 'ASSESSING', 'downsizers', 'WATERTOWN', 'PHANTASMAGORICAL', 'Subsidence', '32,300', 'Militantly', 'PIPERS', 'Geon', 'Sert', 'claymont', 'PROGRAMME', 'WETTED', 'Inter-County', 'EIGHTY-NINE', 
+    'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
+    'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
+
+    test_out_vocabs= ['100376msv', 'Cricket5', '3768082', 'vladsmirnov', 'faicee44', '881221922', 'bobolin', '33133', 'wigvam', 'Archangel', 'lokokina', 'wertyq', 'wxqgslhk', 'mosina', '22222222000', 'xatuna2525', 
+    'zzan9180', 'wolf415', 'zdVWwR', 'bur112', 'wt6yG8D2', 'kotik150197', 'claudell', 'wwww1212', 'Eclipse', '811Tadao', 'bestbest', '3134356', 'YaKAK', 'Y90E8VWx', '4841ky', 'selivan', 'Pierr', 'posaune1', 'lemurboy', 
+    '79a5a195', 'yankees01', '311284m', 'fabit', 'novotny', '21021979', 'raga69', 'W7Zrs6', '^zima^', 'wkmxsx', 'olympos', 'herbie', 'wd3romeo', '8311334', 'DEADHEAD', '21048', 'apcampbe', 'zyjeajoc', 'yte210884', '999996',
+     'w77bu3jb', 'atk44cds', '2four1', 'AMERICA1', 'fritz4', 'thebest1', 'X1XLvcyi5R5GU', 'mac1975', 'alex1967', '382436', 'zahar35323472', 'yzY#UBupU6uNu8', 'YBAG', 'wdwdn5k5d', 'FRASER', 'vgmqyz', '20112010', 'jumbotro', 
+     '1antioch', '755dfx', 'crbb980765478', 'VLVWXKBQ', 'stoit', 'honda777', 'yuyu753', 'wetlock1', 'myseinfeld', 'zyceraqo', 'yoajidw767', '5pfp46wp', 'zyx56in3', 'totti', 'zMeMF9yV', 'abaloo1', 'scchamps', 'ange16', 'devon200', 
+     'yanaira1', 'yarik8667', 'YqbtW', 'carlos1976', 'z203040020', 'bear28', 'potomac', 'ypc4mdfj']
+
+
+    count_success = 0
+
+    # in_vocab_word = "password"
+    # out_vocab_word = "sdhfkder893pl,d@"
+    file_name = open("100_in_out_vocab_nlp_whole.txt","a")
+    file_name.write("======== target nlp whole ==============\n")  
+    # file_name.write("In vocab word:{}\n".format(in_vocab_word))  
+    # file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+    in_vocab_runtime_list = []
+    out_vocab_runtime_list = []
+
+    nlp = spacy.load('en_core_web_lg')
+    for i in test_in_vocabs:
+        
+        print(" text = ", i)
+        
+
+        ## in vocab
+        
+        print("-----IN vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = i
+        
+        time0 = time.perf_counter()
+        doc = nlp(text)
+        time_now = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+
+    
+    # nlp = spacy.load('en_core_web_lg')    
+    for i in test_out_vocabs:    
+        ## out vocab
+        
+        print("-----OUT vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = i
+        print(text)
+        
+        time1 = time.perf_counter()
+        doc = nlp(text)
+        time_now1 = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        out_vocab_runtime = time_now1 - time1
+
+        out_vocab_runtime_list.append(out_vocab_runtime)
+        
+        # print(out_vocab_runtime_list)
+
+        print("runtime = ", out_vocab_runtime)
+
+        total_out_vocab_time += out_vocab_runtime
+
+        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+        
+        diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+        print("updated elements: ", diff)
+
+
+        # if out_vocab_runtime > in_vocab_runtime:
+        #     count_success +=1
+        # print("-------------------")
+
+    # file_name.write("Number of successs attempts:{}\n".format(count_success))    
+    # file_name.write("======Average======\n") 
+    if iterations >0:
+        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
+        file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
+
+
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_nlp_whole_100_in_out_vocab")
+
+
 if __name__ == "__main__":
     iterations = 100
     # target_nlp_make_doc(iterations)
