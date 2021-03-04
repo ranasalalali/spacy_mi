@@ -256,16 +256,16 @@ if __name__ == "__main__":
             if all_password_feature_dist_pref_suff[index] in avg_feature_distance_ranks_pref_suff:
                 avg_feature_distance_ranks_pref_suff[all_password_feature_dist_pref_suff[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_pref_shape[index] in avg_feature_distance_ranks_pref_shape:
+            if all_password_feature_dist_pref_shape[index] in avg_feature_distance_ranks_pref_shape:
                 avg_feature_distance_ranks_pref_shape[all_password_feature_dist_pref_shape[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_suff_shape[index] in avg_feature_distance_ranks_suff_shape:
+            if all_password_feature_dist_suff_shape[index] in avg_feature_distance_ranks_suff_shape:
                 avg_feature_distance_ranks_suff_shape[all_password_feature_dist_suff_shape[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_pref_suff_shape[index] in avg_feature_distance_ranks_pref_suff_shape:
+            if all_password_feature_dist_pref_suff_shape[index] in avg_feature_distance_ranks_pref_suff_shape:
                 avg_feature_distance_ranks_pref_suff_shape[all_password_feature_dist_pref_suff_shape[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_pref_suff_shape_norm[index] in avg_feature_distance_ranks_pref_suff_shape_norm:
+            if all_password_feature_dist_pref_suff_shape_norm[index] in avg_feature_distance_ranks_pref_suff_shape_norm:
                 avg_feature_distance_ranks_pref_suff_shape_norm[all_password_feature_dist_pref_suff_shape_norm[index]].append(all_password_ranks[index])
 
             # NOT IN
@@ -274,23 +274,23 @@ if __name__ == "__main__":
                 avg_feature_distance_ranks[all_password_feature_dist[index]] = []
                 avg_feature_distance_ranks[all_password_feature_dist[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_pref_suff[index] not in avg_feature_distance_ranks_pref_suff:
+            if all_password_feature_dist_pref_suff[index] not in avg_feature_distance_ranks_pref_suff:
                 avg_feature_distance_ranks_pref_suff[all_password_feature_dist_pref_suff[index]] = []
                 avg_feature_distance_ranks_pref_suff[all_password_feature_dist_pref_suff[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_pref_shape[index] not in avg_feature_distance_ranks_pref_shape:
+            if all_password_feature_dist_pref_shape[index] not in avg_feature_distance_ranks_pref_shape:
                 avg_feature_distance_ranks_pref_shape[all_password_feature_dist_pref_shape[index]] = []
                 avg_feature_distance_ranks_pref_shape[all_password_feature_dist_pref_shape[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_suff_shape[index] not in avg_feature_distance_ranks_suff_shape:
+            if all_password_feature_dist_suff_shape[index] not in avg_feature_distance_ranks_suff_shape:
                 avg_feature_distance_ranks_suff_shape[all_password_feature_dist_suff_shape[index]] = []
                 avg_feature_distance_ranks_suff_shape[all_password_feature_dist_suff_shape[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_pref_suff_shape[index] not in avg_feature_distance_ranks_pref_suff_shape:
+            if all_password_feature_dist_pref_suff_shape[index] not in avg_feature_distance_ranks_pref_suff_shape:
                 avg_feature_distance_ranks_pref_suff_shape[all_password_feature_dist_pref_suff_shape[index]] = []
                 avg_feature_distance_ranks_pref_suff_shape[all_password_feature_dist_pref_suff_shape[index]].append(all_password_ranks[index])
 
-            if avg_feature_distance_ranks_pref_suff_shape_norm[index] not in avg_feature_distance_ranks_pref_suff_shape_norm:
+            if all_password_feature_dist_pref_suff_shape_norm[index] not in avg_feature_distance_ranks_pref_suff_shape_norm:
                 avg_feature_distance_ranks_pref_suff_shape_norm[all_password_feature_dist_pref_suff_shape_norm[index]] = []
                 avg_feature_distance_ranks_pref_suff_shape_norm[all_password_feature_dist_pref_suff_shape_norm[index]].append(all_password_ranks[index])
             
