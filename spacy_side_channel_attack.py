@@ -791,7 +791,7 @@ def get_avg_runtime_in_vocab():
 
     # in_vocab_word = "Rana's secret is rgjfgklf678"
     # out_vocab_word = "Rana's secret is ghsktham2*ut&&"
-    file_name = open("100_in_vocab_100_out_vocab_avg_runtime_ner_updated.txt","a")
+    file_name = open("100_in_vocab_100_out_vocab_avg_runtime_ner_updated_updating.txt","a")
     file_name.write("======== target ner updated ==============\n")  
     # file_name.write("In vocab word:{}\n".format(in_vocab_word))  
     # file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
@@ -834,7 +834,8 @@ def get_avg_runtime_in_vocab():
 
         print("len of vocab after query {}".format(len(vocab_string_after_query)))
 
-    # nlp = updatingModel()
+    nlp = updatingModel()
+    ner = nlp.get_pipe('ner')
     
     for i in test_out_vocabs:    
         ## out vocab
@@ -882,7 +883,7 @@ def get_avg_runtime_in_vocab():
         file_name.write("avg runtime diff (mis): {}\n".format((total_out_vocab_time/iterations - total_in_vocab_time/iterations )*1000000))
 
 
-    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab_100_out_vocab") 
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_avg_100_in_vocab_100_out_vocab_updating") 
 
 if __name__ == "__main__":
     iterations = 100
