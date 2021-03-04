@@ -1,0 +1,4 @@
+======== target nlp whole ==============
+avg runtime with in vocab: 0.007910298538627103
+avg runtime with out vocab: 0.0076519851922057566
+avg runtime diff: -0.00025831334642134607
