@@ -75,7 +75,13 @@ def feature_distance(target=None, password=None):
     norm_p = password.lower()
     norm_distance = levenshtein_distance(norm_p, norm_t)
 
-    return shape_distance + prefix_distance + suffix_distance #+ norm_distance
+    pref_suff = prefix_distance + suffix_distance
+    pref_shape = prefix_distance + shape_distance
+    suff_shape = suffix_distance + shape_distance
+    pref_suff_shape = prefix_distance + suffix_distance + shape_distance
+    pref_suff_shape_norm = shape_distance + prefix_distance + suffix_distance + norm_distance
+
+    return (pref_suff, pref_shape, suff_shape, pref_suff_shape, pref_suff_shape_norm)
 
 
 if __name__ == "__main__":
@@ -135,6 +141,11 @@ if __name__ == "__main__":
     features_passwords_exist = 0
 
     avg_feature_distance_ranks = {}
+    avg_feature_distance_ranks_pref_suff = {}
+    avg_feature_distance_ranks_pref_shape = {}
+    avg_feature_distance_ranks_suff_shape = {}
+    avg_feature_distance_ranks_pref_suff_shape = {}
+    avg_feature_distance_ranks_pref_suff_shape_norm = {}
 
     for i in range(len(g)):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
@@ -224,7 +235,13 @@ if __name__ == "__main__":
         all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
         all_password_shape = [all_password_stat_sorted[code][2] for code in all_password_stat_sorted]
         all_password_shape_dist = [all_password_stat_sorted[code][3] for code in all_password_stat_sorted]
-        all_password_feature_dist = [all_password_stat_sorted[code][4] for code in all_password_stat_sorted]
+
+        all_password_feature_dist = [all_password_stat_sorted[code][4][4] for code in all_password_stat_sorted]
+        all_password_feature_dist_pref_suff = [all_password_stat_sorted[code][4][0] for code in all_password_stat_sorted]
+        all_password_feature_dist_pref_shape = [all_password_stat_sorted[code][4][1] for code in all_password_stat_sorted]
+        all_password_feature_dist_suff_shape = [all_password_stat_sorted[code][4][2] for code in all_password_stat_sorted]
+        all_password_feature_dist_pref_suff_shape = [all_password_stat_sorted[code][4][3] for code in all_password_stat_sorted]
+        all_password_feature_dist_pref_suff_shape_norm = [all_password_stat_sorted[code][4][4] for code in all_password_stat_sorted]
 
         all_dists = set(all_password_feature_dist)
 
@@ -232,11 +249,51 @@ if __name__ == "__main__":
 
         for index in range(len(all_password_ranks)):
             feature_distance_ranks_per_password[all_password_feature_dist[index]].append(all_password_ranks[index])
+
             if all_password_feature_dist[index] in avg_feature_distance_ranks:
                 avg_feature_distance_ranks[all_password_feature_dist[index]].append(all_password_ranks[index])
-            else:
+
+            if all_password_feature_dist[index] in avg_feature_distance_ranks_pref_suff:
+                avg_feature_distance_ranks_pref_suff[all_password_feature_dist_pref_suff[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] in avg_feature_distance_ranks_pref_shape:
+                avg_feature_distance_ranks_pref_shape[all_password_feature_dist_pref_shape[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] in avg_feature_distance_ranks_suff_shape:
+                avg_feature_distance_ranks_suff_shape[all_password_feature_dist_suff_shape[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] in avg_feature_distance_ranks_pref_suff_shape:
+                avg_feature_distance_ranks_pref_suff_shape[all_password_feature_dist_pref_suff_shape[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] in avg_feature_distance_ranks_pref_suff_shape_norm:
+                avg_feature_distance_ranks_pref_suff_shape_norm[all_password_feature_dist_pref_suff_shape_norm[index]].append(all_password_ranks[index])
+
+            # NOT IN
+
+            if all_password_feature_dist[index] not in avg_feature_distance_ranks:
                 avg_feature_distance_ranks[all_password_feature_dist[index]] = []
                 avg_feature_distance_ranks[all_password_feature_dist[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] not in avg_feature_distance_ranks_pref_suff:
+                avg_feature_distance_ranks_pref_suff[all_password_feature_dist_pref_suff[index]] = []
+                avg_feature_distance_ranks_pref_suff[all_password_feature_dist_pref_suff[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] not in avg_feature_distance_ranks_pref_shape:
+                avg_feature_distance_ranks_pref_shape[all_password_feature_dist_pref_shape[index]] = []
+                avg_feature_distance_ranks_pref_shape[all_password_feature_dist_pref_shape[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] not in avg_feature_distance_ranks_suff_shape:
+                avg_feature_distance_ranks_suff_shape[all_password_feature_dist_suff_shape[index]] = []
+                avg_feature_distance_ranks_suff_shape[all_password_feature_dist_suff_shape[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] not in avg_feature_distance_ranks_pref_suff_shape:
+                avg_feature_distance_ranks_pref_suff_shape[all_password_feature_dist_pref_suff_shape[index]] = []
+                avg_feature_distance_ranks_pref_suff_shape[all_password_feature_dist_pref_suff_shape[index]].append(all_password_ranks[index])
+
+            if all_password_feature_dist[index] not in avg_feature_distance_ranks_pref_suff_shape_norm:
+                avg_feature_distance_ranks_pref_suff_shape_norm[all_password_feature_dist_pref_suff_shape_norm[index]] = []
+                avg_feature_distance_ranks_pref_suff_shape_norm[all_password_feature_dist_pref_suff_shape_norm[index]].append(all_password_ranks[index])
+            
 
         std_error_per_dist = []
         for dist in feature_distance_ranks_per_password.keys():
@@ -331,9 +388,70 @@ if __name__ == "__main__":
         mean_dist.append(avg_feature_distance_ranks_stat[dist][0])
         std_per_mean.append(avg_feature_distance_ranks_stat[dist][1])
 
+    ##PREF SUFF DISTANCE
+    avg_feature_distance_ranks_stat_pref_suff = {}
+    avg_std_error_per_dist_pref_suff = []
+    for dist in avg_feature_distance_ranks_pref_suff.keys():
+        avg_feature_distance_ranks_stat_pref_suff[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff[dist])))
+    
+    avg_feature_distance_ranks_stat_pref_suff = dict(sorted(avg_feature_distance_ranks_stat_pref_suff.items(), key=lambda i: i[0], reverse=False))
+    
+    mean_dist_pref_suff = []
+    std_per_mean_pref_suff = []
+    for dist in avg_feature_distance_ranks_stat_pref_suff.keys():
+        mean_dist.append(avg_feature_distance_ranks_stat_pref_suff[dist][0])
+        std_per_mean.append(avg_feature_distance_ranks_stat_pref_suff[dist][1])  
+
+    ##PREF SHAPE DISTANCE
+    avg_feature_distance_ranks_stat_pref_shape = {}
+    avg_std_error_per_dist_pref_shape = []
+    for dist in avg_feature_distance_ranks_pref_shape.keys():
+        avg_feature_distance_ranks_pref_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_shape[dist])))
+    
+    avg_feature_distance_ranks_stat_pref_shape = dict(sorted(avg_feature_distance_ranks_stat_pref_shape.items(), key=lambda i: i[0], reverse=False))
+    
+    mean_dist_pref_shape = []
+    std_per_mean_pref_shape = []
+    for dist in avg_feature_distance_ranks_stat_pref_shape.keys():
+        mean_dist.append(avg_feature_distance_ranks_stat_pref_shape[dist][0])
+        std_per_mean.append(avg_feature_distance_ranks_stat_pref_shape[dist][1])    
+
+    ##SUFFIX SHAPE DISTANCE
+    avg_feature_distance_ranks_stat_suff_shape = {}
+    avg_std_error_per_dist_suff_shape = []
+    for dist in avg_feature_distance_ranks_suff_shape.keys():
+        avg_feature_distance_ranks_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_suff_shape[dist])))
+    
+    avg_feature_distance_ranks_stat_suff_shape = dict(sorted(avg_feature_distance_ranks_stat_suff_shape.items(), key=lambda i: i[0], reverse=False))
+    
+    mean_dist_suff_shape = []
+    std_per_mean_suff_shape = []
+    for dist in avg_feature_distance_ranks_stat_suff_shape.keys():
+        mean_dist.append(avg_feature_distance_ranks_stat_suff_shape[dist][0])
+        std_per_mean.append(avg_feature_distance_ranks_stat_suff_shape[dist][1])  
+
+    ##SUFFIX SHAPE DISTANCE
+    avg_feature_distance_ranks_stat_pref_suff_shape = {}
+    avg_std_error_per_dist_pref_suff_shape = []
+    for dist in avg_feature_distance_ranks_pref_suff_shape.keys():
+        avg_feature_distance_ranks_pref_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])))
+    
+    avg_feature_distance_ranks_stat_pref_suff_shape = dict(sorted(avg_feature_distance_ranks_stat_pref_suff_shape.items(), key=lambda i: i[0], reverse=False))
+    
+    mean_dist_pref_suff_shape = []
+    std_per_mean_pref_suff_shape = []
+    for dist in avg_feature_distance_ranks_stat_pref_suff_shape.keys():
+        mean_dist.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][0])
+        std_per_mean.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][1])   
+    
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-    plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean, fmt='-o', ecolor='orange', capsize=2)
+    plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape + Norm Distance')
+    plt.errorbar(avg_feature_distance_ranks_stat_pref_suff.keys(), mean_dist_pref_suff, std_per_mean_pref_suff, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix Distance')
+    plt.errorbar(avg_feature_distance_ranks_stat_pref_shape.keys(), mean_dist_pref_shape, std_per_mean_pref_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Shape Distance')
+    plt.errorbar(avg_feature_distance_ranks_stat_suff_shape.keys(), mean_dist_suff_shape, std_per_mean_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Suffix + Shape Distance')
+    plt.errorbar(avg_feature_distance_ranks_stat_pref_suff_shape.keys(), mean_dist_pref_suff_shape, std_per_mean_pref_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape Distance')
+    
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
     plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
