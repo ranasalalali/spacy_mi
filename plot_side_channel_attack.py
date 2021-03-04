@@ -137,7 +137,7 @@ if __name__ == "__main__":
         plt.xlabel("Run $i^{th}$")
         plt.ylabel('runtime (ms)')
         # ax = plt.gca()
-        # ax.set_xlim(1,100) 
+        # ax.set_ylim(3.5, 4.5) 
         plt_dest = plt_folder + 'runtime_{}.pdf'.format(plot_names[i])
         plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
