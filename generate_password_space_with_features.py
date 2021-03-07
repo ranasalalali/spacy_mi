@@ -185,7 +185,7 @@ def generate_password_given_features(shape=None, prefix=None, suffix=None, lengt
         generated.extend(generate_password_given_prefix_shape(prefix, shape, S))
         generated.extend(generate_password_given_suffix_shape(suffix, shape, S))
         generated.extend(generate_password_given_prefix_suffix_shape(prefix, suffix, shape, S))
-        print(generated)
+        #print(generated)
     
     return generated
 
