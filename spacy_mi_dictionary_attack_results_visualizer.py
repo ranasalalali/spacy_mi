@@ -93,6 +93,8 @@ if __name__ == "__main__":
 
     loc = args.loc
 
+    require_passwords = 10
+
     folder = loc
 
     features = folder.split("_")[-1]
@@ -379,86 +381,171 @@ if __name__ == "__main__":
     avg_feature_distance_ranks_stat = {}
     avg_std_error_per_dist = []
     for dist in avg_feature_distance_ranks.keys():
-        avg_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_distance_ranks[dist])), np.std(np.array(avg_feature_distance_ranks[dist])))
+        if len(np.array(avg_feature_distance_ranks[dist])) >= require_passwords:
+            avg_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_distance_ranks[dist])), np.std(np.array(avg_feature_distance_ranks[dist])), len(np.array(avg_feature_distance_ranks[dist])))
     
     avg_feature_distance_ranks_stat = dict(sorted(avg_feature_distance_ranks_stat.items(), key=lambda i: i[0], reverse=False))
     
     mean_dist = []
     std_per_mean = []
+    passwords_per_distance = []
     for dist in avg_feature_distance_ranks_stat.keys():
         mean_dist.append(avg_feature_distance_ranks_stat[dist][0])
         std_per_mean.append(avg_feature_distance_ranks_stat[dist][1])
+        passwords_per_distance.append(avg_feature_distance_ranks_stat[dist][2])
 
     ##PREF SUFF DISTANCE
     avg_feature_distance_ranks_stat_pref_suff = {}
     avg_std_error_per_dist_pref_suff = []
     for dist in avg_feature_distance_ranks_pref_suff.keys():
-        avg_feature_distance_ranks_stat_pref_suff[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff[dist])))
+        if len(np.array(avg_feature_distance_ranks_pref_suff[dist])) >= require_passwords:
+            avg_feature_distance_ranks_stat_pref_suff[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff[dist])), len(np.array(avg_feature_distance_ranks_pref_suff[dist])))
     
     avg_feature_distance_ranks_stat_pref_suff = dict(sorted(avg_feature_distance_ranks_stat_pref_suff.items(), key=lambda i: i[0], reverse=False))
     
     mean_dist_pref_suff = []
     std_per_mean_pref_suff = []
+    passwords_per_distance_pref_suff = []
     for dist in avg_feature_distance_ranks_stat_pref_suff.keys():
         mean_dist_pref_suff.append(avg_feature_distance_ranks_stat_pref_suff[dist][0])
         std_per_mean_pref_suff.append(avg_feature_distance_ranks_stat_pref_suff[dist][1])  
+        passwords_per_distance_pref_suff.append(avg_feature_distance_ranks_stat_pref_suff[dist][2])
 
     ##PREF SHAPE DISTANCE
     avg_feature_distance_ranks_stat_pref_shape = {}
     avg_std_error_per_dist_pref_shape = []
     for dist in avg_feature_distance_ranks_pref_shape.keys():
-        avg_feature_distance_ranks_pref_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_shape[dist])))
+        if len(np.array(avg_feature_distance_ranks_pref_shape[dist])) >= require_passwords:
+            avg_feature_distance_ranks_pref_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_shape[dist])), len(np.array(avg_feature_distance_ranks_pref_shape[dist])))
     
     avg_feature_distance_ranks_stat_pref_shape = dict(sorted(avg_feature_distance_ranks_stat_pref_shape.items(), key=lambda i: i[0], reverse=False))
     
     mean_dist_pref_shape = []
     std_per_mean_pref_shape = []
+    passwords_per_distance_pref_shape = []
     for dist in avg_feature_distance_ranks_stat_pref_shape.keys():
         mean_dist_pref_shape.append(avg_feature_distance_ranks_stat_pref_shape[dist][0])
-        std_per_mean_pref_shape.append(avg_feature_distance_ranks_stat_pref_shape[dist][1])    
+        std_per_mean_pref_shape.append(avg_feature_distance_ranks_stat_pref_shape[dist][1])  
+        passwords_per_distance_pref_shape.append(avg_feature_distance_ranks_stat_pref_shape[dist][2])  
 
     ##SUFFIX SHAPE DISTANCE
     avg_feature_distance_ranks_stat_suff_shape = {}
     avg_std_error_per_dist_suff_shape = []
     for dist in avg_feature_distance_ranks_suff_shape.keys():
-        avg_feature_distance_ranks_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_suff_shape[dist])))
+        if len(np.array(avg_feature_distance_ranks_suff_shape[dist])) >= require_passwords:
+            avg_feature_distance_ranks_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_suff_shape[dist])), len(np.array(avg_feature_distance_ranks_suff_shape[dist])))
     
     avg_feature_distance_ranks_stat_suff_shape = dict(sorted(avg_feature_distance_ranks_stat_suff_shape.items(), key=lambda i: i[0], reverse=False))
     
     mean_dist_suff_shape = []
     std_per_mean_suff_shape = []
+    passwords_per_distance_suff_shape = []
     for dist in avg_feature_distance_ranks_stat_suff_shape.keys():
         mean_dist_suff_shape.append(avg_feature_distance_ranks_stat_suff_shape[dist][0])
         std_per_mean_suff_shape.append(avg_feature_distance_ranks_stat_suff_shape[dist][1])  
+        passwords_per_distance_suff_shape.append(avg_feature_distance_ranks_stat_suff_shape[dist][2])
 
     ##PREFIX SUFFIX SHAPE DISTANCE
     avg_feature_distance_ranks_stat_pref_suff_shape = {}
     avg_std_error_per_dist_pref_suff_shape = []
     for dist in avg_feature_distance_ranks_pref_suff_shape.keys():
-        avg_feature_distance_ranks_pref_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])))
+        if len(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])) >= require_passwords:
+            avg_feature_distance_ranks_pref_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])), len(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])))
     
     avg_feature_distance_ranks_stat_pref_suff_shape = dict(sorted(avg_feature_distance_ranks_stat_pref_suff_shape.items(), key=lambda i: i[0], reverse=False))
     
     mean_dist_pref_suff_shape = []
     std_per_mean_pref_suff_shape = []
+    passwords_per_distance_pref_suff_shape = []
     for dist in avg_feature_distance_ranks_stat_pref_suff_shape.keys():
         mean_dist_pref_suff_shape.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][0])
         std_per_mean_pref_suff_shape.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][1])   
+        passwords_per_distance_pref_suff_shape.append(avg_feature_distance_ranks_stat_pref_suff_shape[dist][2])
     
 
+    # fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape + Norm Distance')
+    # plt.errorbar(avg_feature_distance_ranks_stat_pref_suff.keys(), mean_dist_pref_suff, std_per_mean_pref_suff, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix Distance')
+    # plt.errorbar(avg_feature_distance_ranks_stat_pref_shape.keys(), mean_dist_pref_shape, std_per_mean_pref_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Shape Distance')
+    # plt.errorbar(avg_feature_distance_ranks_stat_suff_shape.keys(), mean_dist_suff_shape, std_per_mean_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Suffix + Shape Distance')
+    # plt.errorbar(avg_feature_distance_ranks_stat_pref_suff_shape.keys(), mean_dist_pref_suff_shape, std_per_mean_pref_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape Distance')
+    
+    # plt.xlabel('DISTANCE')
+    # plt.ylabel('RANK')
+    # plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
+    # plt.legend()
+    # plt.tight_layout()
+    # plt_dest = plt_folder + 'AVG_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
+
+    ## ALL FEATURES
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape + Norm Distance')
-    plt.errorbar(avg_feature_distance_ranks_stat_pref_suff.keys(), mean_dist_pref_suff, std_per_mean_pref_suff, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix Distance')
-    plt.errorbar(avg_feature_distance_ranks_stat_pref_shape.keys(), mean_dist_pref_shape, std_per_mean_pref_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Shape Distance')
-    plt.errorbar(avg_feature_distance_ranks_stat_suff_shape.keys(), mean_dist_suff_shape, std_per_mean_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Suffix + Shape Distance')
-    plt.errorbar(avg_feature_distance_ranks_stat_pref_suff_shape.keys(), mean_dist_pref_suff_shape, std_per_mean_pref_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape Distance')
-    
+    plt.hist(x=passwords_per_distance, bins='auto', color='grey', alpha=0.5)
+
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
     plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
     plt.legend()
     plt.tight_layout()
-    plt_dest = plt_folder + 'AVG_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
+    plt_dest = plt_folder + 'AVG_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
+    ## PREF SUFF
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    plt.errorbar(avg_feature_distance_ranks_stat_pref_suff.keys(), mean_dist_pref_suff, std_per_mean_pref_suff, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix Distance')
+    plt.hist(x=passwords_per_distance_pref_suff, bins='auto', color='grey', alpha=0.5)
+
+    plt.xlabel('DISTANCE')
+    plt.ylabel('RANK')
+    plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
+    plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + 'AVG_PREF_SUFF_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
+    ## PREF SHAPE
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    plt.errorbar(avg_feature_distance_ranks_stat_pref_shape.keys(), mean_dist_pref_shape, std_per_mean_pref_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Shape Distance')
+    plt.hist(x=passwords_per_distance_pref_shape, bins='auto', color='grey', alpha=0.5)
+
+    plt.xlabel('DISTANCE')
+    plt.ylabel('RANK')
+    plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
+    plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + 'AVG_PREF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
+    ## SUFF SHAPE
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    plt.errorbar(avg_feature_distance_ranks_stat_suff_shape.keys(), mean_dist_suff_shape, std_per_mean_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Suffix + Shape Distance')
+    plt.hist(x=passwords_per_distance_suff_shape, bins='auto', color='grey', alpha=0.5)
+
+    plt.xlabel('DISTANCE')
+    plt.ylabel('RANK')
+    plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
+    plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + 'AVG_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
+    ## PREF SUFF SHAPE
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    plt.errorbar(avg_feature_distance_ranks_stat_pref_suff_shape.keys(), mean_dist_pref_suff_shape, std_per_mean_pref_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape Distance')
+    plt.hist(x=passwords_per_distance_pref_suff_shape, bins='auto', color='grey', alpha=0.5)
+
+    plt.xlabel('DISTANCE')
+    plt.ylabel('RANK')
+    plt.title('AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
+    plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + 'AVG_PREF_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
     plt.savefig(plt_dest,
             bbox_inches="tight")
     #BLOCK FOR AVG FEATURE DISTANCE RANK END
