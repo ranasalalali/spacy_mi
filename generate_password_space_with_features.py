@@ -271,7 +271,7 @@ if __name__ == "__main__":
         length = len(choice)
         generated = generate_password_given_features(shape, prefix, suffix, length, S, features)        
         temp_passwords.extend(generated)
-        print(len(temp_passwords))
+        #print(len(temp_passwords))
 
         filename = '{}_passwords_features_{}_password_{}.pickle3'.format(r_space, ''.join(features), choice)
         filename = os.path.join(folder, filename)
