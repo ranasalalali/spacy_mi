@@ -1,0 +1,8 @@
+======== target parser tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:48
+avg runtime with in vocab: 0.0010677160136401654
+avg runtime with out vocab: 0.00096289390232414
+avg runtime diff: -0.00010482211131602537
+

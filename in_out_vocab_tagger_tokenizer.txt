@@ -1,0 +1,8 @@
+======== target tagger tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:47
+avg runtime with in vocab: 0.0006545386929064989
+avg runtime with out vocab: 0.0006949618691578507
+avg runtime diff: 4.042317625135188e-05
+

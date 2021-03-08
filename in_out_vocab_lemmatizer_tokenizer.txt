@@ -1,0 +1,7 @@
+======== target lemmatizer tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:50
+avg runtime with in vocab: 0.00045199421234428885
+avg runtime with out vocab: 0.0005567360343411565
+avg runtime diff: 0.00010474182199686765

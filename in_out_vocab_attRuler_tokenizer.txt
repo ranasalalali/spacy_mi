@@ -1,0 +1,10 @@
+======== target attRuler tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+======== target attRuler tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:47
+avg runtime with in vocab: 0.0003961135633289814
+avg runtime with out vocab: 0.0003796339919790626
+avg runtime diff: -1.6479571349918836e-05

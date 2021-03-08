@@ -5,3 +5,10 @@ Number of successs attempts:96
 avg runtime with in vocab: 0.00026727345306426286
 avg runtime with out vocab: 0.00030810327152721586
 avg runtime diff: 4.0829818462952995e-05
+======== target nlp tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:47
+avg runtime with in vocab: 0.0002698225574567914
+avg runtime with out vocab: 0.00030689850449562074
+avg runtime diff: 3.707594703882932e-05
