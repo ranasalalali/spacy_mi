@@ -251,7 +251,7 @@ def fig_avg_all_feature_distance_rank(avg_feature_distance_ranks=None):
     bar = passwords_per_distance
     label = 'Prefix + Suffix + Shape + Norm Distance'
     plot_name = 'AVG_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
-    fig_error_bar(x, y, e, bar, plot_name)
+    fig_error_bar(x, y, e, bar, label, plot_name)
     
 def fig_avg_pref_suff_feature_distance_rank(avg_feature_distance_ranks_pref_suff=None):
 
@@ -277,7 +277,7 @@ def fig_avg_pref_suff_feature_distance_rank(avg_feature_distance_ranks_pref_suff
     bar = passwords_per_distance_pref_suff
     label = 'Prefix + Suffix Distance'
     plot_name = 'AVG_PREF_SUFF_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
-    fig_error_bar(x, y, e, bar, plot_name)
+    fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_avg_pref_shape_feature_distance_rank(avg_feature_distance_ranks_pref_shape=None):
     avg_feature_distance_ranks_stat_pref_shape = {}
@@ -302,7 +302,7 @@ def fig_avg_pref_shape_feature_distance_rank(avg_feature_distance_ranks_pref_sha
     bar = passwords_per_distance_pref_shape
     label = 'Prefix + Shape Distance'
     plot_name = 'AVG_PREF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
-    fig_error_bar(x, y, e, bar, plot_name)
+    fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_avg_suff_shape_feature_distance_rank(avg_feature_distance_ranks_suff_shape=None):
 
@@ -328,7 +328,7 @@ def fig_avg_suff_shape_feature_distance_rank(avg_feature_distance_ranks_suff_sha
     bar = passwords_per_distance_suff_shape
     label = 'Suffix + Shape Distance'
     plot_name = 'AVG_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
-    fig_error_bar(x, y, e, bar, plot_name)
+    fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pref_suff_shape=None):
     avg_feature_distance_ranks_stat_pref_suff_shape = {}
@@ -353,7 +353,7 @@ def fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pre
     bar = passwords_per_distance_pref_suff_shape
     label = 'Prefix + Suffix + Shape Distance'
     plot_name = 'AVG_PREF_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
-    fig_error_bar(x, y, e, bar, plot_name)
+    fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoomed=False):
 
