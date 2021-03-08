@@ -5,3 +5,10 @@ Number of successs attempts:96
 avg runtime with in vocab: 0.006711220679571852
 avg runtime with out vocab: 0.0071718203800264745
 avg runtime diff: 0.00046059970045462216
+======== target nlp whole ==============
+In vocab word:password
+Out vocab word:sdhfkder893pl,d@
+Number of successs attempts:48
+avg runtime with in vocab: 0.006555925267748535
+avg runtime with out vocab: 0.006996279293671251
+avg runtime diff: 0.0004403540259227158
