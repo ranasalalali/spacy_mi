@@ -182,6 +182,28 @@ def fig_cdf_per_password(all_passwords=None, radius=5, all_password_ranks=None, 
 
     #CDF END
     
+def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
+
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    plt.errorbar(x, y, e, fmt='-o', ecolor='orange', capsize=2, label=label)
+    plt.bar(x, bar, color='grey', alpha=0.5)
+
+    for bar in plt.patches: 
+        plots.annotate(format(bar.get_height(), '.2f'),  
+                    (bar.get_x() + bar.get_width() / 2,  
+                        bar.get_height()), ha='center', va='center', 
+                    size=15, xytext=(0, 8), 
+                    textcoords='offset points')
+
+    plt.xlabel('DISTANCE')
+    plt.ylabel('RANK')
+    plt.title(plot_name)
+    plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + plot_name
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
 def fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_feature_distance_ranks=None):
     #BLOCK FOR AVG FEATURE PASSWORDS FEATURE DISTANCE RANK
     avg_feature_passwords_feature_distance_ranks_stat = {}
@@ -215,20 +237,6 @@ def fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_featur
 
     #BLOCK FOR AVG FEATURE PASSWORDS FEATURE DISTANCE RANK END
 
-def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
-
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-    plt.errorbar(x, y, e, fmt='-o', ecolor='orange', capsize=2, label=label)
-    plt.bar(x, bar, color='grey', alpha=0.5)
-
-    plt.xlabel('DISTANCE')
-    plt.ylabel('RANK')
-    plt.title(plot_name)
-    plt.legend()
-    plt.tight_layout()
-    plt_dest = plt_folder + plot_name
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
 
 def fig_avg_all_feature_distance_rank(avg_feature_distance_ranks=None):
     avg_feature_distance_ranks_stat = {}
