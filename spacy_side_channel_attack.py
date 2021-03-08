@@ -1090,9 +1090,12 @@ if __name__ == "__main__":
     iterations = 50
     # target_nlp_make_doc(iterations)
     # target_nlp_whole(iterations)
-    target_nlp_tokenizer(iterations)
+    # target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
-    target_ner_tokenizer(iterations)
+    # target_ner_tokenizer(iterations)
+    target_tagger_tokenizer(iterations)
+
+
     # target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
     # get_avg_runtime_in_vocab()
