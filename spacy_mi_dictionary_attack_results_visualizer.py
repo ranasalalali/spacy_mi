@@ -27,15 +27,18 @@ def mkdir_p(path):
 
 def unpack_data(res_folder=None):
     g = []
+    br = True
     files = os.listdir(res_folder)
     for file_name in files:
         print(file_name)
         file_path = os.path.join(res_folder, file_name)
         h = pickle.load(open(file_path, 'rb'))
         g.append(h)
+        if br:
+            break
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
-    
+
     return g
 
 def format_string(s):
@@ -350,6 +353,40 @@ def fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pre
     plot_name = 'AVG_PREF_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
     fig_error_bar(x, y, e, bar, plot_name)
 
+def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoomed=False):
+
+    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    for i in epoch_insertion_rank_per_password:
+        
+        epochs = []
+        insertions = []
+        ranks = []
+        for j in epoch_insertion_rank_per_password[i]:
+            epochs.append(j[0])
+            insertions.append(j[1])
+            ranks.append(j[2])
+
+        pr = fig.gca(projection='3d') 
+
+        pr.scatter(insertions, epochs, ranks, label=i)
+        
+        pr.set_ylabel("Epochs")
+        pr.set_xlabel("Insertions")
+        pr.set_zlabel("Ranks")
+        if zoomed:
+            pr.set_zlim(0,500)
+            file_name = 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED'
+        else:
+            file_name = 'RANK_PER_EPOCH_AND_INSERTION'
+        
+    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    plt.title('{} test with {} passwords'.format(version, number_of_experiments))
+    plt.tight_layout()
+    plt_dest = plt_folder + file_name
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
 
 if __name__ == "__main__":
 
@@ -364,7 +401,10 @@ if __name__ == "__main__":
 
     folder = loc
 
+    global features
     features = folder.split("_")[-1]
+
+    global version
     version = str(folder.split("_")[1]) + str(folder.split("_")[2])
 
     # Load results for plotting
@@ -379,6 +419,7 @@ if __name__ == "__main__":
 
     mkdir_p(plt_folder)
 
+    global number_of_experiments
     number_of_experiments = len(g)
 
     secret_index = 3
@@ -605,357 +646,302 @@ if __name__ == "__main__":
     #FIGURE 0 EPOCH VS INSERTIONS VS RANKS
 
     epoch_insertion_rank_per_password = {g[i][1].split()[secret_index]:[] for i in range(number_of_experiments)}
+
     for secret in avg_epoch_rank_per_password:
         for j in avg_epoch_rank_per_password[secret].keys():
             epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j]))
 
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, False)
+    fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, True)
 
-    for i in epoch_insertion_rank_per_password:
-        
-        epochs = []
-        insertions = []
-        ranks = []
-        for j in epoch_insertion_rank_per_password[i]:
-            epochs.append(j[0])
-            insertions.append(j[1])
-            ranks.append(j[2])
-
-        pr = fig.gca(projection='3d') 
-
-        pr.scatter(insertions, epochs, ranks, label=i)
-        
-        pr.set_ylabel("Epochs")
-        pr.set_xlabel("Insertions")
-        pr.set_zlabel("Ranks")
-        #pr.set_zlim(0,500)
-        
-    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
-    plt.title('{} test with {} passwords'.format(version, number_of_passwords))
-    plt.tight_layout()
-    plt_dest = plt_folder + 'RANK_PER_EPOCH_AND_INSERTION'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
-
-
-    #FIGURE 0.1 EPOCH VS INSERTIONS VS RANKS 2X
-
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-
-    for i in epoch_insertion_rank_per_password:
-        
-        epochs = []
-        insertions = []
-        ranks = []
-        for j in epoch_insertion_rank_per_password[i]:
-            epochs.append(j[0])
-            insertions.append(j[1])
-            ranks.append(j[2])
-        
-        pr = fig.gca(projection='3d') 
-
-        pr.scatter(insertions, epochs, ranks, label=i)
-        
-        pr.set_ylabel("Epochs")
-        pr.set_xlabel("Insertions")
-        pr.set_zlabel("Ranks")
-        pr.set_zlim(0,500)
-        
-    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
-    plt.title('{} test with {} passwords'.format(version, number_of_passwords))
-    plt.tight_layout()
-    plt_dest = plt_folder + 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
 
     
-    #FIGURE 2 - DIGITS vs LETTERS EXPOSURE RANK
+    # #FIGURE 2 - DIGITS vs LETTERS EXPOSURE RANK
 
-    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
-    index = 1
-    label1 = True
-    label2 = True
-    for password, rank in avg_exposure_rank_per_secret.items():
-        if password[0].isdigit():
-            plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
-            label1 = False
-        else:
-            plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
-            label2 = False
-        index+=1
-    plt.xlabel("Codes")
-    plt.ylabel("Exposure Rank")
-    plt.yscale("log")
-    #plt.ylim(0,200)
-    plt.legend()
-    plt.tight_layout()
-    plt_dest = plt_folder + 'DIGITS_VS_LETTERS_EXPOSURE_RANKS'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
+    # index = 1
+    # label1 = True
+    # label2 = True
+    # for password, rank in avg_exposure_rank_per_secret.items():
+    #     if password[0].isdigit():
+    #         plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
+    #         label1 = False
+    #     else:
+    #         plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
+    #         label2 = False
+    #     index+=1
+    # plt.xlabel("Codes")
+    # plt.ylabel("Exposure Rank")
+    # plt.yscale("log")
+    # #plt.ylim(0,200)
+    # plt.legend()
+    # plt.tight_layout()
+    # plt_dest = plt_folder + 'DIGITS_VS_LETTERS_EXPOSURE_RANKS'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
 
 
-    #FIGURE 3 - DIGITS vs LETTERS SCORE RANK
+    # #FIGURE 3 - DIGITS vs LETTERS SCORE RANK
 
-    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     
-    index = 1
-    label1 = True
-    label2 = True
-    for password, rank in avg_rank_per_secret.items():
-        if password[0].isdigit():
-            plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
-            label1 = False
-        else:
-            plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
-            label2 = False
-        index+=1
-    plt.xlabel("Codes")
-    plt.ylabel("Confidence Rank")
-    plt.yscale("log")
-    #plt.ylim(0,200)
-    plt.legend()
-    plt.tight_layout()
-    plt_dest = plt_folder + 'DIGITS_VS_LETTERS_SCORE_RANKS'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
+    # index = 1
+    # label1 = True
+    # label2 = True
+    # for password, rank in avg_rank_per_secret.items():
+    #     if password[0].isdigit():
+    #         plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
+    #         label1 = False
+    #     else:
+    #         plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
+    #         label2 = False
+    #     index+=1
+    # plt.xlabel("Codes")
+    # plt.ylabel("Confidence Rank")
+    # plt.yscale("log")
+    # #plt.ylim(0,200)
+    # plt.legend()
+    # plt.tight_layout()
+    # plt_dest = plt_folder + 'DIGITS_VS_LETTERS_SCORE_RANKS'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
 
 
-    #FIGURE 4 - DIGITS vs LETTERS EXPOSURES
+    # #FIGURE 4 - DIGITS vs LETTERS EXPOSURES
 
-    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
-    index = 1
-    label1 = True
-    label2 = True
-    for password, rank in avg_exposure_per_secret.items():
-        if password[0].isdigit():
-            plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
-            label1 = False
-        else:
-            plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
-            label2 = False
-        index+=1
-    plt.xlabel("Codes")
-    plt.ylabel("Exposure")
-    #plt.yscale("log")
-    #plt.ylim(0,200)
-    plt.legend()
-    plt.tight_layout()
-    plt_dest = plt_folder + 'DIGITS_VS_LETTERS_EXPOSURE'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
-
-
-    #FIGURE 5 - AVG RANKING PER SECRET
-
-    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-
-    #newA = dict(sorted(ranks_per_secret.items(), key=operator.itemgetter(1), reverse=False))
-    newA = avg_rank_per_secret
-    digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
-    letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
-    special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
+    # index = 1
+    # label1 = True
+    # label2 = True
+    # for password, rank in avg_exposure_per_secret.items():
+    #     if password[0].isdigit():
+    #         plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
+    #         label1 = False
+    #     else:
+    #         plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
+    #         label2 = False
+    #     index+=1
+    # plt.xlabel("Codes")
+    # plt.ylabel("Exposure")
+    # #plt.yscale("log")
+    # #plt.ylim(0,200)
+    # plt.legend()
+    # plt.tight_layout()
+    # plt_dest = plt_folder + 'DIGITS_VS_LETTERS_EXPOSURE'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
 
 
-    lists = newA.items()
+    # #FIGURE 5 - AVG RANKING PER SECRET
 
-    x, y = zip(*lists)
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
-    x = range(len(x))
-
-    fig = plt.figure()
-    ax = fig.add_axes([0,0,1,1])
-
-    index = 0
-    label1 = True
-    label2 = True
-    for password, rank in avg_rank_per_secret.items():
-        if password[0].isdigit():
-            plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
-            label1 = False
-        else:
-            plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
-            label2 = False
-        index+=1
+    # newA = avg_rank_per_secret
+    # digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
+    # letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
+    # special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
 
 
-    #plt.plot(x, y, 'xk')
-    plt.yscale("log")
-    #plt.ylim(0,10)
-    ax.bar(x, digits_per_password.values(), alpha = 0.6, color = 'cyan', width = 0.25, label='digits')
-    ax.bar(x, letters_per_password.values(), alpha = 0.6, color = 'orange', width = 0.25, label='letters')
-    ax.bar(x, special_char_per_password.values(), alpha = 0.6, color = 'r', width = 0.25, label='special characters')
+    # lists = newA.items()
 
-    plt.xlabel('Codes')
-    plt.ylabel('Avg Rank')
-    plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
-    plt.legend(loc='upper right')
-    #plt.tight_layout()
-    plt_dest = plt_folder + 'PASSWORDS_AVERAGE_RANK_WRT_DIGIT_LETTER_COUNT'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
-    plt.show()
+    # x, y = zip(*lists)
 
+    # x = range(len(x))
 
+    # fig = plt.figure()
+    # ax = fig.add_axes([0,0,1,1])
 
-    #FIGURE 6 - AVG RANKING PER STRENGTH
-
-    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-
-    info_per_password = {password:[] for password, stat in password_Stat.items()}
-
-    strength_per_password = {password:stat.strength() for password, stat in password_Stat.items()}
-    digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
-    letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
-    special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
+    # index = 0
+    # label1 = True
+    # label2 = True
+    # for password, rank in avg_rank_per_secret.items():
+    #     if password[0].isdigit():
+    #         plt.plot(index, rank, 'ok', label="first char is digit" if label1 else "")
+    #         label1 = False
+    #     else:
+    #         plt.plot(index, rank, 'xk', label="first char is letter" if label2 else "")
+    #         label2 = False
+    #     index+=1
 
 
-    for key in avg_rank_per_secret.keys():
-        info_per_password[key].extend([strength_per_password[key], avg_rank_per_secret[key], digits_per_password[key], letters_per_password[key], special_char_per_password[key]])
+    # #plt.plot(x, y, 'xk')
+    # plt.yscale("log")
+    # #plt.ylim(0,10)
+    # ax.bar(x, digits_per_password.values(), alpha = 0.6, color = 'cyan', width = 0.25, label='digits')
+    # ax.bar(x, letters_per_password.values(), alpha = 0.6, color = 'orange', width = 0.25, label='letters')
+    # ax.bar(x, special_char_per_password.values(), alpha = 0.6, color = 'r', width = 0.25, label='special characters')
+
+    # plt.xlabel('Codes')
+    # plt.ylabel('Avg Rank')
+    # plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
+    # plt.legend(loc='upper right')
+    # #plt.tight_layout()
+    # plt_dest = plt_folder + 'PASSWORDS_AVERAGE_RANK_WRT_DIGIT_LETTER_COUNT'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
+    # plt.show()
 
 
-    strength = [value[0] for key, value in info_per_password.items()]
-    rank = [value[1] for key, value in info_per_password.items()]
-    digits = [value[2] for key, value in info_per_password.items()]
-    letters = [value[3] for key, value in info_per_password.items()]
-    special_chars = [value[4] for key, value in info_per_password.items()]
 
-    fig = plt.figure()
-    ax = fig.add_axes([0,0,1,1])
+    # #FIGURE 6 - AVG RANKING PER STRENGTH
 
-    label1 = True
-    label2 = True
-    for password, stats in info_per_password.items():
-        if password[0].isdigit():
-            plt.plot(stats[0], stats[1], 'ok', label="first char is digit" if label1 else "")
-            label1 = False
-        else:
-            plt.plot(stats[0], stats[1], 'xk', label="first char is letter" if label2 else "")
-            label2 = False
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    # info_per_password = {password:[] for password, stat in password_Stat.items()}
+
+    # strength_per_password = {password:stat.strength() for password, stat in password_Stat.items()}
+    # digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
+    # letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
+    # special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
+
+
+    # for key in avg_rank_per_secret.keys():
+    #     info_per_password[key].extend([strength_per_password[key], avg_rank_per_secret[key], digits_per_password[key], letters_per_password[key], special_char_per_password[key]])
+
+
+    # strength = [value[0] for key, value in info_per_password.items()]
+    # rank = [value[1] for key, value in info_per_password.items()]
+    # digits = [value[2] for key, value in info_per_password.items()]
+    # letters = [value[3] for key, value in info_per_password.items()]
+    # special_chars = [value[4] for key, value in info_per_password.items()]
+
+    # fig = plt.figure()
+    # ax = fig.add_axes([0,0,1,1])
+
+    # label1 = True
+    # label2 = True
+    # for password, stats in info_per_password.items():
+    #     if password[0].isdigit():
+    #         plt.plot(stats[0], stats[1], 'ok', label="first char is digit" if label1 else "")
+    #         label1 = False
+    #     else:
+    #         plt.plot(stats[0], stats[1], 'xk', label="first char is letter" if label2 else "")
+    #         label2 = False
         
-    #plt.plot(x, y, 'xk')
-    plt.yscale("log")
-    #plt.ylim(0,10)
-    ax.bar(strength, digits_per_password.values(), alpha = 0.2, color = 'cyan', width = 0.25, label='digits')
-    ax.bar(strength, letters_per_password.values(), alpha = 0.2, color = 'orange', width = 0.25, label='letters')
-    ax.bar(strength, special_char_per_password.values(), alpha = 0.2, color = 'r', width = 0.25, label='special characters')
+    # #plt.plot(x, y, 'xk')
+    # plt.yscale("log")
+    # #plt.ylim(0,10)
+    # ax.bar(strength, digits_per_password.values(), alpha = 0.2, color = 'cyan', width = 0.25, label='digits')
+    # ax.bar(strength, letters_per_password.values(), alpha = 0.2, color = 'orange', width = 0.25, label='letters')
+    # ax.bar(strength, special_char_per_password.values(), alpha = 0.2, color = 'r', width = 0.25, label='special characters')
 
-    #plt.plot(x, y, 'xk')
-    plt.xlabel('Strength of Password')
-    plt.ylabel('Avg Rank')
-    plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
-    plt.legend(loc='upper right')
-    #plt.tight_layout()
-    plt_dest = plt_folder + 'AVERAGE_RANK_PER_STRENGTH'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
-    plt.show()
-
-
-    #FIGURE 7 - AVG RANKING PER ENTROPY BITS
-
-    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-
-    info_per_password = {password:[] for password, stat in password_Stat.items()}
-
-    entropy_bits_per_password = {password:stat.entropy_bits for password, stat in password_Stat.items()}
-    digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
-    letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
-    special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
+    # #plt.plot(x, y, 'xk')
+    # plt.xlabel('Strength of Password')
+    # plt.ylabel('Avg Rank')
+    # plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
+    # plt.legend(loc='upper right')
+    # #plt.tight_layout()
+    # plt_dest = plt_folder + 'AVERAGE_RANK_PER_STRENGTH'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
+    # plt.show()
 
 
-    for key in avg_rank_per_secret.keys():
-        info_per_password[key].extend([entropy_bits_per_password[key], avg_rank_per_secret[key], digits_per_password[key], letters_per_password[key], special_char_per_password[key]])
+    # #FIGURE 7 - AVG RANKING PER ENTROPY BITS
+
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    # info_per_password = {password:[] for password, stat in password_Stat.items()}
+
+    # entropy_bits_per_password = {password:stat.entropy_bits for password, stat in password_Stat.items()}
+    # digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
+    # letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
+    # special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
 
 
-    strength = [value[0] for key, value in info_per_password.items()]
-    rank = [value[1] for key, value in info_per_password.items()]
-    digits = [value[2] for key, value in info_per_password.items()]
-    letters = [value[3] for key, value in info_per_password.items()]
-    special_chars = [value[4] for key, value in info_per_password.items()]
+    # for key in avg_rank_per_secret.keys():
+    #     info_per_password[key].extend([entropy_bits_per_password[key], avg_rank_per_secret[key], digits_per_password[key], letters_per_password[key], special_char_per_password[key]])
 
-    fig = plt.figure()
-    ax = fig.add_axes([0,0,1,1])
 
-    label1 = True
-    label2 = True
-    for password, stats in info_per_password.items():
-        if password[0].isdigit():
-            plt.plot(stats[0], stats[1], 'ok', label="first char is digit" if label1 else "")
-            label1 = False
-        else:
-            plt.plot(stats[0], stats[1], 'xk', label="first char is letter" if label2 else "")
-            label2 = False
+    # strength = [value[0] for key, value in info_per_password.items()]
+    # rank = [value[1] for key, value in info_per_password.items()]
+    # digits = [value[2] for key, value in info_per_password.items()]
+    # letters = [value[3] for key, value in info_per_password.items()]
+    # special_chars = [value[4] for key, value in info_per_password.items()]
+
+    # fig = plt.figure()
+    # ax = fig.add_axes([0,0,1,1])
+
+    # label1 = True
+    # label2 = True
+    # for password, stats in info_per_password.items():
+    #     if password[0].isdigit():
+    #         plt.plot(stats[0], stats[1], 'ok', label="first char is digit" if label1 else "")
+    #         label1 = False
+    #     else:
+    #         plt.plot(stats[0], stats[1], 'xk', label="first char is letter" if label2 else "")
+    #         label2 = False
         
-    #plt.plot(x, y, 'xk')
-    plt.yscale("log")
-    #plt.ylim(0,10)
-    ax.bar(strength, digits_per_password.values(), alpha = 0.2, color = 'cyan', width = 0.25, label='digits')
-    ax.bar(strength, letters_per_password.values(), alpha = 0.2, color = 'orange', width = 0.25, label='letters')
-    ax.bar(strength, special_char_per_password.values(), alpha = 0.2, color = 'r', width = 0.25, label='special characters')
+    # #plt.plot(x, y, 'xk')
+    # plt.yscale("log")
+    # #plt.ylim(0,10)
+    # ax.bar(strength, digits_per_password.values(), alpha = 0.2, color = 'cyan', width = 0.25, label='digits')
+    # ax.bar(strength, letters_per_password.values(), alpha = 0.2, color = 'orange', width = 0.25, label='letters')
+    # ax.bar(strength, special_char_per_password.values(), alpha = 0.2, color = 'r', width = 0.25, label='special characters')
 
-    #plt.plot(x, y, 'xk')
-    plt.xlabel("ENTROPY BITS (log2 of the number of possible passwords)")
-    plt.ylabel('Avg Rank')
-    plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
-    plt.legend(loc='upper right')
-    #plt.tight_layout()
-    plt_dest = plt_folder + 'AVERAGE_RANK_PER_ENTROPY_BITS'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
-    plt.show()
-
-
-    #FIGURE 8 - AVG RANKING PER ENTROPY DENSITY
-
-    plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-
-    info_per_password = {password:[] for password, stat in password_Stat.items()}
-
-    entropy_density_per_password = {password:stat.entropy_density for password, stat in password_Stat.items()}
-    digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
-    letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
-    special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
+    # #plt.plot(x, y, 'xk')
+    # plt.xlabel("ENTROPY BITS (log2 of the number of possible passwords)")
+    # plt.ylabel('Avg Rank')
+    # plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
+    # plt.legend(loc='upper right')
+    # #plt.tight_layout()
+    # plt_dest = plt_folder + 'AVERAGE_RANK_PER_ENTROPY_BITS'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
+    # plt.show()
 
 
-    for key in avg_rank_per_secret.keys():
-        info_per_password[key].extend([entropy_density_per_password[key], avg_rank_per_secret[key], digits_per_password[key], letters_per_password[key], special_char_per_password[key]])
+    # #FIGURE 8 - AVG RANKING PER ENTROPY DENSITY
+
+    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    # info_per_password = {password:[] for password, stat in password_Stat.items()}
+
+    # entropy_density_per_password = {password:stat.entropy_density for password, stat in password_Stat.items()}
+    # digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
+    # letters_per_password = {password:stat.letters for password, stat in password_Stat.items()}
+    # special_char_per_password = {password:stat.special_characters for password, stat in password_Stat.items()}
 
 
-    strength = [value[0] for key, value in info_per_password.items()]
-    rank = [value[1] for key, value in info_per_password.items()]
-    digits = [value[2] for key, value in info_per_password.items()]
-    letters = [value[3] for key, value in info_per_password.items()]
-    special_chars = [value[4] for key, value in info_per_password.items()]
+    # for key in avg_rank_per_secret.keys():
+    #     info_per_password[key].extend([entropy_density_per_password[key], avg_rank_per_secret[key], digits_per_password[key], letters_per_password[key], special_char_per_password[key]])
 
-    fig = plt.figure()
-    ax = fig.add_axes([0,0,1,1])
 
-    label1 = True
-    label2 = True
-    for password, stats in info_per_password.items():
-        if password[0].isdigit():
-            plt.plot(stats[0], stats[1], 'ok', label="first char is digit" if label1 else "")
-            label1 = False
-        else:
-            plt.plot(stats[0], stats[1], 'xk', label="first char is letter" if label2 else "")
-            label2 = False
+    # strength = [value[0] for key, value in info_per_password.items()]
+    # rank = [value[1] for key, value in info_per_password.items()]
+    # digits = [value[2] for key, value in info_per_password.items()]
+    # letters = [value[3] for key, value in info_per_password.items()]
+    # special_chars = [value[4] for key, value in info_per_password.items()]
+
+    # fig = plt.figure()
+    # ax = fig.add_axes([0,0,1,1])
+
+    # label1 = True
+    # label2 = True
+    # for password, stats in info_per_password.items():
+    #     if password[0].isdigit():
+    #         plt.plot(stats[0], stats[1], 'ok', label="first char is digit" if label1 else "")
+    #         label1 = False
+    #     else:
+    #         plt.plot(stats[0], stats[1], 'xk', label="first char is letter" if label2 else "")
+    #         label2 = False
         
-    #plt.plot(x, y, 'xk')
-    plt.yscale("log")
-    #plt.ylim(0,10)
-    ax.bar(strength, digits_per_password.values(), alpha = 0.2, color = 'cyan', width = 0.25, label='digits')
-    ax.bar(strength, letters_per_password.values(), alpha = 0.2, color = 'orange', width = 0.25, label='letters')
-    ax.bar(strength, special_char_per_password.values(), alpha = 0.2, color = 'r', width = 0.25, label='special characters')
+    # #plt.plot(x, y, 'xk')
+    # plt.yscale("log")
+    # #plt.ylim(0,10)
+    # ax.bar(strength, digits_per_password.values(), alpha = 0.2, color = 'cyan', width = 0.25, label='digits')
+    # ax.bar(strength, letters_per_password.values(), alpha = 0.2, color = 'orange', width = 0.25, label='letters')
+    # ax.bar(strength, special_char_per_password.values(), alpha = 0.2, color = 'r', width = 0.25, label='special characters')
 
-    #plt.plot(x, y, 'xk')
-    plt.xlabel("ENTROPY DENSITY")
-    plt.ylabel('Avg Rank')
-    plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
-    plt.legend(loc='upper right')
-    #plt.tight_layout()
-    plt_dest = plt_folder + 'AVERAGE_RANK_PER_ENTROPY_DENSITY'
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
-    plt.show()
+    # #plt.plot(x, y, 'xk')
+    # plt.xlabel("ENTROPY DENSITY")
+    # plt.ylabel('Avg Rank')
+    # plt.title('Avg Rank over {} Runs'.format(len(g[0][0])))
+    # plt.legend(loc='upper right')
+    # #plt.tight_layout()
+    # plt_dest = plt_folder + 'AVERAGE_RANK_PER_ENTROPY_DENSITY'
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
+    # plt.show()
