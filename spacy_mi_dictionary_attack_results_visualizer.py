@@ -186,10 +186,10 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(x, y, e, fmt='-o', ecolor='orange', capsize=2, label=label)
-    plt.bar(x, bar, color='grey', alpha=0.5)
+    plot = plt.bar(x, bar, color='grey', alpha=0.5)
 
-    for bar in plt.patches: 
-        plots.annotate(format(bar.get_height(), '.2f'),  
+    for bar in plott.patches: 
+        plots.annotate(bar.get_height(),  
                     (bar.get_x() + bar.get_width() / 2,  
                         bar.get_height()), ha='center', va='center', 
                     size=15, xytext=(0, 8), 
