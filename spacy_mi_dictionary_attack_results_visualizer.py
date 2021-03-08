@@ -27,7 +27,7 @@ def mkdir_p(path):
 
 def unpack_data(res_folder=None):
     g = []
-    br = True
+    br = False
     files = os.listdir(res_folder)
     for file_name in files:
         print(file_name)
