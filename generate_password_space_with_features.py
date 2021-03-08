@@ -238,7 +238,7 @@ if __name__ == "__main__":
             for line in file: 
                 for word in line.split():          
                     passwords.append(word)
-        passwords = random.sample(passwords, (r_space-(S*number_of_features)))
+        passwords = random.sample(passwords, (r_space))
 
         strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
         choices = random.sample(strength_passwords, N)
