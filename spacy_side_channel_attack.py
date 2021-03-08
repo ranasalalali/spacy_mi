@@ -915,7 +915,7 @@ def updatingModel():
     ner.add_label(LABEL)
     optimizer = nlp.resume_training()
 
-    ner = nlp.get_pipe("ner")
+    # ner = nlp.get_pipe("ner")
     # Disable pipeline components you dont need to change
     pipe_exceptions = ["ner", "tok2vec"]
     unaffected_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
@@ -963,7 +963,7 @@ def updatingModel_ner_no_disable_tag_par():
 
     # Disable pipeline components you dont need to change
     pipe_exceptions = [ ]
-    unaffected_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
+    unaffected_pipes = [pipe for pipe in nlp.pipe_names if pipe in pipe_exceptions]
 
 #     optimizer = nlp.resume_training()
 
@@ -1527,20 +1527,10 @@ if __name__ == "__main__":
 
 
 
-    target_ner_updated(iterations)
+    # target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
     # get_avg_runtime_in_vocab()
     # target_nlp_whole_multiple_words()
     target_ner_updated_no_disable_pipe(iterations)
 
-    # import pickle
-    # g = []
-    # h = pickle.load(open("/home/tham/spacy_mi/r_space_data/1000_passwords.pickle3", 'rb'))
-    # g.append(h)
-    # print(g)
-    # print(len(g))
-
-    # a = g[0][0:100]
-    # print(a)
-    # print(len(a))
     
