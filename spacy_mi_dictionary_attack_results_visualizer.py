@@ -189,7 +189,7 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
 
     x = list(x)
     for i in range(len(bar)):
-        plt.annotate(bar[i], (x[i], bar[i]))
+        plt.annotate(bar[i], (x[i], bar[i]), ha='center', rotation=90, color='grey', alpha=0.5)
         plt.bar(x[i], bar[i], color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
