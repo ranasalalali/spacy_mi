@@ -187,7 +187,7 @@ def fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_featur
     avg_feature_passwords_feature_distance_ranks_stat = {}
     avg_feature_passwords_std_error_per_dist = []
     for dist in avg_feature_passwords_feature_distance_ranks.keys():
-        if dist !=0 and len(np.array(avg_feature_passwords_feature_distance_ranks_stat[dist])) >= required_passwords:
+        if dist !=0 and len(np.array(avg_feature_passwords_feature_distance_ranks[dist])) >= required_passwords:
             avg_feature_passwords_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_passwords_feature_distance_ranks[dist])), np.std(np.array(avg_feature_passwords_feature_distance_ranks[dist])), len(np.array(avg_feature_passwords_feature_distance_ranks[dist])))
     
     avg_feature_passwords_feature_distance_ranks_stat = dict(sorted(avg_feature_passwords_feature_distance_ranks_stat.items(), key=lambda i: i[0], reverse=False))
