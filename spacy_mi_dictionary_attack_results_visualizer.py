@@ -27,7 +27,7 @@ def mkdir_p(path):
 
 def unpack_data(res_folder=None):
     g = []
-    br = True
+    br = False
     files = os.listdir(res_folder)
     for file_name in files:
         print(file_name)
@@ -189,7 +189,7 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
 
     x = list(x)
     for i in range(len(bar)):
-        plt.annotate(bar[i], (x[i], bar[i]), ha='center', fontsize='small', rotation='vertical', color='grey', alpha=0.5)
+        plt.annotate(bar[i], (x[i], bar[i]), ha='center', xytext=(0, 3), fontsize='small', rotation='vertical', color='grey', alpha=0.5)
         plt.bar(x[i], bar[i], color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
