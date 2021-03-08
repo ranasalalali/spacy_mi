@@ -1,0 +1,14 @@
+======== target ner updated no_disable_pipes ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is rkgnweok678
+Number of successs attempts:40
+avg runtime with in vocab: 0.0036483542434871197
+avg runtime with out vocab: 0.003649322334676981
+avg runtime diff: 9.680911898612803e-07
+======== target ner updated no_disable_pipes ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is rkgnweok678
+Number of successs attempts:41
+avg runtime with in vocab: 0.0036155662639066576
+avg runtime with out vocab: 0.003693466857075691
+avg runtime diff: 7.790059316903353e-05
