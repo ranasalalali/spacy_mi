@@ -98,6 +98,8 @@ def feature_distance(target=None, password=None):
     return (pref_suff, pref_shape, suff_shape, pref_suff_shape, pref_suff_shape_norm)
 
 def get_feature_passwords(n_feature_passwords=0, feature=None, secret=None):
+    feature_passwords = []
+    
     if n_feature_passwords>0:
         features_passwords_file = 'r_space_data/password_{}_features_{}_{}_passwords.pickle3'.format(secret, features, n_feature_passwords)
         file = open(features_passwords_file, 'rb')
