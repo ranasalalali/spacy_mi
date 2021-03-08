@@ -196,7 +196,7 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
     plt.ylabel('RANK')
 
     y_lim = plt.ylim()
-    plt.ylim(top=y_lim[1]+(1/100 * x_lim[1]))
+    plt.ylim(top=y_lim[1]+(1/100 * y_lim[1]))
 
     plt.title(plot_name)
     plt.legend()
