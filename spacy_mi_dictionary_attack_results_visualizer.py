@@ -189,11 +189,15 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
 
     x = list(x)
     for i in range(len(bar)):
-        plt.annotate(bar[i], (x[i], bar[i]), ha='center', xytext=(0, 3), fontsize='small', rotation='vertical', color='grey', alpha=0.5)
+        plt.annotate(bar[i], (x[i], bar[i]), ha='center', xytext=(x[i], bar[i]+2), fontsize='small', rotation='vertical', color='grey', alpha=0.5)
         plt.bar(x[i], bar[i], color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
+
+    y_lim = plt.get_ylim()
+    plt.set_xlim([y_lim[0], y_lim[1]+(1/100 * x_lim[1])])
+
     plt.title(plot_name)
     plt.legend()
     plt.tight_layout()
