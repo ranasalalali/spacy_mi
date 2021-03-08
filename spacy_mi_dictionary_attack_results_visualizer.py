@@ -26,6 +26,7 @@ def mkdir_p(path):
             raise
 
 def unpack_data(res_folder=None):
+    g = []
     files = os.listdir(res_folder)
     for file_name in files:
         print(file_name)
@@ -34,6 +35,8 @@ def unpack_data(res_folder=None):
         g.append(h)
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
+    
+    return g
 
 def format_string(s):
     escaped = re.escape(s)
@@ -649,8 +652,6 @@ if __name__ == "__main__":
             insertions.append(j[1])
             ranks.append(j[2])
         
-        
-
         pr = fig.gca(projection='3d') 
 
         pr.scatter(insertions, epochs, ranks, label=i)
