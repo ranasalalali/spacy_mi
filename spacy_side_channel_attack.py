@@ -1011,7 +1011,7 @@ def target_ner_updated(iterations):
         
         print("i = ", i)
         nlp = updatingModel()
-        tokenizer = nlp.get_pipe("tokenizer")
+        tokenizer =  nlp.tokenizer
         ner = nlp.get_pipe('ner')
 
         ## in vocab
@@ -1111,7 +1111,7 @@ def target_ner_updated_no_disable_pipe(iterations):
         print("i = ", i)
         # nlp = updatingModel()
         nlp = updatingModel_ner_no_disable_tag_par()
-        tokenizer = nlp.get_pipe("tokenizer")
+        tokenizer = nlp.tokenizer
         ner = nlp.get_pipe('ner')
 
         ## in vocab
