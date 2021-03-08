@@ -1011,6 +1011,8 @@ def target_ner_updated(iterations):
         
         print("i = ", i)
         nlp = updatingModel()
+        tokenizer = nlp.get_pipe("tokenizer")
+        ner = nlp.get_pipe('ner')
 
         ## in vocab
         
@@ -1020,10 +1022,12 @@ def target_ner_updated(iterations):
         
         text = in_vocab_word
         
-        ner = nlp.get_pipe('ner')
+        # ner = nlp.get_pipe('ner')
         time0 = time.perf_counter()
-        docs = nlp.make_doc(text)
+        docs = tokenizer(text)
         docs = ner(docs)
+        # docs = nlp.make_doc(text)
+        # docs = ner(docs)
         time_now = time.perf_counter()
         vocab_string_after_query = list(nlp.vocab.strings)
         in_vocab_runtime = time_now - time0
@@ -1047,9 +1051,11 @@ def target_ner_updated(iterations):
         text = out_vocab_word
         
        
-        ner = nlp.get_pipe('ner')
+        # ner = nlp.get_pipe('ner')
         time1 = time.perf_counter()
-        docs = nlp.make_doc(text)
+        # docs = nlp.make_doc(text)
+        # docs = ner(docs)
+        docs = tokenizer(text)
         docs = ner(docs)
         time_now1 = time.perf_counter()
         vocab_string_after_query = list(nlp.vocab.strings)
@@ -1103,7 +1109,10 @@ def target_ner_updated_no_disable_pipe(iterations):
     for i in range(iterations):
         
         print("i = ", i)
-        nlp = updatingModel()
+        # nlp = updatingModel()
+        nlp = updatingModel_ner_no_disable_tag_par()
+        tokenizer = nlp.get_pipe("tokenizer")
+        ner = nlp.get_pipe('ner')
 
         ## in vocab
         
@@ -1113,9 +1122,11 @@ def target_ner_updated_no_disable_pipe(iterations):
         
         text = in_vocab_word
         
-        ner = nlp.get_pipe('ner')
+        # ner = nlp.get_pipe('ner')
         time0 = time.perf_counter()
-        docs = nlp.make_doc(text)
+        # docs = nlp.make_doc(text)
+        # docs = ner(docs)
+        docs = tokenizer(text)
         docs = ner(docs)
         time_now = time.perf_counter()
         vocab_string_after_query = list(nlp.vocab.strings)
@@ -1140,9 +1151,11 @@ def target_ner_updated_no_disable_pipe(iterations):
         text = out_vocab_word
         
        
-        ner = nlp.get_pipe('ner')
+        # ner = nlp.get_pipe('ner')
         time1 = time.perf_counter()
-        docs = nlp.make_doc(text)
+        # docs = nlp.make_doc(text)
+        # docs = ner(docs)
+        docs = tokenizer(text)
         docs = ner(docs)
         time_now1 = time.perf_counter()
         vocab_string_after_query = list(nlp.vocab.strings)
@@ -1514,7 +1527,7 @@ if __name__ == "__main__":
 
 
 
-    # target_ner_updated(iterations)
+    target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
     # get_avg_runtime_in_vocab()
     # target_nlp_whole_multiple_words()
