@@ -186,14 +186,10 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(x, y, e, fmt='-o', ecolor='orange', capsize=2, label=label)
-    plot = plt.bar(x, bar, color='grey', alpha=0.5)
 
-    for bar in plot.patches: 
-        plot.annotate(bar.get_height(),  
-                    (bar.get_x() + bar.get_width() / 2,  
-                        bar.get_height()), ha='center', va='center', 
-                    size=15, xytext=(0, 8), 
-                    textcoords='offset points')
+    for i in range(len(bar)):
+        plt.annotate(count)
+        plt.bar(x[i], bar[i], color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
@@ -222,18 +218,13 @@ def fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_featur
         feature_passwords_std_per_mean.append(avg_feature_passwords_feature_distance_ranks_stat[dist][1])
         feature_passwords_passwords_per_distance.append(avg_feature_passwords_feature_distance_ranks_stat[dist][2])
 
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
-    plt.errorbar(avg_feature_passwords_feature_distance_ranks_stat.keys(), feature_passwords_mean_dist, feature_passwords_std_per_mean, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape + Norm Distance')
-    plt.bar(avg_feature_passwords_feature_distance_ranks_stat.keys(), feature_passwords_passwords_per_distance, color='grey', alpha=0.5)
-
-    plt.xlabel('DISTANCE')
-    plt.ylabel('RANK')
-    plt.title('FEATURE PASSWORDS AVERAGE FEATURE DISTANCE RANKS {} PASSWORDS'.format(len(g)))
-    plt.legend()
-    plt.tight_layout()
-    plt_dest = plt_folder + 'AVG_FEATURE_PASSWORDS_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(len(g))
-    plt.savefig(plt_dest,
-            bbox_inches="tight")
+    x = avg_feature_passwords_feature_distance_ranks_stat.keys()
+    y = feature_passwords_mean_dist
+    e = feature_passwords_std_per_mean
+    bar = feature_passwords_passwords_per_distance
+    label = 'Prefix + Suffix + Shape + Norm Distance'
+    plot_name = 'AVG_FEATURE_PASSWORDS_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
+    fig_error_bar(x, y, e, bar, label, plot_name)
 
     #BLOCK FOR AVG FEATURE PASSWORDS FEATURE DISTANCE RANK END
 
