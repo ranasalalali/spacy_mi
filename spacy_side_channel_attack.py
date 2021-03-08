@@ -945,6 +945,50 @@ def updatingModel():
 
     return nlp
 
+def updatingModel_ner_no_disable_tag_par():
+    LABEL = "SECRET"
+    secret = 'rgjfgklf678'
+    text = "Rana's secret is {}.".format(secret)
+    TRAIN_DATA = []
+    TRAIN_DATA.append((text, {'entities': [(0, 4, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
+
+    nlp = spacy.load('en_core_web_lg')
+#     print("model before updating")
+    print("Size of vocab_string in model before updating: ", len(list(nlp.vocab.strings)))
+    ner = nlp.get_pipe("ner")
+    ner.add_label(LABEL)
+    optimizer = nlp.resume_training()
+
+    ner = nlp.get_pipe("ner")
+
+    # Disable pipeline components you dont need to change
+    pipe_exceptions = [ ]
+    unaffected_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
+
+#     optimizer = nlp.resume_training()
+
+    for _, annotations in TRAIN_DATA:
+        for ent in annotations.get("entities"):
+            ner.add_label(ent[2])
+
+    move_names = list(ner.move_names)
+#     print("move_names:", move_names)
+#     print("num of moves: ", len(move_names))
+
+    examples = []
+    for text, annots in TRAIN_DATA:
+        examples.append(Example.from_dict(nlp.make_doc(text), annots))
+    get_examples = lambda: examples
+    #nlp.initialize(lambda: get_examples)
+    for _ in range(60):
+        random.shuffle(examples)
+    with nlp.disable_pipes(*unaffected_pipes): 
+        for _ in range(60):
+            for batch in minibatch(examples, size=8):
+                nlp.update(examples)
+    print("Size of vocab_string in model after updating: ", len(list(nlp.vocab.strings)))
+
+    return nlp
 
 def target_ner_updated(iterations):
     iterations = iterations
@@ -1038,6 +1082,99 @@ def target_ner_updated(iterations):
 
 
     save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_in_out_vocab_same_atts_notUpdating_model_between_query")    
+ 
+def target_ner_updated_no_disable_pipe(iterations):
+    iterations = iterations
+    total_in_vocab_time = 0
+    total_out_vocab_time = 0
+
+    count_success = 0
+
+    in_vocab_word = "Rana's secret is rgjfgklf678"
+    out_vocab_word = "Rana's secret is rkgnweok678"
+    file_name = open("in_out_vocab_ner_updated_no_disable_pipes.txt","a")
+    file_name.write("======== target ner updated no_disable_pipes ==============\n")  
+    file_name.write("In vocab word:{}\n".format(in_vocab_word))  
+    file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+    in_vocab_runtime_list = []
+    out_vocab_runtime_list = []
+
+    for i in range(iterations):
+        
+        print("i = ", i)
+        nlp = updatingModel()
+
+        ## in vocab
+        
+        print("-----IN vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = in_vocab_word
+        
+        ner = nlp.get_pipe('ner')
+        time0 = time.perf_counter()
+        docs = nlp.make_doc(text)
+        docs = ner(docs)
+        time_now = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+        print("len of vocab after query {}".format(len(vocab_string_after_query)))
+
+        ## out vocab
+        
+        # nlp = updatingModel()
+
+        print("-----OUT vocab-----")
+        vocab_string_org = list(nlp.vocab.strings)
+        print("len of vocab before query {}".format(len(vocab_string_org)))
+        
+        text = out_vocab_word
+        
+       
+        ner = nlp.get_pipe('ner')
+        time1 = time.perf_counter()
+        docs = nlp.make_doc(text)
+        docs = ner(docs)
+        time_now1 = time.perf_counter()
+        vocab_string_after_query = list(nlp.vocab.strings)
+        out_vocab_runtime = time_now1 - time1
+
+        out_vocab_runtime_list.append(out_vocab_runtime)
+        
+        # print(out_vocab_runtime_list)
+
+        print("runtime = ", out_vocab_runtime)
+
+        total_out_vocab_time += out_vocab_runtime
+
+        print("len of vocab after query {}".format(len(vocab_string_after_query)))
+        
+        diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+        print("updated elements: ", diff)
+
+
+        if out_vocab_runtime > in_vocab_runtime:
+            count_success +=1
+        # print("-------------------")
+
+    file_name.write("Number of successs attempts:{}\n".format(count_success))    
+    # file_name.write("======Average======\n") 
+    if iterations >0:
+        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
+        file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
+
+
+    save_results([in_vocab_runtime_list, out_vocab_runtime_list], "target_ner_updated_no_disable_pipes_in_out_vocab_same_atts_notUpdating_model_between_query")    
  
 
 def target_ner_updated_blackbox(iterations):
@@ -1373,6 +1510,8 @@ if __name__ == "__main__":
     # target_parser_tokenizer(iterations)
     # target_attRuler_tokenizer(iterations)
     # target_lemmatizer_tokenizer(iterations)
+
+
 
 
     # target_ner_updated(iterations)
