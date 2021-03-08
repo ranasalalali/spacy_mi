@@ -187,7 +187,8 @@ def fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_featur
     avg_feature_passwords_feature_distance_ranks_stat = {}
     avg_feature_passwords_std_error_per_dist = []
     for dist in avg_feature_passwords_feature_distance_ranks.keys():
-        avg_feature_passwords_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_passwords_feature_distance_ranks[dist])), np.std(np.array(avg_feature_passwords_feature_distance_ranks[dist])), len(np.array(avg_feature_passwords_feature_distance_ranks[dist])))
+        if dist !=0 and len(np.array(avg_feature_passwords_feature_distance_ranks_stat[dist])) >= required_passwords:
+            avg_feature_passwords_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_passwords_feature_distance_ranks[dist])), np.std(np.array(avg_feature_passwords_feature_distance_ranks[dist])), len(np.array(avg_feature_passwords_feature_distance_ranks[dist])))
     
     avg_feature_passwords_feature_distance_ranks_stat = dict(sorted(avg_feature_passwords_feature_distance_ranks_stat.items(), key=lambda i: i[0], reverse=False))
     
@@ -233,7 +234,7 @@ def fig_avg_all_feature_distance_rank(avg_feature_distance_ranks=None):
     avg_feature_distance_ranks_stat = {}
     avg_std_error_per_dist = []
     for dist in avg_feature_distance_ranks.keys():
-        if dist !=0 and len(np.array(avg_feature_distance_ranks[dist])) >= require_passwords:
+        if dist !=0 and len(np.array(avg_feature_distance_ranks[dist])) >= required_passwords:
             avg_feature_distance_ranks_stat[dist] = (np.mean(np.array(avg_feature_distance_ranks[dist])), np.std(np.array(avg_feature_distance_ranks[dist])), len(np.array(avg_feature_distance_ranks[dist])))
     
     avg_feature_distance_ranks_stat = dict(sorted(avg_feature_distance_ranks_stat.items(), key=lambda i: i[0], reverse=False))
@@ -259,7 +260,7 @@ def fig_avg_pref_suff_feature_distance_rank(avg_feature_distance_ranks_pref_suff
     avg_feature_distance_ranks_stat_pref_suff = {}
     avg_std_error_per_dist_pref_suff = []
     for dist in avg_feature_distance_ranks_pref_suff.keys():
-        if dist !=0 and len(np.array(avg_feature_distance_ranks_pref_suff[dist])) >= require_passwords:
+        if dist !=0 and len(np.array(avg_feature_distance_ranks_pref_suff[dist])) >= required_passwords:
             avg_feature_distance_ranks_stat_pref_suff[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff[dist])), len(np.array(avg_feature_distance_ranks_pref_suff[dist])))
     
     avg_feature_distance_ranks_stat_pref_suff = dict(sorted(avg_feature_distance_ranks_stat_pref_suff.items(), key=lambda i: i[0], reverse=False))
@@ -284,7 +285,7 @@ def fig_avg_pref_shape_feature_distance_rank(avg_feature_distance_ranks_pref_sha
     avg_feature_distance_ranks_stat_pref_shape = {}
     avg_std_error_per_dist_pref_shape = []
     for dist in avg_feature_distance_ranks_pref_shape.keys():
-        if dist !=0 and len(np.array(avg_feature_distance_ranks_pref_shape[dist])) >= require_passwords:
+        if dist !=0 and len(np.array(avg_feature_distance_ranks_pref_shape[dist])) >= required_passwords:
             avg_feature_distance_ranks_pref_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_shape[dist])), len(np.array(avg_feature_distance_ranks_pref_shape[dist])))
     
     avg_feature_distance_ranks_stat_pref_shape = dict(sorted(avg_feature_distance_ranks_stat_pref_shape.items(), key=lambda i: i[0], reverse=False))
@@ -310,7 +311,7 @@ def fig_avg_suff_shape_feature_distance_rank(avg_feature_distance_ranks_suff_sha
     avg_feature_distance_ranks_stat_suff_shape = {}
     avg_std_error_per_dist_suff_shape = []
     for dist in avg_feature_distance_ranks_suff_shape.keys():
-        if dist !=0 and len(np.array(avg_feature_distance_ranks_suff_shape[dist])) >= require_passwords:
+        if dist !=0 and len(np.array(avg_feature_distance_ranks_suff_shape[dist])) >= required_passwords:
             avg_feature_distance_ranks_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_suff_shape[dist])), len(np.array(avg_feature_distance_ranks_suff_shape[dist])))
     
     avg_feature_distance_ranks_stat_suff_shape = dict(sorted(avg_feature_distance_ranks_stat_suff_shape.items(), key=lambda i: i[0], reverse=False))
@@ -335,7 +336,7 @@ def fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pre
     avg_feature_distance_ranks_stat_pref_suff_shape = {}
     avg_std_error_per_dist_pref_suff_shape = []
     for dist in avg_feature_distance_ranks_pref_suff_shape.keys():
-        if dist !=0 and len(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])) >= require_passwords:
+        if dist !=0 and len(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])) >= required_passwords:
             avg_feature_distance_ranks_pref_suff_shape[dist] = (np.mean(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])), np.std(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])), len(np.array(avg_feature_distance_ranks_pref_suff_shape[dist])))
     
     avg_feature_distance_ranks_stat_pref_suff_shape = dict(sorted(avg_feature_distance_ranks_stat_pref_suff_shape.items(), key=lambda i: i[0], reverse=False))
@@ -400,7 +401,8 @@ if __name__ == "__main__":
 
     loc = args.loc
 
-    require_passwords = 10
+    global required_passwords
+    required_passwords = 10
 
     folder = loc
 
