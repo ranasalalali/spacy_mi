@@ -187,6 +187,7 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(x, y, e, fmt='-o', ecolor='orange', capsize=2, label=label)
 
+    x = list(x)
     for i in range(len(bar)):
         plt.annotate(bar[i], (x[i], bar[i]))
         plt.bar(x[i], bar[i], color='grey', alpha=0.5)
