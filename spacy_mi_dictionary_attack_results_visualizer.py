@@ -27,12 +27,15 @@ def mkdir_p(path):
 
 def unpack_data(res_folder=None):
     g = []
+    br = True
     files = os.listdir(res_folder)
     for file_name in files:
         print(file_name)
         file_path = os.path.join(res_folder, file_name)
         h = pickle.load(open(file_path, 'rb'))
         g.append(h)
+        if br:
+            break
     
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
@@ -79,8 +82,8 @@ def feature_distance(target=None, password=None):
     prefix_p = password[1]
     prefix_distance = levenshtein_distance(prefix_t, prefix_p)
 
-    suffix_t = target[-3]
-    suffix_p = password[-3]
+    suffix_t = target[-3:]
+    suffix_p = password[-3:]
     suffix_distance = levenshtein_distance(suffix_t, suffix_p)
 
     norm_t = target.lower()
@@ -469,6 +472,7 @@ if __name__ == "__main__":
         secret_shape = word_shape(secret)
 
         feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
+        print(len(feature_passwords))
         
         for score in scores:
             sorted_score = dict(sorted(score.items(), key=operator.itemgetter(1), reverse=True))
