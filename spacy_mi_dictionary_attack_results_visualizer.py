@@ -99,13 +99,13 @@ def feature_distance(target=None, password=None):
 
 def get_feature_passwords(n_feature_passwords=0, feature=None, secret=None):
     feature_passwords = []
-    
+
     if n_feature_passwords>0:
-        features_passwords_file = 'r_space_data/password_{}_features_{}_{}_passwords.pickle3'.format(secret, features, n_feature_passwords)
-        file = open(features_passwords_file, 'rb')
-        features_passwords = pickle.load(file)
+        feature_passwords_file = 'r_space_data/password_{}_features_{}_{}_passwords.pickle3'.format(secret, feature, n_feature_passwords)
+        file = open(feature_passwords_file, 'rb')
+        feature_passwords = pickle.load(file)
     else:
-        features_passwords = []
+        feature_passwords = []
 
     return feature_passwords
 
@@ -161,7 +161,7 @@ def fig_cdf_per_password(all_passwords=None, radius=5, all_password_ranks=None, 
         if all_passwords[i] == secret:
             plt.annotate("{} - {} - {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), all_password_shape[i], all_password_shape_dist[i]), (all_password_ranks[i], yvals[i]))
             plt.plot(all_password_ranks[i], yvals[i], 'x', color='green')
-        elif all_passwords[i] in features_passwords:
+        elif all_passwords[i] in feature_passwords:
             plt.annotate("{} - {} - {} - {}".format(all_password_dist[i], format_string(all_passwords[i]), all_password_shape[i], all_password_shape_dist[i]), (all_password_ranks[i], yvals[i]))
             plt.plot(all_password_ranks[i], yvals[i], 'o', color='red', alpha=0.5)
         else:
@@ -597,18 +597,18 @@ if __name__ == "__main__":
 
         #CHECK GENERATED FEATURE PASSWORDS
 
-        feature_password_stat_sorted = {code:all_password_stat_sorted[code] for code in features_passwords}
+        feature_passwords_stat_sorted = {code:all_password_stat_sorted[code] for code in feature_passwords}
 
-        feature_passwords = [code for code in feature_password_stat_sorted]
-        feature_password_ranks = [feature_password_stat_sorted[code][0] for code in feature_password_stat_sorted]
-        feature_password_feature_dist = [feature_password_stat_sorted[code][4][4] for code in feature_password_stat_sorted]
+        feature_passwords = [code for code in feature_passwords_stat_sorted]
+        feature_passwords_ranks = [feature_passwords_stat_sorted[code][0] for code in feature_passwords_stat_sorted]
+        feature_passwords_feature_dist = [feature_passwords_stat_sorted[code][4][4] for code in feature_passwords_stat_sorted]
 
         for index in range(len(feature_passwords)):
-            if feature_password_feature_dist[index] in avg_feature_passwords_feature_distance_ranks:
-                avg_feature_passwords_feature_distance_ranks[feature_password_feature_dist[index]].append(feature_password_ranks[index])
-            elif feature_password_feature_dist[index] not in avg_feature_passwords_feature_distance_ranks:
-                avg_feature_passwords_feature_distance_ranks[feature_password_feature_dist[index]] = []
-                avg_feature_passwords_feature_distance_ranks[feature_password_feature_dist[index]].append(feature_password_ranks[index])
+            if feature_passwords_feature_dist[index] in avg_feature_passwords_feature_distance_ranks:
+                avg_feature_passwords_feature_distance_ranks[feature_passwords_feature_dist[index]].append(feature_passwords_ranks[index])
+            elif feature_passwords_feature_dist[index] not in avg_feature_passwords_feature_distance_ranks:
+                avg_feature_passwords_feature_distance_ranks[feature_passwords_feature_dist[index]] = []
+                avg_feature_passwords_feature_distance_ranks[feature_passwords_feature_dist[index]].append(feature_passwords_ranks[index])
 
         #CHECK GENERATED FEATURE PASSWORDS END
 
