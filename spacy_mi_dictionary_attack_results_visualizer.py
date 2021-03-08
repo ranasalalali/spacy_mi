@@ -482,7 +482,7 @@ if __name__ == "__main__":
     ## ALL FEATURES
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape + Norm Distance')
-    #plt.hist(x=passwords_per_distance, bins='auto', color='grey', alpha=0.5)
+    plt.bar(avg_feature_distance_ranks_stat.keys(), passwords_per_distance, bins='auto', color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
