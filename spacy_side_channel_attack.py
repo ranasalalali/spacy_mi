@@ -76,7 +76,7 @@ def load_nlp():
     tagger = nlp.get_pipe("tagger")
     parser = nlp.get_pipe("parser")
     ner = nlp.get_pipe("ner")
-    att_ruler = nlp.get_pipe("att_ruler")
+    att_ruler = nlp.get_pipe("attribute_ruler")
     lemmatizer = nlp.get_pipe("lemmatizer")
     return nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer
 
