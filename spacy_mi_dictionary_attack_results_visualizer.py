@@ -27,15 +27,13 @@ def mkdir_p(path):
 
 def unpack_data(res_folder=None):
     g = []
-    br = True
     files = os.listdir(res_folder)
     for file_name in files:
         print(file_name)
         file_path = os.path.join(res_folder, file_name)
         h = pickle.load(open(file_path, 'rb'))
         g.append(h)
-        if br:
-            break
+    
     print('Read Disk')
     print('{} TEST RUNS FOUND'.format(len(g)))
 
