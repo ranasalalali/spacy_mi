@@ -482,7 +482,7 @@ if __name__ == "__main__":
     ## ALL FEATURES
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(avg_feature_distance_ranks_stat.keys(), mean_dist, std_per_mean, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape + Norm Distance')
-    plt.hist(x=passwords_per_distance, bins='auto', color='grey', alpha=0.5)
+    #plt.hist(x=passwords_per_distance, bins='auto', color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
@@ -496,7 +496,7 @@ if __name__ == "__main__":
     ## PREF SUFF
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(avg_feature_distance_ranks_stat_pref_suff.keys(), mean_dist_pref_suff, std_per_mean_pref_suff, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix Distance')
-    plt.hist(x=passwords_per_distance_pref_suff, bins='auto', color='grey', alpha=0.5)
+    #plt.hist(x=passwords_per_distance_pref_suff, bins='auto', color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
@@ -510,7 +510,7 @@ if __name__ == "__main__":
     ## PREF SHAPE
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(avg_feature_distance_ranks_stat_pref_shape.keys(), mean_dist_pref_shape, std_per_mean_pref_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Shape Distance')
-    plt.hist(x=passwords_per_distance_pref_shape, bins='auto', color='grey', alpha=0.5)
+    #plt.hist(x=passwords_per_distance_pref_shape, bins='auto', color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
@@ -524,7 +524,7 @@ if __name__ == "__main__":
     ## SUFF SHAPE
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(avg_feature_distance_ranks_stat_suff_shape.keys(), mean_dist_suff_shape, std_per_mean_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Suffix + Shape Distance')
-    plt.hist(x=passwords_per_distance_suff_shape, bins='auto', color='grey', alpha=0.5)
+    #plt.hist(x=passwords_per_distance_suff_shape, bins='auto', color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
@@ -538,7 +538,7 @@ if __name__ == "__main__":
     ## PREF SUFF SHAPE
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(avg_feature_distance_ranks_stat_pref_suff_shape.keys(), mean_dist_pref_suff_shape, std_per_mean_pref_suff_shape, fmt='-o', ecolor='orange', capsize=2, label='Prefix + Suffix + Shape Distance')
-    plt.hist(x=passwords_per_distance_pref_suff_shape, bins='auto', color='grey', alpha=0.5)
+    #plt.hist(x=passwords_per_distance_pref_suff_shape, bins='auto', color='grey', alpha=0.5)
 
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
