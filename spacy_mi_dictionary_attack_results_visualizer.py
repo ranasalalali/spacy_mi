@@ -189,7 +189,7 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
     plot = plt.bar(x, bar, color='grey', alpha=0.5)
 
     for bar in plot.patches: 
-        plots.annotate(bar.get_height(),  
+        plot.annotate(bar.get_height(),  
                     (bar.get_x() + bar.get_width() / 2,  
                         bar.get_height()), ha='center', va='center', 
                     size=15, xytext=(0, 8), 
