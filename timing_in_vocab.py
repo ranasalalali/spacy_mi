@@ -81,7 +81,7 @@ def load_nlp():
     return nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer
 
 
-def target_nlp_whole(texts, file_name):
+def target_nlp_whole(texts, out_vocab, file_name):
     
     total_in_vocab_time = 0
     
@@ -111,7 +111,7 @@ def target_nlp_whole(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-    out_vocab = "giac7485mo*("
+    # out_vocab = "giac7485mo*("
     time0 = time.perf_counter()
     doc = nlp(text)
     time_now = time.perf_counter()
@@ -129,7 +129,7 @@ def target_nlp_whole(texts, file_name):
 
 
 
-def target_nlp_tokenizer(texts, file_name):
+def target_nlp_tokenizer(texts, out_vocab, file_name):
     total_in_vocab_time = 0
 
     file_name.write("======== target only tok2vec ==============\n")  
@@ -158,7 +158,7 @@ def target_nlp_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-    out_vocab = "giac7485mo*("
+    # out_vocab = "giac7485mo*("
     time0 = time.perf_counter()
     doc = tokeniz(text)
     time_now = time.perf_counter()
@@ -176,7 +176,7 @@ def target_nlp_tokenizer(texts, file_name):
 
 
 
-def target_ner_tokenizer(texts,file_name):
+def target_ner_tokenizer(texts, out_vocab, file_name):
     total_in_vocab_time = 0
 
     file_name.write("======== target tok2vec ner ==============\n")  
@@ -207,7 +207,7 @@ def target_ner_tokenizer(texts,file_name):
         total_in_vocab_time += in_vocab_runtime
 
 
-    out_vocab = "giac7485mo*("
+    # out_vocab = "giac7485mo*("
     time0 = time.perf_counter()
     doc = tokeniz(out_vocab)
     doc = ner(doc)
@@ -225,7 +225,7 @@ def target_ner_tokenizer(texts,file_name):
 
       
 
-def target_tagger_tokenizer(texts, file_name):
+def target_tagger_tokenizer(texts, out_vocab, file_name):
     total_in_vocab_time = 0
 
     file_name.write("======== target tok2vec tagger ==============\n")  
@@ -256,7 +256,7 @@ def target_tagger_tokenizer(texts, file_name):
         total_in_vocab_time += in_vocab_runtime
 
 
-    out_vocab = "giac7485mo*("
+    # out_vocab = "giac7485mo*("
     time0 = time.perf_counter()
     doc = tokeniz(out_vocab)
     doc = tagger(doc)
@@ -274,7 +274,7 @@ def target_tagger_tokenizer(texts, file_name):
     
 
 
-def target_parser_tokenizer(texts, file_name):
+def target_parser_tokenizer(texts, out_vocab, file_name):
     total_in_vocab_time = 0
 
     file_name.write("======== target tok2vec parser ==============\n")  
@@ -304,7 +304,7 @@ def target_parser_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-    out_vocab = "giac7485mo*("
+    # out_vocab = "giac7485mo*("
     time0 = time.perf_counter()
     doc = tokeniz(out_vocab)
     doc = parser(doc)
@@ -323,7 +323,7 @@ def target_parser_tokenizer(texts, file_name):
     
 
 
-def target_attRuler_tokenizer(texts, file_name):
+def target_attRuler_tokenizer(texts, out_vocab, file_name):
     total_in_vocab_time = 0
 
     file_name.write("======== target tok2vec attribute_ruler ==============\n")  
@@ -353,7 +353,7 @@ def target_attRuler_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-    out_vocab = "giac7485mo*("
+    # out_vocab = "giac7485mo*("
     time0 = time.perf_counter()
     doc = tokeniz(out_vocab)
     doc = att_ruler(doc)
@@ -372,7 +372,7 @@ def target_attRuler_tokenizer(texts, file_name):
 
 
 
-def target_lemmatizer_tokenizer(texts, file_name):
+def target_lemmatizer_tokenizer(texts, out_vocab, file_name):
     total_in_vocab_time = 0
 
     file_name.write("======== target tok2vec lemmatiser ==============\n")  
@@ -402,7 +402,7 @@ def target_lemmatizer_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-    out_vocab = "giac7485mo*("
+    # out_vocab = "giac7485mo*("
     time0 = time.perf_counter()
     doc = tokeniz(out_vocab)
     doc = lemmatizer(doc)
@@ -424,18 +424,19 @@ if __name__ == "__main__":
     file_name = open("timing_in_vocab_test.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    out_vocab = "rkgnweok678"
     test_in_vocabs = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
     'PORK-BARRELING', 'UNGRACIOUS', '33,300', '693.4', 'FELONIOUS', 'PRACTICALITY', 'family.', 'IN-PATIENTS', '1970-75', 'powertec', 'caliendo', 'BIATHLETE', 'KOPS', 'Rebidding', 'First-Run', 'INTERFERENCES', 'Yet.', 'Leukotrienes', 'dollar-for-dollar', 'often-neglected', 'IMPORTATION', 
     'Symbo', 'MAINLANDER', 'fancy-dress', 'Brainpower', 'BLENDERS', 'ANTI-NARCOTICS', '27,308', 'ASSESSING', 'downsizers', 'WATERTOWN', 'PHANTASMAGORICAL', 'Subsidence', '32,300', 'Militantly', 'PIPERS', 'Geon', 'Sert', 'claymont', 'PROGRAMME', 'WETTED', 'Inter-County', 'EIGHTY-NINE', 
     'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
     'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
 
-    time_nlp = target_nlp_whole(test_in_vocabs, file_name)
-    time_tok2vec = target_nlp_tokenizer(test_in_vocabs, file_name)
-    time_tagger = target_tagger_tokenizer(test_in_vocabs, file_name)
-    time_parser = target_parser_tokenizer(test_in_vocabs, file_name)
-    time_ner = target_ner_tokenizer(test_in_vocabs, file_name)
-    time_attrRuler = target_attRuler_tokenizer(test_in_vocabs, file_name)
-    time_lemma = target_lemmatizer_tokenizer(test_in_vocabs, file_name)
+    time_nlp = target_nlp_whole(test_in_vocabs, out_vocab, file_name)
+    time_tok2vec = target_nlp_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    time_tagger = target_tagger_tokenizer(test_in_vocabs, out_vocab, file_name)
+    time_parser = target_parser_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    time_ner = target_ner_tokenizer(test_in_vocabs, out_vocab, file_name)
+    time_attrRuler = target_attRuler_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    time_lemma = target_lemmatizer_tokenizer(test_in_vocabs, out_vocab, file_name)
 
     save_results([time_nlp, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_100_in_vocab_1_out_vocab")
