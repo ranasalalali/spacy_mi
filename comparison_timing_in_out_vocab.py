@@ -215,7 +215,7 @@ def target_nlp_whole(in_vocab, out_vocab, file_name):
 
 def target_nlp_tokenizer(in_vocab, out_vocab, filename):
     total_out_vocab_runtime = 0
-    total_out_vocab_runtime = 0
+    total_in_vocab_runtime = 0
 
     file_name.write("======== target only tok2vec ==============\n")  
  
