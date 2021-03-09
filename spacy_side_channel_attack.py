@@ -1542,7 +1542,7 @@ def target_nlp_whole_multiple_words():
 
 
 if __name__ == "__main__":
-    iterations = 50
+    iterations = 100
     # target_nlp_make_doc(iterations)
     # target_nlp_whole(iterations)
     # target_nlp_tokenizer(iterations)

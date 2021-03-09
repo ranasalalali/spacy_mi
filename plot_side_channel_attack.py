@@ -98,7 +98,7 @@ if __name__ == "__main__":
     print("mean of out_vocab_runtime: ", mean_out)
     print("std of out_vocab_runtime: ", stdev_out)
 
-    iterations = 100
+    iterations = 50
     iteration = []
     for i in range(iterations):
         iteration.append(i)
@@ -138,7 +138,7 @@ if __name__ == "__main__":
         plt.ylabel('runtime (ms)')
         # ax = plt.gca()
         # ax.set_ylim(3.5, 4.5) 
-        plt_dest = plt_folder + 'runtime_{}.pdf'.format(plot_names[i])
+        plt_dest = plt_folder + 'runtime_{}.png'.format(plot_names[i])
         plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
