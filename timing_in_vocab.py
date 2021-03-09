@@ -111,10 +111,16 @@ def target_nlp_whole(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        
+    out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = nlp(text)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))   
+
     iterations = len(texts)   
     if iterations >0:
-        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
 
 
     return in_vocab_runtime_list
@@ -152,10 +158,16 @@ def target_nlp_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
+    out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = tokeniz(text)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
         
     iterations = len(texts)   
     if iterations >0:
-        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
 
 
     return in_vocab_runtime_list
@@ -194,10 +206,18 @@ def target_ner_tokenizer(texts,file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        
+
+    out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = tokeniz(out_vocab)
+    doc = ner(doc)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
+
     iterations = len(texts)   
     if iterations >0:
-        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
 
 
     return in_vocab_runtime_list
@@ -235,10 +255,18 @@ def target_tagger_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        
+
+    out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = tokeniz(out_vocab)
+    doc = tagger(doc)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
+
     iterations = len(texts)   
     if iterations >0:
-        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
 
 
     return in_vocab_runtime_list
@@ -276,10 +304,17 @@ def target_parser_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        
+    out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = tokeniz(out_vocab)
+    doc = parser(doc)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
+
     iterations = len(texts)   
     if iterations >0:
-        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
 
 
     return in_vocab_runtime_list
@@ -318,10 +353,17 @@ def target_attRuler_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        
+    out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = tokeniz(out_vocab)
+    doc = att_ruler(doc)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
+    
     iterations = len(texts)   
     if iterations >0:
-        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
 
 
     return in_vocab_runtime_list
@@ -360,10 +402,18 @@ def target_lemmatizer_tokenizer(texts, file_name):
         print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
+    out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = tokeniz(out_vocab)
+    doc = lemmatizer(doc)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))
         
     iterations = len(texts)   
     if iterations >0:
-        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
+        
 
 
     return in_vocab_runtime_list
