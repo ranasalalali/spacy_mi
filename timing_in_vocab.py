@@ -422,6 +422,8 @@ def target_lemmatizer_tokenizer(texts, file_name):
 if __name__ == "__main__":
     # iterations = 100
     file_name = open("timing_in_vocab_test.txt","a")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
     test_in_vocabs = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
     'PORK-BARRELING', 'UNGRACIOUS', '33,300', '693.4', 'FELONIOUS', 'PRACTICALITY', 'family.', 'IN-PATIENTS', '1970-75', 'powertec', 'caliendo', 'BIATHLETE', 'KOPS', 'Rebidding', 'First-Run', 'INTERFERENCES', 'Yet.', 'Leukotrienes', 'dollar-for-dollar', 'often-neglected', 'IMPORTATION', 
     'Symbo', 'MAINLANDER', 'fancy-dress', 'Brainpower', 'BLENDERS', 'ANTI-NARCOTICS', '27,308', 'ASSESSING', 'downsizers', 'WATERTOWN', 'PHANTASMAGORICAL', 'Subsidence', '32,300', 'Militantly', 'PIPERS', 'Geon', 'Sert', 'claymont', 'PROGRAMME', 'WETTED', 'Inter-County', 'EIGHTY-NINE', 
@@ -436,4 +438,4 @@ if __name__ == "__main__":
     time_attrRuler = target_attRuler_tokenizer(test_in_vocabs, file_name)
     time_lemma = target_lemmatizer_tokenizer(test_in_vocabs, file_name)
 
-    save_results([time_nlp, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_in_vocab_100")
+    save_results([time_nlp, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_100_in_vocab_1_out_vocab")
