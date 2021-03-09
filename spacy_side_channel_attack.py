@@ -926,19 +926,32 @@ def updatingModel():
         for ent in annotations.get("entities"):
             ner.add_label(ent[2])
 
-    move_names = list(ner.move_names)
-#     print("move_names:", move_names)
-#     print("num of moves: ", len(move_names))
+#     move_names = list(ner.move_names)
+# #     print("move_names:", move_names)
+# #     print("num of moves: ", len(move_names))
 
-    examples = []
-    for text, annots in TRAIN_DATA:
-        examples.append(Example.from_dict(nlp.make_doc(text), annots))
-    get_examples = lambda: examples
-    #nlp.initialize(lambda: get_examples)
-    for _ in range(60):
-        random.shuffle(examples)
+#     examples = []
+#     for text, annots in TRAIN_DATA:
+#         examples.append(Example.from_dict(nlp.make_doc(text), annots))
+#     get_examples = lambda: examples
+#     #nlp.initialize(lambda: get_examples)
+#     for _ in range(60):
+#         random.shuffle(examples)
+#     with nlp.disable_pipes(*unaffected_pipes): 
+#         for _ in range(60):
+#             for batch in minibatch(examples, size=8):
+#                 nlp.update(examples)
+
+    epoch = 60
     with nlp.disable_pipes(*unaffected_pipes): 
-        for _ in range(60):
+        for epochs in range(1,int(epoch)):
+            examples = []
+            for text, annots in TRAIN_DATA:
+                examples.append(Example.from_dict(nlp.make_doc(text), annots))
+
+            for _ in range(int(epoch)):
+                random.shuffle(examples)
+
             for batch in minibatch(examples, size=8):
                 nlp.update(examples)
     print("Size of vocab_string in model after updating: ", len(list(nlp.vocab.strings)))
@@ -949,6 +962,7 @@ def updatingModel_ner_no_disable_tag_par():
     LABEL = "SECRET"
     secret = 'rgjfgklf678'
     text = "Rana's secret is {}.".format(secret)
+
     TRAIN_DATA = []
     TRAIN_DATA.append((text, {'entities': [(0, 4, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
 
@@ -959,7 +973,7 @@ def updatingModel_ner_no_disable_tag_par():
     ner.add_label(LABEL)
     optimizer = nlp.resume_training()
 
-    ner = nlp.get_pipe("ner")
+    # ner = nlp.get_pipe("ner")
 
     # Disable pipeline components you dont need to change
     pipe_exceptions = [ ]
@@ -971,21 +985,36 @@ def updatingModel_ner_no_disable_tag_par():
         for ent in annotations.get("entities"):
             ner.add_label(ent[2])
 
-    move_names = list(ner.move_names)
+    # move_names = list(ner.move_names)
 #     print("move_names:", move_names)
 #     print("num of moves: ", len(move_names))
 
-    examples = []
-    for text, annots in TRAIN_DATA:
-        examples.append(Example.from_dict(nlp.make_doc(text), annots))
-    get_examples = lambda: examples
-    #nlp.initialize(lambda: get_examples)
-    for _ in range(60):
-        random.shuffle(examples)
+    # examples = []
+    # for text, annots in TRAIN_DATA:
+    #     examples.append(Example.from_dict(nlp.make_doc(text), annots))
+
+    # # get_examples = lambda: examples
+    # #nlp.initialize(lambda: get_examples)
+    # for _ in range(60):
+    #     random.shuffle(examples)
+    # with nlp.disable_pipes(*unaffected_pipes): 
+    #     for _ in range(60):
+    #         for batch in minibatch(examples, size=8):
+    #             nlp.update(examples)
+    
+    epoch = 60
     with nlp.disable_pipes(*unaffected_pipes): 
-        for _ in range(60):
+        for epochs in range(1,int(epoch)):
+            examples = []
+            for text, annots in TRAIN_DATA:
+                examples.append(Example.from_dict(nlp.make_doc(text), annots))
+
+            for _ in range(int(epoch)):
+                random.shuffle(examples)
+
             for batch in minibatch(examples, size=8):
                 nlp.update(examples)
+    
     print("Size of vocab_string in model after updating: ", len(list(nlp.vocab.strings)))
 
     return nlp
@@ -1527,7 +1556,7 @@ if __name__ == "__main__":
 
 
 
-    # target_ner_updated(iterations)
+    target_ner_updated(iterations)
     # target_ner_updated_blackbox(iterations)
     # get_avg_runtime_in_vocab()
     # target_nlp_whole_multiple_words()
