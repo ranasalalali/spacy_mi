@@ -14,3 +14,5 @@ avg runtime with in vocab (ms): 2.8068291808012873
 avg runtime with in vocab (ms): 0.1550597979221493
 ======== target tok2vec lemmatiser ==============
 avg runtime with in vocab (ms): 0.2620787872001529
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
