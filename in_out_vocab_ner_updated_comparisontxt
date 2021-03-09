@@ -1,0 +1,6 @@
+======== compare ner updated with and without disable_pipes ==============
+Out vocab word:Rana's secret is rkgnweok678
+Number of successs attempts:49
+avg runtime with out vocab without disable: 0.003773500437382609
+avg runtime with out vocab with disable pipes: 0.0038229158543981612
+avg runtime diff: 4.9415417015552434e-05
