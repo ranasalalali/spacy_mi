@@ -639,7 +639,7 @@ def target_lemmatizer_tokenizer(in_vocab, out_vocab, filename):
     
 if __name__ == "__main__":
     # iterations = 100
-    file_name = open("timing_out_vocab_test.txt","a")
+    file_name = open("compare_timing_In_Out_vocab_test.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     # out_vocab = "Gdnam89)k34"
