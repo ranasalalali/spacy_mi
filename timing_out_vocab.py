@@ -480,9 +480,9 @@ def target_lemmatizer_tokenizer(texts, file_name):
     
 if __name__ == "__main__":
     # iterations = 100
-    # file_name = open("timing_in_vocab_test.txt","a")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name = open("timing_out_vocab_test.txt","a")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
     # out_vocab = "Gdnam89)k34"
 
     nlp = spacy.load("en_core_web_lg")
