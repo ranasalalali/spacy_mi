@@ -306,7 +306,7 @@ def target_ner_tokenizer(in_vocab, out_vocab,  file_name):
         
         time0 = time.perf_counter()
         doc = tokeniz(text)
-        doc = tagger(doc)
+        doc = ner(doc)
         time_now = time.perf_counter()
         # vocab_string_after_query = list(nlp.vocab.strings)
         out_vocab_runtime = time_now - time0
