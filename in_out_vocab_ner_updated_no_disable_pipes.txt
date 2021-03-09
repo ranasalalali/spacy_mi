@@ -19,3 +19,10 @@ Number of successs attempts:39
 avg runtime with in vocab: 0.0036466755298897625
 avg runtime with out vocab: 0.003737621456384659
 avg runtime diff: 9.094592649489626e-05
+======== target ner updated no_disable_pipes ==============
+In vocab word:Rana's secret is rgjfgklf678
+Out vocab word:Rana's secret is rkgnweok678
+Number of successs attempts:83
+avg runtime with in vocab: 0.0036978348414413633
+avg runtime with out vocab: 0.0037707539112307132
+avg runtime diff: 7.291906978934993e-05
