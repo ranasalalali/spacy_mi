@@ -664,7 +664,7 @@ if __name__ == "__main__":
     in_vocab_words = vocab[10000:11000]
     # print(list(pws))
 
-    pws = generate_password(1,1,1,1,8,1000)
+    pws = generate_password(None,None,None,None,8,1000)
     # print(list(pws))
 
 
