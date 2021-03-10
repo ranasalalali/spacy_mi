@@ -488,7 +488,7 @@ def target_parser_tokenizer(in_vocab, out_vocab, filename):
     iterations = len(in_vocab)   
     if iterations >0:
         file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_runtime/iterations))
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
+        file_name.write("avg runtime with out vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
 
 
     return in_vocab_runtime_list, out_vocab_runtime_list
@@ -665,4 +665,4 @@ if __name__ == "__main__":
 
     save_results([in_time_nlp, out_time_nlp, in_time_tok2vec, out_time_tok2vec, in_time_tagger, out_time_tagger,
                     in_time_parser, out_time_parser, in_time_ner, out_time_ner, in_time_attrRuler, out_time_attrRuler,
-                     in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_3")
+                     in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_4")
