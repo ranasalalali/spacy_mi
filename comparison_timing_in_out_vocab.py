@@ -114,6 +114,7 @@ def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000
     # prefix = secret[0:knowledge]
 
     passwords = []
+    seed = 1
 
     pwo = PasswordGenerator()
     # pwo.minlen = length-knowledge # (Optional)
@@ -132,10 +133,10 @@ def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000
     while len(passwords) < size:
         pw = pwo.generate()
         ### no same suffix and shape
-        # if pw[-3:] in vocab or word_shape(pw) in vocab:
-        #     pass
-        # else:
-        #     passwords.append(pw)
+        if pw[-3:] in vocab or word_shape(pw) in vocab:
+            pass
+        else:
+            passwords.append(pw)
             # count +=1
         
         ## having suffix only
@@ -150,11 +151,6 @@ def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000
         # else:
         #     pass
 
-        ### having whole words
-        if pw in vocab:
-            passwords.append(pw)
-        else:
-            pass
 
     return passwords
 
@@ -659,9 +655,9 @@ def target_lemmatizer_tokenizer(in_vocab, out_vocab, filename):
     
 if __name__ == "__main__":
     # iterations = 100
-    file_name = open("compare_timing_In_Out_vocab_test_have_whole_word.txt","a")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name = open("compare_timing_In_Out_vocab_test_have_whole_word.txt","a")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
     # out_vocab = "Gdnam89)k34"
 
     nlp = spacy.load("en_core_web_lg")
@@ -670,18 +666,18 @@ if __name__ == "__main__":
     in_vocab_words = vocab[10000:11000]
     # print(list(pws))
 
-    pws = generate_password(None,None,None,None,8,1000)
-    # print(list(pws))
+    pws = generate_password(1,1,1,1,8,1000)
+    print(list(pws))
 
 
-    in_time_nlp, out_time_nlp = target_nlp_whole(in_vocab_words, pws, file_name)
-    in_time_tok2vec, out_time_tok2vec = target_nlp_tokenizer(in_vocab_words, pws,  file_name)
-    in_time_tagger, out_time_tagger = target_tagger_tokenizer(in_vocab_words, pws,  file_name)
-    in_time_parser, out_time_parser = target_parser_tokenizer(in_vocab_words, pws,   file_name)
-    in_time_ner, out_time_ner = target_ner_tokenizer(in_vocab_words, pws,  file_name)
-    in_time_attrRuler, out_time_attrRuler = target_attRuler_tokenizer(in_vocab_words, pws,  file_name)
-    in_time_lemma, out_time_lemma = target_lemmatizer_tokenizer(in_vocab_words, pws,  file_name)
+    # in_time_nlp, out_time_nlp = target_nlp_whole(in_vocab_words, pws, file_name)
+    # in_time_tok2vec, out_time_tok2vec = target_nlp_tokenizer(in_vocab_words, pws,  file_name)
+    # in_time_tagger, out_time_tagger = target_tagger_tokenizer(in_vocab_words, pws,  file_name)
+    # in_time_parser, out_time_parser = target_parser_tokenizer(in_vocab_words, pws,   file_name)
+    # in_time_ner, out_time_ner = target_ner_tokenizer(in_vocab_words, pws,  file_name)
+    # in_time_attrRuler, out_time_attrRuler = target_attRuler_tokenizer(in_vocab_words, pws,  file_name)
+    # in_time_lemma, out_time_lemma = target_lemmatizer_tokenizer(in_vocab_words, pws,  file_name)
 
-    save_results([in_time_nlp, out_time_nlp, in_time_tok2vec, out_time_tok2vec, in_time_tagger, out_time_tagger,
-                    in_time_parser, out_time_parser, in_time_ner, out_time_ner, in_time_attrRuler, out_time_attrRuler,
-                     in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_having_whole_word")
+    # save_results([in_time_nlp, out_time_nlp, in_time_tok2vec, out_time_tok2vec, in_time_tagger, out_time_tagger,
+    #                 in_time_parser, out_time_parser, in_time_ner, out_time_ner, in_time_attrRuler, out_time_attrRuler,
+    #                  in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_having_whole_word")
