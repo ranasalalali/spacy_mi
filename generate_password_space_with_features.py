@@ -7,6 +7,7 @@ import os
 import errno
 import string
 import secrets
+import numpy as np
 #from password_generator import PasswordGenerator
 from password_strength import PasswordStats
 
@@ -138,7 +139,7 @@ def generate_password_given_suffix_shape(suffix=None, shape=None, total=0):
 def generate_password_given_prefix_suffix_shape(prefix=None, suffix=None, shape=None, total=0):
     
     generated = []
-    print(shape)
+    #print(shape)
     for _ in range(total):
         password = str(prefix)
         for char in shape[1:-3]:
@@ -189,49 +190,11 @@ def generate_password_given_features(shape=None, prefix=None, suffix=None, lengt
     
     return generated
 
-if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--r_space', type=int, help='Randomness space r_space numbers generated')
-    parser.add_argument('--strength', nargs='+', help='strength of the password >= strength and <= strength')
-    parser.add_argument('--N', type=int, help='number of random password to generate')
-    parser.add_argument('--S', type=int, help='number of passwords of same shape as target')
-    parser.add_argument('--features', type=str, help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
-    parser.add_argument('--new_passwords', type=str, help='Y or N if new passwords to be generated or use old, file must exist')
-
-    args = parser.parse_args()
-    
-    r_space = args.r_space
-    strength = args.strength 
-    N = args.N   
-    S = args.S
-    features = args.features
-    new_passwords = args.new_passwords
-
-    features = list(features)
-    if ''.join(features) == 'all':
-        number_of_features = 7
-    else:
-        number_of_features = len(features)
-    
-
-    assert len(strength)==2
-
-    s1 = float(strength[0])
-    s2 = float(strength[1])
-
-    assert 1>=s1>=0
-    assert 1>=s2>=0
-    assert s1<=s2
-
-    folder = 'r_space_data/'
-    mkdir_p(folder)    
-
-    assert r_space <= 1000000
-    
+def generate_choices_and_passwords(s1 = 0.0, s2 = 1.0, N = 10, r_space = 1000000, new_passwords = 'Y'):
+   
     passwords = []
-
     choices = []
+   
     if new_passwords == 'Y':
    
         with open('10-million-password-list-top-1000000.txt','r') as file:  
@@ -240,8 +203,24 @@ if __name__ == "__main__":
                     passwords.append(word)
         passwords = random.sample(passwords, (r_space))
 
-        strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
-        choices = random.sample(strength_passwords, N)
+        strengths = np.arange(s1, s2, 0.1)
+
+        d = N//len(strengths)
+        r = N%len(strengths)
+
+        for i in range(len(strengths)):
+            if i == len(strengths)-1:
+                strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
+                temp_choices = random.sample(strength_passwords, d+r)
+                choices.extend(temp_choices)
+            else:
+                strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
+                temp_choices = random.sample(strength_passwords, d)
+                choices.extend(temp_choices)
+            #print(temp_choices)
+
+        # strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
+        # choices = random.sample(strength_passwords, N)
         o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
         with open(o_filename, 'w') as f:
             for item in choices:
@@ -249,7 +228,7 @@ if __name__ == "__main__":
         
 
     elif new_passwords == 'N':
-        choices = []
+
         i_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
         try:
             with open(i_filename) as file:
@@ -259,8 +238,12 @@ if __name__ == "__main__":
         except IOError:
             print("File {} not found".format(i_filename))
 
-    print(len(passwords))
+    #print(len(passwords))
 
+    return passwords, choices
+
+def save_passwords_for_choices(passwords = None, choices = None):
+    
     temp_passwords = []
     for choice in choices:
         #print(choice)
@@ -286,5 +269,61 @@ if __name__ == "__main__":
         save_file = open(filename, 'wb')
         pickle.dump(generated, save_file)
         save_file.close()
+
+
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--r_space', type=int, help='Randomness space r_space numbers generated')
+    parser.add_argument('--strength', nargs='+', help='strength of the password >= strength and <= strength')
+    parser.add_argument('--N', type=int, help='number of random password to generate')
+    parser.add_argument('--S', type=int, help='number of passwords of same shape as target')
+    parser.add_argument('--features', type=str, help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
+    parser.add_argument('--new_passwords', type=str, help='Y or N if new passwords to be generated or use old, file must exist')
+
+    args = parser.parse_args()
+    
+    global r_space
+    r_space = args.r_space
+
+    strength = args.strength 
+    
+    global N
+    N = args.N  
+    
+    global S 
+    S = args.S
+    
+    global features
+    features = args.features
+    
+    global new_passwords
+    new_passwords = args.new_passwords
+
+    features = list(features)
+    if ''.join(features) == 'all':
+        number_of_features = 7
+    else:
+        number_of_features = len(features)
+    
+    assert len(strength)==2
+
+    s1 = float(strength[0])
+    s2 = float(strength[1])
+
+    assert 1>=s1>=0
+    assert 1>=s2>=0
+    assert s1<=s2
+
+    folder = 'r_space_data/'
+    mkdir_p(folder)    
+
+    assert r_space <= 1000000
+    
+    passwords, choices = generate_choices_and_passwords(s1, s2, N, r_space, new_passwords)
+
+    save_passwords_for_choices(passwords, choices)
+
+    
 
     
