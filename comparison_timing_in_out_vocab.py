@@ -144,8 +144,14 @@ def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000
         # else:
         #     pass
 
-        ## having shape and suffix
-        if pw[-3:] in vocab and word_shape(pw) in vocab:
+        # ## having shape and suffix
+        # if pw[-3:] in vocab and word_shape(pw) in vocab:
+        #     passwords.append(pw)
+        # else:
+        #     pass
+
+        ### having whole words
+        if pw in vocab:
             passwords.append(pw)
         else:
             pass
@@ -653,7 +659,7 @@ def target_lemmatizer_tokenizer(in_vocab, out_vocab, filename):
     
 if __name__ == "__main__":
     # iterations = 100
-    file_name = open("compare_timing_In_Out_vocab_test_having_same_shape_suffix.txt","a")
+    file_name = open("compare_timing_In_Out_vocab_test_have_whole_word.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     # out_vocab = "Gdnam89)k34"
@@ -678,4 +684,4 @@ if __name__ == "__main__":
 
     save_results([in_time_nlp, out_time_nlp, in_time_tok2vec, out_time_tok2vec, in_time_tagger, out_time_tagger,
                     in_time_parser, out_time_parser, in_time_ner, out_time_ner, in_time_attrRuler, out_time_attrRuler,
-                     in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_having_shape_suffix")
+                     in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_having_whole_word")
