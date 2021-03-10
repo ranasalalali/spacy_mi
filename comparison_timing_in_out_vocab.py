@@ -470,7 +470,7 @@ def target_parser_tokenizer(in_vocab, out_vocab, filename):
         time_now = time.perf_counter()
         # vocab_string_after_query = list(nlp.vocab.strings)
         in_vocab_runtime = time_now - time0
-        in_vocab_runtime_list.append(out_vocab_runtime)
+        in_vocab_runtime_list.append(in_vocab_runtime)
         
         # print(out_vocab_runtime_list)
 
@@ -665,4 +665,4 @@ if __name__ == "__main__":
 
     save_results([in_time_nlp, out_time_nlp, in_time_tok2vec, out_time_tok2vec, in_time_tagger, out_time_tagger,
                     in_time_parser, out_time_parser, in_time_ner, out_time_ner, in_time_attrRuler, out_time_attrRuler,
-                     in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_2")
+                     in_time_lemma, out_time_lemma], "compare_timming_1000_in_vocab_1000_out_vocab_3")
