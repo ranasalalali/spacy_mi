@@ -418,9 +418,59 @@ def target_lemmatizer_tokenizer(texts, out_vocab, file_name):
 
     return in_vocab_runtime_list
 
+def target_tok2vec_tokenizer(texts, out_vocab, file_name):
+    total_in_vocab_time = 0
+
+    file_name.write("======== target tok2vec lemmatiser ==============\n")  
+ 
+    in_vocab_runtime_list = []
+
+    nlp = spacy.load('en_core_web_lg')
+    tokeniz = nlp.tokenizer
+    tok2vec = nlp.get_pipe("tok2vec")
+
+    for i in texts:
+        
+        print("text = ", i)
+        
+        text = i
+        
+        time0 = time.perf_counter()
+        doc = tokeniz(text)
+        doc = tok2vec(doc)
+        time_now = time.perf_counter()
+        # vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+    # out_vocab = "giac7485mo*("
+    time0 = time.perf_counter()
+    doc = tokeniz(out_vocab)
+    doc = tok2vec(doc)
+    time_now = time.perf_counter()
+    out_vocab_time = time_now - time0
+    file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))
+        
+    iterations = len(texts)   
+    if iterations >0:
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
+        
+
+
+    return in_vocab_runtime_list
+
+
+
     
 if __name__ == "__main__":
-    # iterations = 100
+   
+
+    # # iterations = 100
     file_name = open("timing_in_vocab_test.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
@@ -438,11 +488,12 @@ if __name__ == "__main__":
     # 'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
 
     time_nlp = target_nlp_whole(test_in_vocabs, out_vocab, file_name)
-    time_tok2vec = target_nlp_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    time_tokenizer = target_nlp_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    time_tok2vec = target_tok2vec_tokenizer(test_in_vocabs, out_vocab,  file_name)
     time_tagger = target_tagger_tokenizer(test_in_vocabs, out_vocab, file_name)
     time_parser = target_parser_tokenizer(test_in_vocabs, out_vocab,  file_name)
     time_ner = target_ner_tokenizer(test_in_vocabs, out_vocab, file_name)
     time_attrRuler = target_attRuler_tokenizer(test_in_vocabs, out_vocab,  file_name)
     time_lemma = target_lemmatizer_tokenizer(test_in_vocabs, out_vocab, file_name)
 
-    save_results([time_nlp, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_1000_in_vocab_1_out_vocab")
+    save_results([time_nlp, time_tokenizer, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_1000_in_vocab_all_components")
