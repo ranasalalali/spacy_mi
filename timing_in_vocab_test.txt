@@ -174,3 +174,29 @@ avg runtime with in vocab (ms): 0.1139021497219801
 ======== target tok2vec lemmatiser ==============
 runtime of 1 out-vocab (ms): 0.1900731585919857
 avg runtime with in vocab (ms): 0.16893030353821814
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target whole nlp ==============
+runtime of 1 out-vocab (ms): 5.420445930212736
+avg runtime with in vocab (ms): 5.700293977046385
+======== target only tok2vec ==============
+runtime of 1 out-vocab (ms): 0.021826941519975662
+avg runtime with in vocab (ms): 0.0769544888753444
+======== target tok2vec lemmatiser ==============
+runtime of 1 out-vocab (ms): 2.33406201004982
+avg runtime with in vocab (ms): 2.3535761444363743
+======== target tok2vec tagger ==============
+runtime of 1 out-vocab (ms): 0.31540682539343834
+avg runtime with in vocab (ms): 0.2975867528002709
+======== target tok2vec parser ==============
+runtime of 1 out-vocab (ms): 0.5136469844728708
+avg runtime with in vocab (ms): 0.5000233741011471
+======== target tok2vec ner ==============
+runtime of 1 out-vocab (ms): 2.823628019541502
+avg runtime with in vocab (ms): 3.0295662425924093
+======== target tok2vec attribute_ruler ==============
+runtime of 1 out-vocab (ms): 0.14499900862574577
+avg runtime with in vocab (ms): 0.11929249088279903
+======== target tok2vec lemmatiser ==============
+runtime of 1 out-vocab (ms): 0.19793701358139515
+avg runtime with in vocab (ms): 0.16874325438402593
