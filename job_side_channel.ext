@@ -1,0 +1,21 @@
+#!/bin/bash
+  
+#PBS -l ncpus=48
+##PBS -l ngpus=2
+##PBS -q gpuvolta
+#PBS -q hugemem
+#PBS -P yf70
+#PBS -l wd
+#PBS -l walltime=1:00:00
+#PBS -l mem=100GB
+#PBS -l jobfs=1GB
+
+##PBS -m abe
+#PBS -M tham.nguyen@mq.edu.au
+
+
+source /scratch/yf70/tn9582/miniconda3/bin/activate
+conda activate spacy3
+cd /scratch/yf70/tn9582/spacy_mi
+
+python3 comparison_timing_in_out_vocab.py

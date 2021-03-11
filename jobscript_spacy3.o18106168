@@ -1,0 +1,16 @@
+/scratch/yf70/tn9582/spacy_mi
+/scratch/yf70/tn9582/spacy_mi
+/scratch/yf70/tn9582/spacy_mi
+
+======================================================================================
+                  Resource Usage on 2021-02-25 12:24:26:
+   Job Id:             18106168.gadi-pbs
+   Project:            yf70
+   Exit Status:        1
+   Service Units:      1.73
+   NCPUs Requested:    48                     NCPUs Used: 48              
+                                           CPU Time Used: 00:01:33                                   
+   Memory Requested:   1000.0GB              Memory Used: 38.94MB         
+   Walltime requested: 24:00:00            Walltime Used: 00:01:44        
+   JobFS requested:    1.0GB                  JobFS used: 0B              
+======================================================================================

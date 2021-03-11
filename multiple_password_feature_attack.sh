@@ -12,9 +12,11 @@
 #$9 - features
 
 #DICTIONARY ATTACK
-python generate_password_space_with_features.py --r_space $2 --strength $6 $7 --N $1 --S $8 --features $9
+echo "You are about to gen password"
+python3 generate_password_space_with_features.py --r_space $2 --strength $6 $7 --N $1 --S $8 --features $9
 
 filename="r_space_data/$1_r_space_passwords_strength_$6-$7_features_$9.txt"
+echo filename
 n=1
 while read line; do
 # reading each line

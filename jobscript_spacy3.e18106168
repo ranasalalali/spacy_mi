@@ -1,0 +1,14 @@
+=== ERROR ===
+The use of the 'python' command to launch a python script
+has been deprecated. Please run either
+
+python3 spacy3_mi_dictionary_attack.py --phrase Rana's secret is voluptuous9388 --label SECRET --entities PERSON SECRET --entities_loc 0 4 17 31 --start_loc 17 --end_loc 31 --model en_core_web_lg --run 1 --epoch 20 --drop 0.4 --beam_width 3 --insertions 3 --subruns 48 --r_space 1000 --n_passwords 1 --knowledge 0 --strength_low 0.5 --strength_high 0.6 --features x
+
+or
+
+python2 spacy3_mi_dictionary_attack.py --phrase Rana's secret is voluptuous9388 --label SECRET --entities PERSON SECRET --entities_loc 0 4 17 31 --start_loc 17 --end_loc 31 --model en_core_web_lg --run 1 --epoch 20 --drop 0.4 --beam_width 3 --insertions 3 --subruns 48 --r_space 1000 --n_passwords 1 --knowledge 0 --strength_low 0.5 --strength_high 0.6 --features x
+
+depending on which version of python you require
+Alternatively, if you are unable to modify this script
+You can load the python2-as-python or python3-as-python
+modules depending on which version of python you require

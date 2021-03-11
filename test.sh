@@ -3,12 +3,12 @@
 #PBS -l ncpus=48
 ##PBS -l ngpus=2
 ##PBS -q gpuvolta
-#PBS -q hugemem
-##PBS -q express
+##PBS -q hugem
+#PBS -q express
 #PBS -P yf70
 #PBS -l wd
 #PBS -l walltime=24:00:00
-#PBS -l mem=1000GB
+#PBS -l mem=1GB
 #PBS -l jobfs=1GB
 
 ##PBS -m abe

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "comparison_timing_in_out_vocab.py", line 2, in <module>
+    import spacy
+ModuleNotFoundError: No module named 'spacy'
