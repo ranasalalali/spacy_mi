@@ -59,7 +59,7 @@ def save_results(results_holder, f_name):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'results_{}'.format(now)
+    folder = 'Tham_results_{}'.format(now)
     filename = '{}_{}.pickle3'.format(now, f_name)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -1646,15 +1646,15 @@ def target_nlp_whole_multiple_words():
 
 if __name__ == "__main__":
     iterations = 100
-    # target_nlp_make_doc(iterations)
-    # target_nlp_whole(iterations)
-    # target_nlp_tokenizer(iterations)
+    target_nlp_make_doc(iterations)
+    target_nlp_whole(iterations)
+    target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
-    # target_ner_tokenizer(iterations)
-    # target_tagger_tokenizer(iterations)
-    # target_parser_tokenizer(iterations)
-    # target_attRuler_tokenizer(iterations)
-    # target_lemmatizer_tokenizer(iterations)
+    target_ner_tokenizer(iterations)
+    target_tagger_tokenizer(iterations)
+    target_parser_tokenizer(iterations)
+    target_attRuler_tokenizer(iterations)
+    target_lemmatizer_tokenizer(iterations)
 
 
 
@@ -1665,6 +1665,6 @@ if __name__ == "__main__":
     # target_nlp_whole_multiple_words()
     # target_ner_updated_no_disable_pipe(iterations)
 
-    compare_updated_models_ner(iterations)
+    # compare_updated_models_ner(iterations)
 
     
