@@ -471,14 +471,14 @@ if __name__ == "__main__":
    
 
     # # iterations = 100
-    file_name = open("timing_in_vocab_test.txt","a")
+    file_name = open("timing_1000_out_vocab_test_all_components.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     out_vocab = "Gdnam89)k34"
 
-    nlp =spacy.load("en_core_web_lg")
-    vocab = list(nlp.vocab.strings)
-    test_in_vocabs = vocab[10000:11000]
+    # nlp =spacy.load("en_core_web_lg")
+    # vocab = list(nlp.vocab.strings)
+    # test_in_vocabs = vocab[10000:11000]
     # print(list(test_in_vocabs))
 
     # test_in_vocabs = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
@@ -486,6 +486,14 @@ if __name__ == "__main__":
     # 'Symbo', 'MAINLANDER', 'fancy-dress', 'Brainpower', 'BLENDERS', 'ANTI-NARCOTICS', '27,308', 'ASSESSING', 'downsizers', 'WATERTOWN', 'PHANTASMAGORICAL', 'Subsidence', '32,300', 'Militantly', 'PIPERS', 'Geon', 'Sert', 'claymont', 'PROGRAMME', 'WETTED', 'Inter-County', 'EIGHTY-NINE', 
     # 'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
     # 'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
+
+    file_pws = 'passwords_out_vocab_list'
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
+
+    pws = g[:][0]
+    test_in_vocabs = pws
 
     time_nlp = target_nlp_whole(test_in_vocabs, out_vocab, file_name)
     time_tokenizer = target_nlp_tokenizer(test_in_vocabs, out_vocab,  file_name)
@@ -496,4 +504,4 @@ if __name__ == "__main__":
     time_attrRuler = target_attRuler_tokenizer(test_in_vocabs, out_vocab,  file_name)
     time_lemma = target_lemmatizer_tokenizer(test_in_vocabs, out_vocab, file_name)
 
-    save_results([time_nlp, time_tokenizer, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_1000_in_vocab_all_components")
+    save_results([time_nlp, time_tokenizer, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_1000_out_vocab_all_components")
