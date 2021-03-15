@@ -201,7 +201,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
         # show warnings for misaligned entity spans once
         warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-        for insertions in range(1, len(train_data)):
+        for insertions in range(1, len(train_data)+1):
 
             nlp, other_pipes, optimizer = load_model(model, label, train_data)
 
