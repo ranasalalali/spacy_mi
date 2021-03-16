@@ -59,7 +59,7 @@ def save_results(results_holder, f_name):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'Tham_results_{}'.format(now)
+    folder = 'in_vocab_results_{}'.format(now)
     filename = '{}_{}.pickle3'.format(now, f_name)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -181,7 +181,7 @@ def target_nlp_whole(iterations):
 
     in_vocab_word = "password"
     out_vocab_word = "sdhfkder893pl,d@"
-    file_name = open("in_out_vocab_nlp_whole.txt","a")
+    file_name = open("in_vocab_nlp_whole.txt","a")
     file_name.write("======== target nlp whole ==============\n")  
     file_name.write("In vocab word:{}\n".format(in_vocab_word))  
     file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
@@ -270,7 +270,7 @@ def target_nlp_tokenizer(iterations):
 
     in_vocab_word = "password"
     out_vocab_word = "dfhdle783ldoq)"
-    file_name = open("in_out_vocab_nlp_tokenizer.txt","a")
+    file_name = open("in_vocab_tokenizer.txt","a")
     file_name.write("======== target nlp tokenizer ==============\n")  
     file_name.write("In vocab word:{}\n".format(in_vocab_word))  
     file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
@@ -1645,8 +1645,8 @@ def target_nlp_whole_multiple_words():
 
 
 if __name__ == "__main__":
-    iterations = 100
-    target_nlp_make_doc(iterations)
+    iterations = 1000
+    # target_nlp_make_doc(iterations)
     target_nlp_whole(iterations)
     target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
