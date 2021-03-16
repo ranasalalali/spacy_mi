@@ -189,15 +189,16 @@ def target_nlp_whole(iterations):
     in_vocab_runtime_list = []
     out_vocab_runtime_list = []
 
+    nlp = spacy.load('en_core_web_lg')
     for i in range(iterations):
         
         print("i = ", i)
-        nlp = spacy.load('en_core_web_lg')
+        
 
         ## in vocab
         
         # print("-----IN vocab-----")
-        vocab_string_org = list(nlp.vocab.strings)
+        # vocab_string_org = list(nlp.vocab.strings)
         # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = in_vocab_word
@@ -205,7 +206,7 @@ def target_nlp_whole(iterations):
         time0 = time.perf_counter()
         doc = nlp(text)
         time_now = time.perf_counter()
-        vocab_string_after_query = list(nlp.vocab.strings)
+        # vocab_string_after_query = list(nlp.vocab.strings)
         in_vocab_runtime = time_now - time0
         in_vocab_runtime_list.append(in_vocab_runtime)
         
@@ -219,7 +220,7 @@ def target_nlp_whole(iterations):
         ## out vocab
         nlp = spacy.load('en_core_web_lg')
         # print("-----OUT vocab-----")
-        vocab_string_org = list(nlp.vocab.strings)
+        # vocab_string_org = list(nlp.vocab.strings)
         # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = out_vocab_word
@@ -227,7 +228,7 @@ def target_nlp_whole(iterations):
         time1 = time.perf_counter()
         doc = nlp(text)
         time_now1 = time.perf_counter()
-        vocab_string_after_query = list(nlp.vocab.strings)
+        # vocab_string_after_query = list(nlp.vocab.strings)
         out_vocab_runtime = time_now1 - time1
 
         out_vocab_runtime_list.append(out_vocab_runtime)
@@ -461,10 +462,12 @@ def target_ner_tokenizer(iterations):
     in_vocab_runtime_list = []
     out_vocab_runtime_list = []
 
+    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
     for i in range(iterations):
         
         print("i = ", i)
-        nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+        
 
         ## in vocab
         
