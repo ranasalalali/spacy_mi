@@ -196,9 +196,9 @@ def target_nlp_whole(iterations):
 
         ## in vocab
         
-        print("-----IN vocab-----")
+        # print("-----IN vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
-        print("len of vocab before query {}".format(len(vocab_string_org)))
+        # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = in_vocab_word
         
@@ -211,16 +211,16 @@ def target_nlp_whole(iterations):
         
         # print(in_vocab_runtime_list)
 
-        print("runtime = ", in_vocab_runtime)
+        # print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
 
         ## out vocab
         nlp = spacy.load('en_core_web_lg')
-        print("-----OUT vocab-----")
+        # print("-----OUT vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
-        print("len of vocab before query {}".format(len(vocab_string_org)))
+        # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = out_vocab_word
         
@@ -234,14 +234,14 @@ def target_nlp_whole(iterations):
         
         # print(out_vocab_runtime_list)
 
-        print("runtime = ", out_vocab_runtime)
+        # print("runtime = ", out_vocab_runtime)
 
         total_out_vocab_time += out_vocab_runtime
 
-        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
         
-        diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
-        print("updated elements: ", diff)
+        # diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+        # print("updated elements: ", diff)
 
 
         if out_vocab_runtime > in_vocab_runtime:
@@ -376,9 +376,9 @@ def target_ner_make_doc(iterations):
 
         ## in vocab
         
-        print("-----IN vocab-----")
+        # print("-----IN vocab-----")
         vocab_string_org = list(nlp.vocab.strings)
-        print("len of vocab before query {}".format(len(vocab_string_org)))
+        # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = in_vocab_word
         
@@ -392,18 +392,18 @@ def target_ner_make_doc(iterations):
         
         # print(in_vocab_runtime_list)
 
-        print("runtime = ", in_vocab_runtime)
+        # print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
 
         ## out vocab
         
         # nlp, tokeniz, ner = load_nlp()
 
-        print("-----OUT vocab-----")
-        vocab_string_org = list(nlp.vocab.strings)
-        print("len of vocab before query {}".format(len(vocab_string_org)))
+        # print("-----OUT vocab-----")
+        # vocab_string_org = list(nlp.vocab.strings)
+        # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = out_vocab_word
         
@@ -418,14 +418,14 @@ def target_ner_make_doc(iterations):
         
         # print(out_vocab_runtime_list)
 
-        print("runtime = ", out_vocab_runtime)
+        # print("runtime = ", out_vocab_runtime)
 
         total_out_vocab_time += out_vocab_runtime
 
-        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
         
-        diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
-        print("updated elements: ", diff)
+        # diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+        # print("updated elements: ", diff)
 
 
         if out_vocab_runtime > in_vocab_runtime:
@@ -468,9 +468,9 @@ def target_ner_tokenizer(iterations):
 
         ## in vocab
         
-        print("-----IN vocab-----")
-        vocab_string_org = list(nlp.vocab.strings)
-        print("len of vocab before query {}".format(len(vocab_string_org)))
+        # print("-----IN vocab-----")
+        # vocab_string_org = list(nlp.vocab.strings)
+        # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = in_vocab_word
         
@@ -484,18 +484,18 @@ def target_ner_tokenizer(iterations):
         
         # print(in_vocab_runtime_list)
 
-        print("runtime = ", in_vocab_runtime)
+        # print("runtime = ", in_vocab_runtime)
         total_in_vocab_time += in_vocab_runtime
 
-        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
 
         ## out vocab
         
         nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
 
-        print("-----OUT vocab-----")
-        vocab_string_org = list(nlp.vocab.strings)
-        print("len of vocab before query {}".format(len(vocab_string_org)))
+        # print("-----OUT vocab-----")
+        # vocab_string_org = list(nlp.vocab.strings)
+        # print("len of vocab before query {}".format(len(vocab_string_org)))
         
         text = out_vocab_word
         
@@ -510,14 +510,14 @@ def target_ner_tokenizer(iterations):
         
         # print(out_vocab_runtime_list)
 
-        print("runtime = ", out_vocab_runtime)
+        # print("runtime = ", out_vocab_runtime)
 
         total_out_vocab_time += out_vocab_runtime
 
-        print("len of vocab before query {}".format(len(vocab_string_after_query)))
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
         
-        diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
-        print("updated elements: ", diff)
+        # diff = list(set(vocab_string_org).symmetric_difference(vocab_string_after_query))
+        # print("updated elements: ", diff)
 
 
         if out_vocab_runtime > in_vocab_runtime:
@@ -1648,13 +1648,13 @@ if __name__ == "__main__":
     iterations = 1000
     # target_nlp_make_doc(iterations)
     target_nlp_whole(iterations)
-    target_nlp_tokenizer(iterations)
+    # target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
     target_ner_tokenizer(iterations)
-    target_tagger_tokenizer(iterations)
-    target_parser_tokenizer(iterations)
-    target_attRuler_tokenizer(iterations)
-    target_lemmatizer_tokenizer(iterations)
+    # target_tagger_tokenizer(iterations)
+    # target_parser_tokenizer(iterations)
+    # target_attRuler_tokenizer(iterations)
+    # target_lemmatizer_tokenizer(iterations)
 
 
 
