@@ -51,6 +51,8 @@ def entropy_bits(text=None):
     R = len(set(text))
     E = math.log(math.pow(R, L), 2)
 
+    strength = ""
+
     if E < 28: strength = 'very-weak' 
     if 28 <= E <= 35: strength = 'weak' 
     if 36 <= E <= 59: strength = 'reasonable' 
