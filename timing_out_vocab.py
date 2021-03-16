@@ -523,14 +523,14 @@ def target_ner_tokenizer_in_vocab(texts, out_vocab, file_name):
 
     return in_vocab_runtime_list
 
-def target_ner_tokenizer_one_word(iterations):
+def target_ner_tokenizer_one_word(iterations, text):
     iterations = iterations
     total_in_vocab_time = 0
     # total_out_vocab_time = 0
 
     # count_success = 0
 
-    in_vocab_word = "news"
+    in_vocab_word = text
     # out_vocab_word = "fher135*73p&2"
     file_name = open("in_vocab_ner_tokenizer_1000runss.txt","a")
     file_name.write("======== target ner tokenizer 1000 runs ==============\n")  
@@ -585,7 +585,9 @@ if __name__ == "__main__":
     in_vocab_words = vocab[10000:11000]
     # print(list(pws))
 
-    in_vocab_one_word = target_ner_tokenizer_one_word(1000)
+    in_vocab_news = target_ner_tokenizer_one_word(1000,"news")
+    in_vocab_people = target_ner_tokenizer_one_word(1000,"people")
+    in_vocab_Australia = target_ner_tokenizer_one_word(1000,"Australia")
     in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
 
     pws = generate_password(1,1,1,1,8,1000)
@@ -605,4 +607,4 @@ if __name__ == "__main__":
     # time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
-    save_results([in_vocab_one_word, in_vocab_ner_time, out_vocab_ner_time], "timming_1000_vocab_obs_test_2")
+    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_ner_time], "timming_1000_vocab_obs_test_3words")
