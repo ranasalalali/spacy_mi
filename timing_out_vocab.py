@@ -44,7 +44,7 @@ import math
 from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
 from password_generator import PasswordGenerator
-from timing_in_vocab import *
+# from timing_in_vocab import *
 
 
 def mkdir_p(path):
@@ -477,19 +477,116 @@ def target_lemmatizer_tokenizer(texts, file_name):
 
     return out_vocab_runtime_list
 
-    
+def target_ner_tokenizer_in_vocab(texts, out_vocab, file_name):
+    total_in_vocab_time = 0
+
+    file_name.write("======== target ner tokenizer ==============\n")  
+ 
+    in_vocab_runtime_list = []
+
+    nlp = spacy.load('en_core_web_lg')
+
+    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
+    for i in texts:
+        
+        print("text = ", i)
+        
+        text = i
+        
+        time0 = time.perf_counter()
+        doc = tokeniz(text)
+        doc = ner(doc)
+        time_now = time.perf_counter()
+        # vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        # print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+
+    # # out_vocab = "giac7485mo*("
+    # time0 = time.perf_counter()
+    # doc = tokeniz(out_vocab)
+    # doc = ner(doc)
+    # time_now = time.perf_counter()
+    # out_vocab_time = time_now - time0
+    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
+
+    iterations = len(texts)   
+    if iterations >0:
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
+
+
+    return in_vocab_runtime_list
+
+def target_ner_tokenizer_one_word(iterations):
+    iterations = iterations
+    total_in_vocab_time = 0
+    # total_out_vocab_time = 0
+
+    # count_success = 0
+
+    in_vocab_word = "news"
+    # out_vocab_word = "fher135*73p&2"
+    file_name = open("in_vocab_ner_tokenizer_1000runss.txt","a")
+    file_name.write("======== target ner tokenizer 1000 runs ==============\n")  
+    file_name.write("In vocab word:{}\n".format(in_vocab_word))  
+    # file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+    in_vocab_runtime_list = []
+    # out_vocab_runtime_list = []
+
+    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
+    for i in range(iterations):
+        
+        print("i = ", i)
+
+        text = in_vocab_word
+        
+        time0 = time.perf_counter()
+        doc = tokeniz(text)
+        doc = ner(doc)
+        time_now = time.perf_counter()
+        # vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        # print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
+
+        
+    if iterations >0:
+        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        # file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
+        # file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
+
+
+    return in_vocab_runtime_list
+
 if __name__ == "__main__":
     # iterations = 100
     file_name = open("timing_out_vocab_test.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    # out_vocab = "Gdnam89)k34"
+    out_vocab = "Gdnam89)k34"
 
     nlp = spacy.load("en_core_web_lg")
     global vocab
     vocab = list(nlp.vocab.strings)
-    # in_vocab_words = vocab[10000:11000]
+    in_vocab_words = vocab[10000:11000]
     # print(list(pws))
+
+    in_vocab_one_word = target_ner_tokenizer_one_word(1000)
+    in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
 
     pws = generate_password(1,1,1,1,8,1000)
     # print(list(pws))
@@ -500,12 +597,12 @@ if __name__ == "__main__":
     # 'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
     # 'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
 
-    time_nlp = target_nlp_whole(pws, file_name)
-    time_tok2vec = target_nlp_tokenizer(pws,  file_name)
-    time_tagger = target_tagger_tokenizer(pws,  file_name)
-    time_parser = target_parser_tokenizer(pws,   file_name)
-    time_ner = target_ner_tokenizer(pws,  file_name)
-    time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
-    time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
+    # time_nlp = target_nlp_whole(pws, file_name)
+    # time_tok2vec = target_nlp_tokenizer(pws,  file_name)
+    # time_tagger = target_tagger_tokenizer(pws,  file_name)
+    # time_parser = target_parser_tokenizer(pws,   file_name)
+    out_vocab_ner_time = target_ner_tokenizer(pws,  file_name)
+    # time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
+    # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
-    save_results([time_nlp, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_1000_out_vocab")
+    save_results([in_vocab_one_word, in_vocab_ner_time, out_vocab_ner_time], "timming_1000_vocab_obs_test")
