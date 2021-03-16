@@ -4,3 +4,12 @@ avg runtime with in vocab: 0.0025912883062846957
 ======== target ner tokenizer 1000 runs ==============
 In vocab word:news
 avg runtime with in vocab: 0.0025743236436974255
+======== target ner tokenizer 1000 runs ==============
+In vocab word:news
+avg runtime with in vocab: 0.002599462516605854
+======== target ner tokenizer 1000 runs ==============
+In vocab word:people
+avg runtime with in vocab: 0.0026036696655210106
+======== target ner tokenizer 1000 runs ==============
+In vocab word:Australia
+avg runtime with in vocab: 0.0025841518186498435
