@@ -1,0 +1,6 @@
+======== target ner tokenizer 1000 runs ==============
+In vocab word:news
+avg runtime with in vocab: 0.0025912883062846957
+======== target ner tokenizer 1000 runs ==============
+In vocab word:news
+avg runtime with in vocab: 0.0025743236436974255
