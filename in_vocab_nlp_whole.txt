@@ -1,0 +1,13 @@
+======== target nlp whole ==============
+In vocab word:password
+Out vocab word:sdhfkder893pl,d@
+======== target nlp whole ==============
+In vocab word:password
+Out vocab word:sdhfkder893pl,d@
+======== target nlp whole ==============
+In vocab word:password
+Out vocab word:sdhfkder893pl,d@
+Number of successs attempts:995
+avg runtime with in vocab: 0.005699629463953897
+avg runtime with out vocab: 0.006869862588588149
+avg runtime diff: 0.0011702331246342514

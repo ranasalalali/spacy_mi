@@ -26,3 +26,10 @@ Number of successs attempts:34
 avg runtime with in vocab: 0.003051317139997991
 avg runtime with out vocab: 0.0031227409999337397
 avg runtime diff: 7.142385993574862e-05
+======== target ner tokenizer ==============
+In vocab word:password
+Out vocab word:dfhdle783ldoq)
+Number of successs attempts:541
+avg runtime with in vocab: 0.003334251479944214
+avg runtime with out vocab: 0.0033440714224707334
+avg runtime diff: 9.819942526519392e-06
