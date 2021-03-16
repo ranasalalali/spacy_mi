@@ -408,10 +408,10 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
 
         pr = fig.gca(projection='3d') 
 
-        pr.scatter(strength, epochs, ranks, label=i)
+        pr.scatter(entropy, epochs, ranks, label=i)
         
         pr.set_ylabel("Epochs")
-        pr.set_xlabel("Strength")
+        pr.set_xlabel("Entropy")
         pr.set_zlabel("Ranks")
         if zoomed:
             pr.set_zlim(0,500)
