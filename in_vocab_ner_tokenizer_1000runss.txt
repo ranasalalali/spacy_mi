@@ -142,3 +142,11 @@ avg runtime with in vocab: 0.003468767907470465
 ======== target ner tokenizer out vocab 1000 runs ==============
 In vocab word:Gpn(0i
 avg runtime with in vocab: 0.003263570181326941
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:-kXU&gW7L#B
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:s.Zn+HI5O6aP
+avg runtime with in vocab: 0.0035202266951091586
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:J?C-4#8gY
+avg runtime with in vocab: 0.00337970222113654
