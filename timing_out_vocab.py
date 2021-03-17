@@ -593,8 +593,14 @@ if __name__ == "__main__":
     in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
     in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
 
-    pws = generate_password(1,1,1,1,8,1000)
-    # print(list(pws))
+    # pws = generate_password(1,1,1,1,8,1000)
+    file_pws = 'passwords_out_vocab_list'
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
+
+    pws = g[:][0]
+   
 
     # pws = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
     # 'PORK-BARRELING', 'UNGRACIOUS', '33,300', '693.4', 'FELONIOUS', 'PRACTICALITY', 'family.', 'IN-PATIENTS', '1970-75', 'powertec', 'caliendo', 'BIATHLETE', 'KOPS', 'Rebidding', 'First-Run', 'INTERFERENCES', 'Yet.', 'Leukotrienes', 'dollar-for-dollar', 'often-neglected', 'IMPORTATION', 
@@ -610,4 +616,4 @@ if __name__ == "__main__":
     # time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
-    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_ner_time, out_vocab_news, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000in")
+    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_ner_time, out_vocab_news, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000in_2")
