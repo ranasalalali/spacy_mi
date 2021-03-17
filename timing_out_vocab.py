@@ -572,6 +572,56 @@ def target_ner_tokenizer_one_word(iterations, text):
 
     return in_vocab_runtime_list
 
+def target_ner_tokenizer_one_word_out(iterations, text):
+    iterations = iterations
+    total_in_vocab_time = 0
+    # total_out_vocab_time = 0
+
+    # count_success = 0
+
+    in_vocab_word = text
+    # out_vocab_word = "fher135*73p&2"
+    file_name = open("in_vocab_ner_tokenizer_1000runss.txt","a")
+    file_name.write("======== target ner tokenizer out vocab 1000 runs ==============\n")  
+    file_name.write("In vocab word:{}\n".format(in_vocab_word))  
+    # file_name.write("Out vocab word:{}\n".format(out_vocab_word))    
+
+    in_vocab_runtime_list = []
+    # out_vocab_runtime_list = []
+
+    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
+    for i in range(iterations):
+        
+        print("i = ", i)
+        nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
+        text = in_vocab_word
+        
+        time0 = time.perf_counter()
+        doc = tokeniz(text)
+        doc = ner(doc)
+        time_now = time.perf_counter()
+        # vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        # print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+        # print("len of vocab before query {}".format(len(vocab_string_after_query)))
+
+        
+    if iterations >0:
+        file_name.write("avg runtime with in vocab: {}\n".format(total_in_vocab_time/iterations))
+        # file_name.write("avg runtime with out vocab: {}\n".format(total_out_vocab_time/iterations))
+        # file_name.write("avg runtime diff: {}\n".format(total_out_vocab_time/iterations - total_in_vocab_time/iterations ))
+
+
+    return in_vocab_runtime_list
+
 if __name__ == "__main__":
     # iterations = 100
     file_name = open("timing_out_vocab_test.txt","a")
@@ -589,7 +639,7 @@ if __name__ == "__main__":
     in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
     in_vocab_people = target_ner_tokenizer_one_word(1000,"people")
     in_vocab_Australia = target_ner_tokenizer_one_word(1000,"Australia")
-    out_vocab_news = target_ner_tokenizer_one_word(1000,"X1XLvcyi5R5GU")
+    out_vocab_news = target_ner_tokenizer_one_word_out(1000,"X1XLvcyi5R5GU")
     in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
     in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
 
@@ -616,4 +666,4 @@ if __name__ == "__main__":
     # time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
-    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_ner_time, out_vocab_news, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000in_2")
+    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_ner_time, out_vocab_news, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs")
