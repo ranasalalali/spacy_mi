@@ -31,3 +31,15 @@ avg runtime with in vocab: 0.002610515738837421
 ======== target ner tokenizer 1000 runs ==============
 In vocab word:Australia
 avg runtime with in vocab: 0.0025948695368133486
+======== target ner tokenizer 1000 runs ==============
+In vocab word:You
+avg runtime with in vocab: 0.003143381845206022
+======== target ner tokenizer 1000 runs ==============
+In vocab word:people
+avg runtime with in vocab: 0.0026026293879840524
+======== target ner tokenizer 1000 runs ==============
+In vocab word:Australia
+avg runtime with in vocab: 0.002619676386937499
+======== target ner tokenizer 1000 runs ==============
+In vocab word:X1XLvcyi5R5GU
+avg runtime with in vocab: 0.0028110712829511613
