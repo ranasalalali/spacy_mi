@@ -320,8 +320,8 @@ if __name__ == "__main__":
     
     assert len(strength)==2
 
-    s1 = strength[0]
-    s2 = strength[1]
+    s1 = int(strength[0])
+    s2 = int(strength[1])
 
     assert 4>=s1>=0
     assert 4>=s2>=0
