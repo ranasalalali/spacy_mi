@@ -40,3 +40,9 @@ avg runtime with in vocab (ms): 2.854242115514353
 avg runtime with in vocab (ms): 2.883986235363409
 ======== target tok2vec ner ==============
 avg runtime with in vocab (ms): 2.7941795287188143
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.7132485832553357
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8252401447389275
