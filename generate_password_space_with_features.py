@@ -10,6 +10,7 @@ import secrets
 import numpy as np
 #from password_generator import PasswordGenerator
 from password_strength import PasswordStats
+from zxcvbn import zxcvbn
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -20,6 +21,11 @@ def mkdir_p(path):
             pass
         else:
             raise
+
+def zxcvbn_score(text=None):
+    results = zxcvbn(text)
+
+    return results['score']
 
 def word_shape(text=None):
     if len(text) >= 100:
@@ -190,7 +196,7 @@ def generate_password_given_features(shape=None, prefix=None, suffix=None, lengt
     
     return generated
 
-def generate_choices_and_passwords(s1 = 0.0, s2 = 1.0, N = 10, r_space = 1000000, new_passwords = 'Y'):
+def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000, new_passwords = 'Y'):
    
     passwords = []
     choices = []
@@ -203,21 +209,27 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 1.0, N = 10, r_space = 1000000
                     passwords.append(word)
         passwords = random.sample(passwords, (r_space))
 
-        strengths = np.arange(s1, s2, 0.1)
+        #strengths = np.arange(s1, s2, 0.1)
+
+        strengths = np.arange(s1, s2+1, 1)
+
+        print(strengths)
 
         d = N//len(strengths)
         r = N%len(strengths)
 
         for i in range(len(strengths)):
             if i == len(strengths)-1:
-                strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
+                #strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
+                strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
                 temp_choices = random.sample(strength_passwords, d+r)
                 choices.extend(temp_choices)
             else:
-                strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
+                #strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
+                strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
                 temp_choices = random.sample(strength_passwords, d)
                 choices.extend(temp_choices)
-            #print(temp_choices)
+            print(temp_choices)
 
         # strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
         # choices = random.sample(strength_passwords, N)
@@ -311,8 +323,8 @@ if __name__ == "__main__":
     s1 = float(strength[0])
     s2 = float(strength[1])
 
-    assert 1>=s1>=0
-    assert 1>=s2>=0
+    assert 4>=s1>=0
+    assert 4>=s2>=0
     assert s1<=s2
 
     folder = 'r_space_data/'
