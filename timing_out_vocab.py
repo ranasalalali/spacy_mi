@@ -583,6 +583,7 @@ if __name__ == "__main__":
     global vocab
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:11000]
+    in_vocab_words_test = vocab[12000:13000]
     # print(list(pws))
 
     in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
@@ -590,6 +591,7 @@ if __name__ == "__main__":
     in_vocab_Australia = target_ner_tokenizer_one_word(1000,"Australia")
     out_vocab_news = target_ner_tokenizer_one_word(1000,"X1XLvcyi5R5GU")
     in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
+    in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
 
     pws = generate_password(1,1,1,1,8,1000)
     # print(list(pws))
@@ -608,4 +610,4 @@ if __name__ == "__main__":
     # time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
-    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_ner_time, out_vocab_news], "timming_1000_vocab_obs_test_3words_1word_out")
+    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_ner_time, out_vocab_news, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out")
