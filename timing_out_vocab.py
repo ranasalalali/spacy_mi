@@ -585,7 +585,7 @@ if __name__ == "__main__":
     in_vocab_words = vocab[10000:11000]
     # print(list(pws))
 
-    in_vocab_news = target_ner_tokenizer_one_word(1000,"news")
+    in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
     in_vocab_people = target_ner_tokenizer_one_word(1000,"people")
     in_vocab_Australia = target_ner_tokenizer_one_word(1000,"Australia")
     in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
