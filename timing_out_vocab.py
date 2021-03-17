@@ -675,4 +675,4 @@ if __name__ == "__main__":
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
     save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_test_list, 
-                  out_vocab_ner_time, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_3")
+                  out_vocab_ner_time, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_10_pws")
