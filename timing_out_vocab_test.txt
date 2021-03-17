@@ -52,3 +52,19 @@ avg runtime with in vocab (ms): 2.8252401447389275
 avg runtime with in vocab (ms): 2.688277833396569
 ======== target tok2vec ner ==============
 avg runtime with in vocab (ms): 2.8611765527166426
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.775415120879188
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.825724117225036
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7937833822797984
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.7030610425863415
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.7221841043792665
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8229827703908086
