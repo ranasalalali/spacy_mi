@@ -656,7 +656,7 @@ if __name__ == "__main__":
     out_vocab_test_list =[]
     for i in list_10_pw:
         text = i
-        out_vocab_test = target_ner_tokenizer_one_word_out(1000,text)
+        out_vocab_test = target_ner_tokenizer_one_word_out(100,text)
         out_vocab_test_list.append(out_vocab_test)
    
 
