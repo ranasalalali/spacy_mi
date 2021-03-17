@@ -91,3 +91,54 @@ avg runtime with in vocab: 0.002522806104039773
 ======== target ner tokenizer out vocab 1000 runs ==============
 In vocab word:X1XLvcyi5R5GU
 avg runtime with in vocab: 0.0031555967731401323
+======== target ner tokenizer 1000 runs ==============
+In vocab word:You
+avg runtime with in vocab: 0.002556373674655333
+======== target ner tokenizer 1000 runs ==============
+In vocab word:people
+avg runtime with in vocab: 0.0025489973921794446
+======== target ner tokenizer 1000 runs ==============
+In vocab word:Australia
+avg runtime with in vocab: 0.0025687127381097525
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:X1XLvcyi5R5GU
+avg runtime with in vocab: 0.0031987692879047245
+======== target ner tokenizer 1000 runs ==============
+In vocab word:You
+avg runtime with in vocab: 0.0026219542734324934
+======== target ner tokenizer 1000 runs ==============
+In vocab word:people
+avg runtime with in vocab: 0.002553941503399983
+======== target ner tokenizer 1000 runs ==============
+In vocab word:Australia
+avg runtime with in vocab: 0.002566188864642754
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:x6y3?gr_Q)R9BRyD
+avg runtime with in vocab: 0.003265411562984809
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:9X=oYd&z9r7
+avg runtime with in vocab: 0.0034290269494522364
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:wd7Mn,ldo=-m%q
+avg runtime with in vocab: 0.0034371642500627786
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:!-t-_6x%3iV$aQg3
+avg runtime with in vocab: 0.0033954206365160644
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:&LXzF^N2Y_+<
+avg runtime with in vocab: 0.0034605395009275524
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:9NoJMUt*L
+avg runtime with in vocab: 0.003256761347409338
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:0?zHU&E
+avg runtime with in vocab: 0.003260894084349275
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:1-_=izbHx_,2C6w5
+avg runtime with in vocab: 0.0032806849195621906
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:pzFT<U$5+
+avg runtime with in vocab: 0.003468767907470465
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:Gpn(0i
+avg runtime with in vocab: 0.003263570181326941
