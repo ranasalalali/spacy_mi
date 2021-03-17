@@ -636,12 +636,12 @@ if __name__ == "__main__":
     in_vocab_words_test = vocab[12000:13000]
     # print(list(pws))
 
-    in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
-    in_vocab_people = target_ner_tokenizer_one_word(1000,"people")
-    in_vocab_Australia = target_ner_tokenizer_one_word(1000,"Australia")
+    # in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
+    # in_vocab_people = target_ner_tokenizer_one_word(1000,"people")
+    # in_vocab_Australia = target_ner_tokenizer_one_word(1000,"Australia")
     
-    in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
-    in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
+    # in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
+    # in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
 
     # pws = generate_password(1,1,1,1,8,1000)
     file_pws = 'passwords_out_vocab_list'
@@ -651,7 +651,7 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    list_10_pw = random.sample(pws,10)
+    list_10_pw = random.sample(pws,2)
     print(list_10_pw)
     out_vocab_test_list =[]
     for i in list_10_pw:
@@ -674,5 +674,9 @@ if __name__ == "__main__":
     # time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
-    save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_test_list, 
-                  out_vocab_ner_time, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_10_pws")
+    # save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_test_list, 
+                #   out_vocab_ner_time, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_10_pws")
+
+
+    save_results([out_vocab_test_list, 
+                  out_vocab_ner_time], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_2_pws")              
