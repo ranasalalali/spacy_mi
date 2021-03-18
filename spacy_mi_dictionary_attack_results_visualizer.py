@@ -539,7 +539,7 @@ if __name__ == "__main__":
 
 
     for i in range(number_of_experiments):
-        avg_epoch_exposure = {key:[] for key in gs[i][5][0]}
+        avg_epoch_exposure = {key:[] for key in g[i][5][0]}
         avg_epoch_rank = {key:[] for key in g[i][5][0]}
         
         agg_scores = {}
