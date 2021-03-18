@@ -633,7 +633,7 @@ if __name__ == "__main__":
     global vocab
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:11000]
-    in_vocab_words_test = vocab[12000:13000]
+    in_vocab_words_test = vocab[12000:12100]
     # print(list(pws))
 
     in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
@@ -652,13 +652,14 @@ if __name__ == "__main__":
     pws = g[:][0]
 
     
-    # list_10_pw = random.sample(pws,5)
+    list_100_pw = random.sample(pws,100)
     # print(list_10_pw)
     out_vocab_test_list =[]
-    list_10_pw =['74QR+H?bQ)xf']
+    # list_10_pw =['74QR+H?bQ)xf']
+    list_10_pw = random.sample(list_100_pw, 5)
     for i in list_10_pw:
         text = i
-        out_vocab_test = target_ner_tokenizer_one_word_out(1000,text)
+        out_vocab_test = target_ner_tokenizer_one_word_out(100,text)
         out_vocab_test_list.append(out_vocab_test)
    
 
@@ -672,12 +673,17 @@ if __name__ == "__main__":
     # time_tok2vec = target_nlp_tokenizer(pws,  file_name)
     # time_tagger = target_tagger_tokenizer(pws,  file_name)
     # time_parser = target_parser_tokenizer(pws,   file_name)
-    out_vocab_ner_time = target_ner_tokenizer(pws,  file_name)
+
+    out_vocab_100pws_list =[]
+    for i in range(100):
+        out_vocab_ner_time = target_ner_tokenizer(list_100_pw,  file_name)
+        out_vocab_100pws_list.append(out_vocab_ner_time)
+
     # time_attrRuler = target_attRuler_tokenizer(pws,  file_name)
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
     save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_test_list, 
-                  out_vocab_ner_time, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_1_pws")
+                  out_vocab_100pws_list, in_vocab_ner_time_test], "timming_100pws_5_pws_100_invocab_pws")
 
 
     # save_results([out_vocab_test_list, 
