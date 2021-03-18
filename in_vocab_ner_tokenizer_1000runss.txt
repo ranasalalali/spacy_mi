@@ -252,3 +252,18 @@ avg runtime with in vocab: 0.0027305443095974624
 ======== target ner tokenizer 1000 runs ==============
 In vocab word:VC^L.7S6e-9gx1R
 avg runtime with in vocab: 0.0026311692781746387
+======== target ner tokenizer 1000 runs ==============
+In vocab word:M^9fGV>nW4
+avg runtime with in vocab: 0.0027227646065875887
+======== target ner tokenizer 1000 runs ==============
+In vocab word:4.cy<Sk-%4
+avg runtime with in vocab: 0.0027131346939131616
+======== target ner tokenizer 1000 runs ==============
+In vocab word:ThcPh$H?2h
+avg runtime with in vocab: 0.0025913230259902776
+======== target ner tokenizer 1000 runs ==============
+In vocab word:B.tv1&b
+avg runtime with in vocab: 0.0025606278353370727
+======== target ner tokenizer 1000 runs ==============
+In vocab word:7XDb#IJNnfj%x(3
+avg runtime with in vocab: 0.0026012943498790264
