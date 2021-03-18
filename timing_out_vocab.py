@@ -651,9 +651,11 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    list_10_pw = random.sample(pws,5)
-    print(list_10_pw)
+    
+    # list_10_pw = random.sample(pws,5)
+    # print(list_10_pw)
     out_vocab_test_list =[]
+    list_10_pw =['74QR+H?bQ)xf']
     for i in list_10_pw:
         text = i
         out_vocab_test = target_ner_tokenizer_one_word_out(1000,text)
@@ -675,7 +677,7 @@ if __name__ == "__main__":
     # time_lemma = target_lemmatizer_tokenizer(pws,  file_name)
 
     save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_test_list, 
-                  out_vocab_ner_time, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_5_pws")
+                  out_vocab_ner_time, in_vocab_ner_time_test], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_1_pws")
 
 
     # save_results([out_vocab_test_list, 
