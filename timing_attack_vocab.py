@@ -667,7 +667,7 @@ if __name__ == "__main__":
    
     out_vocab_no_refresh_vocab_list =[]
     for i in list_5_pw:
-        file_name.write(i+"\n")
+        file_name.write(i + "\n")
         out_vocab_no_refresh_vocab = target_ner_tokenizer_one_word(100,i)
         out_vocab_no_refresh_vocab_list.append(out_vocab_no_refresh_vocab)
 
@@ -683,4 +683,4 @@ if __name__ == "__main__":
                 #   out_vocab_100pws_list, in_vocab_ner_time_test], "timming_100pws_5_pws_100_invocab_pws")
 
 
-    save_results([out_vocab_no_refresh_vocab_list], "timing_out_vocab_100_run_no_refresh_vocab_5pws")             
+    save_results([out_vocab_no_refresh_vocab_list], "timing_out_vocab_100_run_no_refresh_vocab_5pws_2")             
