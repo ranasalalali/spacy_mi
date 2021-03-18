@@ -122,3 +122,209 @@ avg runtime with in vocab (ms): 2.894937878707424
 avg runtime with in vocab (ms): 2.873825919115916
 ======== target tok2vec ner ==============
 avg runtime with in vocab (ms): 2.95870779780671
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.6133702462539077
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.6921660476364195
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8047680435702205
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7913402603007853
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7911545406095684
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8391088102944195
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.825338589027524
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.821914160158485
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8212765767239034
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8029848588630557
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.800470965448767
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.945410313550383
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.977080293931067
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.9392691794782877
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.971560820005834
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.9248120286501944
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7977959369309247
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8084917226806283
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7804844081401825
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7825137390755117
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8020544815808535
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8042750665917993
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8896646155044436
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8646821598522365
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.797044541221112
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.829495973419398
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8673928743228316
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.791398058179766
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.80632410896942
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7751516923308372
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7640596916899085
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.866944232955575
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8189975628629327
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.814956959336996
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7660088520497084
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7806569589301944
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8212210559286177
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 3.6556390579789877
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.922996082343161
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 3.018278719391674
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.949287157971412
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 6.947061601094902
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.953042851295322
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7845323900692165
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.780053843744099
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7732247090898454
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8890063636936247
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7602864941582084
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7667912538163364
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7566836401820183
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.761278133839369
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8007851145230234
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8408231679350138
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8919778391718864
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8734567505307496
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8872456215322018
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7631703577935696
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.80334681738168
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8248651628382504
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8064976958557963
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.9226755793206394
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.97568513546139
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8030291968025267
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8164198831655085
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.9693095781840384
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.9707960970699787
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 3.1036608503200114
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8626616904512048
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.857440726365894
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7592662908136845
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 5.888672983273864
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8423797176219523
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7649380289949477
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8034510579891503
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7737419330514967
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7816597768105567
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7745932526886463
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.777487162966281
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7955799200572073
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.805242408066988
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8201365377753973
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7803694014437497
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.792688321787864
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.813649580348283
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8629638953134418
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8245262033306062
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.844691073987633
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8070931741967797
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.79890563338995
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.825331795029342
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.9796269279904664
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.94842780334875
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.935769136529416
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.930490595754236
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.9314876534044743
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7504299278371036
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7676132670603693
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8037875751033425
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.8032078268006444
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 5.986856687813997
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.870840518735349
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 2.7735548838973045
