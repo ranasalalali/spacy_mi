@@ -7,6 +7,7 @@ import statistics as st
 import heapq
 import operator
 import errno
+from zxcvbn import zxcvbn
 from itertools import islice
 from password_strength import PasswordStats
 import argparse
@@ -45,6 +46,11 @@ def unpack_data(res_folder=None):
 def format_string(s):
     escaped = re.escape(s)
     return escaped
+
+def zxcvbn_score(text=None):
+    results = zxcvbn(text)
+
+    return results['score']
 
 def entropy_bits(text=None):
     L = len(text)
@@ -405,13 +411,14 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
             ranks.append(j[2])
             entropy = j[3]
             strength = j[4]
+            zxcvbn = j[5]
 
         pr = fig.gca(projection='3d') 
 
-        pr.scatter(entropy, epochs, ranks, label=i)
+        pr.scatter(zxcvbn, epochs, ranks, label=i)
         
         pr.set_ylabel("Epochs")
-        pr.set_xlabel("Entropy")
+        pr.set_xlabel("zxcvbn_score")
         pr.set_zlabel("Ranks")
         if zoomed:
             pr.set_zlim(0,500)
@@ -504,6 +511,7 @@ if __name__ == "__main__":
     avg_epoch_rank_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
     entropy_bits_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
     strength_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
+    zxcvbn_score_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
 
 
     agg_exposures = {}
@@ -608,6 +616,7 @@ if __name__ == "__main__":
         avg_epoch_rank_per_password[secret] = avg_epoch_rank
         entropy_bits_per_password[secret] = entropy_bits(secret)[0]
         strength_per_password[secret] = entropy_bits(secret)[1]
+        zxcvbn_score_per_password[secret] = zxcvbn_score(secret)
 
         all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret_shape, word_shape(code)), feature_distance(code, secret)) for code in exposure_rank_per_code}
 
@@ -734,7 +743,7 @@ if __name__ == "__main__":
 
     for secret in avg_epoch_rank_per_password:
         for j in avg_epoch_rank_per_password[secret].keys():
-            epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j], entropy_bits_per_password[secret], strength_per_password[secret]))
+            epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j], entropy_bits_per_password[secret], strength_per_password[secret], zxcvbn_score_per_password[secret]))
 
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, False)
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, True)
