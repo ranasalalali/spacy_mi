@@ -624,7 +624,7 @@ def target_ner_tokenizer_one_word_out(iterations, text):
 
 if __name__ == "__main__":
     # iterations = 100
-    file_name = open("timing_attack_vocab_test.txt","a")
+    file_name = open("timing_attack_vocab_test_no_reload_model_5pws.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     out_vocab = "Gdnam89)k34"
@@ -644,24 +644,32 @@ if __name__ == "__main__":
     # in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
 
     # # pws = generate_password(1,1,1,1,8,1000)
-    # file_pws = 'passwords_out_vocab_list'
-    # g = []
-    # h = pickle.load(open(file_pws, 'rb'))
-    # g.append(h)
+    file_pws = 'passwords_out_vocab_list'
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
 
-    # pws = g[:][0]
+    pws = g[:][0]
 
     
-    # list_100_pw = random.sample(pws,100)
-    # # print(list_10_pw)
-    # out_vocab_test_list =[]
-    # # list_10_pw =['74QR+H?bQ)xf']
-    # list_10_pw = random.sample(list_100_pw, 5)
+    list_100_pw = random.sample(pws,100)
+    # print(list_10_pw)
+    out_vocab_test_list =[]
+    # list_10_pw =['74QR+H?bQ)xf']
+    list_5_pw = random.sample(list_100_pw, 5)
+
+    
+
     # for i in list_10_pw:
     #     text = i
     #     out_vocab_test = target_ner_tokenizer_one_word_out(100,text)
     #     out_vocab_test_list.append(out_vocab_test)
    
+    out_vocab_no_refresh_vocab_list =[]
+    for i in list_5_pw:
+        file_name.write(i+"\n")
+        out_vocab_no_refresh_vocab = target_ner_tokenizer_one_word(100,i)
+        out_vocab_no_refresh_vocab_list.append(out_vocab_no_refresh_vocab)
 
 
     # out_vocab_100pws_list =[]
@@ -669,10 +677,10 @@ if __name__ == "__main__":
     #     out_vocab_ner_time = target_ner_tokenizer(list_100_pw,  file_name)
     #     out_vocab_100pws_list.append(out_vocab_ner_time)
 
-    out_vocab_no_refresh_vocab = target_ner_tokenizer_one_word(100,"'74QR+H?bQ)xf'")
+    
 
     # save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_test_list, 
                 #   out_vocab_100pws_list, in_vocab_ner_time_test], "timming_100pws_5_pws_100_invocab_pws")
 
 
-    save_results([out_vocab_no_refresh_vocab], "timing_out_vocab_100_run_no_refresh_vocab")             
+    save_results([out_vocab_no_refresh_vocab_list], "timing_out_vocab_100_run_no_refresh_vocab_5pws")             
