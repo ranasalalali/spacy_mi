@@ -415,7 +415,17 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
 
         pr = fig.gca(projection='3d') 
 
-        pr.scatter(zxcvbn, epochs, ranks, label=i)
+        if zxcvbn[0] == 0:
+            pr.scatter(zxcvbn, epochs, ranks, color='green', label=zxcvbn[0])
+        if zxcvbn[0] == 1:
+            pr.scatter(zxcvbn, epochs, ranks, color='yellow', label=zxcvbn[0])
+        if zxcvbn[0] == 2:
+            pr.scatter(zxcvbn, epochs, ranks, color='orange', label=zxcvbn[0])
+        if zxcvbn[0] == 3:
+            pr.scatter(zxcvbn, epochs, ranks, color='brown', label=zxcvbn[0])
+        if zxcvbn[0] == 4:
+            pr.scatter(zxcvbn, epochs, ranks, color='red', label=zxcvbn[0])
+        
         
         pr.set_ylabel("Epochs")
         pr.set_xlabel("zxcvbn_score")
