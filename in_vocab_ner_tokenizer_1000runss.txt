@@ -234,3 +234,6 @@ avg runtime with in vocab: 0.0035600343400039947
 ======== target ner tokenizer out vocab 1000 runs ==============
 In vocab word:.8u2jV#Ma
 avg runtime with in vocab: 0.0033381939699995656
+======== target ner tokenizer 1000 runs ==============
+In vocab word:'74QR+H?bQ)xf'
+avg runtime with in vocab: 0.0028466300130821766
