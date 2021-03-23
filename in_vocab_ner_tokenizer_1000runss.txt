@@ -267,3 +267,27 @@ avg runtime with in vocab: 0.0025606278353370727
 ======== target ner tokenizer 1000 runs ==============
 In vocab word:7XDb#IJNnfj%x(3
 avg runtime with in vocab: 0.0026012943498790264
+======== target ner tokenizer 1000 runs ==============
+In vocab word:You
+avg runtime with in vocab: 0.0026566047449596225
+======== target ner tokenizer 1000 runs ==============
+In vocab word:people
+avg runtime with in vocab: 0.0026263895812444387
+======== target ner tokenizer 1000 runs ==============
+In vocab word:Australia
+avg runtime with in vocab: 0.002720788220874965
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:QmZt_eKn,EE^GF4<
+avg runtime with in vocab: 0.003525823618751019
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:mxD*Lq0=v0
+avg runtime with in vocab: 0.003480010415427387
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:=CY#OL6Pm!
+avg runtime with in vocab: 0.003509297528769821
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:oo45?2Z.R
+avg runtime with in vocab: 0.003285681272856891
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:Xd0(dCt5
+avg runtime with in vocab: 0.0032835421529598535
