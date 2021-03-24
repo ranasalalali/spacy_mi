@@ -383,3 +383,33 @@ avg runtime with in vocab: 0.00276042559184134
 ======== target ner tokenizer out vocab 1000 runs ==============
 In vocab word:2ejcNF9YK!U^24=
 avg runtime with in vocab: 0.0026864910451695322
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.0034275658521801234
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.00345787706784904
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.0034772247867658735
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.0034148861235007645
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.0034466156968846915
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.0027626700373366477
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.0066174851730465886
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.00282479302957654
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.002834034999832511
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:4u5.9Df>
+avg runtime with in vocab: 0.0027233762480318546
