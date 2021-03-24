@@ -744,7 +744,7 @@ if __name__ == "__main__":
     #               out_vocab_1000pws_list, in_vocab_ner_time_test], "timming_outvocab_1000pws_5_times_5pws_1000_in-vocab_pws")
 
     save_results([in_vocab_ner_time, out_vocab_test_list, out_vocab_test_NO_reload_list,
-                  in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_2")
+                  in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_3")
 
 
 
