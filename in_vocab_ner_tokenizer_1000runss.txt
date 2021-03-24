@@ -323,3 +323,33 @@ avg runtime with in vocab: 0.0027414764603599906
 ======== target ner tokenizer out vocab 1000 runs ==============
 In vocab word:QMrjxavQ$CZZ&?9
 avg runtime with in vocab: 0.0027200835710391403
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:eo2idT8qJ41>SZp
+avg runtime with in vocab: 0.003560603586956859
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:9X=oYd&z9r7
+avg runtime with in vocab: 0.003561605238355696
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:y,n7ZZI
+avg runtime with in vocab: 0.0034882734436541794
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:S,>!FTkGx6
+avg runtime with in vocab: 0.003351275413297117
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:Y*S8f(k,U?X9bc!Q
+avg runtime with in vocab: 0.0035591300204396246
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:eo2idT8qJ41>SZp
+avg runtime with in vocab: 0.0027543669193983078
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:9X=oYd&z9r7
+avg runtime with in vocab: 0.006550183771178126
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:y,n7ZZI
+avg runtime with in vocab: 0.002905424335040152
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:S,>!FTkGx6
+avg runtime with in vocab: 0.0026742371637374163
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:Y*S8f(k,U?X9bc!Q
+avg runtime with in vocab: 0.002791445725597441

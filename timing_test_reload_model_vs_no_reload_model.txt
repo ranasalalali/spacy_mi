@@ -10,4 +10,10 @@ list_5_pw:['V+08oRmw(xe$lf<', '2>>z3&D#_4Azz57(', '8AA=9#EF4#,EoO)', 'Rct07#Wgtj
 avg runtime with in vocab (ms): 2.669686042238027
 ======== target ner tokenizer ==============
 avg runtime with in vocab (ms): 2.670588307082653
-list_5_pw:['<EzPRIlq1', '6pB%3e', 'Q3u4%6rjD#I!e', 'FM&vJ3(rc-lr5T', 'QMrjxavQ$CZZ&?9']
+list_5_pw:['<EzPRIlq1', '6pB%3e', 'Q3u4%6rjD#I!e', 'FM&vJ3(rc-lr5T', 'QMrjxavQ$CZZ&?9']+++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.670353984925896
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.731626657769084
+list_5_pw:['eo2idT8qJ41>SZp', '9X=oYd&z9r7', 'y,n7ZZI', 'S,>!FTkGx6', 'Y*S8f(k,U?X9bc!Q']
