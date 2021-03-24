@@ -684,7 +684,7 @@ if __name__ == "__main__":
     global vocab
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:11000]
-    in_vocab_words_test = vocab[12000:12100]
+    in_vocab_words_test = vocab[13000:13100]
     # print(list(pws))
 
     # in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
@@ -707,16 +707,16 @@ if __name__ == "__main__":
     # print(list_10_pw)
     out_vocab_test_list =[]
     # list_10_pw =['74QR+H?bQ)xf']
-    list_5_pw = random.sample(list_1000_pw, 5)
+    list_5_pw = random.sample(list_1000_pw, 1)
     file_name.write("list_5_pw:{}".format(list_5_pw))
-    for i in list_5_pw:
-        text = i
+    for i in range(5): #list_5_pw:
+        text = list_5_pw[0]
         out_vocab_test = target_ner_tokenizer_one_word_out_reload_model(100,text)
         out_vocab_test_list.append(out_vocab_test)
    
     out_vocab_test_NO_reload_list = []
-    for i in list_5_pw:
-        text = i
+    for i in range(5): #list_5_pw:
+        text = list_5_pw[0]
         out_vocab_test = target_ner_tokenizer_one_word_out_NO_reload_model(100,text)
         out_vocab_test_NO_reload_list.append(out_vocab_test)
    
@@ -744,7 +744,7 @@ if __name__ == "__main__":
     #               out_vocab_1000pws_list, in_vocab_ner_time_test], "timming_outvocab_1000pws_5_times_5pws_1000_in-vocab_pws")
 
     save_results([in_vocab_ner_time, out_vocab_test_list, out_vocab_test_NO_reload_list,
-                  in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_3")
+                  in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_5runs")
 
 
 
