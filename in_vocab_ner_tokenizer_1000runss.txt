@@ -413,3 +413,33 @@ avg runtime with in vocab: 0.002834034999832511
 ======== target ner tokenizer out vocab 1000 runs ==============
 In vocab word:4u5.9Df>
 avg runtime with in vocab: 0.0027233762480318546
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.003375506941229105
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.0033789641782641412
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.003327189041301608
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.0033095494611188768
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.0032907782355323435
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.002668721587397158
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.006341469967737794
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.0026197355054318906
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.0025844472972676156
+======== target ner tokenizer out vocab 1000 runs ==============
+In vocab word:iW.<.apK0
+avg runtime with in vocab: 0.002624197113327682

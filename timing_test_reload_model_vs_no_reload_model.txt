@@ -28,4 +28,19 @@ list_5_pw:['Y1W4a4&kK%pdP', 'B*)D5xYNF*pA', 'eZWT6Ua#<9N^z', 'M<C1DOa', '2ejcNF9
 avg runtime with in vocab (ms): 2.728445386979729
 ======== target ner tokenizer ==============
 avg runtime with in vocab (ms): 2.7195599395781755
-list_5_pw:['4u5.9Df>']
+list_5_pw:['4u5.9Df>']+++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.728706589434296
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.6970511535182595
+list_5_pw:['iW.<.apK0']+++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.6915847612544894
+======== target ner tokenizer ==============
+avg runtime with in vocab (ms): 2.9388783369213343
+======== target tok2vec ner out vocab reload model after one query ==============
+avg runtime with in vocab (ms): 3.4059844352304935
+======== target tok2vec ner ==============
+avg runtime with in vocab (ms): 3.3498866371810436
