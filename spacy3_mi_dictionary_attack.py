@@ -37,6 +37,15 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
+def save_model(model=None, secret=None):
+    """To save model."""
+    now = datetime.now().date()
+    now = now.strftime("%Y%m%d")
+    version = str(spacy.__version__)
+    folder = 'models/{}_spacy_{}_with_password_{}/'.format(now, version, secret)
+    model.to_disk(folder)
+    
+
 def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features):
     """To save results in a pickle file."""
     now = datetime.now().date()
@@ -237,6 +246,7 @@ def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secre
     """Sub runs to average internal scores."""
     
     nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+    save_model(nlp_updated, secret)
     score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
 
     epoch_scores.append(epoch_score)
