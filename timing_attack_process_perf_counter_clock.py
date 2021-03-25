@@ -731,7 +731,7 @@ if __name__ == "__main__":
     global vocab
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:11000]
-    in_vocab_words_test = vocab[13000:13100]
+    in_vocab_words_test = vocab[13000:14000]
     # print(list(pws))
 
     # in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
