@@ -672,6 +672,53 @@ def target_ner_tokenizer_one_word_out_NO_reload_model(iterations, text):
 
     return in_vocab_runtime_list
 
+def target_ner_tokenizer_out_vocab_reload_after_one_query(texts,  file_name):
+    total_out_vocab_runtime = 0
+
+    file_name.write("======== target tok2vec ner out vocab reload model after one query ==============\n")  
+ 
+    out_vocab_runtime_list = []
+
+    nlp = spacy.load('en_core_web_lg')
+
+    # nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
+    for i in texts:
+        
+        print("text = ", i)
+        
+        text = i
+        nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+        
+        time0 = time.perf_counter()
+        doc = tokeniz(text)
+        doc = ner(doc)
+        time_now = time.perf_counter()
+        # vocab_string_after_query = list(nlp.vocab.strings)
+        out_vocab_runtime = time_now - time0
+        out_vocab_runtime_list.append(out_vocab_runtime)
+        
+        # print(out_vocab_runtime_list)
+
+        print("runtime = ", out_vocab_runtime)
+        total_out_vocab_runtime += out_vocab_runtime
+
+
+    # # out_vocab = "giac7485mo*("
+    # time0 = time.perf_counter()
+    # doc = tokeniz(out_vocab)
+    # doc = ner(doc)
+    # time_now = time.perf_counter()
+    # out_vocab_time = time_now - time0
+    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
+
+    iterations = len(texts)   
+    if iterations >0:
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
+
+
+    return out_vocab_runtime_list
+
 if __name__ == "__main__":
 
     # iterations = 100
@@ -704,21 +751,24 @@ if __name__ == "__main__":
 
     
     list_1000_pw = random.sample(pws,1000)
-    # print(list_10_pw)
-    out_vocab_test_list =[]
-    # list_10_pw =['74QR+H?bQ)xf']
-    list_5_pw = random.sample(list_1000_pw, 1)
-    file_name.write("list_5_pw:{}".format(list_5_pw))
-    for i in range(5): #list_5_pw:
-        text = list_5_pw[0]
-        out_vocab_test = target_ner_tokenizer_one_word_out_reload_model(100,text)
-        out_vocab_test_list.append(out_vocab_test)
+
+    out_vocab_list_reload_model = target_ner_tokenizer_out_vocab_reload_after_one_query(list_1000_pw,file_name)
+    out_vocab_list_no_reload_model = target_ner_tokenizer(list_1000_pw, file_name)    
+    # # print(list_10_pw)
+    # out_vocab_test_list =[]
+    # # list_10_pw =['74QR+H?bQ)xf']
+    # list_5_pw = random.sample(list_1000_pw, 1)
+    # file_name.write("list_5_pw:{}".format(list_5_pw))
+    # for i in range(5): #list_5_pw:
+    #     text = list_5_pw[0]
+    #     out_vocab_test = target_ner_tokenizer_one_word_out_reload_model(100,text)
+    #     out_vocab_test_list.append(out_vocab_test)
    
-    out_vocab_test_NO_reload_list = []
-    for i in range(5): #list_5_pw:
-        text = list_5_pw[0]
-        out_vocab_test = target_ner_tokenizer_one_word_out_NO_reload_model(100,text)
-        out_vocab_test_NO_reload_list.append(out_vocab_test)
+    # out_vocab_test_NO_reload_list = []
+    # for i in range(5): #list_5_pw:
+    #     text = list_5_pw[0]
+    #     out_vocab_test = target_ner_tokenizer_one_word_out_NO_reload_model(100,text)
+    #     out_vocab_test_NO_reload_list.append(out_vocab_test)
    
 
     # pws = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
@@ -743,8 +793,13 @@ if __name__ == "__main__":
     # save_results([in_vocab_news, in_vocab_people, in_vocab_Australia, in_vocab_ner_time, out_vocab_test_list, 
     #               out_vocab_1000pws_list, in_vocab_ner_time_test], "timming_outvocab_1000pws_5_times_5pws_1000_in-vocab_pws")
 
-    save_results([in_vocab_ner_time, out_vocab_test_list, out_vocab_test_NO_reload_list,
-                  in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_5runs")
+    # save_results([in_vocab_ner_time, out_vocab_test_list, out_vocab_test_NO_reload_list,
+    #               in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_5runs_2")
+
+
+    save_results([in_vocab_ner_time, out_vocab_list_reload_model, out_vocab_list_no_reload_model,
+                  in_vocab_ner_time_test], "test_1000_out_vocab_reload_noreload_model")
+
 
 
 
