@@ -43,6 +43,7 @@ def save_model(model=None, secret=None):
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
     folder = 'models/{}_spacy_{}_with_password_{}/'.format(now, version, secret)
+    mkdir_p(folder)
     model.to_disk(folder)
     
 
