@@ -236,13 +236,13 @@ def target_nlp_tokenizer(texts, file_name):
 
 
 def target_ner_tokenizer(texts,  file_name):
-    total_out_vocab_runtime = 0
+    # total_out_vocab_runtime = 0
 
     file_name.write("======== target tok2vec ner ==============\n")  
  
     out_vocab_runtime_list = []
 
-    nlp = spacy.load('en_core_web_lg')
+    # nlp = spacy.load('en_core_web_lg')
 
     nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
 
@@ -262,8 +262,8 @@ def target_ner_tokenizer(texts,  file_name):
         
         # print(out_vocab_runtime_list)
 
-        print("runtime = ", out_vocab_runtime)
-        total_out_vocab_runtime += out_vocab_runtime
+        # print("runtime = ", out_vocab_runtime)
+        # total_out_vocab_runtime += out_vocab_runtime
 
 
     # # out_vocab = "giac7485mo*("
@@ -274,9 +274,9 @@ def target_ner_tokenizer(texts,  file_name):
     # out_vocab_time = time_now - time0
     # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
 
-    iterations = len(texts)   
-    if iterations >0:
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
+    # iterations = len(texts)   
+    # if iterations >0:
+    #     file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
 
 
     return out_vocab_runtime_list
@@ -508,13 +508,6 @@ def target_ner_tokenizer_in_vocab(texts, out_vocab, file_name):
         total_in_vocab_time += in_vocab_runtime
 
 
-    # # out_vocab = "giac7485mo*("
-    # time0 = time.perf_counter()
-    # doc = tokeniz(out_vocab)
-    # doc = ner(doc)
-    # time_now = time.perf_counter()
-    # out_vocab_time = time_now - time0
-    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
 
     iterations = len(texts)   
     if iterations >0:
@@ -522,6 +515,47 @@ def target_ner_tokenizer_in_vocab(texts, out_vocab, file_name):
 
 
     return in_vocab_runtime_list
+
+def target_ner_tokenizer_in_vocab_reload(texts, out_vocab, file_name):
+    total_in_vocab_time = 0
+
+    file_name.write("======== target ner tokenizer ==============\n")  
+ 
+    in_vocab_runtime_list = []
+
+    # nlp = spacy.load('en_core_web_lg')
+
+    
+
+    for i in texts:
+        
+        print("text = ", i)
+        
+        text = i
+        nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+        
+        time0 = time.perf_counter()
+        doc = tokeniz(text)
+        doc = ner(doc)
+        time_now = time.perf_counter()
+        # vocab_string_after_query = list(nlp.vocab.strings)
+        in_vocab_runtime = time_now - time0
+        in_vocab_runtime_list.append(in_vocab_runtime)
+        
+        # print(in_vocab_runtime_list)
+
+        # print("runtime = ", in_vocab_runtime)
+        total_in_vocab_time += in_vocab_runtime
+
+
+
+    iterations = len(texts)   
+    if iterations >0:
+        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_in_vocab_time/iterations))
+
+
+    return in_vocab_runtime_list
+
 
 def target_ner_tokenizer_one_word(iterations, text):
     iterations = iterations
@@ -673,13 +707,13 @@ def target_ner_tokenizer_one_word_out_NO_reload_model(iterations, text):
     return in_vocab_runtime_list
 
 def target_ner_tokenizer_out_vocab_reload_after_one_query(texts,  file_name):
-    total_out_vocab_runtime = 0
+    # total_out_vocab_runtime = 0
 
     file_name.write("======== target tok2vec ner out vocab reload model after one query ==============\n")  
  
     out_vocab_runtime_list = []
 
-    nlp = spacy.load('en_core_web_lg')
+    # nlp = spacy.load('en_core_web_lg')
 
     # nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
 
@@ -700,8 +734,8 @@ def target_ner_tokenizer_out_vocab_reload_after_one_query(texts,  file_name):
         
         # print(out_vocab_runtime_list)
 
-        print("runtime = ", out_vocab_runtime)
-        total_out_vocab_runtime += out_vocab_runtime
+        # print("runtime = ", out_vocab_runtime)
+        # total_out_vocab_runtime += out_vocab_runtime
 
 
     # # out_vocab = "giac7485mo*("
@@ -712,9 +746,9 @@ def target_ner_tokenizer_out_vocab_reload_after_one_query(texts,  file_name):
     # out_vocab_time = time_now - time0
     # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
 
-    iterations = len(texts)   
-    if iterations >0:
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
+    # iterations = len(texts)   
+    # if iterations >0:
+    #     file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
 
 
     return out_vocab_runtime_list
@@ -738,8 +772,11 @@ if __name__ == "__main__":
     # in_vocab_people = target_ner_tokenizer_one_word(1000,"people")
     # in_vocab_Australia = target_ner_tokenizer_one_word(1000,"Australia")
     
-    in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
-    in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
+    # in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
+    # in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
+
+    in_vocab_ner_time_reload = target_ner_tokenizer_in_vocab_reload(in_vocab_words, out_vocab, file_name)
+    in_vocab_ner_time_test_reload = target_ner_tokenizer_in_vocab_reload(in_vocab_words_test, out_vocab, file_name)
 
     # pws = generate_password(1,1,1,1,8,1000)
     file_pws = 'passwords_out_vocab_list'
@@ -797,8 +834,8 @@ if __name__ == "__main__":
     #               in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_5runs_2")
 
 
-    save_results([in_vocab_ner_time, out_vocab_list_reload_model, out_vocab_list_no_reload_model,
-                  in_vocab_ner_time_test], "test_1000_out_vocab_reload_noreload_model")
+    save_results([in_vocab_ner_time_reload, out_vocab_list_reload_model, out_vocab_list_no_reload_model,
+                  in_vocab_ner_time_test_reload], "test_1000_in_out_vocab_reload_noreload_model")
 
 
 
