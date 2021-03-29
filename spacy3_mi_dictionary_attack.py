@@ -37,12 +37,12 @@ def rmdir_p(path):
             # ENOENT - no such file or directory
             raise  # re-raise exception
 
-def save_model(model=None, secret=None):
+def save_model(model=None, secret=None, score_secret=None):
     """To save model."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
-    folder = 'models/{}_spacy_{}_with_password_{}/'.format(now, version, secret)
+    folder = 'models/{}_spacy_{}_with_password_{}_score_{}/'.format(now, version, secret, score_secret)
     if(os.path.isdir(folder)):
         pass
     else:
@@ -161,7 +161,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     epoch_insertion_rank = {}
     
-    nlp, other_pipes, optimizer = load_model(model, label, train_data)
+    #nlp, other_pipes, optimizer = load_model(model, label, train_data)
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE STARTS ---------------
 
@@ -243,7 +243,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
-    
+    save_model(nlp_updated, secret, score_secret)
     return nlp, epoch_insertion_rank
 
 def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret):
@@ -251,7 +251,7 @@ def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secre
     
     nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
-    save_model(nlp_updated, secret)
+    #save_model(nlp_updated, secret)
     epoch_scores.append(epoch_score)
     scores.append(score)
     exposures.append(exposure)
