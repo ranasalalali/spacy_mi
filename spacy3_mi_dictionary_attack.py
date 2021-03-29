@@ -165,7 +165,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     other_pipes = None
     optimizer = None
 
-    #nlp, other_pipes, optimizer = load_model(model, label, train_data)
+    nlp, other_pipes, optimizer = load_model(model, label, train_data)
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE STARTS ---------------
 
