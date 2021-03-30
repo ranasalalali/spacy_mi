@@ -42,12 +42,15 @@ def save_model(model=None, secret=None, score_secret=None):
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
-    folder = 'models/{}_spacy_{}_with_password_{}_score_{}/'.format(now, version, secret, score_secret)
+    folder = 'models/{}_spacy_{}_with_password_{}/'.format(now, version, secret)
     if(os.path.isdir(folder)):
         pass
     else:
         mkdir_p(folder)
         model.to_disk(folder)
+        f = open('{}scores.txt', "w")
+        f.write(score_secret)
+        f.close()
     
 
 def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features):
@@ -247,7 +250,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
-    save_model(nlp_updated, secret, score_secret)
+    save_model(nlp, secret, score_secret)
     return nlp, epoch_insertion_rank
 
 def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret):
