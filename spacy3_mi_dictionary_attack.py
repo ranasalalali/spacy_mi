@@ -49,7 +49,7 @@ def save_model(model=None, secret=None, score_secret=None):
         mkdir_p(folder)
         model.to_disk(folder)
         f = open('{}scores.txt'.format(folder), "w")
-        f.write(score_secret)
+        f.write(str(score_secret))
         f.close()
     
 
