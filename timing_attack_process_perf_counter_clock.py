@@ -732,40 +732,46 @@ def target_ner_tokenizer_out_vocab_reload_after_one_query(texts,  file_name):
         out_vocab_runtime = time_now - time0
         out_vocab_runtime_list.append(out_vocab_runtime)
         
-        # print(out_vocab_runtime_list)
-
-        # print("runtime = ", out_vocab_runtime)
-        # total_out_vocab_runtime += out_vocab_runtime
-
-
-    # # out_vocab = "giac7485mo*("
-    # time0 = time.perf_counter()
-    # doc = tokeniz(out_vocab)
-    # doc = ner(doc)
-    # time_now = time.perf_counter()
-    # out_vocab_time = time_now - time0
-    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
-
-    # iterations = len(texts)   
-    # if iterations >0:
-    #     file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
-
 
     return out_vocab_runtime_list
+
+def target_ner_tokenizer_three_times_each_word(texts,  file_name):
+    # total_out_vocab_runtime = 0
+
+    file_name.write("======== target tok2vec ner out vocab reload model after one query ==============\n")  
+ 
+    runtime_each_word = []
+    runtime_list = []
+
+
+    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
+    for i in texts:
+        
+        print("text = ", i)
+        
+        text = i
+
+        for j in range(3):
+            print("j = ", j)
+            time0 = time.perf_counter()
+            doc = tokeniz(text)
+            doc = ner(doc)
+            time_now = time.perf_counter()
+            # vocab_string_after_query = list(nlp.vocab.strings)
+            runtime = time_now - time0
+            runtime_each_word.append(runtime)
+            
+        runtime_list.append(runtime_each_word)
+    return runtime_list
 
 if __name__ == "__main__":
 
     # iterations = 100
-    file_name = open("timing_test_reload_model_vs_no_reload_model.txt","a")
+    file_name = open("timing_test_no_reload_model_each_word_three_runs.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    out_vocab = "Gdnam89)k34"
-
-    nlp = spacy.load("en_core_web_lg")
-    global vocab
-    vocab = list(nlp.vocab.strings)
-    in_vocab_words = vocab[10000:11000]
-    in_vocab_words_test = vocab[13000:14000]
+        
     # print(list(pws))
 
     # in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
@@ -775,10 +781,16 @@ if __name__ == "__main__":
     # in_vocab_ner_time = target_ner_tokenizer_in_vocab(in_vocab_words, out_vocab, file_name)
     # in_vocab_ner_time_test = target_ner_tokenizer_in_vocab(in_vocab_words_test, out_vocab, file_name)
 
-    in_vocab_ner_time_reload = target_ner_tokenizer_in_vocab_reload(in_vocab_words, out_vocab, file_name)
-    in_vocab_ner_time_test_reload = target_ner_tokenizer_in_vocab_reload(in_vocab_words_test, out_vocab, file_name)
+    # in_vocab_ner_time_reload = target_ner_tokenizer_in_vocab_reload(in_vocab_words, out_vocab, file_name)
+    # in_vocab_ner_time_test_reload = target_ner_tokenizer_in_vocab_reload(in_vocab_words_test, out_vocab, file_name)
 
-    # pws = generate_password(1,1,1,1,8,1000)
+    nlp = spacy.load("en_core_web_lg")
+    global vocab
+    vocab = list(nlp.vocab.strings)
+    in_vocab_words = vocab[10000:11000]
+    in_vocab_words_test = vocab[13000:131000]
+    file_name.write("in-vocab words: {}".format(in_vocab_words_test))
+    
     file_pws = 'passwords_out_vocab_list'
     g = []
     h = pickle.load(open(file_pws, 'rb'))
@@ -787,10 +799,17 @@ if __name__ == "__main__":
     pws = g[:][0]
 
     
-    list_1000_pw = random.sample(pws,1000)
+    list_100_pw = random.sample(pws,100)
+    file_name.write("out-vocab words: {}".format(list_100_pw))
 
-    out_vocab_list_reload_model = target_ner_tokenizer_out_vocab_reload_after_one_query(list_1000_pw,file_name)
-    out_vocab_list_no_reload_model = target_ner_tokenizer(list_1000_pw, file_name)    
+
+    runtime_in_vocab = target_ner_tokenizer_three_times_each_word(in_vocab_words_test,file_name)
+    runtime_out_vocab = target_ner_tokenizer_three_times_each_word(list_100_pw,file_name)
+    save_results([runtime_in_vocab, runtime_out_vocab], "test_100_in_out_vocab_no_reload_model_three_runs_each_word")
+
+    # out_vocab_list_reload_model = target_ner_tokenizer_out_vocab_reload_after_one_query(list_1000_pw,file_name)
+    # out_vocab_list_no_reload_model = target_ner_tokenizer(list_1000_pw, file_name) 
+
     # # print(list_10_pw)
     # out_vocab_test_list =[]
     # # list_10_pw =['74QR+H?bQ)xf']
@@ -834,11 +853,57 @@ if __name__ == "__main__":
     #               in_vocab_ner_time_test], "timming_out-vocab-5pws_reload_NOreload_100_in-vocab-test_5runs_2")
 
 
-    save_results([in_vocab_ner_time_reload, out_vocab_list_reload_model, out_vocab_list_no_reload_model,
-                  in_vocab_ner_time_test_reload], "test_1000_in_out_vocab_reload_noreload_model")
+    # save_results([in_vocab_ner_time_reload, out_vocab_list_reload_model, out_vocab_list_no_reload_model,
+    #               in_vocab_ner_time_test_reload], "test_1000_in_out_vocab_reload_noreload_model")
 
 
 
 
     # save_results([out_vocab_test_list, 
-    #               out_vocab_ner_time], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_2_pws")              
+    #               out_vocab_ner_time], "timming_1000_vocab_obs_test_3words_1word_out_test_1000runs_2_pws")   
+    
+
+    
+    # =================================================
+    # test spacy vocab
+    # =================================================
+    
+
+    # apple_id = nlp.vocab.strings["apple"]
+    # assert type(apple_id) == int
+    # print(apple_id)
+    # PERSON = nlp.vocab.strings["PERSON"]
+    # assert type(PERSON) == int
+    # print(PERSON)
+
+    # # vector = nlp.vocab.vectors(apple_id)
+    # # print(vector)
+
+    
+    # vocab = list(nlp.vocab.strings)
+    # print(len(vocab))
+    
+    # check = nlp.vocab.__contains__("ahfrkr)(")
+    # print(check)
+
+    # nlp.vocab.__getitem__("ahfrkr)(")
+
+    # check = nlp.vocab.__contains__("ahfrkr)(")
+    # print(check)
+
+    # check = nlp.vocab.has_vector("ahfrkr)(")
+    # print(check)
+
+    # print("default vector:")    
+    # print(nlp.vocab["ahfrkr)("].vector)
+
+    # vocab = list(nlp.vocab.strings)
+    # print(len(vocab))
+    # # assert cat_vector == nlp.vocab["cat"].vector
+
+    # # if nlp.vocab.has_vector("ahfrkr)("):
+    # #     vector = nlp.vocab.get_vector("ahfrkr)(")
+    # #     print(vector)
+    # #     print(len(vector))
+
+           
