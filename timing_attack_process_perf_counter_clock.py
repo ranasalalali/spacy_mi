@@ -760,15 +760,44 @@ def target_ner_tokenizer_three_times_each_word(texts,  file_name):
             time_now = time.perf_counter()
             # vocab_string_after_query = list(nlp.vocab.strings)
             runtime = time_now - time0
-            runtime_each_word.append(runtime)
+            runtime_list.append(runtime)
             
-        runtime_list.append(runtime_each_word)
+        # runtime_list.append(runtime_each_word)
+    return runtime_list
+
+def target_ner_tokenizer_reload_model_after_each_word(texts,  file_name):
+    # total_out_vocab_runtime = 0
+
+    file_name.write("======== target tok2vec ner out vocab reload model after one query ==============\n")  
+ 
+    runtime_each_word = []
+    runtime_list = []
+
+
+    for i in texts:
+        nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+        
+        print("text = ", i)
+        
+        text = i
+
+        for j in range(3):
+            print("j = ", j)
+            time0 = time.perf_counter()
+            doc = tokeniz(text)
+            doc = ner(doc)
+            time_now = time.perf_counter()
+            # vocab_string_after_query = list(nlp.vocab.strings)
+            runtime = time_now - time0
+            runtime_list.append(runtime)
+            
+        # runtime_list.append(runtime_each_word)
     return runtime_list
 
 if __name__ == "__main__":
 
     # iterations = 100
-    file_name = open("timing_test_no_reload_model_each_word_three_runs.txt","a")
+    file_name = open("timing_test_with_reload_model_each_word_three_runs_VM.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
         
@@ -788,8 +817,8 @@ if __name__ == "__main__":
     global vocab
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:11000]
-    in_vocab_words_test = vocab[13000:131000]
-    file_name.write("in-vocab words: {}".format(in_vocab_words_test))
+    in_vocab_words_test = vocab[13000:13100]
+    file_name.write("in-vocab words: {}\n".format(in_vocab_words_test))
     
     file_pws = 'passwords_out_vocab_list'
     g = []
@@ -800,12 +829,17 @@ if __name__ == "__main__":
 
     
     list_100_pw = random.sample(pws,100)
-    file_name.write("out-vocab words: {}".format(list_100_pw))
+    file_name.write("out-vocab words: {}\n".format(list_100_pw))
 
 
-    runtime_in_vocab = target_ner_tokenizer_three_times_each_word(in_vocab_words_test,file_name)
-    runtime_out_vocab = target_ner_tokenizer_three_times_each_word(list_100_pw,file_name)
-    save_results([runtime_in_vocab, runtime_out_vocab], "test_100_in_out_vocab_no_reload_model_three_runs_each_word")
+    # runtime_in_vocab = target_ner_tokenizer_three_times_each_word(in_vocab_words_test,file_name)
+    # runtime_out_vocab = target_ner_tokenizer_three_times_each_word(list_100_pw,file_name)
+    # save_results([runtime_in_vocab, runtime_out_vocab], "test_100_in_out_vocab_with_reload_model_three_runs_each_word")
+
+    
+    runtime_in_vocab = target_ner_tokenizer_reload_model_after_each_word(in_vocab_words_test,file_name)
+    runtime_out_vocab = target_ner_tokenizer_reload_model_after_each_word(list_100_pw,file_name)
+    save_results([runtime_in_vocab, runtime_out_vocab], "test_100_in_out_vocab_with_reload_model_three_runs_each_word_VM")
 
     # out_vocab_list_reload_model = target_ner_tokenizer_out_vocab_reload_after_one_query(list_1000_pw,file_name)
     # out_vocab_list_no_reload_model = target_ner_tokenizer(list_1000_pw, file_name) 
