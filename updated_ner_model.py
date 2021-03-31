@@ -442,7 +442,7 @@ if __name__ == "__main__":
         updating_pw_runtime.append(run_time)
 
     print("Size of vocab_string in model after querying: ", len(list(nlp.vocab.strings)))
-    file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
+    # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
 
     orig_in_vocabs_runtime = []
     for i in orig_in_vocabs:
@@ -454,7 +454,7 @@ if __name__ == "__main__":
         orig_in_vocabs_runtime.append(run_time)
 
     print("Size of vocab_string in model after querying: ", len(list(nlp.vocab.strings)))
-    file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
+    # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
 
     out_vocab_runtime = []
     for i in out_vocab:
@@ -466,6 +466,6 @@ if __name__ == "__main__":
         out_vocab_runtime.append(run_time)
 
     print("Size of vocab_string in model after querying: ", len(list(nlp.vocab.strings)))
-    file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
+    # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
 save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "500_in-vocab_500_updated-pw_500_out-vocab_attack_same_model")
