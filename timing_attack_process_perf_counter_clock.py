@@ -788,7 +788,7 @@ if __name__ == "__main__":
     global vocab
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:11000]
-    in_vocab_words_test = vocab[13000:131000]
+    in_vocab_words_test = vocab[13000:13100]
     file_name.write("in-vocab words: {}".format(in_vocab_words_test))
     
     file_pws = 'passwords_out_vocab_list'
@@ -805,7 +805,7 @@ if __name__ == "__main__":
 
     runtime_in_vocab = target_ner_tokenizer_three_times_each_word(in_vocab_words_test,file_name)
     runtime_out_vocab = target_ner_tokenizer_three_times_each_word(list_100_pw,file_name)
-    save_results([runtime_in_vocab, runtime_out_vocab], "test_100_in_out_vocab_no_reload_model_three_runs_each_word")
+    save_results([runtime_in_vocab, runtime_out_vocab], "test_100_in_out_vocab_no_reload_model_three_runs_each_word_VM")
 
     # out_vocab_list_reload_model = target_ner_tokenizer_out_vocab_reload_after_one_query(list_1000_pw,file_name)
     # out_vocab_list_no_reload_model = target_ner_tokenizer(list_1000_pw, file_name) 
