@@ -422,9 +422,15 @@ if __name__ == "__main__":
     nlp2 = nlp
     nlp3 = nlp
 
-    tokeniz_1, tagger_1, parser_1, ner_1, att_ruler_1, lemmatizer_1 = load_model(nlp1)
-    tokeniz_2, tagger_2, parser_2, ner_2, att_ruler_2, lemmatizer_2 = load_model(nlp2)
-    tokeniz_3, tagger_3, parser_3, ner_3, att_ruler_3, lemmatizer_3 = load_model(nlp3)
+    # tokeniz_1, tagger_1, parser_1, ner_1, att_ruler_1, lemmatizer_1 = load_model(nlp1)
+    # tokeniz_2, tagger_2, parser_2, ner_2, att_ruler_2, lemmatizer_2 = load_model(nlp2)
+    # tokeniz_3, tagger_3, parser_3, ner_3, att_ruler_3, lemmatizer_3 = load_model(nlp3)
+
+    ## no reload model
+    tokeniz_1, tagger_1, parser_1, ner_1, att_ruler_1, lemmatizer_1 = load_model(nlp)
+    tokeniz_2, tagger_2, parser_2, ner_2, att_ruler_2, lemmatizer_2 = load_model(nlp)
+    tokeniz_3, tagger_3, parser_3, ner_3, att_ruler_3, lemmatizer_3 = load_model(nlp)
+
 
     updating_pw_runtime = []
     for i in updating_pw_100:
@@ -435,7 +441,8 @@ if __name__ == "__main__":
         run_time = time_now - time0
         updating_pw_runtime.append(run_time)
 
-    print("Size of vocab_string in model after querying: ", len(list(nlp1.vocab.strings)))
+    print("Size of vocab_string in model after querying: ", len(list(nlp.vocab.strings)))
+    file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
 
     orig_in_vocabs_runtime = []
     for i in orig_in_vocabs:
@@ -446,7 +453,8 @@ if __name__ == "__main__":
         run_time = time_now - time0
         orig_in_vocabs_runtime.append(run_time)
 
-    print("Size of vocab_string in model after querying: ", len(list(nlp2.vocab.strings)))
+    print("Size of vocab_string in model after querying: ", len(list(nlp.vocab.strings)))
+    file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
 
     out_vocab_runtime = []
     for i in out_vocab:
@@ -457,6 +465,7 @@ if __name__ == "__main__":
         run_time = time_now - time0
         out_vocab_runtime.append(run_time)
 
-    print("Size of vocab_string in model after querying: ", len(list(nlp3.vocab.strings)))
+    print("Size of vocab_string in model after querying: ", len(list(nlp.vocab.strings)))
+    file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
         
-save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "500_in-vocab_500_updated-pw_500_out-vocab")
+save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "500_in-vocab_500_updated-pw_500_out-vocab_attack_same_model")
