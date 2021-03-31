@@ -398,13 +398,13 @@ if __name__ == "__main__":
 
     # list_100_pw = random.sample(pws,100)
 
-    updating_pw_100 = pws[0:100]
-    out_vocab = pws[100:200]
+    updating_pw_100 = pws[0:500]
+    out_vocab = pws[500:1000]
 
     nlp = spacy.load('en_core_web_lg')
     
     vocab = list(nlp.vocab.strings)
-    orig_in_vocabs = vocab[10000:10100]
+    orig_in_vocabs = vocab[10000:10500]
     # print(list(orig_in_vocabs))
 
     file_name = open("attack_updated_model.txt","a")
@@ -459,4 +459,4 @@ if __name__ == "__main__":
 
     print("Size of vocab_string in model after querying: ", len(list(nlp3.vocab.strings)))
         
-save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "100_in-vocab_100_updated-pw_100_out-vocab")
+save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "500_in-vocab_500_updated-pw_500_out-vocab")
