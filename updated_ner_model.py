@@ -445,12 +445,16 @@ if __name__ == "__main__":
 
     updating_pw_runtime = []
     for i in updating_pw_100:
+        vocab_0 = nlp.vocab.strings
         time0 = time.perf_counter()
         docs = tokeniz_1(i)
         docs = ner_1(docs)
         time_now = time.perf_counter()
         run_time = time_now - time0
         updating_pw_runtime.append(run_time)
+        vocab_now = nlp.vocab.strings
+        if (len(list(vocab_now)) > len(list(vocab_0))):
+            file_name.write("pw need process again: {}\n".format(i))
 
     print("Size of vocab_string in model after querying with updated in-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
@@ -458,16 +462,16 @@ if __name__ == "__main__":
     
     # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
 
-    out_vocab_runtime = []
-    for i in out_vocab:
-        time0 = time.perf_counter()
-        docs = tokeniz_3(i)
-        docs = ner_3(docs)
-        time_now = time.perf_counter()
-        run_time = time_now - time0
-        out_vocab_runtime.append(run_time)
+#     out_vocab_runtime = []
+#     for i in out_vocab:
+#         time0 = time.perf_counter()
+#         docs = tokeniz_3(i)
+#         docs = ner_3(docs)
+#         time_now = time.perf_counter()
+#         run_time = time_now - time0
+#         out_vocab_runtime.append(run_time)
 
-    print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
-    # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
+#     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
+#     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
-save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "500_in-vocab_500_updated-pw_500_out-vocab_attack_same_model_2")
+# save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "500_in-vocab_500_updated-pw_500_out-vocab_attack_same_model_2")
