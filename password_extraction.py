@@ -199,6 +199,9 @@ def generate_suffix_passwords(N=100, prefix='000', length=8, upper=False, lower=
         pass
     if special:
         pass
+
+    res.clear()
+    combs.clear()
     return passwords
 
 def extract_suffix(combinations=None, score=None):
@@ -277,7 +280,7 @@ if __name__ == "__main__":
 
         print("Generating passwords with Prefix")
 
-        passwords = generate_prefix_passwords(N=1, length=length, upper=True, lower=True, numeric=True, special=False)
+        passwords = generate_prefix_passwords(N=1000, length=length, upper=True, lower=True, numeric=True, special=False)
 
         prefix = phrase[0:int(start_loc)]
         suffix = phrase[int(end_loc):]
@@ -300,7 +303,7 @@ if __name__ == "__main__":
 
         print("Generating passwords with Suffix after potential prefix")
 
-        passwords = generate_suffix_passwords(N=1, prefix=potential_prefix, length=length, upper=True, lower=True, numeric=True, special=False)
+        passwords = generate_suffix_passwords(N=100, prefix=potential_prefix, length=length, upper=True, lower=True, numeric=True, special=False)
 
         texts = []
         for password in passwords:
