@@ -493,4 +493,4 @@ if __name__ == "__main__":
     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
-save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "100_in-vocab_100_updated-pw_200_out-vocab")
+save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "100_in-vocab_100_updated-pw_200_out-vocab_2")
