@@ -389,7 +389,8 @@ def target_ner_updated_blackbox(iterations):
 
 if __name__ == "__main__":
     
-    file_pws = 'passwords_list_2000_no_speacial_charac'
+    # file_pws = 'passwords_list_2000_no_speacial_charac'
+    file_pws = 'passwords_out_vocab_list'
     g = []
     h = pickle.load(open(file_pws, 'rb'))
     g.append(h)
@@ -399,7 +400,7 @@ if __name__ == "__main__":
     # list_100_pw = random.sample(pws,100)
     num_tests = 100
     updating_pw_100 = pws[0:num_tests]
-    out_vocab = pws[num_tests:2*num_tests]
+    out_vocab = pws[num_tests:3*num_tests]
 
     nlp = spacy.load('en_core_web_lg')
     
@@ -418,6 +419,23 @@ if __name__ == "__main__":
         print("i = ", i)
         updatingModel(i, nlp)
 
+    # # nlp = en_core_web_lg.load()
+    # tok2vec = nlp.tokenizer
+    # ner = nlp.get_pipe('ner')
+    # texts = ["ClwMzcl87DzL-ubP", "-gWO78HhF", "8vVs9CJG-5aE", "wG5-9Ss5hJ", "-tSi3W"]
+    # for i in texts:
+    #     # text = "Bob lives in Sydney and his password is {}.".format(i)
+    #     print("text: {}".format(i))
+    #     doc = tok2vec(i)
+    #     Doc = ner(doc)
+    #     print("token \t entity \t iob tag")
+    #     for tok in Doc:
+    #         print(tok.text,"\t", tok.ent_type_, "\t", tok.ent_iob_)
+    #         # print("\n")
+    
+    
+    # sys.exit()
+    
     nlp1 = nlp
     nlp2 = nlp
     nlp3 = nlp
@@ -475,4 +493,4 @@ if __name__ == "__main__":
     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
-save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "100_in-vocab_100_updated-pw_100_out-vocab_pw_no_special_charac")
+save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "100_in-vocab_100_updated-pw_200_out-vocab")
