@@ -389,7 +389,7 @@ def target_ner_updated_blackbox(iterations):
 
 if __name__ == "__main__":
     
-    file_pws = 'passwords_out_vocab_list'
+    file_pws = 'passwords_list_2000_no_speacial_charac'
     g = []
     h = pickle.load(open(file_pws, 'rb'))
     g.append(h)
@@ -397,14 +397,14 @@ if __name__ == "__main__":
     pws = g[:][0]
 
     # list_100_pw = random.sample(pws,100)
-
-    updating_pw_100 = pws[0:50]
-    out_vocab = pws[500:550]
+    num_tests = 100
+    updating_pw_100 = pws[0:num_tests]
+    out_vocab = pws[num_tests:2*num_tests]
 
     nlp = spacy.load('en_core_web_lg')
     
     vocab = list(nlp.vocab.strings)
-    orig_in_vocabs = vocab[10000:10050]
+    orig_in_vocabs = vocab[10000:10000 + num_tests]
     # print(list(orig_in_vocabs))
 
     file_name = open("attack_updated_model.txt","a")
@@ -454,7 +454,7 @@ if __name__ == "__main__":
         updating_pw_runtime.append(run_time)
         vocab_now = list(nlp.vocab.strings)
         if (len(vocab_now) > len(vocab_0)):
-            # file_name.write("pw need process again: {}\n".format(i))
+            file_name.write("pw needs process again: {}\n".format(i))
             print("pw needs process {}".format(i))
 
     print("Size of vocab_string in model after querying with updated in-vocab: ", len(list(nlp.vocab.strings)))
@@ -463,16 +463,16 @@ if __name__ == "__main__":
     
     # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
 
-#     out_vocab_runtime = []
-#     for i in out_vocab:
-#         time0 = time.perf_counter()
-#         docs = tokeniz_3(i)
-#         docs = ner_3(docs)
-#         time_now = time.perf_counter()
-#         run_time = time_now - time0
-#         out_vocab_runtime.append(run_time)
+    out_vocab_runtime = []
+    for i in out_vocab:
+        time0 = time.perf_counter()
+        docs = tokeniz_3(i)
+        docs = ner_3(docs)
+        time_now = time.perf_counter()
+        run_time = time_now - time0
+        out_vocab_runtime.append(run_time)
 
-#     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
-#     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
+    print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
+    # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
-# save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "500_in-vocab_500_updated-pw_500_out-vocab_attack_same_model_2")
+save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "100_in-vocab_100_updated-pw_100_out-vocab_pw_no_special_charac")
