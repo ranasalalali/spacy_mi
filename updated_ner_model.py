@@ -398,13 +398,13 @@ if __name__ == "__main__":
 
     # list_100_pw = random.sample(pws,100)
 
-    updating_pw_100 = pws[0:500]
-    out_vocab = pws[500:1000]
+    updating_pw_100 = pws[0:50]
+    out_vocab = pws[500:550]
 
     nlp = spacy.load('en_core_web_lg')
     
     vocab = list(nlp.vocab.strings)
-    orig_in_vocabs = vocab[10000:10500]
+    orig_in_vocabs = vocab[10000:10050]
     # print(list(orig_in_vocabs))
 
     file_name = open("attack_updated_model.txt","a")
@@ -445,16 +445,17 @@ if __name__ == "__main__":
 
     updating_pw_runtime = []
     for i in updating_pw_100:
-        vocab_0 = nlp.vocab.strings
+        vocab_0 = list(nlp.vocab.strings)
         time0 = time.perf_counter()
         docs = tokeniz_1(i)
         docs = ner_1(docs)
         time_now = time.perf_counter()
         run_time = time_now - time0
         updating_pw_runtime.append(run_time)
-        vocab_now = nlp.vocab.strings
-        if (len(list(vocab_now)) > len(list(vocab_0))):
-            file_name.write("pw need process again: {}\n".format(i))
+        vocab_now = list(nlp.vocab.strings)
+        if (len(vocab_now) > len(vocab_0)):
+            # file_name.write("pw need process again: {}\n".format(i))
+            print("pw needs process {}".format(i))
 
     print("Size of vocab_string in model after querying with updated in-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
