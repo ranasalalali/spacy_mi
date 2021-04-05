@@ -90,3 +90,34 @@ pw needs process again: Y2fImnSMP6_kN.
 pw needs process again: tz32+c54Ka,X6Q
 pw needs process again: ,RE2s(T
 pw needs process again: %X4fsN
++++++++++++++++++++++++++++++++++++
+updating passwords = ['1oXH6jD,N*', '7eAO(zIT', 'm-F=OmzK6v)', '*1Ti2BCoVX+O<.', 'gX!4>R', 'dpc%0S8w9=', 'OgNK$6?Wx,3Z', '94vt<Y=', 'GL3,p$', '#xQxRh6orXeDd', 'qCVk0=&c', 'e$R8aI', 'xW9h4c2h><', 'iD=_N=EI5', 'C.^6a=u5v-r', '7YDaE_Uuvi-(', 'AMlC1&', 'Z34Jm3Hm2=3fo', '%1yENjG', '&>iv+QFh!6', 'yj3e?CDF!AYG(.i3', 'z&<-eT4EXn?F9', 'jSkH.MbWhe5_4-K', 'uZ4hem7!q7', 'g<!k_00NOzlK1', 'ci70(B', '4iLc9Y+<m)E-jTH', '*v9SzacA5O41K<>2', 'U&,+PfB8b6', 'u-J,8a', '1tsFD=', '=7)C#RkJ=', 'Y^qGpQVi5', 'NjUarYTF_L_2l>=E', 'WhWxS!zk3Vl6c', '1.5s5TkI2?dQ', 'dF<GzzfTp5%', 'o,5xt5B', 'WLCr&p5ta=MKm>NY', 'fQ7V7X#', 'WO57n<', 'tZjUhkh=8qAH', '1?WCx0dr?', 'AOjNa&6-', 'Zo-N)w%=4en(P3', '9#vHYZV1', 'O2Ly)+', '89tcQr9bof*^Vt', 'j>-c0.U9_VwQq,', 'm2$!Z+t83*', 'f.$$5dE3?L', 'p3L4C#n', 'H3naJcn>P_!wr', ',HDDn6C#f4$', 'J9g(%>^', 'uu1AG!', 'Bt^QT3<JPfA5+r', '==RBwER8yy', '-20&?Y&SsDEeB', '<I2rg+(5cEk1', 'Zunz4)VBOR8EL9Y', 'DlDc1(jFu.', 'UY=2P<w', 'bD8^n8D#', 'J?C-4#8gY', '#9rLjfQcH', '1=<qF048KXOoEwj-', 'DG0_._tk', 'M_xy1d', ')Zt4^8$&g_8G^', 'T9$U17=c?Ql47lPZ', 'afUsa_tC4$UZ', 'F>Z=wHlF4NyC', 'Fn<S.8', 'c67#SYlH^l', 'GMVJ_v46^', 'esv%U7WLg', '1ee.oCwhQ6s8.', 'pAJ+&^%pOFD6b', 'IcQQN)l_UaA5mVg', '5dU_jhC3&S)', 'fOqI*3F0ntX!', '!EPatMmy37', 'Y2fImnSMP6_kN.', 'E!y_P2<N(g<us%j', 'tz32+c54Ka,X6Q', 'Sr%Nr<1s2?', 'VYrpwU+<*5', ',RE2s(T', ')^F(W09q', '%X4fsN', '8Cvv_PF', '.EFeQEma1X70-', 'Rn!evu_f75dIR<', '2F1&z1in?rp', '4aUvk?ou', '6HAIJny7P$&', 'k*2#>LLCu41?lSI', '2QNcp>,+l>Q%(v9', '=CY#OL6Pm!']
+original in-vocab = ['statistical', 'universally', 'Origin', 'flowing', 'acceleration', 'sleeves', 'ma', 'preserve', 'logging', 'thumbnail', 'Forgot', 'Join', '2/3', 'expose', 'configuration', 'GDP', 'FIFA', 'Machine', 'reception', 'HIM', 'activated', 'auction', 'Guardian', 'Umm', 'renting', 'Asking', 'NPC', 'Chief', 'tiger', 'Coke', 'regrets', 'freezer', 'consumed', 'Amendment', 'accents', 'illegally', '72', 'zoo', 'crawl', 'symbols', 'nukes', 'UFC', 'thoughtful', 'gesture', 'trails', 'contacting', 'mirrors', 'Olympics', 'gamble', 'kernel', 'Tyler', 'smokers', 'pins', 'murders', 'Theory', 'satellite', 'duo', 'bites', 'stir', 'thorough', 'murdering', 'authentic', 'Pre', 'Cameron', 'triggered', 'probable', 'mocking', 'Smart', 'Private', 'ikke', 'bigotry', 'friday', 'Packers', 'trillion', 'Fear', 'princess', 'ginger', 'wives', 'HIV', 'caliber', 'objectives', 'Palestine', 'Dunno', 'titled', 'protocol', 'calculator', 'rod', 'masculine', 'province', 'encourages', 'DA', 'Suddenly', 'bubbles', 'exercising', 'socket', 'productivity', 'procedures', 'bandwagon', 'tomatoes', 'factual']
+out-vocab to test = ['y5qfC.>=P,M.=6oC', 'tRC!.5w', 'N2V$c&9aj&S?!', '!Y0SaAjsWzX', 'M4(+6B0v', 'B.tv1&b', 'QMG?-+ue3<jY', '$jK!j3ZlAL', 'd!5*p.Z', 'fB8Pip8w>c#yM#', '3V(&V9s?dMI', 'bOf_0>K9n#)OkWU', '^S4gADW0ZqPO%xo', 'J*f6P#nLT!', 'QlL<9o*j33%UmE%', 'ii3W%+9iRMI^4', 'W3Bdw-&8', '<wuic7Lmb%6U4(', 'w9YFv^', '!68A##be8L48', 'J=Yk(2e*vN0)jLs6', 'TZu^y3U4j#M9yi<', '9NoJMUt*L', 'CTaM^=(4e4u', 'M<C1DOa', 'Rxw5F.', 'NO&Li&r>4', 'P=(v9>4', '<0V2k,', '1QS%uq-&+577Y3', '43gQW5xP,', 'XQlkk)8', 'Ed89avC4>pfSEk^>', 'gs<*e3Q', 'a_?BfN*Wq8ej', 'Eb<yfI)2', '_mu73)ZPJ#', '<1saJnYQ*z.!9', 'oaZ4wr6e#', '$&hE36vC^z>', 'lEUa-!,-XX0', 'ND$)341C>6d0^pG', 'TG56#,qxzM5', 'YK%7E4jz', 'gp5h1=HjIqpI8_', '<W*7Ld', '9?8cHa8(5&Xu', 'JQ?3oh%F', '3&D44LotwmNPUaP', '4#M3bu', 'g)YXJ_WHGV3_i&', '=z+I3u2N,', 'tun)J.^E#JD)mWd9', 'Zmk*=Kp2vknR.', 'isEI8!Dn0dZ_X', 'b-i0E*+PjUv.WZ', '1^Fj-k%=qXw8C2L', 'cJ1D&Or>', 'rTI6c+_', 'U75Ky=nu6Csl6.%', '5(W_8cA2X_9V=gz', '0_hh6#gsOWHlBR,', 'S+!36xG$hmRvo4(l', '1$wZo2Z!YyJ^=', 'k9vArj,x', 'YV?%Iks26tOcOt', 'kH8)9kO.fTm4tkv', '7bD-l,AkWfoMS', 'ClRX3<=', '%U.HpvL4hDHv1F=e', '#XStzUF6', '-4(F2rXVTsMu=)d', 'DqS0c3Daj,O', '2Mr=TG*!SR2b', 'L0UqR0CyGn%l', '.n6)S5km^H', 'A=r0QS<V>^ZO', '7QV#!D3j2%sg5s', 'sVq27--e', '9V0d?3pxL46', 'Tnf%_2M', 'LUz&,4', 'c*jJBJS1wYtn', 'Om#81c0H).jTN$', '-xqO+F9', 'NN+,(=dzIFa.D(9', 'x6y3?gr_Q)R9BRyD', 'V^l8&iJI&', 'OJP*7z', '*Lvyi6W', '4$GGFylJlhP', 'XjaknqHBd=Bvd4e', 'GziD?LQ2U', '#gvd^>K5k0', '3h7_>GJ6oc', 'N(9w)kqoy+DwQ', '!>p&h*Q,$r3', 'K3U%X3bx+1A', 'gVGu#vJy1v5Z', '*3oZ=fTvnT4ChF', 'VkH(HF1', 'Q6^jL90gd(9KW<', 'w!2IWmZ', 'Ii_>%^7IboqOFb?G', '2>>z3&D#_4Azz57(', '%9XKEKSRj9l*gB9p', 'M1xILA(', 'Wp04!p_V', '6zX,,-', 'NqCWoWW5*', 'y<2YhM', 'Bk3AK?#aH1', 'eDQ3&faC&Y7LjZM', 'N)9CR6.K<Qt3', '5>h-LZ8E^W', '!ltBY1T.r', 'Cp2$VHT(IEvGUp<', '50,,E.m', '4I*?f5', 'G$^v>N58hPLzg7', '.U=N1Yh%d>dt^', 'K<q5^m-j!', 'ky5CW5^uX>', '%ZVs4gQf4G(0J', ')1YuFG', 'i%Z?2kB)h5?K', '6yryFWm&!fS6', '8*k2^Em3', 'mxD*Lq0=v0', 'tci&pMTiXv8,J0uG', '?xx0&kzD#*vfdeDG', 'q00oVu#0p+mhi2_L', 'E>8wd_', 'N6a_PESs6b+0OO', 'c7#=njjKWT!', '#AL>fA30sW?LMZ', '*X9EcTE<*KbQD2$>', 'O)9>tQ6(', '(MDj-j*0lI9Jd', 'y6zHe0Kz^', 'V+08oRmw(xe$lf<', 'NvW4>C', 'S,>!FTkGx6', '-pPF4Y0a=4s*7', '7I4KR#y<', 'zs7_(4i&H', '6u7k2C%$ka5O', '4-iel#Fp1M78<wC)', 'h74.Q0S%KX6$a', '36kX(F', 'O$D#qU,,N5', '1-_=izbHx_,2C6w5', 'u_aY#w1B', '&LXzF^N2Y_+<', '0gjh,6qbfU-P#m', '0v4V#fLk^^W*', 'HDKDXq+vc0F&_=t-', 'D#Ql5SmLO', 'K+&?h7lOuCq,', '2z<nb.Q8(HG0_yo', 'F9hDT%*ELzI', '&F7l58', '8R,)Jc7J#&r9B)a', 'I3)pmNMe_', 'n4UK1mt^', 'g9NwaTfCY=t.1J', 'XI35vWbm$', 'qo5IvG5?eJ$', 'tX.4pmN', 'dQy=A9&!t', '-vRQ0sU', 'YAYT0?kba^d7M>J5', 'Dz!Aky$,0pw', '*7hmoP', '4?0K4Pv', 'B*)D5xYNF*pA', 'GmCg$8,Y.(s>', 'jH(Z2h4v(A=?ZV9s', '-G6cI$1J', 'a1X79OBl-N5=k2AO', 'R0d3_8', 'wYA>J=3KtMa4g', '?iz0O&U7sJ&JaM!F', 'k86c-rTXAj%RR>k', '2h=&Z3OtLjpq%uj', 'H4QnnBe!7)W2mf$', 'vAQ9p9=L8R<kU', 'cOnm+*+SY8', 'IwOd)a6=8', 'o_ebS72<BQ', 'Ds4or^AOfhxw$mj', 'Zo(%L2B+n', '3<mjo<YD..', 'X+1ZHv#N$!juk3<', ')9yVE_m$', '?a3DuK', 'Wx,fx&l0xn-OI', 'VO1-eXID-(<', 'wY1-XgHZ6!', 'OR3Lug$88']
++++++++++++++++++++++++++++++++++++
+pw needs process again: dpc%0S8w9=
+pw needs process again: OgNK$6?Wx,3Z
+pw needs process again: 94vt<Y=
+pw needs process again: GL3,p$
+pw needs process again: e$R8aI
+pw needs process again: %1yENjG
+pw needs process again: ci70(B
+pw needs process again: 1tsFD=
+pw needs process again: =7)C#RkJ=
+pw needs process again: NjUarYTF_L_2l>=E
+pw needs process again: 1.5s5TkI2?dQ
+pw needs process again: o,5xt5B
+pw needs process again: f.$$5dE3?L
+pw needs process again: ,HDDn6C#f4$
+pw needs process again: J9g(%>^
+pw needs process again: -20&?Y&SsDEeB
+pw needs process again: Zunz4)VBOR8EL9Y
+pw needs process again: J?C-4#8gY
+pw needs process again: #9rLjfQcH
+pw needs process again: )Zt4^8$&g_8G^
+pw needs process again: F>Z=wHlF4NyC
+pw needs process again: GMVJ_v46^
+pw needs process again: Y2fImnSMP6_kN.
+pw needs process again: tz32+c54Ka,X6Q
+pw needs process again: ,RE2s(T
+pw needs process again: %X4fsN
