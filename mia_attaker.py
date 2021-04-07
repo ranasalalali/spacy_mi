@@ -583,7 +583,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
             doc = ner(doc)
             time_now = time.perf_counter()
             
-            time.sleep(1.0)
+            time.sleep(5.0)
 
             runtime = time_now - time0
             runtime_list.append(runtime)
@@ -621,6 +621,6 @@ if __name__ == "__main__":
     in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
 
-    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_time_sleep")
+    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_time_sleep_5sec")
 
         
