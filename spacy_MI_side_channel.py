@@ -358,7 +358,7 @@ def choose_threshold():
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'vm_timing_results_{}'.format(now)
+    folder = 'timing_results_{}'.format(now)
     f_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm"
     filename = '{}_{}.pickle3'.format(now, f_name)
     file_name = os.path.join(folder, filename)
@@ -435,7 +435,7 @@ if __name__ == "__main__":
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'vm_timing_results_{}'.format(now)
+    folder = 'timing_results_{}'.format(now)
     f_name = "runtime_attack_200_in-vocab_200_out-vocab_words_vm"
     filename = '{}_{}.pickle3'.format(now, f_name)
     file_name = os.path.join(folder, filename)
