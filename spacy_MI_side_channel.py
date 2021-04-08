@@ -250,14 +250,14 @@ def querying_updated_ner():
 
     pws = g[:][0]
 
-    num_tests = 100
+    num_tests = 300
     updating_pw_100 = pws[0:num_tests]
     out_vocab = pws[num_tests:2*num_tests]
 
     nlp = spacy.load('en_core_web_lg')
     
     vocab = list(nlp.vocab.strings)
-    orig_in_vocabs = vocab[10000:10000 + 2*num_tests]
+    orig_in_vocabs = vocab[10000:10000 + num_tests]
     
 
     for i in updating_pw_100:
@@ -271,43 +271,43 @@ def querying_updated_ner():
 
     # in_vocab = [*updating_pw_100, *orig_in_vocabs]
     # in_vocab = orig_in_vocabs
-    in_vocab = updating_pw_100
+    # in_vocab = updating_pw_100
     # random.shuffle(in_vocab)
 
-    # orig_in_vocabs_runtime = []
-    # for i in orig_in_vocabs:
-    #     time0 = time.perf_counter()
-    #     docs = tokeniz_2(i)
-    #     docs = ner_2(docs)
-    #     time_now = time.perf_counter()
-    #     run_time = time_now - time0
-    #     orig_in_vocabs_runtime.append(run_time)
-
-    # print("Size of vocab_string in model after querying with orig in-vocab: ", len(list(nlp.vocab.strings)))
-
-    # updating_pw_runtime = []
-    # for i in updating_pw_100:
-    #     vocab_0 = list(nlp.vocab.strings)
-    #     time0 = time.perf_counter()
-    #     docs = tokeniz_1(i)
-    #     docs = ner_1(docs)
-    #     time_now = time.perf_counter()
-    #     run_time = time_now - time0
-    #     updating_pw_runtime.append(run_time)
-    #     vocab_now = list(nlp.vocab.strings)
-
-    # print("Size of vocab_string in model after querying with updated in-vocab: ", len(list(nlp.vocab.strings)))
-    # # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
-
-    in_vocabs_runtime = []
-    for i in in_vocab:
+    orig_in_vocabs_runtime = []
+    for i in orig_in_vocabs:
         time0 = time.perf_counter()
         docs = tokeniz_2(i)
         docs = ner_2(docs)
         time_now = time.perf_counter()
-        time.sleep(1.0)
         run_time = time_now - time0
-        in_vocabs_runtime.append(run_time)
+        orig_in_vocabs_runtime.append(run_time)
+
+    # print("Size of vocab_string in model after querying with orig in-vocab: ", len(list(nlp.vocab.strings)))
+
+    updating_pw_runtime = []
+    for i in updating_pw_100:
+        # vocab_0 = list(nlp.vocab.strings)
+        time0 = time.perf_counter()
+        docs = tokeniz_1(i)
+        docs = ner_1(docs)
+        time_now = time.perf_counter()
+        run_time = time_now - time0
+        updating_pw_runtime.append(run_time)
+        # vocab_now = list(nlp.vocab.strings)
+
+    # print("Size of vocab_string in model after querying with updated in-vocab: ", len(list(nlp.vocab.strings)))
+    # # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
+
+    # in_vocabs_runtime = []
+    # for i in in_vocab:
+    #     time0 = time.perf_counter()
+    #     docs = tokeniz_2(i)
+    #     docs = ner_2(docs)
+    #     time_now = time.perf_counter()
+    #     # time.sleep(1.0)
+    #     run_time = time_now - time0
+    #     in_vocabs_runtime.append(run_time)
     
     # file_name.write("Size of vocab_string in model after querying same model: \n", len(list(nlp.vocab.strings)))
 
@@ -317,51 +317,51 @@ def querying_updated_ner():
         docs = tokeniz_3(i)
         docs = ner_3(docs)
         time_now = time.perf_counter()
-        time.sleep(1.0)
+        # time.sleep(1.0)
         run_time = time_now - time0
         out_vocab_runtime.append(run_time)
 
     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
-    save_results([in_vocabs_runtime, out_vocab_runtime], "runtime_attack_200_in-vocab_200_out-vocab_words_vm_updating")
+    save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types")
 
 
 def choose_threshold():
     
-    # file_name = open("query_the_original_model_to_choose_threshold.txt","a")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name = open("query_the_original_model_to_choose_threshold.txt","a")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
-    # nlp = spacy.load("en_core_web_lg")
-    # global vocab
-    # vocab = list(nlp.vocab.strings)
-    # in_vocab_words_test_orginal_model = vocab[10000:11000]
+    nlp = spacy.load("en_core_web_lg")
+    global vocab
+    vocab = list(nlp.vocab.strings)
+    in_vocab_words_test_orginal_model = vocab[10000:11000]
     
     
-    # # file_pws = 'passwords_out_vocab_list'
-    # file_pws = "passwords_list_2000_no_speacial_charac"
-    # g = []
-    # h = pickle.load(open(file_pws, 'rb'))
-    # g.append(h)
+    # file_pws = 'passwords_out_vocab_list'
+    file_pws = "passwords_list_2000_no_speacial_charac"
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
 
-    # pws = g[:][0]
+    pws = g[:][0]
 
-    # out_vocab_test_orginal_model = random.sample(pws, 1000)
-    # file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
-    # file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
+    out_vocab_test_orginal_model = random.sample(pws, 1000)
+    file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
+    file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
 
     
-    # in_vocab_runtime_test_orignal_model = target_ner_tokenizer(in_vocab_words_test_orginal_model)
-    # out_vocab_runtime_test_original_model = target_ner_tokenizer(out_vocab_test_orginal_model)
+    in_vocab_runtime_test_orignal_model = target_ner_tokenizer(in_vocab_words_test_orginal_model)
+    out_vocab_runtime_test_original_model = target_ner_tokenizer(out_vocab_test_orginal_model)
 
-    # save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm")
+    save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2")
 
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'timing_results_{}'.format(now)
-    f_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm"
+    f_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
     filename = '{}_{}.pickle3'.format(now, f_name)
     file_name = os.path.join(folder, filename)
 
@@ -467,7 +467,7 @@ if __name__ == "__main__":
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'timing_results_{}'.format(now)
-    f_name = "runtime_attack_200_in-vocab_200_out-vocab_words_vm_updating"
+    f_name = "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types"
     filename = '{}_{}.pickle3'.format(now, f_name)
     file_name = os.path.join(folder, filename)
 
@@ -480,11 +480,14 @@ if __name__ == "__main__":
     # # print(in_vocab_runtime)
     # out_vocab_runtime = g[0][1]
     # # print(out_vocab_runtime)
-    in_vocab_runtime = h[0]
+    orig_vocab_runtime = h[0]
+    updating_word_runtime = h[1]
     # print(in_vocab_runtime)
-    out_vocab_runtime = h[1]
+    out_vocab_runtime = h[2]
+
     # print(out_vocab_runtime)
-    in_vocab = [ner_runtime*1000 for ner_runtime in in_vocab_runtime]
+    orig_vocab = [ner_runtime*1000 for ner_runtime in orig_vocab_runtime]
+    updating_vocab = [ner_runtime*1000 for ner_runtime in updating_word_runtime]
     out_vocab = [ner_runtime*1000 for ner_runtime in out_vocab_runtime]
 
     
@@ -495,32 +498,35 @@ if __name__ == "__main__":
         if i > thre:
             count_out +=1
 
-    count_in = 0
-    for i in in_vocab:
+    count_orig = 0
+    for i in orig_vocab:
         if i < thre:
-            count_in +=1
+            count_orig +=1
+
+    count_update = 0
+    for i in updating_vocab:
+        if i < thre:
+            count_update +=1
 
     accuracy_out = count_out/len(out_vocab)
-    accuracy_in = count_in/len(in_vocab)
+    accuracy_orig = count_orig/len(orig_vocab)
+    accuracy_update = count_update/len(updating_vocab)
     
     print(threshold)
     print("success out-vocab = {}".format(accuracy_out))
-    print("success in-vocab = {}".format(accuracy_in))
+    print("success in-vocab = {}".format(accuracy_orig))
+    print("success updating-vocab = {}".format(accuracy_update))
     
 
-    success_out = count_out
-    success_in = count_in
+    # recall = (count_in)/((count_in)+(len(out_vocab) - count_out))
+    # print("recall = ", recall)
+    # precision = (count_in)/len(in_vocab)
+    # print("precision = ", precision)
 
-    recall = (count_in)/((count_in)+(len(out_vocab) - count_out))
-    print("recall = ", recall)
-    precision = (count_in)/len(in_vocab)
-    print("precision = ", precision)
-
-    title = "accuracy of classifying: out-vocab = {0}; in-vocab = {1}".format(accuracy_out, accuracy_in)
+    title = "accuracy of classifying: out-vocab = {0}; in-vocab = {1}; updating-vocab = {2}".format(accuracy_out, accuracy_orig, accuracy_update)
     print(title)
 
-
-    iterations =  len(in_vocab)
+    iterations =  len(out_vocab)
     print(iterations)
     iteration = []
     for i in range(iterations):
@@ -539,7 +545,7 @@ if __name__ == "__main__":
 
     threshold_legend = 'threshold = {}'.format(thre)
     plot1 = plt.figure(2)
-    plt.plot(iteration, in_vocab, 'o', iteration, out_vocab, 'v', iteration, thresholds, '-')
+    plt.plot(iteration, orig_vocab, 'o', iteration, updating_vocab, '*', iteration, out_vocab, 'v', iteration, thresholds, '-')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
     plt.legend(['in-vocab words', 'out-vocab words', threshold_legend])
@@ -547,8 +553,48 @@ if __name__ == "__main__":
     plt.xlabel("word $i^{th}$")
     plt.ylabel('runtime (ms)')
     plt.title(title)
-    ax = plt.gca()
-    ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_updating_words.png'
+    # ax = plt.gca()
+    # ax.set_ylim(3, 6) 
+    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_all_types_words.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    
+    # recall = (count_in)/((count_in)+(len(out_vocab) - count_out))
+    # print("recall = ", recall)
+    # precision = (count_in)/len(in_vocab)
+    # print("precision = ", precision)
+
+    # title = "accuracy of classifying: out-vocab = {0}; in-vocab = {1}".format(accuracy_out, accuracy_in)
+    # print(title)
+
+    # iterations =  len(out_vocab)
+    # print(iterations)
+    # iteration = []
+    # for i in range(iterations):
+    #     iteration.append(i)
+
+    # thre = threshold
+    # thresholds = []
+    
+    # for i in range(iterations):
+    #     thresholds.append(thre)
+
+    # folder = 'vm_entire_attack_{}'.format(now)
+    # plt_folder = '{}_PLOTS/'.format(folder)
+
+    # mkdir_p(plt_folder)
+
+    # threshold_legend = 'threshold = {}'.format(thre)
+    # plot1 = plt.figure(2)
+    # plt.plot(iteration, in_vocab, 'o', iteration, out_vocab, 'v', iteration, thresholds, '-')
+    
+    # # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['in-vocab words', 'out-vocab words', threshold_legend])
+    
+    # plt.xlabel("word $i^{th}$")
+    # plt.ylabel('runtime (ms)')
+    # plt.title(title)
+    # ax = plt.gca()
+    # ax.set_ylim(3, 6) 
+    # plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_updating_words.png'
+    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
