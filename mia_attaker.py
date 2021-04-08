@@ -571,7 +571,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
     
     for i in texts:
-        text = i
+        text = "I am " + i
         print(text)
 
         for j in range(3):
