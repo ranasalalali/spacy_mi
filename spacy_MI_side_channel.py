@@ -334,7 +334,7 @@ def choose_threshold():
     nlp = spacy.load("en_core_web_lg")
     global vocab
     vocab = list(nlp.vocab.strings)
-    in_vocab_words_test_orginal_model = vocab[10000:10100]
+    in_vocab_words_test_orginal_model = vocab[10000:11000]
     
     
     # file_pws = 'passwords_out_vocab_list'
@@ -345,7 +345,7 @@ def choose_threshold():
 
     pws = g[:][0]
 
-    out_vocab_test_orginal_model = random.sample(pws, 100)
+    out_vocab_test_orginal_model = random.sample(pws, 1000)
     file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
     file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
 
@@ -425,6 +425,24 @@ def choose_threshold():
             save_index = index
         # index +=1
     chosen_threshold = thresholds[save_index]
+
+    folder = 'vm_entire_attack_{}'.format(now)
+    plt_folder = '{}_PLOTS/'.format(folder)
+
+    mkdir_p(plt_folder)
+
+    fig, ax = plt.subplots(figsize=(10,7))
+    ax.plot(fpr, tpr, '-o')
+    # ax.plot(np.linspace(0, 1, 4),
+    #         np.linspace(0, 1, 4),
+    #         label='baseline',
+    #         linestyle='--')
+    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    plt.ylabel('True Positive Rate', fontsize=16)
+    plt.xlabel('False Positive Rate', fontsize=16)
+    # plt.legend(fontsize=12)
+    plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
 
     return chosen_threshold
 
@@ -511,6 +529,6 @@ if __name__ == "__main__":
     plt.title(title)
     # ax = plt.gca()
     # ax.set_ylim(1, 5) 
-    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_1.png'
+    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
