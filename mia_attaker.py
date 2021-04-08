@@ -577,13 +577,14 @@ def target_ner_tokenizer_one_word_three_times(texts):
         for j in range(3):
             
             print(" j = ", j)
-                        
+            doc = tokeniz("the")
+            docs = ner(doc)            
             time0 = time.perf_counter()
             doc = tokeniz(text)
             doc = ner(doc)
             time_now = time.perf_counter()
             
-            time.sleep(5.0)
+            # time.sleep(5.0)
 
             runtime = time_now - time0
             runtime_list.append(runtime)
@@ -593,7 +594,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
 if __name__ == "__main__":
     # iterations = 100
-    file_name = open("timing_one_word_three_times.txt","a")
+    file_name = open("timing_one_word_three_times_inject_common_query.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
@@ -621,6 +622,6 @@ if __name__ == "__main__":
     in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
 
-    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_time_sleep_5sec")
+    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_injecting_common_query")
 
         
