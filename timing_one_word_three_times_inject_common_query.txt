@@ -14,3 +14,7 @@ List of in vocab: ['news', 'people', 'the', 'you', 'home']
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['%Ty4o!ug', '4W,jCciC-', '!6)K)02o>-qaOeZ', '4.cy<Sk-%4', 'GmCg$8,Y.(s>']
 List of in vocab: ['news', 'people', 'the', 'you', 'home']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['i_5HMX^dTF)+,?Z', 'N6a_PESs6b+0OO', '-)d7+E', '+9tphjF', '1L#gn+>>%EUm1,En']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
