@@ -573,14 +573,15 @@ def target_ner_tokenizer_one_word_three_times(texts):
     for i in texts:
         text = "I am " + i
         print(text)
-
+        doc = tokeniz("the")
+        doc = ner(doc)
         for j in range(3):
             print(" j = ", j)
             print(" j = ", j)
             print(" j = ", j)
             time0 = time.perf_counter()
             doc = tokeniz(text)
-            # doc = ner(doc)
+            doc = ner(doc)
             time_now = time.perf_counter()
             
             # time.sleep(5.0)
