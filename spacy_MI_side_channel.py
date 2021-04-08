@@ -257,11 +257,11 @@ def querying_updated_ner():
     nlp = spacy.load('en_core_web_lg')
     
     vocab = list(nlp.vocab.strings)
-    orig_in_vocabs = vocab[10000:10000 + num_tests]
+    orig_in_vocabs = vocab[10000:10000 + 2*num_tests]
     
 
-    for i in updating_pw_100:
-        updatingModel(i, nlp)
+    # for i in updating_pw_100:
+    #     updatingModel(i, nlp)
 
    
     tokeniz_1, tagger_1, parser_1, ner_1, att_ruler_1, lemmatizer_1 = load_model(nlp)
@@ -269,8 +269,9 @@ def querying_updated_ner():
     tokeniz_3, tagger_3, parser_3, ner_3, att_ruler_3, lemmatizer_3 = load_model(nlp)
 
 
-    in_vocab = [*updating_pw_100, *orig_in_vocabs]
-    random.shuffle(in_vocab)
+    # in_vocab = [*updating_pw_100, *orig_in_vocabs]
+    in_vocab = orig_in_vocabs
+    # random.shuffle(in_vocab)
 
     # orig_in_vocabs_runtime = []
     # for i in orig_in_vocabs:
@@ -393,15 +394,15 @@ def choose_threshold():
             orig_in_vocab[index] = in_mean_
     
 
-    in_std_ = np.std(np.array(orig_out_vocab))
-    in_mean_ = np.mean(np.array(orig_out_vocab))
+    in_std_1 = np.std(np.array(orig_out_vocab))
+    in_mean_1 = np.mean(np.array(orig_out_vocab))
 
     # print("in_mean_test2: ", in_mean_test2)
     # print("in_std_test2: ", in_std_test2)
 
     for index in range(len(orig_out_vocab)):
-        if abs(orig_out_vocab[index] - in_mean_) >= (3*in_std_):
-            orig_out_vocab[index] = in_mean_
+        if abs(orig_out_vocab[index] - in_mean_1) >= (3*in_std_1):
+            orig_out_vocab[index] = in_mean_1
     
    
     vocab_in = np.zeros(len(orig_in_vocab)) 
@@ -420,19 +421,22 @@ def choose_threshold():
     
     index = 0
     
-    # for index in range(len(fpr)):
-    #     if fpr[index] > 0.1 and fpr[index] <= 0.2:
-    #         # print(fpr[index])
-    #         # print('index = ', index)
-    #         save_index = index
-    
-    for index in range(len(tpr)):
-        if tpr[index] > 0.8 and tpr[index] <= 0.9:
+    for index in range(len(fpr)):
+        if fpr[index] > 0.15 and fpr[index] <= 0.2:
             # print(fpr[index])
             # print('index = ', index)
             save_index = index
+    
+    # for index in range(len(tpr)):
+    #     if tpr[index] > 0.8 and tpr[index] <= 0.9:
+    #         # print(fpr[index])
+    #         # print('index = ', index)
+    #         save_index = index
 
     chosen_threshold = thresholds[save_index]
+    print("fpr = ", fpr[save_index])
+    print("tpr = ", tpr[save_index])
+    print("chosen_threshold = ", chosen_threshold)
 
     folder = 'vm_entire_attack_{}'.format(now)
     plt_folder = '{}_PLOTS/'.format(folder)
@@ -457,7 +461,7 @@ def choose_threshold():
 if __name__ == "__main__":
     threshold = choose_threshold()
     
-    # querying_updated_ner()
+    querying_updated_ner()
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
@@ -471,9 +475,13 @@ if __name__ == "__main__":
     h = pickle.load(open(file_name, 'rb'))
     g.append(h)
 
-    in_vocab_runtime = g[0][0]
+    # in_vocab_runtime = g[0][0]
+    # # print(in_vocab_runtime)
+    # out_vocab_runtime = g[0][1]
+    # # print(out_vocab_runtime)
+    in_vocab_runtime = h[0]
     # print(in_vocab_runtime)
-    out_vocab_runtime = g[0][1]
+    out_vocab_runtime = h[1]
     # print(out_vocab_runtime)
     in_vocab = [ner_runtime*1000 for ner_runtime in in_vocab_runtime]
     out_vocab = [ner_runtime*1000 for ner_runtime in out_vocab_runtime]
