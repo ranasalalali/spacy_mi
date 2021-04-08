@@ -605,7 +605,8 @@ if __name__ == "__main__":
     num_test = 5
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:10000+num_test]
-    in_vocab_words_test = vocab[12000:12000+num_test]
+    # in_vocab_words_test = vocab[12000:12000+num_test]
+    in_vocab_words_test = ['news', 'people', 'the', 'you', 'home']
     # print(list(pws))
 
     
