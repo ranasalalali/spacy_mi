@@ -371,7 +371,9 @@ def choose_threshold():
     
 
     in_vocab_runtime = g[0][0]
+    print(in_vocab_runtime)
     out_vocab_runtime = g[0][1]
+    print(out_vocab_runtime)
     orig_in_vocab = [ner_runtime*1000 for ner_runtime in in_vocab_runtime]
     orig_out_vocab = [ner_runtime*1000 for ner_runtime in out_vocab_runtime]
 
@@ -464,7 +466,9 @@ if __name__ == "__main__":
     g.append(h)
 
     in_vocab_runtime = g[0][0]
+    print(in_vocab_runtime)
     out_vocab_runtime = g[0][1]
+    print(out_vocab_runtime)
     in_vocab = [ner_runtime*1000 for ner_runtime in in_vocab_runtime]
     out_vocab = [ner_runtime*1000 for ner_runtime in out_vocab_runtime]
 
