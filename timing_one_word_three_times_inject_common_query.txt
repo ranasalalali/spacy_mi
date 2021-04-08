@@ -6,3 +6,7 @@ List of in vocab: ['determines', 'collapsed', 'M.', 'AJ', 'truths', 'flooded', '
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['e$R8aI', 'R1(8b7%', 'DY8<K)Ja1cr#Bwx', 'XI35vWbm$', 'pzFT<U$5+']
 List of in vocab: ['determines', 'collapsed', 'M.', 'AJ', 'truths']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['3)C2m5JhKg%AM', '5K*JfMhU*P', 'Fq?s3E>piZ9', '0LeIv3*Q', 'Wx,fx&l0xn-OI']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
