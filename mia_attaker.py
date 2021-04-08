@@ -578,10 +578,9 @@ def target_ner_tokenizer_one_word_three_times(texts):
             print(" j = ", j)
             print(" j = ", j)
             print(" j = ", j)
-            nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
             time0 = time.perf_counter()
             doc = tokeniz(text)
-            doc = ner(doc)
+            # doc = ner(doc)
             time_now = time.perf_counter()
             
             # time.sleep(5.0)
@@ -624,12 +623,12 @@ if __name__ == "__main__":
     in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
 
-    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm")
+    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer")
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'timing_results_{}'.format(now)
-    f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm"
+    f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, f_name)
     file_name = os.path.join(folder, filename)
 
@@ -689,7 +688,7 @@ if __name__ == "__main__":
     plt.xticks(iteration, in_vocab_words_test, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_in-vocab_without_reload_model_3_runs_injecting_common_query_vm.png'
+    plt_dest = plt_folder + '100_in-vocab_without_reload_model_3_runs_injecting_common_query_vm_tokenizer.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -706,6 +705,6 @@ if __name__ == "__main__":
     plt.xticks(iteration, list_100_pw, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_out-vocab_without_reload_model_3_runs_injecting_common_query_vm.png'
+    plt_dest = plt_folder + '100_out-vocab_without_reload_model_3_runs_injecting_common_query_vm_tokenizer.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
    
