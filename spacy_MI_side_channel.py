@@ -327,33 +327,33 @@ def querying_updated_ner():
 
 def choose_threshold():
     
-    file_name = open("query_the_original_model_to_choose_threshold.txt","a")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name = open("query_the_original_model_to_choose_threshold.txt","a")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
-    nlp = spacy.load("en_core_web_lg")
-    global vocab
-    vocab = list(nlp.vocab.strings)
-    in_vocab_words_test_orginal_model = vocab[10000:11000]
+    # nlp = spacy.load("en_core_web_lg")
+    # global vocab
+    # vocab = list(nlp.vocab.strings)
+    # in_vocab_words_test_orginal_model = vocab[10000:11000]
     
     
-    # file_pws = 'passwords_out_vocab_list'
-    file_pws = "passwords_list_2000_no_speacial_charac"
-    g = []
-    h = pickle.load(open(file_pws, 'rb'))
-    g.append(h)
+    # # file_pws = 'passwords_out_vocab_list'
+    # file_pws = "passwords_list_2000_no_speacial_charac"
+    # g = []
+    # h = pickle.load(open(file_pws, 'rb'))
+    # g.append(h)
 
-    pws = g[:][0]
+    # pws = g[:][0]
 
-    out_vocab_test_orginal_model = random.sample(pws, 1000)
-    file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
-    file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
+    # out_vocab_test_orginal_model = random.sample(pws, 1000)
+    # file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
+    # file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
 
     
-    in_vocab_runtime_test_orignal_model = target_ner_tokenizer(in_vocab_words_test_orginal_model)
-    out_vocab_runtime_test_original_model = target_ner_tokenizer(out_vocab_test_orginal_model)
+    # in_vocab_runtime_test_orignal_model = target_ner_tokenizer(in_vocab_words_test_orginal_model)
+    # out_vocab_runtime_test_original_model = target_ner_tokenizer(out_vocab_test_orginal_model)
 
-    save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm")
+    # save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm")
 
 
     now = datetime.now().date()
@@ -370,8 +370,8 @@ def choose_threshold():
 
     
 
-    in_vocab_runtime = h[:][0]
-    out_vocab_runtime = h[:][1]
+    in_vocab_runtime = g[0][0]
+    out_vocab_runtime = g[0][1]
     orig_in_vocab = [ner_runtime*1000 for ner_runtime in in_vocab_runtime]
     orig_out_vocab = [ner_runtime*1000 for ner_runtime in out_vocab_runtime]
 
@@ -449,7 +449,7 @@ def choose_threshold():
 if __name__ == "__main__":
     threshold = choose_threshold()
     
-    querying_updated_ner()
+    # querying_updated_ner()
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
@@ -463,8 +463,8 @@ if __name__ == "__main__":
     h = pickle.load(open(file_name, 'rb'))
     g.append(h)
 
-    in_vocab_runtime = h[:][0]
-    out_vocab_runtime = h[:][1]
+    in_vocab_runtime = g[0][0]
+    out_vocab_runtime = g[0][1]
     in_vocab = [ner_runtime*1000 for ner_runtime in in_vocab_runtime]
     out_vocab = [ner_runtime*1000 for ner_runtime in out_vocab_runtime]
 
@@ -518,7 +518,7 @@ if __name__ == "__main__":
 
     mkdir_p(plt_folder)
 
-    plot1 = plt.figure(1)
+    plot1 = plt.figure(2)
     plt.plot(iteration, in_vocab, 'o', iteration, out_vocab, 'v', iteration, thresholds, '-')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
