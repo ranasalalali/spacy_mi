@@ -575,14 +575,10 @@ def target_ner_tokenizer_one_word_three_times(texts):
         print(text)
 
         for j in range(3):
-            # doc = tokeniz("the")
-            # docs = ner(doc)    
-            if j == 0: 
-                doc = tokeniz("the")
-                docs = ner(doc)
             print(" j = ", j)
             print(" j = ", j)
             print(" j = ", j)
+            nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
             time0 = time.perf_counter()
             doc = tokeniz(text)
             doc = ner(doc)
