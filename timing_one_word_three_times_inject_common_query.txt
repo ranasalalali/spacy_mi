@@ -10,3 +10,7 @@ List of in vocab: ['determines', 'collapsed', 'M.', 'AJ', 'truths']
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['3)C2m5JhKg%AM', '5K*JfMhU*P', 'Fq?s3E>piZ9', '0LeIv3*Q', 'Wx,fx&l0xn-OI']
 List of in vocab: ['news', 'people', 'the', 'you', 'home']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['%Ty4o!ug', '4W,jCciC-', '!6)K)02o>-qaOeZ', '4.cy<Sk-%4', 'GmCg$8,Y.(s>']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
