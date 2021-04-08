@@ -110,7 +110,7 @@ def target_ner_tokenizer(texts):
         time_now = time.perf_counter()
         runtime = time_now - time0
         runtime_list.append(runtime)
-        time.sleep(2.0)
+        time.sleep(1.0)
 
 
     return runtime_list
@@ -303,7 +303,7 @@ def querying_updated_ner():
         docs = tokeniz_2(i)
         docs = ner_2(docs)
         time_now = time.perf_counter()
-        time.sleep(2.0)
+        time.sleep(1.0)
         run_time = time_now - time0
         in_vocabs_runtime.append(run_time)
     
@@ -315,7 +315,7 @@ def querying_updated_ner():
         docs = tokeniz_3(i)
         docs = ner_3(docs)
         time_now = time.perf_counter()
-        time.sleep(2.0)
+        time.sleep(1.0)
         run_time = time_now - time0
         out_vocab_runtime.append(run_time)
 
@@ -511,6 +511,6 @@ if __name__ == "__main__":
     plt.title(title)
     # ax = plt.gca()
     # ax.set_ylim(1, 5) 
-    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm.png'
+    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_1.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
