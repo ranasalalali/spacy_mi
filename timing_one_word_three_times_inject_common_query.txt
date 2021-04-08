@@ -22,3 +22,7 @@ List of in vocab: ['news', 'people', 'the', 'you', 'home']
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['hY3(!7y=', '4n5&PaN0oxEBM,#$', 'q_!H2D+fb', 'rTI6c+_', 'NkOL+e82&OQT']
 List of in vocab: ['news', 'people', 'the', 'you', 'home']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['G$o=6W+', '(6EEjtKJeH!$QL+', 'fOg9>?R-RxKA?1', ')9yVE_m$', 'M0)kBYplR7cj8+Kv']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
