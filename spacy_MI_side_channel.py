@@ -252,7 +252,7 @@ def querying_updated_ner():
 
     num_tests = 100
     updating_pw_100 = pws[0:num_tests]
-    out_vocab = pws[num_tests:3*num_tests]
+    out_vocab = pws[num_tests:2*num_tests]
 
     nlp = spacy.load('en_core_web_lg')
     
@@ -260,8 +260,8 @@ def querying_updated_ner():
     orig_in_vocabs = vocab[10000:10000 + 2*num_tests]
     
 
-    # for i in updating_pw_100:
-    #     updatingModel(i, nlp)
+    for i in updating_pw_100:
+        updatingModel(i, nlp)
 
    
     tokeniz_1, tagger_1, parser_1, ner_1, att_ruler_1, lemmatizer_1 = load_model(nlp)
@@ -270,7 +270,8 @@ def querying_updated_ner():
 
 
     # in_vocab = [*updating_pw_100, *orig_in_vocabs]
-    in_vocab = orig_in_vocabs
+    # in_vocab = orig_in_vocabs
+    in_vocab = updating_pw_100
     # random.shuffle(in_vocab)
 
     # orig_in_vocabs_runtime = []
@@ -323,7 +324,7 @@ def querying_updated_ner():
     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
-    save_results([in_vocabs_runtime, out_vocab_runtime], "runtime_attack_200_in-vocab_200_out-vocab_words_vm")
+    save_results([in_vocabs_runtime, out_vocab_runtime], "runtime_attack_200_in-vocab_200_out-vocab_words_vm_updating")
 
 
 def choose_threshold():
@@ -422,7 +423,7 @@ def choose_threshold():
     index = 0
     
     for index in range(len(fpr)):
-        if fpr[index] > 0.15 and fpr[index] <= 0.2:
+        if fpr[index] > 0.25 and fpr[index] <= 0.3:
             # print(fpr[index])
             # print('index = ', index)
             save_index = index
@@ -466,7 +467,7 @@ if __name__ == "__main__":
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'timing_results_{}'.format(now)
-    f_name = "runtime_attack_200_in-vocab_200_out-vocab_words_vm"
+    f_name = "runtime_attack_200_in-vocab_200_out-vocab_words_vm_updating"
     filename = '{}_{}.pickle3'.format(now, f_name)
     file_name = os.path.join(folder, filename)
 
@@ -536,17 +537,18 @@ if __name__ == "__main__":
 
     mkdir_p(plt_folder)
 
+    threshold_legend = 'threshold = {}'.format(thre)
     plot1 = plt.figure(2)
     plt.plot(iteration, in_vocab, 'o', iteration, out_vocab, 'v', iteration, thresholds, '-')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
-    plt.legend(['in-vocab words', 'out-vocab words', 'threshold'])
+    plt.legend(['in-vocab words', 'out-vocab words', threshold_legend])
     
     plt.xlabel("word $i^{th}$")
     plt.ylabel('runtime (ms)')
     plt.title(title)
-    # ax = plt.gca()
-    # ax.set_ylim(1, 5) 
-    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_2.png'
+    ax = plt.gca()
+    ax.set_ylim(3, 6) 
+    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_updating_words.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
