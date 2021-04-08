@@ -44,7 +44,7 @@ import math
 from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
 from password_generator import PasswordGenerator
-# from timing_in_vocab import *
+import matplotlib.pyplot as plt
 
 
 def mkdir_p(path):
@@ -576,9 +576,11 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
         for j in range(3):
             
-            print(" j = ", j)
+            
             doc = tokeniz("the")
-            docs = ner(doc)            
+            docs = ner(doc)    
+            print(" j = ", j)
+
             time0 = time.perf_counter()
             doc = tokeniz(text)
             doc = ner(doc)
@@ -593,16 +595,17 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
 
 if __name__ == "__main__":
-    # iterations = 100
+    iterations = 100
     file_name = open("timing_one_word_three_times_inject_common_query.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
     nlp = spacy.load("en_core_web_lg")
     global vocab
+    num_test = 5
     vocab = list(nlp.vocab.strings)
-    in_vocab_words = vocab[10000:11000]
-    in_vocab_words_test = vocab[12000:12100]
+    in_vocab_words = vocab[10000:10000+num_test]
+    in_vocab_words_test = vocab[12000:12000+num_test]
     # print(list(pws))
 
     
@@ -614,7 +617,7 @@ if __name__ == "__main__":
     pws = g[:][0]
 
     
-    list_100_pw = random.sample(pws,100)
+    list_100_pw = random.sample(pws,num_test)
     file_name.write("List of out vocab: {}\n".format(list_100_pw))
     file_name.write("List of in vocab: {}\n".format(in_vocab_words_test))
 
@@ -622,6 +625,86 @@ if __name__ == "__main__":
     in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
 
-    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_injecting_common_query")
+    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm")
 
-        
+    now = datetime.now().date()
+    now = now.strftime("%Y%m%d")
+    folder = 'timing_results_{}'.format(now)
+    f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm"
+    filename = '{}_{}.pickle3'.format(now, f_name)
+    file_name = os.path.join(folder, filename)
+
+    g = []
+    print(file_name)
+    h = pickle.load(open(file_name, 'rb'))
+    g.append(h)
+
+    
+
+
+    in_vocab_runtime_list = g[0][0]
+    out_vocab_runtime_list = g[0][1]
+
+    in_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in in_vocab_runtime_list]
+    out_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in out_vocab_runtime_list]
+
+    # print(in_vocab_runtime_s)
+    in_vocab_run_1 = []
+    in_vocab_run_2 = []
+    in_vocab_run_3 = []
+
+    out_vocab_run_1 = []
+    out_vocab_run_2 = []
+    out_vocab_run_3 = []
+
+    for i in range(num_test):
+        in_vocab_run_1.append(in_vocab_runtime_s[i*3])
+        in_vocab_run_2.append(in_vocab_runtime_s[3*i+1])
+        in_vocab_run_3.append(in_vocab_runtime_s[3*i+2])
+
+        out_vocab_run_1.append(out_vocab_runtime_s[i*3])
+        out_vocab_run_2.append(out_vocab_runtime_s[3*i+1])
+        out_vocab_run_3.append(out_vocab_runtime_s[3*i+2])
+
+    
+    iterations =  num_test
+    iteration = []
+    for i in range(iterations):
+        iteration.append(i)
+
+    
+    plt_folder = '{}_PLOTS/'.format(folder)
+
+    mkdir_p(plt_folder)
+    index = num_test
+    plot1 = plt.figure(1)
+    plt.plot(iteration[0:index], in_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_2[0:index], 'v',
+                    iteration[0:index], in_vocab_run_3[0:index], '*')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['1st run', '2nd run',  '3rd run'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    plt.title("In-vocab w/o reload model after each query")
+    # ax = plt.gca()
+    # ax.set_ylim(3, 6) 
+    plt_dest = plt_folder + '100_in-vocab_without_reload_model_3_runs_injecting_common_query_vm.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    
+
+    plot2 = plt.figure(2)
+    plt.plot(iteration[0:index], out_vocab_run_1[0:index], 'o', iteration[0:index], out_vocab_run_2[0:index], 'v',
+                    iteration[0:index], out_vocab_run_3[0:index], '*')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['1st run', '2nd run',  '3rd run'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    plt.title("Out-vocab w/o reload model after each query")
+    # ax = plt.gca()
+    # ax.set_ylim(3, 6) 
+    plt_dest = plt_folder + '100_out-vocab_without_reload_model_3_runs_injecting_common_query_vm.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+   
