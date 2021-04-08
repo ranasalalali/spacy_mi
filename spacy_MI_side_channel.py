@@ -280,6 +280,7 @@ def querying_updated_ner():
         docs = tokeniz_2(i)
         docs = ner_2(docs)
         time_now = time.perf_counter()
+        time.sleep(1.0)
         run_time = time_now - time0
         orig_in_vocabs_runtime.append(run_time)
 
@@ -292,6 +293,7 @@ def querying_updated_ner():
         docs = tokeniz_1(i)
         docs = ner_1(docs)
         time_now = time.perf_counter()
+        time.sleep(1.0)
         run_time = time_now - time0
         updating_pw_runtime.append(run_time)
         # vocab_now = list(nlp.vocab.strings)
@@ -317,14 +319,14 @@ def querying_updated_ner():
         docs = tokeniz_3(i)
         docs = ner_3(docs)
         time_now = time.perf_counter()
-        # time.sleep(1.0)
+        time.sleep(1.0)
         run_time = time_now - time0
         out_vocab_runtime.append(run_time)
 
     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
         
-    save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types")
+    save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types_time_sleep")
 
 
 def choose_threshold():
@@ -454,7 +456,7 @@ def choose_threshold():
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
-    plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload.png'
+    plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload_timesleep.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
 
     return chosen_threshold
@@ -467,7 +469,7 @@ if __name__ == "__main__":
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'timing_results_{}'.format(now)
-    f_name = "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types"
+    f_name = "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types_time_sleep"
     filename = '{}_{}.pickle3'.format(now, f_name)
     file_name = os.path.join(folder, filename)
 
@@ -555,7 +557,7 @@ if __name__ == "__main__":
     plt.title(title)
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_all_types_words.png'
+    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_all_types_words_time_sleep.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
     # recall = (count_in)/((count_in)+(len(out_vocab) - count_out))
