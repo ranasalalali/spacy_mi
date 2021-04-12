@@ -758,7 +758,7 @@ if __name__ == "__main__":
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
    
     plot2 = plt.figure(4)
-    plt.plot(iteration[0:index], out_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_1, 'v')
+    plt.plot(iteration[0:index], in_vocab_run_1[0:index], 'o', iteration[0:index], out_vocab_run_1, 'v')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
     plt.legend(['in-vocab', 'out-vocab'])
