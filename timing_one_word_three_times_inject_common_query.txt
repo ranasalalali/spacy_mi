@@ -52,3 +52,8 @@ List of shuffle word in/out vocab: ['qAH5%1', 'home', 'news', 'you', 'jy_sLd$*9x
 List of out vocab: ['43<2m-OosEG>??Nw', 'u8DskRsa^', '*(0eoO#ssbq%', '$7&XZe^mBj&oO', '5(Am1rD+mQjdC+']
 List of in vocab: ['news', 'people', 'the', 'you', 'home']
 List of shuffle word in/out vocab: ['news', '5(Am1rD+mQjdC+', 'u8DskRsa^', 'home', 'you', '*(0eoO#ssbq%', 'the', 'people', '$7&XZe^mBj&oO', '43<2m-OosEG>??Nw']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['C9doG-r6vs', '&LXzF^N2Y_+<', 'Xd0(dCt5', 'JwLY%44wVO1', 'r5)YseKOi8>XS2,']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
+List of shuffle word in/out vocab: ['JwLY%44wVO1', 'r5)YseKOi8>XS2,', 'C9doG-r6vs', 'news', 'the', 'Xd0(dCt5', 'people', 'you', '&LXzF^N2Y_+<', 'home']
