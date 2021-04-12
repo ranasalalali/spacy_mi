@@ -718,9 +718,9 @@ if __name__ == "__main__":
     plt.ylabel('runtime (ms)')
     plt.title("In-vocab w/o reload model after each query")
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
-    # ax = plt.gca()
-    # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_in-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special4.png'
+    ax = plt.gca()
+    ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + '100_in-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special5.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -735,9 +735,9 @@ if __name__ == "__main__":
     plt.ylabel('runtime (ms)')
     plt.title("Out-vocab w/o reload model after each query")
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
-    # ax = plt.gca()
-    # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_out-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special4.png'
+    ax = plt.gca()
+    ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + '100_out-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special5.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -752,8 +752,8 @@ if __name__ == "__main__":
     plt.ylabel('runtime (ms)')
     plt.title("shuffle in/out vocab w/o reload model after each query")
     plt.xticks(iteration, shuffe_words, rotation ='vertical')
-    # ax = plt.gca()
-    # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_shuffle_vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special4.png'
+    ax = plt.gca()
+    ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + '100_shuffle_vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special5.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
    
