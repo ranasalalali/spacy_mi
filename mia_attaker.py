@@ -720,7 +720,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
     ax = plt.gca()
     ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100_in-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special5.png'
+    plt_dest = plt_folder + '100_in-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special6.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -737,7 +737,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
     ax = plt.gca()
     ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100_out-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special5.png'
+    plt_dest = plt_folder + '100_out-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special6.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -754,6 +754,20 @@ if __name__ == "__main__":
     plt.xticks(iteration, shuffe_words, rotation ='vertical')
     ax = plt.gca()
     ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100_shuffle_vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special5.png'
+    plt_dest = plt_folder + '100_shuffle_vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special6.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
    
+    plot2 = plt.figure(4)
+    plt.plot(iteration[0:index], out_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_1, 'v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['in-vocab', 'out-vocab'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    plt.title(" in-vocab and out-vocab w/o reload model after each query")
+    # plt.xticks(iteration, shuffe_words, rotation ='vertical')
+    ax = plt.gca()
+    ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + 'compare_in-out_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special6.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
