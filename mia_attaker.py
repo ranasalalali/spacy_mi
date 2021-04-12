@@ -567,7 +567,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
     
     runtime_list = []
     
-    # nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
 
     
     for i in texts:
@@ -576,10 +576,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
         # doc = tokeniz("the")
         # doc = ner(doc)
         for j in range(3):
-            nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
-            print(" j = ", j)
-            print(" j = ", j)
-            print(" j = ", j)
+            
             time0 = time.perf_counter()
             doc = tokeniz(text)
             doc = ner(doc)
@@ -589,6 +586,9 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
             runtime = time_now - time0
             runtime_list.append(runtime)
+            print(" j = ", j)
+            print(" j = ", j)
+            print(" j = ", j)
 
             # doc = tokeniz("the")
             # doc = ner(doc)
@@ -637,7 +637,7 @@ if __name__ == "__main__":
 
     shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "timming_100pws_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer_pws_no_special_reload"
+    pickle_fname = "timming_100pws_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer_pws_no_special_wo_reload"
     save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
 
     now = datetime.now().date()
@@ -713,7 +713,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_in-vocab_WITH_reload_model_3_runs_injecting_common_query_vm_pws_no_special.png'
+    plt_dest = plt_folder + '100_in-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -730,7 +730,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_out-vocab_WITH_reload_model_3_runs_injecting_common_query_vm_pws_no_special.png'
+    plt_dest = plt_folder + '100_out-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -747,6 +747,6 @@ if __name__ == "__main__":
     plt.xticks(iteration, shuffe_words, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_shuffle_vocab_WITH_reload_model_3_runs_injecting_common_query_vm_pws_no_special.png'
+    plt_dest = plt_folder + '100_shuffle_vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_no_special.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
    
