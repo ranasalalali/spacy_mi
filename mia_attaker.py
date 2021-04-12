@@ -571,7 +571,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
     
     for i in texts:
-        text = "I am " + i
+        text = i
         print(text)
         doc = tokeniz("the")
         doc = ner(doc)
@@ -617,20 +617,28 @@ if __name__ == "__main__":
 
     
     list_100_pw = random.sample(pws,num_test)
+
+    shuffe_words = [*in_vocab_words_test, *list_100_pw]
+    random.shuffle(shuffe_words)
+
     file_name.write("List of out vocab: {}\n".format(list_100_pw))
     file_name.write("List of in vocab: {}\n".format(in_vocab_words_test))
+    file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
     
     in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
 
-    save_results([in_vocab_runtime, out_vocab_runtime], "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer")
+    shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
+
+    pickle_fname = "timming_100pws_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer"
+    save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'timing_results_{}'.format(now)
-    f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
-    filename = '{}_{}.pickle3'.format(now, f_name)
+    # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
+    filename = '{}_{}.pickle3'.format(now, pickle_fname)
     file_name = os.path.join(folder, filename)
 
     g = []
@@ -643,9 +651,11 @@ if __name__ == "__main__":
 
     in_vocab_runtime_list = g[0][0]
     out_vocab_runtime_list = g[0][1]
+    shuffle_word_runtime_list = g[0][2]
 
     in_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in in_vocab_runtime_list]
     out_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in out_vocab_runtime_list]
+    shuffle_words_runtime_s = [ner_runtime*1000 for ner_runtime in  shuffle_word_runtime_list]
 
     # print(in_vocab_runtime_s)
     in_vocab_run_1 = []
@@ -656,6 +666,10 @@ if __name__ == "__main__":
     out_vocab_run_2 = []
     out_vocab_run_3 = []
 
+    shuffle_word_vocab_run_1 = []
+    shuffle_word_vocab_run_2 = []
+    shuffle_word_vocab_run_3 = []
+
     for i in range(num_test):
         in_vocab_run_1.append(in_vocab_runtime_s[i*3])
         in_vocab_run_2.append(in_vocab_runtime_s[3*i+1])
@@ -665,8 +679,12 @@ if __name__ == "__main__":
         out_vocab_run_2.append(out_vocab_runtime_s[3*i+1])
         out_vocab_run_3.append(out_vocab_runtime_s[3*i+2])
 
-    
-    iterations =  num_test
+    for i in range(2*num_test):
+        shuffle_word_vocab_run_1.append(shuffle_words_runtime_s[i*3])
+        shuffle_word_vocab_run_2.append(shuffle_words_runtime_s[3*i+1])
+        shuffle_word_vocab_run_3.append(shuffle_words_runtime_s[3*i+2])
+
+    iterations =  num_test*2
     iteration = []
     for i in range(iterations):
         iteration.append(i)
@@ -689,7 +707,7 @@ if __name__ == "__main__":
     plt.xticks(iteration, in_vocab_words_test, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_in-vocab_without_reload_model_3_runs_injecting_common_query_vm_tokenizer.png'
+    plt_dest = plt_folder + '100_in-vocab_without_reload_model_3_runs_injecting_common_query_vm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -706,6 +724,23 @@ if __name__ == "__main__":
     plt.xticks(iteration, list_100_pw, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + '100_out-vocab_without_reload_model_3_runs_injecting_common_query_vm_tokenizer.png'
+    plt_dest = plt_folder + '100_out-vocab_without_reload_model_3_runs_injecting_common_query_vm.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+    plot2 = plt.figure(3)
+    plt.plot(iteration[0:index*2], shuffle_word_vocab_run_1[0:index*2], 'o', iteration[0:index*2], shuffle_word_vocab_run_2[0:index*2], 'v',
+                    iteration[0:index*2], shuffle_word_vocab_run_3[0:index*2], '*')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['1st run', '2nd run',  '3rd run'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    plt.title("shuffle in/out vocab w/o reload model after each query")
+    plt.xticks(iteration, shuffe_words, rotation ='vertical')
+    # ax = plt.gca()
+    # ax.set_ylim(3, 6) 
+    plt_dest = plt_folder + '100_shuffle_in-out_without_reload_model_3_runs_injecting_common_query_vm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
    
