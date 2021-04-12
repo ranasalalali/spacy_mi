@@ -97,3 +97,8 @@ List of shuffle word in/out vocab: ['home', '3FPEswC-7bcB9C', 'the', '-45jwOLIn7
 List of out vocab: ['rddUKDzy2-cNh', '-DqdDJu-1v', '9jJm31G7s-rUGV', '0Ukeha2U-eHpxQ18', 'Tds-G3fgVro0T']
 List of in vocab: ['news', 'people', 'the', 'you', 'home']
 List of shuffle word in/out vocab: ['news', 'rddUKDzy2-cNh', 'people', 'home', 'Tds-G3fgVro0T', 'the', '-DqdDJu-1v', '0Ukeha2U-eHpxQ18', '9jJm31G7s-rUGV', 'you']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['5-L2zP', 'hrunzC54SRk-', '9htr-L', 'POJ6AWXR-pKn6', 'HcAo9-']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
+List of shuffle word in/out vocab: ['home', 'HcAo9-', 'POJ6AWXR-pKn6', 'people', 'news', 'the', 'hrunzC54SRk-', '9htr-L', 'you', '5-L2zP']
