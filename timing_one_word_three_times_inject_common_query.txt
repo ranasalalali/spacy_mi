@@ -42,3 +42,13 @@ List of in vocab: ['news', 'people', 'the', 'you', 'home']
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['5Ymuu0=jnkk', 'Y2fImnSMP6_kN.', 'asoZxAX2^Cuq-L)+', '$16(o(<>P17._cV', '(MDj-j*0lI9Jd']
 List of in vocab: ['news', 'people', 'the', 'you', 'home']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['jy_sLd$*9x', '?hGrQaiK-KpYZB4^', '<I2rg+(5cEk1', '_mu73)ZPJ#', 'qAH5%1']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
+List of shuffle word in/out vocab: ['qAH5%1', 'home', 'news', 'you', 'jy_sLd$*9x', '_mu73)ZPJ#', '<I2rg+(5cEk1', 'people', 'the', '?hGrQaiK-KpYZB4^']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['43<2m-OosEG>??Nw', 'u8DskRsa^', '*(0eoO#ssbq%', '$7&XZe^mBj&oO', '5(Am1rD+mQjdC+']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
+List of shuffle word in/out vocab: ['news', '5(Am1rD+mQjdC+', 'u8DskRsa^', 'home', 'you', '*(0eoO#ssbq%', 'the', 'people', '$7&XZe^mBj&oO', '43<2m-OosEG>??Nw']
