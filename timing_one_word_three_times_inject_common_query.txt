@@ -72,3 +72,8 @@ List of shuffle word in/out vocab: ['home', 'szG0hF-', 'Zj-SjM23WKV', 'tw-NG3P',
 List of out vocab: ['je5-NKw55RI-', 'XB0Iu-', 'Z4g-qxTBJZ5bk', 'hMCs-C1X', 'GEDeSl6Gs-Bkm']
 List of in vocab: ['home', 'home', 'home', 'home', 'home']
 List of shuffle word in/out vocab: ['XB0Iu-', 'home', 'je5-NKw55RI-', 'home', 'home', 'home', 'Z4g-qxTBJZ5bk', 'home', 'GEDeSl6Gs-Bkm', 'hMCs-C1X']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['-D8ghN8', '-1Y1rNP1pEh', '--CJ4Hzhrv8', 'lLuc-t-glZ3Sl8', '2-WTv8EO6z']
+List of in vocab: ['home', 'home', 'home', 'home', 'home']
+List of shuffle word in/out vocab: ['lLuc-t-glZ3Sl8', '-D8ghN8', 'home', 'home', '2-WTv8EO6z', '-1Y1rNP1pEh', 'home', '--CJ4Hzhrv8', 'home', 'home']
