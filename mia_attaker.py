@@ -732,7 +732,7 @@ if __name__ == "__main__":
     plt.legend(['in vocab', 'out vocab'])
     
     plt.xlabel("")
-    plt.ylabel('runtime (ms)')
+    plt.ylabel('average runtime (ms)')
     # plt.title("In-vocab w/o reload model after each query")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
@@ -744,7 +744,7 @@ if __name__ == "__main__":
     sys.exit()
 
     plot1 = plt.figure(1)
-    plt.plot(iteration[0:index], in_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_2[0:index], 'v',
+    plt.plot(iteration[0:index], in_vocab_run_1[0:index], '-o', iteration[0:index], in_vocab_run_2[0:index], '-v',
                     iteration[0:index], in_vocab_run_3[0:index], '*')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
