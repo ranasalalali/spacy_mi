@@ -725,7 +725,7 @@ if __name__ == "__main__":
     x_stick = ["first run", "second run", 'third run']
 
     plot1 = plt.figure(1)
-    plt.plot(iteration[0:3], avg_time_diff_in_vocab, 'o', iteration[0:3], avg_time_diff_out_vocab, 'v',
+    plt.plot(iteration[0:3], avg_time_diff_in_vocab, '-o', iteration[0:3], avg_time_diff_out_vocab, '-v',
                    )
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
@@ -733,7 +733,7 @@ if __name__ == "__main__":
     
     plt.xlabel("")
     plt.ylabel('average runtime (ms)')
-    # plt.title("In-vocab w/o reload model after each query")
+    plt.title("Runtime when querying tokenizer")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
@@ -744,7 +744,7 @@ if __name__ == "__main__":
     sys.exit()
 
     plot1 = plt.figure(1)
-    plt.plot(iteration[0:index], in_vocab_run_1[0:index], '-o', iteration[0:index], in_vocab_run_2[0:index], '-v',
+    plt.plot(iteration[0:index], in_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_2[0:index], 'v',
                     iteration[0:index], in_vocab_run_3[0:index], '*')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
