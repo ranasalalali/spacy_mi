@@ -846,7 +846,7 @@ if __name__ == "__main__":
     plt.xlabel("")
     plt.ylabel('Runtime (ms)')
     plt.title("Querying NER first time")
-    plt.xticks(iteration[0:3], x_stick)
+    # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
     plt_dest = plt_folder + '100words_vm_ner.png'
@@ -862,10 +862,10 @@ if __name__ == "__main__":
     plt.xlabel("")
     plt.ylabel('Runtime (ms)')
     plt.title("Querying tokenizer first time")
-    plt.xticks(iteration[0:3], x_stick)
+    # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100words_vm_ner.png'
+    plt_dest = plt_folder + '100words_vm_tokenizer.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     
