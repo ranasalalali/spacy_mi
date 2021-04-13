@@ -571,7 +571,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
     
     for i in texts:
-        text = i
+        text = "Alice lives in Australia and "+i
         print(text)
         # doc = tokeniz("the")
         # doc = ner(doc)
@@ -583,7 +583,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
             time0 = time.perf_counter()
             doc = tokeniz(text)
-            # doc = ner(doc)
+            doc = ner(doc)
             time_now = time.perf_counter()
             
             # time.sleep(5.0)
@@ -640,7 +640,7 @@ if __name__ == "__main__":
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "100words_timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer"
+    pickle_fname = "100words_timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer_ner"
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime, out_vocab_runtime], pickle_fname)
 
@@ -729,16 +729,18 @@ if __name__ == "__main__":
                    )
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
-    plt.legend(['100 in vocab', '100 out vocab'])
+    plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
     
     plt.xlabel("")
     plt.ylabel('Average runtime (ms)')
-    plt.title("Runtime when querying tokenizer")
+    plt.title("Runtime when querying ner: Alice lives in Australia and $test_word$")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_time_difference_100words_vm_tokenizer.png'
+    plt_dest = plt_folder + 'average_time_difference_100words_vm_tokenizer_ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+    
     
 
     sys.exit()
