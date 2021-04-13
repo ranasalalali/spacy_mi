@@ -898,8 +898,13 @@ if __name__ == "__main__":
 
 
 
-    plot1 = plt.figure(6)
-    plt.plot(iteration[0:num_test], diff_in_vocab, '-o', iteration[0:num_test], diff_out_vocab, '-v')
+    fig = plt.figure(6)
+
+    X = np.arange(num_test)
+    ax = fig.add_axes([0,0,1,1])
+    ax.bar(X + 0.00, diff_in_vocab, color = 'r', width = 0.25)
+    ax.bar(X + 0.25, diff_out_vocab, color = 'g', width = 0.25)
+    # plt.plot(iteration[0:num_test], diff_in_vocab, '-o', iteration[0:num_test], diff_out_vocab, '-v')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
     # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
