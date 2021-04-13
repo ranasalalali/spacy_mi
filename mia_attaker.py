@@ -737,8 +737,8 @@ if __name__ == "__main__":
     plt.ylabel('runtime (ms)')
     plt.title("Out-vocab w/o reload model after each query")
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
-    ax = plt.gca()
-    ax.set_ylim(2.5, 3) 
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
     plt_dest = plt_folder + '100_out-vocab_NO_reload_model_3_runs_injecting_common_query_vm_pws_len_6_tokenizer.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
