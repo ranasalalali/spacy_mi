@@ -571,7 +571,8 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
     
     for i in texts:
-        text = "Alice lives in Australia and "+i
+        # text = "Alice lives in Australia and "+i
+        text = i
         print(text)
         # doc = tokeniz("the")
         # doc = ner(doc)
@@ -729,11 +730,12 @@ if __name__ == "__main__":
                    )
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
-    plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['100 in vocab words', '100 out vocab words'])
     
     plt.xlabel("")
     plt.ylabel('Average runtime (ms)')
-    plt.title("Querying ner: Alice lives in Australia and 'test-word'")
+    plt.title("Querying ner")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
