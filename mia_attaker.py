@@ -836,6 +836,38 @@ if __name__ == "__main__":
     plt_dest = plt_folder + 'average_time_difference_100words_vm_tokenizer_only.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
+    plot1 = plt.figure(3)
+    plt.plot(iteration[0:num_test], in_vocab_run_1, 'o', iteration[0:num_test], out_vocab_run_1, 'v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['ner: 100 in vocab words', 'ner: 100 out vocab words'])
+    
+    plt.xlabel("")
+    plt.ylabel('Runtime (ms)')
+    plt.title("Querying NER first time")
+    plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + '100words_vm_ner.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+    plot1 = plt.figure(4)
+    plt.plot(iteration[0:num_test], in_vocab_token_run_1, 'o', iteration[0:num_test], out_vocab_token_run_1, 'v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['tokenizer: 100 in vocab words', 'tokenizer: 100 out vocab words'])
+    
+    plt.xlabel("")
+    plt.ylabel('Runtime (ms)')
+    plt.title("Querying tokenizer first time")
+    plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + '100words_vm_ner.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
     
     
 
