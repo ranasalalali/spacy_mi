@@ -573,7 +573,7 @@ def target_ner_tokenizer_one_word_three_times(texts):
     for i in texts:
         # text = "Alice lives in Australia and "+i
         text = i
-        print(text)
+        # print(text)
         # doc = tokeniz("the")
         # doc = ner(doc)
         for j in range(3):
@@ -671,9 +671,11 @@ if __name__ == "__main__":
 
     
     in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
+    time.sleep(5.0)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
-
+    time.sleep(5.0)
     in_vocab_runtime_tokenizer = target_tokenizer_only_one_word_three_times(in_vocab_words_test)
+    time.sleep(5.0)
     out_vocab_runtime_tokenizer = target_tokenizer_only_one_word_three_times(list_100_pw)
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
