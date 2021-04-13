@@ -611,11 +611,11 @@ if __name__ == "__main__":
     
     nlp = spacy.load("en_core_web_lg")
     global vocab
-    num_test = 5
+    num_test = 100
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:10000+num_test]
-    # in_vocab_words_test = vocab[12000:12000+num_test]
-    in_vocab_words_test = ['news', 'people', 'the', 'you', 'home']
+    in_vocab_words_test = vocab[12000:12000+num_test]
+    # in_vocab_words_test = ['news', 'people', 'the', 'you', 'home']
     # in_vocab_words_test = ['people', 'update', 'school','sample', 'random']
     # in_vocab_words_test = ['home', 'home', 'home', 'home', 'home']
     # print(list(pws))
@@ -638,16 +638,17 @@ if __name__ == "__main__":
 
     file_name.write("List of out vocab: {}\n".format(list_100_pw))
     file_name.write("List of in vocab: {}\n".format(in_vocab_words_test))
-    file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
+    # file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
     
     in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
 
-    shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
+    # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer"
-    save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
+    pickle_fname = "100words_timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer"
+    # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
+    save_results([in_vocab_runtime, out_vocab_runtime], pickle_fname)
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
@@ -666,11 +667,11 @@ if __name__ == "__main__":
 
     in_vocab_runtime_list = g[0][0]
     out_vocab_runtime_list = g[0][1]
-    shuffle_word_runtime_list = g[0][2]
+    # shuffle_word_runtime_list = g[0][2]
 
     in_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in in_vocab_runtime_list]
     out_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in out_vocab_runtime_list]
-    shuffle_words_runtime_s = [ner_runtime*1000 for ner_runtime in  shuffle_word_runtime_list]
+    # shuffle_words_runtime_s = [ner_runtime*1000 for ner_runtime in  shuffle_word_runtime_list]
 
     # print(in_vocab_runtime_s)
     in_vocab_run_1 = []
@@ -681,9 +682,9 @@ if __name__ == "__main__":
     out_vocab_run_2 = []
     out_vocab_run_3 = []
 
-    shuffle_word_vocab_run_1 = []
-    shuffle_word_vocab_run_2 = []
-    shuffle_word_vocab_run_3 = []
+    # shuffle_word_vocab_run_1 = []
+    # shuffle_word_vocab_run_2 = []
+    # shuffle_word_vocab_run_3 = []
 
     for i in range(num_test):
         in_vocab_run_1.append(in_vocab_runtime_s[i*3])
@@ -694,10 +695,21 @@ if __name__ == "__main__":
         out_vocab_run_2.append(out_vocab_runtime_s[3*i+1])
         out_vocab_run_3.append(out_vocab_runtime_s[3*i+2])
 
-    for i in range(2*num_test):
-        shuffle_word_vocab_run_1.append(shuffle_words_runtime_s[i*3])
-        shuffle_word_vocab_run_2.append(shuffle_words_runtime_s[3*i+1])
-        shuffle_word_vocab_run_3.append(shuffle_words_runtime_s[3*i+2])
+    avg_time_diff_in_vocab = []
+    avg_time_diff_out_vocab = []
+
+    avg_time_diff_in_vocab[0] = np.mean(np.array(in_vocab_run_1))
+    avg_time_diff_in_vocab[1] = np.mean(np.array(in_vocab_run_2))
+    avg_time_diff_in_vocab[2] = np.mean(np.array(in_vocab_run_3))
+   
+    avg_time_diff_out_vocab[0] = np.mean(np.array(out_vocab_run_1))
+    avg_time_diff_out_vocab[1] = np.mean(np.array(out_vocab_run_2))
+    avg_time_diff_out_vocab[2] = np.mean(np.array(out_vocab_run_3))
+
+    # for i in range(2*num_test):
+    #     shuffle_word_vocab_run_1.append(shuffle_words_runtime_s[i*3])
+    #     shuffle_word_vocab_run_2.append(shuffle_words_runtime_s[3*i+1])
+    #     shuffle_word_vocab_run_3.append(shuffle_words_runtime_s[3*i+2])
 
     iterations =  num_test*2
     iteration = []
@@ -709,6 +721,28 @@ if __name__ == "__main__":
 
     mkdir_p(plt_folder)
     index = num_test
+
+    x_stick = ["first run", "second run", 'third run']
+
+    plot1 = plt.figure(1)
+    plt.plot(iteration[0:3], avg_time_diff_in_vocab, 'o', iteration[0:3], avg_time_diff_out_vocab, 'v',
+                   )
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['in vocab', 'out vocab'])
+    
+    plt.xlabel("")
+    plt.ylabel('runtime (ms)')
+    # plt.title("In-vocab w/o reload model after each query")
+    plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + 'average_time_difference_100words_vm_tokenizer.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    
+
+    sys.exit()
+
     plot1 = plt.figure(1)
     plt.plot(iteration[0:index], in_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_2[0:index], 'v',
                     iteration[0:index], in_vocab_run_3[0:index], '*')
