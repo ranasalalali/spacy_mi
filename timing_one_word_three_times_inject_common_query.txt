@@ -117,3 +117,8 @@ List of shuffle word in/out vocab: ['P5eZvC', 'you', 'the', '2PMwdJ', 'news', 'p
 List of out vocab: ['SUuOi8', 'V.jBd4', 'yxO7my', 'A9H+6x', 'U1f9Br']
 List of in vocab: ['people', 'update', 'school', 'sample', 'random']
 List of shuffle word in/out vocab: ['V.jBd4', 'SUuOi8', 'people', 'yxO7my', 'A9H+6x', 'U1f9Br', 'sample', 'random', 'update', 'school']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['gVpZ3+', 'yFe9BY', 'ZoQ4Wq', 'qG89oM', 'nF2JeZ']
+List of in vocab: ['people', 'update', 'school', 'sample', 'random']
+List of shuffle word in/out vocab: ['school', 'ZoQ4Wq', 'yFe9BY', 'qG89oM', 'nF2JeZ', 'gVpZ3+', 'update', 'random', 'people', 'sample']
