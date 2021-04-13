@@ -868,6 +868,25 @@ if __name__ == "__main__":
     plt_dest = plt_folder + '30words_vm_tokenizer.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
+
+    plot1 = plt.figure(5)
+    plt.plot(iteration[0:3], avg_time_diff_in_vocab_tokenizer, '-o', iteration[0:3], avg_time_diff_out_vocab_tokenizer, '-v',
+                iteration[0:3], avg_time_diff_in_vocab, '--o', iteration[0:3], avg_time_diff_out_vocab, '--v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['tokenizer: 30 in vocab', 'tokenizer: 30 out vocab','ner: 30 in vocab', 'ner: 30 out vocab'])
+    
+    plt.xlabel("")
+    plt.ylabel('Average runtime (ms)')
+    # plt.title("Querying tokenizer")
+    plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + 'average_time_difference_30_words_vm_tokenizer_and_ner.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
     
     
 
