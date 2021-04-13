@@ -127,3 +127,8 @@ List of shuffle word in/out vocab: ['school', 'ZoQ4Wq', 'yFe9BY', 'qG89oM', 'nF2
 List of out vocab: ['T1t19r', '6UCac!', '4ymlD2', 'd1Ms>d', '2YN>j#']
 List of in vocab: ['people', 'update', 'school', 'sample', 'random']
 List of shuffle word in/out vocab: ['2YN>j#', 'T1t19r', 'people', '6UCac!', 'school', 'sample', 'update', '4ymlD2', 'd1Ms>d', 'random']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['-0uNhEZv20U6', '55fc707SxE-gTkV', 'ynnE-0t', 'gjwFC-I6lC', 'L-sAEh0A']
+List of in vocab: ['news', 'people', 'the', 'you', 'home']
+List of shuffle word in/out vocab: ['the', '55fc707SxE-gTkV', '-0uNhEZv20U6', 'news', 'gjwFC-I6lC', 'people', 'ynnE-0t', 'you', 'home', 'L-sAEh0A']
