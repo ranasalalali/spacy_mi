@@ -634,7 +634,7 @@ def target_tokenizer_only_one_word_three_times(texts):
 
 if __name__ == "__main__":
     iterations = 100
-    file_name = open("timing_one_word_three_times_inject_common_query.txt","a")
+    file_name = open("timing_one_word_three_times_inject_common_query_vm.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
@@ -748,6 +748,16 @@ if __name__ == "__main__":
         out_vocab_token_run_1.append(out_vocab_tokenizer_runtime_s[i*3])
         out_vocab_token_run_2.append(out_vocab_tokenizer_runtime_s[3*i+1])
         out_vocab_token_run_3.append(out_vocab_tokenizer_runtime_s[3*i+2])
+
+    max_in = 0
+    for i in range(num_test):
+        if in_vocab_run_1[i] >= max_in:
+            max_in = in_vocab_run_1[i]
+            save_index = i
+
+    max_in_run_1 = max(in_vocab_run_1)
+    if max_in_run_1 > 5:
+        in_vocab_run_1[save_index] = 5
 
     avg_time_diff_in_vocab = []
     avg_time_diff_out_vocab = []
@@ -919,7 +929,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100w_time_difference_between_two_runs_vm_ner.png'
+    plt_dest = plt_folder + '100w_time_difference_between_two_runs_pc_ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
