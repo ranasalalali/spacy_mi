@@ -879,12 +879,12 @@ if __name__ == "__main__":
     
     plt.xlabel("")
     plt.ylabel('Average runtime (ms)')
-    plt.yscale("log")
+    # plt.yscale("log")
     # plt.title("Querying tokenizer")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_time_difference_30_words_vm_tokenizer_and_ner_log_scale.png'
+    plt_dest = plt_folder + 'average_time_difference_30_words_vm_tokenizer_and_ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
