@@ -729,10 +729,10 @@ if __name__ == "__main__":
                    )
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
-    plt.legend(['in vocab', 'out vocab'])
+    plt.legend(['100 in vocab', '100 out vocab'])
     
     plt.xlabel("")
-    plt.ylabel('average runtime (ms)')
+    plt.ylabel('Average runtime (ms)')
     plt.title("Runtime when querying tokenizer")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
