@@ -733,7 +733,7 @@ if __name__ == "__main__":
     
     plt.xlabel("")
     plt.ylabel('Average runtime (ms)')
-    plt.title("Runtime when querying ner: Alice lives in Australia and $test_word$")
+    plt.title("Querying ner: Alice lives in Australia and 'test-word'")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
