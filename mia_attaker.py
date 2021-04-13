@@ -640,7 +640,7 @@ if __name__ == "__main__":
     
     nlp = spacy.load("en_core_web_lg")
     global vocab
-    num_test = 30
+    num_test = 50
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:10000+num_test]
     in_vocab_words_test = random.sample(vocab, num_test)#vocab[10000:10000+num_test]
@@ -816,7 +816,7 @@ if __name__ == "__main__":
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
     # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
-    plt.legend(['30 in vocab words', '30 out vocab words'])
+    plt.legend(['in vocab words', '30 out vocab words'])
     
     plt.xlabel("")
     plt.ylabel('Average runtime (ms)')
@@ -824,7 +824,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_time_difference_30words_vm_tokenizer_ner.png'
+    plt_dest = plt_folder + 'average_time_difference_50_words_vm_tokenizer_ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -833,7 +833,7 @@ if __name__ == "__main__":
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
     # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
-    plt.legend(['30 in vocab words', '30 out vocab words'])
+    plt.legend(['in vocab words', 'out vocab words'])
     
     plt.xlabel("")
     plt.ylabel('Average runtime (ms)')
@@ -841,7 +841,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_time_difference_30_words_vm_tokenizer_only.png'
+    plt_dest = plt_folder + 'average_time_difference_50_words_vm_tokenizer_only.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plot1 = plt.figure(3)
@@ -917,7 +917,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'time_difference_between_two_runs_vm_ner.png'
+    plt_dest = plt_folder + '50_time_difference_between_two_runs_vm_ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
