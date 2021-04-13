@@ -576,9 +576,6 @@ def target_ner_tokenizer_one_word_three_times(texts):
         # doc = tokeniz("the")
         # doc = ner(doc)
         for j in range(3):
-            
-            doc = tokeniz("the")
-            doc = ner(doc)
             print(" j = ", j)
             print(" j = ", j)
             print(" j = ", j)
@@ -596,9 +593,6 @@ def target_ner_tokenizer_one_word_three_times(texts):
             print(" j = ", j)
             print(" j = ", j)
             print(" j = ", j)
-
-            doc = tokeniz("the")
-            doc = ner(doc)
 
     return runtime_list
 
@@ -698,13 +692,19 @@ if __name__ == "__main__":
     avg_time_diff_in_vocab = []
     avg_time_diff_out_vocab = []
 
-    avg_time_diff_in_vocab[0] = np.mean(np.array(in_vocab_run_1))
-    avg_time_diff_in_vocab[1] = np.mean(np.array(in_vocab_run_2))
-    avg_time_diff_in_vocab[2] = np.mean(np.array(in_vocab_run_3))
+    tmp = np.mean(np.array(in_vocab_run_1))
+    avg_time_diff_in_vocab.append(tmp)
+    tmp = np.mean(np.array(in_vocab_run_2))
+    avg_time_diff_in_vocab.append(tmp)
+    tmp = np.mean(np.array(in_vocab_run_3))
+    avg_time_diff_in_vocab.append(tmp)
    
-    avg_time_diff_out_vocab[0] = np.mean(np.array(out_vocab_run_1))
-    avg_time_diff_out_vocab[1] = np.mean(np.array(out_vocab_run_2))
-    avg_time_diff_out_vocab[2] = np.mean(np.array(out_vocab_run_3))
+    tmp = np.mean(np.array(out_vocab_run_1))
+    avg_time_diff_out_vocab.append(tmp)
+    tmp = np.mean(np.array(out_vocab_run_2))
+    avg_time_diff_out_vocab.append(tmp)
+    tmp = np.mean(np.array(out_vocab_run_3))
+    avg_time_diff_out_vocab.append(tmp)
 
     # for i in range(2*num_test):
     #     shuffle_word_vocab_run_1.append(shuffle_words_runtime_s[i*3])
