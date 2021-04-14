@@ -42,3 +42,7 @@ List of in vocab: ['Scowled', 'gaun', 'Daughtry', '.283', 'Tianjin', 'METALL', '
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['84NkrpSzZ7-T', 'hBKafX3Q1Ld-uD', '92ERsf-Hu7COUUg', '8xu-7UqNYJGgBV', 'xk75H-6Hv', 'E3JiOezVyh-9p', 'Z7-lt-g', 'zI46-mlB', 'c--S7DdFt7U', '-7mYl4vgb']
 List of in vocab: ['KUM', 'conca', 'sluiten', 'FLUF', 'Self-Induced', 'RJC', 'musume', 'tarento', 'Grüßen', 'guildmaster']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['U-t8-rkBzvDc54', '4tZ-swNKyScXM94', 'f-cb-9V0', 'eGc2pzdAF13U-j', 'ewnRPKWy-lKN6Z', 'nG1v-k7X3xDa5tWD', '7JevV-', 'g-9Q7c3yGv', '-dv0G-Xe3ghZc', 'Ve-n4Ym']
+List of in vocab: ['deplored', 'MURIEL', 'permanente', 'Morbidity', 'Five-Point', 'snowdrifts', 'a.p.', 'SOGO', 'koolance', 'monsoonal']
