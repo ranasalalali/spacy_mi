@@ -631,6 +631,41 @@ def target_tokenizer_only_one_word_three_times(texts):
 
     return runtime_list
 
+def target_ner_only_one_word_three_times(texts):
+    
+    runtime_list = []
+    
+    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
+
+    doc = tokeniz("the")
+    doc = ner(doc)
+    for i in texts:
+        # text = "Alice lives in Australia and "+i
+        text = "Alice lives in "+i
+        print(text)
+        
+        for j in range(3):
+            print(" j = ", j)
+            print(" j = ", j)
+            print(" j = ", j)
+
+
+            
+            doc = tokeniz(text)
+            time0 = time.perf_counter()
+            doc = ner(doc)
+            time_now = time.perf_counter()
+            
+            # time.sleep(5.0)
+
+            runtime = time_now - time0
+            runtime_list.append(runtime)
+            print(" j = ", j)
+            print(" j = ", j)
+            print(" j = ", j)
+
+    return runtime_list
+
 
 if __name__ == "__main__":
     iterations = 10
@@ -670,9 +705,13 @@ if __name__ == "__main__":
     # file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
     
-    in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
+    # in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
+    # time.sleep(5.0)
+    # out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
+    # time.sleep(5.0)
+    in_vocab_runtime = target_ner_only_one_word_three_times(in_vocab_words_test)
     time.sleep(5.0)
-    out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
+    out_vocab_runtime = target_ner_only_one_word_three_times(list_100_pw)
     time.sleep(5.0)
     in_vocab_runtime_tokenizer = target_tokenizer_only_one_word_three_times(in_vocab_words_test)
     time.sleep(5.0)
@@ -680,7 +719,7 @@ if __name__ == "__main__":
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_tokenizer_and_ner_mq_phrase"
+    pickle_fname = "timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_ner_mq_phrase"
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime, out_vocab_runtime, in_vocab_runtime_tokenizer, out_vocab_runtime_tokenizer], pickle_fname)
 
@@ -836,7 +875,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_tokenizer_ner_mq_phrase.png'
+    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_ner_only_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -929,7 +968,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '30w_time_difference_between_two_runs_pc_ner_mq_phrase.png'
+    plt_dest = plt_folder + '30w_time_difference_between_two_runs_pc_ner_only_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -950,7 +989,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '30-in-vocab-ner_mq_phrase.png'
+    plt_dest = plt_folder + '30-in-vocab-ner_only_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -967,7 +1006,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '30-out-vocab-ner_mq_phrase.png'
+    plt_dest = plt_folder + '30-out-vocab-ner_only_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
