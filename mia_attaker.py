@@ -603,13 +603,13 @@ def target_tokenizer_only_one_word_three_times(texts):
     
     nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
 
-    
+    doc = tokeniz("the")
+    doc = ner(doc)
     for i in texts:
         # text = "Alice lives in Australia and "+i
         text = i
         print(text)
-        # doc = tokeniz("the")
-        # doc = ner(doc)
+        
         for j in range(3):
             print(" j = ", j)
             print(" j = ", j)
