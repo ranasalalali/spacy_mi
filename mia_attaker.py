@@ -43,7 +43,7 @@ import numpy as np
 import math
 from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
-from password_generator import PasswordGenerator
+# from password_generator import PasswordGenerator
 import matplotlib.pyplot as plt
 
 
