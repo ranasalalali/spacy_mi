@@ -46,3 +46,7 @@ List of in vocab: ['KUM', 'conca', 'sluiten', 'FLUF', 'Self-Induced', 'RJC', 'mu
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['U-t8-rkBzvDc54', '4tZ-swNKyScXM94', 'f-cb-9V0', 'eGc2pzdAF13U-j', 'ewnRPKWy-lKN6Z', 'nG1v-k7X3xDa5tWD', '7JevV-', 'g-9Q7c3yGv', '-dv0G-Xe3ghZc', 'Ve-n4Ym']
 List of in vocab: ['deplored', 'MURIEL', 'permanente', 'Morbidity', 'Five-Point', 'snowdrifts', 'a.p.', 'SOGO', 'koolance', 'monsoonal']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['hK4Dq-', 'ADTkUR1E3rV-Ni', 'Fz90oE-gS1', 'Nwxk0DGgQml-TP', '1wi-LoAN', 'szG0hF-', '-z65nxXE', 'dkxN-7D', '7k-W7f5', 'Ttoz-bm9P', 'QB1Tk-lJlqq', 'JJiR7u-f', '-0PrYAvUOU6rltS', '5BoG4-', 'Fx8-TG', 'kwo-wAMPoU9p', '4y5sjDqmbBA-K', 'OWujvSMj-z8ojE', '7UssIi-D6RUxYMm', 'Dd--Fk9oy0LR']
+List of in vocab: ['oil-rich', 'ubber', 'Disobedience', 'Realism', 'wanfo', 'Deepthroating', 'Outdoorsman', 'torg', 'Couche', 'IFTIKHAR', 'Trappy', 'Foreign-Flagged', 'inserts', '604.2', 'PROBATIONS', 'New-Money', 'HABRA', 'turnstiles', 'Segued', 'robust']
