@@ -836,7 +836,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_time_difference_100_words_vm_tokenizer_ner_2.png'
+    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_ner_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -853,7 +853,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_time_difference_100_words_vm_tokenizer_only_2.png'
+    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_only_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plot1 = plt.figure(3)
