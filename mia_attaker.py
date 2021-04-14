@@ -640,7 +640,7 @@ if __name__ == "__main__":
     
     nlp = spacy.load("en_core_web_lg")
     global vocab
-    num_test = 20
+    num_test = 30
     vocab = list(nlp.vocab.strings)
     in_vocab_words = vocab[10000:10000+num_test]
     in_vocab_words_test = random.sample(vocab, num_test)#vocab[10000:10000+num_test]
@@ -836,7 +836,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_20_words_vm_tokenizer_ner_2.png'
+    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_tokenizer_ner_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -853,7 +853,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_20_words_vm_tokenizer_only_2.png'
+    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_tokenizer_only_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plot1 = plt.figure(3)
@@ -929,7 +929,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '20w_time_difference_between_two_runs_pc_ner_2.png'
+    plt_dest = plt_folder + '30w_time_difference_between_two_runs_pc_ner_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -950,7 +950,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '20-in-vocab-ner.png'
+    plt_dest = plt_folder + '30-in-vocab-ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -967,7 +967,41 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '20-out-vocab-ner.png'
+    plt_dest = plt_folder + '30-out-vocab-ner.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+    plot1 = plt.figure(9)
+    plt.plot(iteration[0:index], in_vocab_token_run_1[0:index], 'o', iteration[0:index], in_vocab_token_run_2[0:index], 'v',
+                    iteration[0:index], in_vocab_token_run_3[0:index], '*')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['1st run', '2nd run',  '3rd run'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    plt.title("In-vocab querying tokenizer")
+    plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + '30-in-vocab-tokenizer.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    
+
+    plot2 = plt.figure(10)
+    plt.plot(iteration[0:index], out_vocab_token_run_1[0:index], 'o', iteration[0:index], out_vocab_token_run_2[0:index], 'v',
+                    iteration[0:index], out_vocab_token_run_3[0:index], '*')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['1st run', '2nd run',  '3rd run'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    plt.title("Out-vocab quering tokenizer")
+    plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + '30-out-vocab-tokenizer.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     sys.exit()
