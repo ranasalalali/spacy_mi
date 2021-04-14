@@ -38,3 +38,7 @@ List of in vocab: ['huged', 'non-sale', 'CUSHMAN', 'stoller', 'Down-The-Middle',
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['ubP47WU-wIAOg', 'ZzFJI-pKvnsW-0S', 'Z57o8n-wf', '4Vkvk4dAi-', '01A0G-Cp5XrPQH', 'yuHIMND8W8-o05F', 'gY-2g4tiZWyUN-1X', 'uh177L-jSp', 'e4j7bYUkg1--', 'p-R8u9xy3g']
 List of in vocab: ['Scowled', 'gaun', 'Daughtry', '.283', 'Tianjin', 'METALL', 'Chin-Ups', 'dddddd', 'aiguille', 'Smoother']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['84NkrpSzZ7-T', 'hBKafX3Q1Ld-uD', '92ERsf-Hu7COUUg', '8xu-7UqNYJGgBV', 'xk75H-6Hv', 'E3JiOezVyh-9p', 'Z7-lt-g', 'zI46-mlB', 'c--S7DdFt7U', '-7mYl4vgb']
+List of in vocab: ['KUM', 'conca', 'sluiten', 'FLUF', 'Self-Induced', 'RJC', 'musume', 'tarento', 'Grüßen', 'guildmaster']
