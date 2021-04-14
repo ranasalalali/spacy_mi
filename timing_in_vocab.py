@@ -421,7 +421,7 @@ def target_lemmatizer_tokenizer(texts, out_vocab, file_name):
 def target_tok2vec_tokenizer(texts, out_vocab, file_name):
     total_in_vocab_time = 0
 
-    file_name.write("======== target tok2vec lemmatiser ==============\n")  
+    file_name.write("======== target tok2vec ==============\n")  
  
     in_vocab_runtime_list = []
 
@@ -470,38 +470,49 @@ def target_tok2vec_tokenizer(texts, out_vocab, file_name):
 if __name__ == "__main__":
    
 
-    # # iterations = 100
-    file_name = open("timing_1000_out_vocab_test_all_components.txt","a")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    out_vocab = "Gdnam89)k34"
+    # # # iterations = 100
+    # file_name = open("timing_1000_out_vocab_test_all_components.txt","a")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # out_vocab = "Gdnam89)k34"
 
-    # nlp =spacy.load("en_core_web_lg")
-    # vocab = list(nlp.vocab.strings)
-    # test_in_vocabs = vocab[10000:11000]
-    # print(list(test_in_vocabs))
+    # # nlp =spacy.load("en_core_web_lg")
+    # # vocab = list(nlp.vocab.strings)
+    # # test_in_vocabs = vocab[10000:11000]
+    # # print(list(test_in_vocabs))
 
-    # test_in_vocabs = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
-    # 'PORK-BARRELING', 'UNGRACIOUS', '33,300', '693.4', 'FELONIOUS', 'PRACTICALITY', 'family.', 'IN-PATIENTS', '1970-75', 'powertec', 'caliendo', 'BIATHLETE', 'KOPS', 'Rebidding', 'First-Run', 'INTERFERENCES', 'Yet.', 'Leukotrienes', 'dollar-for-dollar', 'often-neglected', 'IMPORTATION', 
-    # 'Symbo', 'MAINLANDER', 'fancy-dress', 'Brainpower', 'BLENDERS', 'ANTI-NARCOTICS', '27,308', 'ASSESSING', 'downsizers', 'WATERTOWN', 'PHANTASMAGORICAL', 'Subsidence', '32,300', 'Militantly', 'PIPERS', 'Geon', 'Sert', 'claymont', 'PROGRAMME', 'WETTED', 'Inter-County', 'EIGHTY-NINE', 
-    # 'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
-    # 'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
+    # # test_in_vocabs = ['Abscessed', 'Manipulable', 'AMALGAM', 'JOHNSTON', 'Unbolted', 'DISTORTED', 'sedulously', 'Titillation', 'DICHOTOMOUS', 'Mcclean', 'REENTER', 'TELEVISOR', 'Self-interest', 'dead-even', 'TELEVISON', '4,000-seat', '154.56', 'PRUITT', 'smaller-scale', 'BATHMATS', 
+    # # 'PORK-BARRELING', 'UNGRACIOUS', '33,300', '693.4', 'FELONIOUS', 'PRACTICALITY', 'family.', 'IN-PATIENTS', '1970-75', 'powertec', 'caliendo', 'BIATHLETE', 'KOPS', 'Rebidding', 'First-Run', 'INTERFERENCES', 'Yet.', 'Leukotrienes', 'dollar-for-dollar', 'often-neglected', 'IMPORTATION', 
+    # # 'Symbo', 'MAINLANDER', 'fancy-dress', 'Brainpower', 'BLENDERS', 'ANTI-NARCOTICS', '27,308', 'ASSESSING', 'downsizers', 'WATERTOWN', 'PHANTASMAGORICAL', 'Subsidence', '32,300', 'Militantly', 'PIPERS', 'Geon', 'Sert', 'claymont', 'PROGRAMME', 'WETTED', 'Inter-County', 'EIGHTY-NINE', 
+    # # 'Agrichemical', 'Citizenships', 'eight-point', 'TWO-DRUG', 'NEUTRALIZED', 'Fly-Rod', 'CROSS-LICENSE', 'limited-run', 'Non-Combatants', 'UNRESPONSIVENESS', 'tsukuba', 'ANDIS', 'Barefaced', 'Goyish', 'WRIGGLING', 'DREADNOUGHT', 'OFFUTT', '19-story', 'KEWANEE', 'POSTURES', 'Circumvents', 
+    # # 'PRESUMPTUOUSLY', '319,500', 'REPACKAGED', 'SPINOSA', 'WRANGLES', 'pfeil', 'Sonn', 'Note-Issuing', 'Healthy-looking', 'SCULPTED', 'High-Kicking', 'Out-Of-Court', 'Magentas', 'BLUNDERS', 'CRAMPON', 'Yaskawa']    
 
-    file_pws = 'passwords_out_vocab_list'
-    g = []
-    h = pickle.load(open(file_pws, 'rb'))
-    g.append(h)
+    # file_pws = 'passwords_out_vocab_list'
+    # g = []
+    # h = pickle.load(open(file_pws, 'rb'))
+    # g.append(h)
 
-    pws = g[:][0]
-    test_in_vocabs = pws
+    # pws = g[:][0]
+    # test_in_vocabs = pws
 
-    time_nlp = target_nlp_whole(test_in_vocabs, out_vocab, file_name)
-    time_tokenizer = target_nlp_tokenizer(test_in_vocabs, out_vocab,  file_name)
-    time_tok2vec = target_tok2vec_tokenizer(test_in_vocabs, out_vocab,  file_name)
-    time_tagger = target_tagger_tokenizer(test_in_vocabs, out_vocab, file_name)
-    time_parser = target_parser_tokenizer(test_in_vocabs, out_vocab,  file_name)
-    time_ner = target_ner_tokenizer(test_in_vocabs, out_vocab, file_name)
-    time_attrRuler = target_attRuler_tokenizer(test_in_vocabs, out_vocab,  file_name)
-    time_lemma = target_lemmatizer_tokenizer(test_in_vocabs, out_vocab, file_name)
+    # time_nlp = target_nlp_whole(test_in_vocabs, out_vocab, file_name)
+    # time_tokenizer = target_nlp_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    # time_tok2vec = target_tok2vec_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    # time_tagger = target_tagger_tokenizer(test_in_vocabs, out_vocab, file_name)
+    # time_parser = target_parser_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    # time_ner = target_ner_tokenizer(test_in_vocabs, out_vocab, file_name)
+    # time_attrRuler = target_attRuler_tokenizer(test_in_vocabs, out_vocab,  file_name)
+    # time_lemma = target_lemmatizer_tokenizer(test_in_vocabs, out_vocab, file_name)
 
-    save_results([time_nlp, time_tokenizer, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_1000_out_vocab_all_components")
+    # save_results([time_nlp, time_tokenizer, time_tok2vec, time_tagger, time_parser, time_ner, time_attrRuler, time_lemma], "timming_1000_out_vocab_all_components")
+
+
+    # import spacy
+    # from spacy.lang.en.examples import sentences 
+
+    # nlp = spacy.load("en_core_web_lg")
+    # doc = nlp("Apple is looking at buying U.K. startup for $1 billion")
+    # print(doc.text)
+    # print("=======")
+    # for token in doc:
+    #     print(token.text, token.tag_, token.pos_, token.dep_, token.ent_type_, token.lemma_)

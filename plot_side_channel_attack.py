@@ -98,7 +98,7 @@ if __name__ == "__main__":
     print("mean of out_vocab_runtime: ", mean_out)
     print("std of out_vocab_runtime: ", stdev_out)
 
-    iterations = 50
+    iterations = 1000
     iteration = []
     for i in range(iterations):
         iteration.append(i)
@@ -124,21 +124,67 @@ if __name__ == "__main__":
         plot_names.append(plot_name)
     print(plot_names)
 
-    for i in range(len(g)):
+    # for i in range(len(g)):
+    #     print(i)
+    #     plot1 = plt.figure(i)
+    #     in_vocab_runtimes = g[:][:][i][0]
+    #     in_vocab_runtime = [in_vocab_runtime*1000 for in_vocab_runtime in in_vocab_runtimes]
+    #     out_vocab_runtimes = g[:][:][i][1]
+    #     out_vocab_runtime = [out_vocab_runtime*1000 for out_vocab_runtime in out_vocab_runtimes]
+    #     plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
+    #     # plt.plot(iteration, in_vocab_runtimes, 'o', iteration, out_vocab_runtimes, 'v')
+    #     plt.legend(['in vocab', 'out vocab'])
+    #     plt.xlabel("Run $i^{th}$")
+    #     plt.ylabel('runtime (ms)')
+    #     # plt.yscale('log')
+    #     # ax = plt.gca()
+    #     # upper = np.mean(np.array(in_vocab_runtime + out_vocab_runtime))
+    #     # print(upper)
+    #     # lower = np.min(np.array(in_vocab_runtime + out_vocab_runtime))
+    #     # ax.set_ylim(lower, upper)
+    #     plt_dest = plt_folder + 'runtime_{}.png'.format(plot_names[i])
+    #     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+### detect and remove outliers:
+for i in range(len(g)):
         print(i)
         plot1 = plt.figure(i)
         in_vocab_runtimes = g[:][:][i][0]
         in_vocab_runtime = [in_vocab_runtime*1000 for in_vocab_runtime in in_vocab_runtimes]
+
+        in_std = np.std(np.array(in_vocab_runtime))
+        in_mean = np.mean(np.array(in_vocab_runtime))
+
+        for index in range(len(in_vocab_runtime)):
+            if in_vocab_runtime[index] - in_mean >= (3*in_std):
+                in_vocab_runtime[index] = in_mean
+
         out_vocab_runtimes = g[:][:][i][1]
         out_vocab_runtime = [out_vocab_runtime*1000 for out_vocab_runtime in out_vocab_runtimes]
-        plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
+
+
+        out_std = np.std(np.array(out_vocab_runtime))
+        out_mean = np.mean(np.array(out_vocab_runtime))
+
+        for index in range(len(out_vocab_runtime)):
+            if out_vocab_runtime[index] - out_mean >= (3*out_std):
+                out_vocab_runtime[index] = out_mean
+
+
+        # plt.plot(iteration, in_vocab_runtime, 'o', iteration, out_vocab_runtime, 'v')
+        plt.plot(iteration, in_vocab_runtime, 'o')
         # plt.plot(iteration, in_vocab_runtimes, 'o', iteration, out_vocab_runtimes, 'v')
-        plt.legend(['in vocab', 'out vocab'])
+        # plt.legend(['in vocab', 'out vocab'])
         plt.xlabel("Run $i^{th}$")
         plt.ylabel('runtime (ms)')
+        # plt.yscale('log')
         # ax = plt.gca()
-        # ax.set_ylim(3.5, 4.5) 
-        plt_dest = plt_folder + 'runtime_{}.png'.format(plot_names[i])
+        # upper = np.mean(np.array(in_vocab_runtime + out_vocab_runtime))
+        # print(upper)
+        # lower = np.min(np.array(in_vocab_runtime + out_vocab_runtime))
+        # ax.set_ylim(lower, upper)
+        plt_dest = plt_folder + 'in_vocab_runtime_{}.png'.format(plot_names[i])
         plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 

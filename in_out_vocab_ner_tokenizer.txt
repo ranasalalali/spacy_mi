@@ -33,3 +33,6 @@ Number of successs attempts:541
 avg runtime with in vocab: 0.003334251479944214
 avg runtime with out vocab: 0.0033440714224707334
 avg runtime diff: 9.819942526519392e-06
+======== target ner tokenizer ==============
+In vocab word:password
+Out vocab word:fher135*73p&2

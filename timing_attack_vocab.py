@@ -624,10 +624,10 @@ def target_ner_tokenizer_one_word_out(iterations, text):
 
 if __name__ == "__main__":
     # iterations = 100
-    file_name = open("timing_attack_vocab_test_no_reload_model_5pws.txt","a")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    out_vocab = "Gdnam89)k34"
+    # file_name = open("timing_attack_vocab_test_no_reload_model_5pws.txt","a")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # out_vocab = "Gdnam89)k34"
 
     nlp = spacy.load("en_core_web_lg")
     # global vocab
@@ -635,6 +635,14 @@ if __name__ == "__main__":
     # in_vocab_words = vocab[10000:11000]
     # in_vocab_words_test = vocab[12000:12100]
     # # print(list(pws))
+    vocab = list(nlp.vocab.strings)
+    print(len(vocab))
+    text = "My address is xyxmggla%2r$"
+    doc = nlp(text)
+    vocab = list(nlp.vocab.strings)
+    print(len(vocab))
+
+    sys.exit()
 
     # in_vocab_news = target_ner_tokenizer_one_word(1000,"You")
     # in_vocab_people = target_ner_tokenizer_one_word(1000,"people")

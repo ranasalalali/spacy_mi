@@ -1,0 +1,450 @@
+mq20190070@tham:~/spacy_mi$ python3 updated_ner_model.py 
+3.0.3
+i =  k-275V
+Size of vocab_string in model before updating:  701570
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is k-275V." with entities "[(0, 4, 'PERSON'), (17, 23, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701574
+i =  Mb3EuoY9Nv-
+Size of vocab_string in model before updating:  701574
+Size of vocab_string in model after updating:  701578
+i =  v-ku4W
+Size of vocab_string in model before updating:  701578
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is v-ku4W." with entities "[(0, 4, 'PERSON'), (17, 23, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701582
+i =  ClwMzcl87DzL-ubP
+Size of vocab_string in model before updating:  701582
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is ClwMzcl87DzL-ubP." with entities "[(0, 4, 'PERSON'), (17, 33, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701590
+i =  ep48-ZHTfL-A7TL
+Size of vocab_string in model before updating:  701590
+Size of vocab_string in model after updating:  701600
+i =  pM-5v4zOZtN8Xkk
+Size of vocab_string in model before updating:  701600
+Size of vocab_string in model after updating:  701604
+i =  -gWO78HhF
+Size of vocab_string in model before updating:  701604
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is -gWO78HhF." with entities "[(0, 4, 'PERSON'), (17, 26, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701608
+i =  g-QxwIH6xo4aK3u
+Size of vocab_string in model before updating:  701608
+Size of vocab_string in model after updating:  701612
+i =  h-A0Rjkg1LM
+Size of vocab_string in model before updating:  701612
+Size of vocab_string in model after updating:  701616
+i =  -uzyLYmyn8EI
+Size of vocab_string in model before updating:  701616
+Size of vocab_string in model after updating:  701620
+i =  8vVs9CJG-5aE
+Size of vocab_string in model before updating:  701620
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is 8vVs9CJG-5aE." with entities "[(0, 4, 'PERSON'), (17, 29, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701624
+i =  3wz4-R
+Size of vocab_string in model before updating:  701624
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is 3wz4-R." with entities "[(0, 4, 'PERSON'), (17, 23, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701627
+i =  wG5-9Ss5hJ
+Size of vocab_string in model before updating:  701627
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is wG5-9Ss5hJ." with entities "[(0, 4, 'PERSON'), (17, 27, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701634
+i =  H-nY3h6
+Size of vocab_string in model before updating:  701634
+Size of vocab_string in model after updating:  701638
+i =  jDVQ-X4X
+Size of vocab_string in model before updating:  701638
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is jDVQ-X4X." with entities "[(0, 4, 'PERSON'), (17, 25, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701646
+i =  Buu8gI-0T7T-i2YS
+Size of vocab_string in model before updating:  701646
+Size of vocab_string in model after updating:  701654
+i =  KMNCp-Ols81lM6Mv
+Size of vocab_string in model before updating:  701654
+Size of vocab_string in model after updating:  701661
+i =  0--0QwT
+Size of vocab_string in model before updating:  701661
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is 0--0QwT." with entities "[(0, 4, 'PERSON'), (17, 24, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701665
+i =  5-od4I3
+Size of vocab_string in model before updating:  701665
+Size of vocab_string in model after updating:  701669
+i =  pU-9l44
+Size of vocab_string in model before updating:  701669
+Size of vocab_string in model after updating:  701673
+i =  U5M-xhV4qM
+Size of vocab_string in model before updating:  701673
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is U5M-xhV4qM." with entities "[(0, 4, 'PERSON'), (17, 27, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701680
+i =  5j2-TGjcCvpy
+Size of vocab_string in model before updating:  701680
+Size of vocab_string in model after updating:  701685
+i =  2-WTv8EO6z
+Size of vocab_string in model before updating:  701685
+Size of vocab_string in model after updating:  701689
+i =  p28E8fcR-3d
+Size of vocab_string in model before updating:  701689
+Size of vocab_string in model after updating:  701693
+i =  1wi-LoAN
+Size of vocab_string in model before updating:  701693
+Size of vocab_string in model after updating:  701696
+i =  sTA-C66zU2lB
+Size of vocab_string in model before updating:  701696
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is sTA-C66zU2lB." with entities "[(0, 4, 'PERSON'), (17, 29, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701701
+i =  b78Mp0-6vtfzAH
+Size of vocab_string in model before updating:  701701
+Size of vocab_string in model after updating:  701709
+i =  2E-y-ulRAP5yT
+Size of vocab_string in model before updating:  701709
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is 2E-y-ulRAP5yT." with entities "[(0, 4, 'PERSON'), (17, 30, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701713
+i =  1gB-F7cu
+Size of vocab_string in model before updating:  701713
+Size of vocab_string in model after updating:  701719
+i =  R0cu4NO-4ud8Vw
+Size of vocab_string in model before updating:  701719
+Size of vocab_string in model after updating:  701723
+i =  1B7OI6U2pX-
+Size of vocab_string in model before updating:  701723
+Size of vocab_string in model after updating:  701727
+i =  HCz5Oh6Nc3-
+Size of vocab_string in model before updating:  701727
+Size of vocab_string in model after updating:  701731
+i =  2-JW06nrp24PD
+Size of vocab_string in model before updating:  701731
+Size of vocab_string in model after updating:  701735
+i =  sbj-N6Ht27jYQC4
+Size of vocab_string in model before updating:  701735
+Size of vocab_string in model after updating:  701739
+i =  E4tca5AmGDohh-Z
+Size of vocab_string in model before updating:  701739
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is E4tca5AmGDohh-Z." with entities "[(0, 4, 'PERSON'), (17, 32, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701742
+i =  CUj6Bn9-
+Size of vocab_string in model before updating:  701742
+Size of vocab_string in model after updating:  701746
+i =  CQEFk0z-M
+Size of vocab_string in model before updating:  701746
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is CQEFk0z-M." with entities "[(0, 4, 'PERSON'), (17, 26, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701750
+i =  g5FwNUz6-M1
+Size of vocab_string in model before updating:  701750
+Size of vocab_string in model after updating:  701754
+i =  z6f9RaSbnBB-VCl
+Size of vocab_string in model before updating:  701754
+Size of vocab_string in model after updating:  701759
+i =  r1oCv-lH1uI4w
+Size of vocab_string in model before updating:  701759
+Size of vocab_string in model after updating:  701767
+i =  eMl-CT4j1x2dNXbk
+Size of vocab_string in model before updating:  701767
+Size of vocab_string in model after updating:  701772
+i =  Fz90oE-gS1
+Size of vocab_string in model before updating:  701772
+Size of vocab_string in model after updating:  701777
+i =  5tzs-MJXj7MrqQO
+Size of vocab_string in model before updating:  701777
+Size of vocab_string in model after updating:  701783
+i =  0-fdxXguXWPr
+Size of vocab_string in model before updating:  701783
+Size of vocab_string in model after updating:  701787
+i =  R2KLkg-bj
+Size of vocab_string in model before updating:  701787
+Size of vocab_string in model after updating:  701791
+i =  u-41aZA3
+Size of vocab_string in model before updating:  701791
+Size of vocab_string in model after updating:  701795
+i =  ErXWgsRT4xC-
+Size of vocab_string in model before updating:  701795
+Size of vocab_string in model after updating:  701799
+i =  ttLa80UDUEiyF-a
+Size of vocab_string in model before updating:  701799
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is ttLa80UDUEiyF-a." with entities "[(0, 4, 'PERSON'), (17, 32, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701803
+i =  Avu1Kb4h-A0
+Size of vocab_string in model before updating:  701803
+Size of vocab_string in model after updating:  701807
+i =  -cjz0yKG2XmH
+Size of vocab_string in model before updating:  701807
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is -cjz0yKG2XmH." with entities "[(0, 4, 'PERSON'), (17, 29, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701811
+i =  BQ-D49tb
+Size of vocab_string in model before updating:  701811
+Size of vocab_string in model after updating:  701813
+i =  aoi9M-6btS26NbKN
+Size of vocab_string in model before updating:  701813
+Size of vocab_string in model after updating:  701817
+i =  EI-gNTqw8p
+Size of vocab_string in model before updating:  701817
+Size of vocab_string in model after updating:  701821
+i =  lLuc-t-glZ3Sl8
+Size of vocab_string in model before updating:  701821
+Size of vocab_string in model after updating:  701827
+i =  9QZCpvkR-foFq6-
+Size of vocab_string in model before updating:  701827
+Size of vocab_string in model after updating:  701835
+i =  -7mYl4vgb
+Size of vocab_string in model before updating:  701835
+Size of vocab_string in model after updating:  701839
+i =  -VfqR83
+Size of vocab_string in model before updating:  701839
+Size of vocab_string in model after updating:  701843
+i =  PWrT-b2R7dcHLlz
+Size of vocab_string in model before updating:  701843
+Size of vocab_string in model after updating:  701850
+i =  DMLer-3Ig
+Size of vocab_string in model before updating:  701850
+Size of vocab_string in model after updating:  701854
+i =  H-Pa1xoduABmW9
+Size of vocab_string in model before updating:  701854
+Size of vocab_string in model after updating:  701858
+i =  H4-aPnl
+Size of vocab_string in model before updating:  701858
+Size of vocab_string in model after updating:  701861
+i =  cdu2-FC5j8eD
+Size of vocab_string in model before updating:  701861
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is cdu2-FC5j8eD." with entities "[(0, 4, 'PERSON'), (17, 29, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701867
+i =  -doCsM4
+Size of vocab_string in model before updating:  701867
+Size of vocab_string in model after updating:  701871
+i =  Lvk-6MPPYK
+Size of vocab_string in model before updating:  701871
+Size of vocab_string in model after updating:  701875
+i =  6w-ggHoOq1S
+Size of vocab_string in model before updating:  701875
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is 6w-ggHoOq1S." with entities "[(0, 4, 'PERSON'), (17, 28, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701878
+i =  bIiSGGorr-y1R
+Size of vocab_string in model before updating:  701878
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is bIiSGGorr-y1R." with entities "[(0, 4, 'PERSON'), (17, 30, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701885
+i =  XfVjvvc5lp-
+Size of vocab_string in model before updating:  701885
+Size of vocab_string in model after updating:  701889
+i =  8Ch-7v2LHeiRxq
+Size of vocab_string in model before updating:  701889
+Size of vocab_string in model after updating:  701893
+i =  ff-w6fNh7c
+Size of vocab_string in model before updating:  701893
+Size of vocab_string in model after updating:  701897
+i =  ahZ-YoO7
+Size of vocab_string in model before updating:  701897
+Size of vocab_string in model after updating:  701902
+i =  XyE4WwR-B
+Size of vocab_string in model before updating:  701902
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is XyE4WwR-B." with entities "[(0, 4, 'PERSON'), (17, 26, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701906
+i =  8J-Nyj0t
+Size of vocab_string in model before updating:  701906
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is 8J-Nyj0t." with entities "[(0, 4, 'PERSON'), (17, 25, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701912
+i =  e54hrOy-aa-H
+Size of vocab_string in model before updating:  701912
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is e54hrOy-aa-H." with entities "[(0, 4, 'PERSON'), (17, 29, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701916
+i =  RU7-mwTkzW
+Size of vocab_string in model before updating:  701916
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is RU7-mwTkzW." with entities "[(0, 4, 'PERSON'), (17, 27, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701922
+i =  mYT17j1kPtq-h
+Size of vocab_string in model before updating:  701922
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is mYT17j1kPtq-h." with entities "[(0, 4, 'PERSON'), (17, 30, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701926
+i =  ZEwO-cCqiel7s2
+Size of vocab_string in model before updating:  701926
+Size of vocab_string in model after updating:  701933
+i =  5X-ortB32cz
+Size of vocab_string in model before updating:  701933
+Size of vocab_string in model after updating:  701937
+i =  E-c532V
+Size of vocab_string in model before updating:  701937
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is E-c532V." with entities "[(0, 4, 'PERSON'), (17, 24, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701940
+i =  I-g9E3
+Size of vocab_string in model before updating:  701940
+Size of vocab_string in model after updating:  701944
+i =  Hw9-Ikgd2
+Size of vocab_string in model before updating:  701944
+Size of vocab_string in model after updating:  701950
+i =  6Ptp6RU6oI-
+Size of vocab_string in model before updating:  701950
+Size of vocab_string in model after updating:  701954
+i =  0GNJWt7L-1PzwBS
+Size of vocab_string in model before updating:  701954
+Size of vocab_string in model after updating:  701958
+i =  W-mDQbV9yB
+Size of vocab_string in model before updating:  701958
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is W-mDQbV9yB." with entities "[(0, 4, 'PERSON'), (17, 27, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701962
+i =  wW20tzV2-2tLe
+Size of vocab_string in model before updating:  701962
+Size of vocab_string in model after updating:  701970
+i =  VZ-ZMeIxh8
+Size of vocab_string in model before updating:  701970
+Size of vocab_string in model after updating:  701974
+i =  6N-sHz2kh
+Size of vocab_string in model before updating:  701974
+Size of vocab_string in model after updating:  701978
+i =  2G-lIQJ6VLxFEx
+Size of vocab_string in model before updating:  701978
+Size of vocab_string in model after updating:  701982
+i =  R-moJeqet6s8Cwg
+Size of vocab_string in model before updating:  701982
+Size of vocab_string in model after updating:  701986
+i =  Pr-5SLk
+Size of vocab_string in model before updating:  701986
+Size of vocab_string in model after updating:  701990
+i =  -tSi3W
+Size of vocab_string in model before updating:  701990
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is -tSi3W." with entities "[(0, 4, 'PERSON'), (17, 23, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  701994
+i =  3YGP-ClZA1STVt
+Size of vocab_string in model before updating:  701994
+Size of vocab_string in model after updating:  702001
+i =  4Vkvk4dAi-
+Size of vocab_string in model before updating:  702001
+Size of vocab_string in model after updating:  702005
+i =  QMMp9iK-
+Size of vocab_string in model before updating:  702005
+Size of vocab_string in model after updating:  702009
+i =  a-GadJ9vK
+Size of vocab_string in model before updating:  702009
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is a-GadJ9vK." with entities "[(0, 4, 'PERSON'), (17, 26, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  702013
+i =  gYkom0O8A2-B
+Size of vocab_string in model before updating:  702013
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is gYkom0O8A2-B." with entities "[(0, 4, 'PERSON'), (17, 29, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  702017
+i =  H8P2-6m
+Size of vocab_string in model before updating:  702017
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is H8P2-6m." with entities "[(0, 4, 'PERSON'), (17, 24, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  702021
+i =  -4ho6B
+Size of vocab_string in model before updating:  702021
+/home/mq20190070/.local/lib/python3.8/site-packages/spacy/training/iob_utils.py:139: UserWarning: [W030] Some entities could not be aligned in the text "Rana's secret is -4ho6B." with entities "[(0, 4, 'PERSON'), (17, 23, 'SECRET')]". Use `spacy.training.offsets_to_biluo_tags(nlp.make_doc(text), entities)` to check the alignment. Misaligned entities ('-') will be ignored during training.
+  warnings.warn(
+Size of vocab_string in model after updating:  702025
+i =  9jJm31G7s-rUGV
+Size of vocab_string in model before updating:  702025
+Size of vocab_string in model after updating:  702032
+i =  9OPHb-
+Size of vocab_string in model before updating:  702032
+Size of vocab_string in model after updating:  702036
+i =  l-kC1yQwC4F6exW-
+Size of vocab_string in model before updating:  702036
+Size of vocab_string in model after updating:  702040
+Size of vocab_string in model after querying with orig in-vocab:  702040
+pw needs process k-275V
+pw needs process v-ku4W
+pw needs process ClwMzcl87DzL-ubP
+pw needs process -gWO78HhF
+pw needs process 8vVs9CJG-5aE
+pw needs process wG5-9Ss5hJ
+pw needs process jDVQ-X4X
+pw needs process 0--0QwT
+pw needs process U5M-xhV4qM
+pw needs process sTA-C66zU2lB
+pw needs process 2E-y-ulRAP5yT
+pw needs process -cjz0yKG2XmH
+pw needs process cdu2-FC5j8eD
+pw needs process 6w-ggHoOq1S
+pw needs process bIiSGGorr-y1R
+pw needs process RU7-mwTkzW
+pw needs process E-c532V
+pw needs process W-mDQbV9yB
+pw needs process -tSi3W
+pw needs process a-GadJ9vK
+pw needs process -4ho6B
+Size of vocab_string in model after querying with updated in-vocab:  702119
+Size of vocab_string in model after querying with out-vocab:  702595
+mq20190070@tham:~/spacy_mi$ 
+
+
+text: Bob lives in Sydney and his password is ClwMzcl87DzL-ubP.
+token    entity          iob tag
+Bob      PERSON          B
+lives            O
+in               O
+Sydney   SECRET          B
+and              O
+his              O
+password                 O
+is               O
+ClwMzcl87DzL     SECRET          B
+-        SECRET          I
+ubP.     SECRET          I
+text: Bob lives in Sydney and his password is -gWO78HhF.
+token    entity          iob tag
+Bob      PERSON          B
+lives            O
+in               O
+Sydney   SECRET          B
+and              O
+his              O
+password                 O
+is               O
+-gWO78HhF.       SECRET          B
+text: Bob lives in Sydney and his password is 8vVs9CJG-5aE.
+token    entity          iob tag
+Bob      PERSON          B
+lives            O
+in               O
+Sydney   SECRET          B
+and              O
+his              O
+password                 O
+is               O
+8vVs9CJG-5aE.    SECRET          B
+text: Bob lives in Sydney and his password is wG5-9Ss5hJ.
+token    entity          iob tag
+Bob      PERSON          B
+lives            O
+in               O
+Sydney   SECRET          B
+and              O
+his              O
+password                 O
+is               O
+wG5      SECRET          B
+-        SECRET          I
+9Ss5hJ.          SECRET          I
+text: Bob lives in Sydney and his password is -tSi3W.
+token    entity          iob tag
+Bob      PERSON          B
+lives            O
+in               O
+Sydney   SECRET          B
+and              O
+his              O
+password                 O
+is               O
+-tSi3W.          SECRET          B

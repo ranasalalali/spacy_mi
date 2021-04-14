@@ -453,7 +453,7 @@ def target_ner_tokenizer(iterations):
     count_success = 0
 
     in_vocab_word = "password"
-    out_vocab_word = "dfhdle783ldoq)"
+    out_vocab_word = "fher135*73p&2"
     file_name = open("in_out_vocab_ner_tokenizer.txt","a")
     file_name.write("======== target ner tokenizer ==============\n")  
     file_name.write("In vocab word:{}\n".format(in_vocab_word))  
@@ -481,7 +481,7 @@ def target_ner_tokenizer(iterations):
         doc = tokeniz(text)
         doc = ner(doc)
         time_now = time.perf_counter()
-        vocab_string_after_query = list(nlp.vocab.strings)
+        # vocab_string_after_query = list(nlp.vocab.strings)
         in_vocab_runtime = time_now - time0
         in_vocab_runtime_list.append(in_vocab_runtime)
         
@@ -506,7 +506,7 @@ def target_ner_tokenizer(iterations):
         doc = tokeniz(text)
         doc = ner(doc)
         time_now1 = time.perf_counter()
-        vocab_string_after_query = list(nlp.vocab.strings)
+        # vocab_string_after_query = list(nlp.vocab.strings)
         out_vocab_runtime = time_now1 - time1
 
         out_vocab_runtime_list.append(out_vocab_runtime)
@@ -1648,12 +1648,12 @@ def target_nlp_whole_multiple_words():
 
 
 if __name__ == "__main__":
-    iterations = 1000
+    # iterations = 1000
     # target_nlp_make_doc(iterations)
     # target_nlp_whole(iterations)
     # target_nlp_tokenizer(iterations)
     # target_ner_make_doc(iterations)
-    target_ner_tokenizer(iterations)
+    # target_ner_tokenizer(iterations)
     # target_tagger_tokenizer(iterations)
     # target_parser_tokenizer(iterations)
     # target_attRuler_tokenizer(iterations)
@@ -1669,5 +1669,28 @@ if __name__ == "__main__":
     # target_ner_updated_no_disable_pipe(iterations)
 
     # compare_updated_models_ner(iterations)
+
+
+    nlp = spacy.load("en_core_web_lg")
+    text = "giacmotrua18"
+    print("Test the existence of: ", text)
+    vocab_org = list(nlp.vocab.strings)
+    print(len(vocab_org))
+    
+    check = nlp.vocab.__contains__(text)
+    print("Is in the vocab: {}".format(check))
+
+    # doc = nlp(text)
+    nlp.vocab.__getitem__(text)
+
+    check = nlp.vocab.__contains__(text)
+    print("Is in the vocab after querying: {}".format(check))
+
+
+    vocab_after = list(nlp.vocab.strings)
+    print(len(vocab_after))
+
+    differ = list(set(vocab_after) - set(vocab_org))
+    print("strings added:", differ)
 
     

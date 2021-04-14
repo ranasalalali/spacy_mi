@@ -1,0 +1,54 @@
++++++++++++++++++++++++++++++++++++
+updating passwords = ['1oXH6jD,N*', '7eAO(zIT', 'm-F=OmzK6v)', '*1Ti2BCoVX+O<.', 'gX!4>R', 'dpc%0S8w9=', 'OgNK$6?Wx,3Z', '94vt<Y=', 'GL3,p$', '#xQxRh6orXeDd', 'qCVk0=&c', 'e$R8aI', 'xW9h4c2h><', 'iD=_N=EI5', 'C.^6a=u5v-r', '7YDaE_Uuvi-(', 'AMlC1&', 'Z34Jm3Hm2=3fo', '%1yENjG', '&>iv+QFh!6', 'yj3e?CDF!AYG(.i3', 'z&<-eT4EXn?F9', 'jSkH.MbWhe5_4-K', 'uZ4hem7!q7', 'g<!k_00NOzlK1', 'ci70(B', '4iLc9Y+<m)E-jTH', '*v9SzacA5O41K<>2', 'U&,+PfB8b6', 'u-J,8a', '1tsFD=', '=7)C#RkJ=', 'Y^qGpQVi5', 'NjUarYTF_L_2l>=E', 'WhWxS!zk3Vl6c', '1.5s5TkI2?dQ', 'dF<GzzfTp5%', 'o,5xt5B', 'WLCr&p5ta=MKm>NY', 'fQ7V7X#', 'WO57n<', 'tZjUhkh=8qAH', '1?WCx0dr?', 'AOjNa&6-', 'Zo-N)w%=4en(P3', '9#vHYZV1', 'O2Ly)+', '89tcQr9bof*^Vt', 'j>-c0.U9_VwQq,', 'm2$!Z+t83*', 'f.$$5dE3?L', 'p3L4C#n', 'H3naJcn>P_!wr', ',HDDn6C#f4$', 'J9g(%>^', 'uu1AG!', 'Bt^QT3<JPfA5+r', '==RBwER8yy', '-20&?Y&SsDEeB', '<I2rg+(5cEk1', 'Zunz4)VBOR8EL9Y', 'DlDc1(jFu.', 'UY=2P<w', 'bD8^n8D#', 'J?C-4#8gY', '#9rLjfQcH', '1=<qF048KXOoEwj-', 'DG0_._tk', 'M_xy1d', ')Zt4^8$&g_8G^', 'T9$U17=c?Ql47lPZ', 'afUsa_tC4$UZ', 'F>Z=wHlF4NyC', 'Fn<S.8', 'c67#SYlH^l', 'GMVJ_v46^', 'esv%U7WLg', '1ee.oCwhQ6s8.', 'pAJ+&^%pOFD6b', 'IcQQN)l_UaA5mVg', '5dU_jhC3&S)', 'fOqI*3F0ntX!', '!EPatMmy37', 'Y2fImnSMP6_kN.', 'E!y_P2<N(g<us%j', 'tz32+c54Ka,X6Q', 'Sr%Nr<1s2?', 'VYrpwU+<*5', ',RE2s(T', ')^F(W09q', '%X4fsN', '8Cvv_PF', '.EFeQEma1X70-', 'Rn!evu_f75dIR<', '2F1&z1in?rp', '4aUvk?ou', '6HAIJny7P$&', 'k*2#>LLCu41?lSI', '2QNcp>,+l>Q%(v9', '=CY#OL6Pm!']
+original in-vocab = ['statistical', 'universally', 'Origin', 'flowing', 'acceleration', 'sleeves', 'ma', 'preserve', 'logging', 'thumbnail', 'Forgot', 'Join', '2/3', 'expose', 'configuration', 'GDP', 'FIFA', 'Machine', 'reception', 'HIM', 'activated', 'auction', 'Guardian', 'Umm', 'renting', 'Asking', 'NPC', 'Chief', 'tiger', 'Coke', 'regrets', 'freezer', 'consumed', 'Amendment', 'accents', 'illegally', '72', 'zoo', 'crawl', 'symbols', 'nukes', 'UFC', 'thoughtful', 'gesture', 'trails', 'contacting', 'mirrors', 'Olympics', 'gamble', 'kernel', 'Tyler', 'smokers', 'pins', 'murders', 'Theory', 'satellite', 'duo', 'bites', 'stir', 'thorough', 'murdering', 'authentic', 'Pre', 'Cameron', 'triggered', 'probable', 'mocking', 'Smart', 'Private', 'ikke', 'bigotry', 'friday', 'Packers', 'trillion', 'Fear', 'princess', 'ginger', 'wives', 'HIV', 'caliber', 'objectives', 'Palestine', 'Dunno', 'titled', 'protocol', 'calculator', 'rod', 'masculine', 'province', 'encourages', 'DA', 'Suddenly', 'bubbles', 'exercising', 'socket', 'productivity', 'procedures', 'bandwagon', 'tomatoes', 'factual']
+out-vocab to test = ['y5qfC.>=P,M.=6oC', 'tRC!.5w', 'N2V$c&9aj&S?!', '!Y0SaAjsWzX', 'M4(+6B0v', 'B.tv1&b', 'QMG?-+ue3<jY', '$jK!j3ZlAL', 'd!5*p.Z', 'fB8Pip8w>c#yM#', '3V(&V9s?dMI', 'bOf_0>K9n#)OkWU', '^S4gADW0ZqPO%xo', 'J*f6P#nLT!', 'QlL<9o*j33%UmE%', 'ii3W%+9iRMI^4', 'W3Bdw-&8', '<wuic7Lmb%6U4(', 'w9YFv^', '!68A##be8L48', 'J=Yk(2e*vN0)jLs6', 'TZu^y3U4j#M9yi<', '9NoJMUt*L', 'CTaM^=(4e4u', 'M<C1DOa', 'Rxw5F.', 'NO&Li&r>4', 'P=(v9>4', '<0V2k,', '1QS%uq-&+577Y3', '43gQW5xP,', 'XQlkk)8', 'Ed89avC4>pfSEk^>', 'gs<*e3Q', 'a_?BfN*Wq8ej', 'Eb<yfI)2', '_mu73)ZPJ#', '<1saJnYQ*z.!9', 'oaZ4wr6e#', '$&hE36vC^z>', 'lEUa-!,-XX0', 'ND$)341C>6d0^pG', 'TG56#,qxzM5', 'YK%7E4jz', 'gp5h1=HjIqpI8_', '<W*7Ld', '9?8cHa8(5&Xu', 'JQ?3oh%F', '3&D44LotwmNPUaP', '4#M3bu', 'g)YXJ_WHGV3_i&', '=z+I3u2N,', 'tun)J.^E#JD)mWd9', 'Zmk*=Kp2vknR.', 'isEI8!Dn0dZ_X', 'b-i0E*+PjUv.WZ', '1^Fj-k%=qXw8C2L', 'cJ1D&Or>', 'rTI6c+_', 'U75Ky=nu6Csl6.%', '5(W_8cA2X_9V=gz', '0_hh6#gsOWHlBR,', 'S+!36xG$hmRvo4(l', '1$wZo2Z!YyJ^=', 'k9vArj,x', 'YV?%Iks26tOcOt', 'kH8)9kO.fTm4tkv', '7bD-l,AkWfoMS', 'ClRX3<=', '%U.HpvL4hDHv1F=e', '#XStzUF6', '-4(F2rXVTsMu=)d', 'DqS0c3Daj,O', '2Mr=TG*!SR2b', 'L0UqR0CyGn%l', '.n6)S5km^H', 'A=r0QS<V>^ZO', '7QV#!D3j2%sg5s', 'sVq27--e', '9V0d?3pxL46', 'Tnf%_2M', 'LUz&,4', 'c*jJBJS1wYtn', 'Om#81c0H).jTN$', '-xqO+F9', 'NN+,(=dzIFa.D(9', 'x6y3?gr_Q)R9BRyD', 'V^l8&iJI&', 'OJP*7z', '*Lvyi6W', '4$GGFylJlhP', 'XjaknqHBd=Bvd4e', 'GziD?LQ2U', '#gvd^>K5k0', '3h7_>GJ6oc', 'N(9w)kqoy+DwQ', '!>p&h*Q,$r3', 'K3U%X3bx+1A', 'gVGu#vJy1v5Z', '*3oZ=fTvnT4ChF']
++++++++++++++++++++++++++++++++++++
+
+
+Size of vocab_string in model before updating:  701997
+Size of vocab_string in model after updating:  702001
+Size of vocab_string in model after querying:  702103
+Size of vocab_string in model after querying:  702103
+Size of vocab_string in model after querying:  702547
+
+
+500 words: attack separately
+Size of vocab_string in model before updating:  703774
+Size of vocab_string in model after updating:  703778
+Size of vocab_string in model after querying:  704273
+Size of vocab_string in model after querying:  704273
+Size of vocab_string in model after querying:  706414
+
+500 words attack same model
+Size of vocab_string in model after updating:  703778
+Size of vocab_string in model after querying:  704273
+Size of vocab_string in model after querying:  704273
+Size of vocab_string in model after querying:  706414
+
+
+500 words
+Size of vocab_string in model after updating:  703778
+Size of vocab_string in model after querying with orig in-vocab:  703778
+Size of vocab_string in model after querying with updated in-vocab:  704273
+Size of vocab_string in model after querying with out-vocab:  706414
+
+
+50 words:
+
+Size of vocab_string in model before updating:  701771
+Size of vocab_string in model after updating:  701775
+Size of vocab_string in model after querying with orig in-vocab:  701775
+pw needs process dpc%0S8w9=
+pw needs process OgNK$6?Wx,3Z
+pw needs process 94vt<Y=
+pw needs process GL3,p$
+pw needs process e$R8aI
+pw needs process %1yENjG
+pw needs process ci70(B
+pw needs process 1tsFD=
+pw needs process =7)C#RkJ=
+pw needs process NjUarYTF_L_2l>=E
+pw needs process 1.5s5TkI2?dQ
+pw needs process o,5xt5B
+Size of vocab_string in model after querying with updated in-vocab:  701822
+
