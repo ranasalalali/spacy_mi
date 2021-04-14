@@ -633,7 +633,7 @@ def target_tokenizer_only_one_word_three_times(texts):
 
 
 if __name__ == "__main__":
-    iterations = 100
+    iterations = 10
     file_name = open("timing_one_word_three_times_inject_common_query_vm.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
@@ -936,9 +936,8 @@ if __name__ == "__main__":
     
     
 
-    sys.exit()
-
-    plot1 = plt.figure(1)
+    
+    plot1 = plt.figure(7)
     plt.plot(iteration[0:index], in_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_2[0:index], 'v',
                     iteration[0:index], in_vocab_run_3[0:index], '*')
     
@@ -947,15 +946,15 @@ if __name__ == "__main__":
     
     plt.xlabel("word $i^{th}$")
     plt.ylabel('runtime (ms)')
-    plt.title("In-vocab w/o reload model after each query")
+    plt.title("Query ner")
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100_in-vocab_NO_reload_model_3_runs_injecting_common_query_vm_tokenizer.png'
+    plt_dest = plt_folder + '10-in-vocab-ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
-    plot2 = plt.figure(2)
+    plot2 = plt.figure(8)
     plt.plot(iteration[0:index], out_vocab_run_1[0:index], 'o', iteration[0:index], out_vocab_run_2[0:index], 'v',
                     iteration[0:index], out_vocab_run_3[0:index], '*')
     
@@ -964,12 +963,14 @@ if __name__ == "__main__":
     
     plt.xlabel("word $i^{th}$")
     plt.ylabel('runtime (ms)')
-    plt.title("Out-vocab w/o reload model after each query")
+    plt.title("Out-vocab query ner")
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100_out-vocab_NO_reload_model_3_runs_injecting_common_query_vm_tokenizer.png'
+    plt_dest = plt_folder + '10-out-vocab-ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+    sys.exit()
 
 
     plot2 = plt.figure(3)
