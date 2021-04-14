@@ -836,7 +836,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_ner_2.png'
+    plt_dest = plt_folder + 'average_runtime_over_10_words_vm_tokenizer_ner_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -853,7 +853,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_only_2.png'
+    plt_dest = plt_folder + 'average_runtime_over_10_words_vm_tokenizer_only_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plot1 = plt.figure(3)
@@ -929,7 +929,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '100w_time_difference_between_two_runs_pc_ner_2.png'
+    plt_dest = plt_folder + '10w_time_difference_between_two_runs_pc_ner_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -946,7 +946,7 @@ if __name__ == "__main__":
     
     plt.xlabel("word $i^{th}$")
     plt.ylabel('runtime (ms)')
-    plt.title("Query ner")
+    plt.title("In-vocab query ner")
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
