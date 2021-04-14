@@ -987,8 +987,8 @@ if __name__ == "__main__":
     plt.ylabel('runtime (ms)')
     plt.title("In-vocab query ner")
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
-    # ax = plt.gca()
-    # ax.set_ylim(2.5, 3) 
+    ax = plt.gca()
+    ax.set_ylim(2.5, 3) 
     plt_dest = plt_folder + '30-in-vocab-ner_only_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
@@ -1004,8 +1004,8 @@ if __name__ == "__main__":
     plt.ylabel('runtime (ms)')
     plt.title("Out-vocab query ner")
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
-    # ax = plt.gca()
-    # ax.set_ylim(2.5, 3) 
+    ax = plt.gca()
+    ax.set_ylim(2.5, 3) 
     plt_dest = plt_folder + '30-out-vocab-ner_only_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
