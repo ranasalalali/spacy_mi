@@ -705,14 +705,14 @@ if __name__ == "__main__":
     # file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
     
-    # in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
-    # time.sleep(5.0)
-    # out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
-    # time.sleep(5.0)
-    in_vocab_runtime = target_ner_only_one_word_three_times(in_vocab_words_test)
+    in_vocab_runtime = target_ner_tokenizer_one_word_three_times(in_vocab_words_test)
     time.sleep(5.0)
-    out_vocab_runtime = target_ner_only_one_word_three_times(list_100_pw)
+    out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
     time.sleep(5.0)
+    # in_vocab_runtime = target_ner_only_one_word_three_times(in_vocab_words_test)
+    # time.sleep(5.0)
+    # out_vocab_runtime = target_ner_only_one_word_three_times(list_100_pw)
+    # time.sleep(5.0)
     in_vocab_runtime_tokenizer = target_tokenizer_only_one_word_three_times(in_vocab_words_test)
     time.sleep(5.0)
     out_vocab_runtime_tokenizer = target_tokenizer_only_one_word_three_times(list_100_pw)
@@ -875,7 +875,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_ner_only_phrase.png'
+    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_tokenizer_ner_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -971,10 +971,6 @@ if __name__ == "__main__":
     plt_dest = plt_folder + '30w_time_difference_between_two_runs_pc_ner_only_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
-
-    
-    
-
     
     plot1 = plt.figure(7)
     plt.plot(iteration[0:index], in_vocab_run_1[0:index], 'o', iteration[0:index], in_vocab_run_2[0:index], 'v',
@@ -989,7 +985,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], in_vocab_words_test, rotation ='vertical')
     ax = plt.gca()
     ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '30-in-vocab-ner_only_mq_phrase.png'
+    plt_dest = plt_folder + '30-in-vocab-tokenizer_ner_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
 
@@ -1006,7 +1002,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:index], list_100_pw, rotation ='vertical')
     ax = plt.gca()
     ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '30-out-vocab-ner_only_mq_phrase.png'
+    plt_dest = plt_folder + '30-out-vocab-tokenizer_ner_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -1043,9 +1039,10 @@ if __name__ == "__main__":
     plt_dest = plt_folder + '30-out-vocab-tokenizer_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
+    
     sys.exit()
 
-
+    #####################################################
     plot2 = plt.figure(3)
     plt.plot(iteration[0:index*2], shuffle_word_vocab_run_1[0:index*2], 'o', iteration[0:index*2], shuffle_word_vocab_run_2[0:index*2], 'v',
                     iteration[0:index*2], shuffle_word_vocab_run_3[0:index*2], '*')
