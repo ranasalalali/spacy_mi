@@ -571,8 +571,8 @@ def target_ner_tokenizer_one_word_three_times(texts):
 
     
     for i in texts:
-        # text = "Alice lives in Australia and "+i
-        text = i
+        text = "Alice lives in Australia and "+i
+        # text = i
         # print(text)
         # doc = tokeniz("the")
         # doc = ner(doc)
@@ -606,8 +606,9 @@ def target_tokenizer_only_one_word_three_times(texts):
     doc = tokeniz("the")
     doc = ner(doc)
     for i in texts:
-        # text = "Alice lives in Australia and "+i
-        text = "Alice lives in "+i
+        text = "Alice lives in Australia and "+i
+        # text = i
+        
         print(text)
         
         for j in range(3):
@@ -640,8 +641,7 @@ def target_ner_only_one_word_three_times(texts):
     doc = tokeniz("the")
     doc = ner(doc)
     for i in texts:
-        # text = "Alice lives in Australia and "+i
-        text = "Alice lives in "+i
+        text = "Alice lives in Australia and "+i
         print(text)
         
         for j in range(3):
@@ -719,7 +719,7 @@ if __name__ == "__main__":
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_ner_mq_phrase"
+    pickle_fname = "timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_ner"
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime, out_vocab_runtime, in_vocab_runtime_tokenizer, out_vocab_runtime_tokenizer], pickle_fname)
 
@@ -892,7 +892,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_tokenizer_only_mq_phrase.png'
+    plt_dest = plt_folder + 'average_runtime_over_30_words_vm_tokenizer_only_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plot1 = plt.figure(3)
@@ -968,7 +968,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + '30w_time_difference_between_two_runs_pc_ner_only_mq_phrase.png'
+    plt_dest = plt_folder + '30w_time_difference_between_two_runs_tokenizer_ner_only_mq_phrase.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     

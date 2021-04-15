@@ -52,6 +52,34 @@ vocab = list(nlp.vocab.strings)
 test_in_vocabs = vocab
 print(len(test_in_vocabs))
 
-vocab = Vocab().from_disk("vocab_original")
-print(len(list(vocab.strings)))
+# vocab = Vocab().from_disk("vocab_original")
+# print(len(list(vocab.strings)))
+
+ner = nlp.get_pipe("ner")
+
+tok = nlp.tokenizer
+test_word = ["people", 'sample', 'random']
+
+for i in test_word:
+    # text = "My name is Tham and I live in "+i
+    text = i
+    print(text)
+    
+    for i in range(15):
+        # print("i = ", i)
+        t0 = time.perf_counter()
+        docs = tok(text)
+        t1 = time.perf_counter()
+        print("i = {0} \t time : {1}".format(i , t1-t0))
+
+    # doc = ner(docs)
+
+    # print("time for tokenizer: {}".format(t1-t0))
+
+# doc = ner(text)
+
+# doc = nlp("Apple is looking at buying U.K. startup for $1 billion")
+
+# for ent in doc.ents:
+#     print(ent.text, ent.start_char, ent.end_char, ent.label_)
 
