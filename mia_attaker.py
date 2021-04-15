@@ -641,7 +641,7 @@ def target_ner_only_one_word_three_times(texts):
     doc = tokeniz("the")
     doc = ner(doc)
     for i in texts:
-        text = "Alice lives in Australia and "+i
+        text = i
         print(text)
         
         for j in range(3):
@@ -709,10 +709,10 @@ if __name__ == "__main__":
     time.sleep(5.0)
     out_vocab_runtime = target_ner_tokenizer_one_word_three_times(list_100_pw)
     time.sleep(5.0)
-    # in_vocab_runtime = target_ner_only_one_word_three_times(in_vocab_words_test)
-    # time.sleep(5.0)
-    # out_vocab_runtime = target_ner_only_one_word_three_times(list_100_pw)
-    # time.sleep(5.0)
+    in_vocab_runtime_ner = target_ner_only_one_word_three_times(in_vocab_words_test)
+    time.sleep(5.0)
+    out_vocab_runtime_ner = target_ner_only_one_word_three_times(list_100_pw)
+    time.sleep(5.0)
     in_vocab_runtime_tokenizer = target_tokenizer_only_one_word_three_times(in_vocab_words_test)
     time.sleep(5.0)
     out_vocab_runtime_tokenizer = target_tokenizer_only_one_word_three_times(list_100_pw)
@@ -721,7 +721,7 @@ if __name__ == "__main__":
 
     pickle_fname = "timming_in-out-vocab_shuffle-words_three_times_injecting_common_query_vm_ner"
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
-    save_results([in_vocab_runtime, out_vocab_runtime, in_vocab_runtime_tokenizer, out_vocab_runtime_tokenizer], pickle_fname)
+    save_results([in_vocab_runtime, out_vocab_runtime,  in_vocab_runtime_tokenizer, out_vocab_runtime_tokenizer, in_vocab_runtime_ner, out_vocab_runtime_ner], pickle_fname)
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
@@ -742,12 +742,18 @@ if __name__ == "__main__":
     out_vocab_runtime_list = g[0][1]
     in_vocab_tokenizer_runtime_list = g[0][2]
     out_vocab_tokenizer_runtime_list = g[0][3]
+    in_vocab_runtime_ner_list = g[0][4]
+    out_vocab_runtime_ner_list = g[0][5]
     # shuffle_word_runtime_list = g[0][2]
 
     in_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in in_vocab_runtime_list]
     out_vocab_runtime_s = [ner_runtime*1000 for ner_runtime in out_vocab_runtime_list]
     in_vocab_tokenizer_runtime_s = [ner_runtime*1000 for ner_runtime in in_vocab_tokenizer_runtime_list]
     out_vocab_tokenizer_runtime_s = [ner_runtime*1000 for ner_runtime in out_vocab_tokenizer_runtime_list]
+
+    in_vocab_runtime_ner_s = [ner_runtime*1000 for ner_runtime in in_vocab_runtime_ner_list]
+    out_vocab_runtime_ner_s = [ner_runtime*1000 for ner_runtime in out_vocab_runtime_ner_list]
+
     # shuffle_words_runtime_s = [ner_runtime*1000 for ner_runtime in  shuffle_word_runtime_list]
 
     # print(in_vocab_runtime_s)
@@ -766,6 +772,14 @@ if __name__ == "__main__":
     out_vocab_token_run_1 = []
     out_vocab_token_run_2 = []
     out_vocab_token_run_3 = []
+
+    in_vocab_ner_run_1 = []
+    in_vocab_ner_run_2 = []
+    in_vocab_ner_run_3 = []
+
+    out_vocab_ner_run_1 = []
+    out_vocab_ner_run_2 = []
+    out_vocab_ner_run_3 = []
 
     # shuffle_word_vocab_run_1 = []
     # shuffle_word_vocab_run_2 = []
@@ -788,6 +802,14 @@ if __name__ == "__main__":
         out_vocab_token_run_2.append(out_vocab_tokenizer_runtime_s[3*i+1])
         out_vocab_token_run_3.append(out_vocab_tokenizer_runtime_s[3*i+2])
 
+        in_vocab_ner_run_1.append(in_vocab_runtime_ner_s[3*i])
+        in_vocab_ner_run_2.append(in_vocab_runtime_ner_s[3*i+1])
+        in_vocab_ner_run_3.append(in_vocab_runtime_ner_s[3*i+2])
+
+        out_vocab_ner_run_1.append(out_vocab_runtime_ner_s[3*i])
+        out_vocab_ner_run_2.append(out_vocab_runtime_ner_s[3*i+1])
+        out_vocab_ner_run_3.append(out_vocab_runtime_ner_s[3*i+2])
+
     max_in = 0
     for i in range(num_test):
         if in_vocab_run_1[i] >= max_in:
@@ -804,6 +826,10 @@ if __name__ == "__main__":
 
     avg_time_diff_in_vocab_tokenizer = []
     avg_time_diff_out_vocab_tokenizer = []
+
+
+    avg_time_diff_in_vocab_ner = []
+    avg_time_diff_out_vocab_ner = []
 
 
 
@@ -835,6 +861,22 @@ if __name__ == "__main__":
     avg_time_diff_out_vocab_tokenizer.append(tmp)
     tmp = np.mean(np.array(out_vocab_token_run_3))
     avg_time_diff_out_vocab_tokenizer.append(tmp)
+
+
+    tmp = np.mean(np.array(in_vocab_ner_run_1))
+    avg_time_diff_in_vocab_ner.append(tmp)
+    tmp = np.mean(np.array(in_vocab_ner_run_2))
+    avg_time_diff_in_vocab_ner.append(tmp)
+    tmp = np.mean(np.array(in_vocab_ner_run_3))
+    avg_time_diff_in_vocab_ner.append(tmp)
+
+
+    tmp = np.mean(np.array(out_vocab_ner_run_1))
+    avg_time_diff_out_vocab_ner.append(tmp)
+    tmp = np.mean(np.array(out_vocab_ner_run_2))
+    avg_time_diff_out_vocab_ner.append(tmp)
+    tmp = np.mean(np.array(out_vocab_ner_run_3))
+    avg_time_diff_out_vocab_ner.append(tmp)
 
     diff_in_vocab =[]
     diff_out_vocab =[]
@@ -871,11 +913,11 @@ if __name__ == "__main__":
     
     plt.xlabel("")
     plt.ylabel('Average runtime (ms)')
-    plt.title("Querying ner")
+    plt.title("Querying tokenizer and ner")
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_ner_phrase.png'
+    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_both_tokenizer_ner.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -892,7 +934,23 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_only_phrase.png'
+    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_only.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+    plot1 = plt.figure(3)
+    plt.plot(iteration[0:3], avg_time_diff_in_vocab_ner, '-o', iteration[0:3], avg_time_diff_out_vocab_ner, '-v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['in vocab words', 'out vocab words'])
+    
+    plt.xlabel("")
+    plt.ylabel('Average runtime (ms)')
+    plt.title("Querying only ner")
+    plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_ner_only.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plot1 = plt.figure(3)
