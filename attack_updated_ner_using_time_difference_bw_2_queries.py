@@ -586,7 +586,7 @@ if __name__ == "__main__":
     title = "accuracy of classifying: out-vocab = {0}; in-vocab = {1}; updating-vocab = {2}".format(accuracy_out, accuracy_orig, accuracy_update)
     print(title)
 
-    iterations =  len(out_vocab)
+    iterations =  len(query_time_diff_in_vocab)
     print(iterations)
     iteration = []
     for i in range(iterations):
@@ -605,7 +605,7 @@ if __name__ == "__main__":
 
     threshold_legend = 'threshold = {}'.format(thre)
     plot1 = plt.figure(2)
-    plt.plot(iteration, orig_vocab, 'o', iteration, updating_vocab, '*', iteration, out_vocab, 'v', iteration, thresholds, '-')
+    plt.plot(iteration, query_time_diff_in_vocab, 'o', iteration, query_time_diff_update_vocab, '*', iteration, query_time_diff_out_vocab, 'v', iteration, thresholds, '-')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
     plt.legend(['original-vocab words', 'updating words', 'out-vocab words', threshold_legend])
@@ -615,7 +615,7 @@ if __name__ == "__main__":
     plt.title(title)
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + 'attack_result_200_in-out-vocab_vm_all_types_words_time_sleep.png'
+    plt_dest = plt_folder + 'time_difference_updated_model_in_out_update_vocab.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     
     # recall = (count_in)/((count_in)+(len(out_vocab) - count_out))
