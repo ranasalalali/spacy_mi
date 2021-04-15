@@ -64,7 +64,7 @@ def save_results(results_holder, f_name):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'timing_results_{}'.format(now)
+    folder = 'attack_based_time_different_results_{}'.format(now)
     filename = '{}_{}.pickle3'.format(now, f_name)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -259,7 +259,7 @@ def querying_updated_ner_2_times():
     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
 
-    global querying_result_file_name
+    # global querying_result_file_name
     querying_result_file_name =   "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types_time_sleep" 
     filename = '{}_{}.pickle3'.format(now, querying_result_file_name)
     pickle_querying_result_file_name = os.path.join(folder, filename)
