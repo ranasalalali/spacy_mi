@@ -457,9 +457,25 @@ def choose_threshold():
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
     plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload_timesleep.png'
-    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight') 
+
+
+    plot1 = plt.figure(1)
+    plt.plot(iteration, orig_in_vocab, 'o', iteration, orig_out_vocab, 'v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['original-vocab words', 'out-vocab words'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    # plt.title(title)
+    # ax = plt.gca()
+    # ax.set_ylim(3, 6) 
+    plt_dest = plt_folder + 'attack_result_runtime_200_in-out-vocab_vm_all_types_words.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')  
 
     return chosen_threshold
+
 
 if __name__ == "__main__":
     
@@ -548,6 +564,7 @@ if __name__ == "__main__":
     mkdir_p(plt_folder)
 
     threshold_legend = 'threshold = {}'.format(thre)
+
     plot1 = plt.figure(2)
     plt.plot(iteration, orig_vocab, 'o', iteration, updating_vocab, '*', iteration, out_vocab, 'v', iteration, thresholds, '-')
     
