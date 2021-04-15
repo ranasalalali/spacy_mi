@@ -459,6 +459,11 @@ def choose_threshold():
     plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload_timesleep.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight') 
 
+    iterations =  len(orig_in_vocab)
+    print(iterations)
+    iteration = []
+    for i in range(iterations):
+        iteration.append(i)
 
     plot1 = plt.figure(1)
     plt.plot(iteration, orig_in_vocab, 'o', iteration, orig_out_vocab, 'v')
