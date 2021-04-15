@@ -403,7 +403,7 @@ def choose_threshold():
     
     plt.xlabel("word $i^{th}$")
     plt.ylabel('runtime (ms)')
-    plt.title(title)
+    # plt.title(title)
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
     plt_dest = plt_folder + 'time_difference_orig_model_in_out_vocab.png'
