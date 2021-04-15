@@ -402,6 +402,8 @@ def choose_threshold():
     fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=1)
         
     print("thresholds = ", thresholds)
+    print("fpr = ", fpr)
+    print("tpr = ", tpr)
     index = 0
     
     for index in range(len(fpr)):
@@ -417,6 +419,7 @@ def choose_threshold():
     #         save_index = index
 
     chosen_threshold = thresholds[save_index]
+    
     print("fpr = ", fpr[save_index])
     print("tpr = ", tpr[save_index])
     print("chosen_threshold = ", chosen_threshold)
