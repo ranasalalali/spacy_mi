@@ -110,7 +110,7 @@ def target_ner_tokenizer(texts):
         time_now = time.perf_counter()
         runtime = time_now - time0
         runtime_list.append(runtime)
-        time.sleep(1.0)
+        # time.sleep(1.0)
 
 
     return runtime_list
@@ -200,7 +200,7 @@ def target_ner_tokenizer_one_word_reload_model(iterations, text):
 def updatingModel(secret, model):
     LABEL = "SECRET"
     secret = secret
-    text = "Alice's secret is {}.".format(secret)
+    text = "Rana's secret is {}.".format(secret)
     TRAIN_DATA = []
     TRAIN_DATA.append((text, {'entities': [(0, 4, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
 
@@ -250,14 +250,14 @@ def querying_updated_ner():
 
     pws = g[:][0]
 
-    num_tests = 300
+    num_tests = 100
     updating_pw_100 = pws[0:num_tests]
     out_vocab = pws[num_tests:2*num_tests]
 
     nlp = spacy.load('en_core_web_lg')
     
     vocab = list(nlp.vocab.strings)
-    orig_in_vocabs = vocab[10000:10000 + num_tests]
+    orig_in_vocabs = random.sample(vocab, num_tests) #vocab[10000:10000 + num_tests]
     
 
     for i in updating_pw_100:
@@ -331,33 +331,33 @@ def querying_updated_ner():
 
 def choose_threshold():
     
-    # file_name = open("query_the_original_model_to_choose_threshold.txt","a")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name = open("query_the_original_model_to_choose_threshold.txt","a")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
-    # nlp = spacy.load("en_core_web_lg")
-    # global vocab
-    # vocab = list(nlp.vocab.strings)
-    # in_vocab_words_test_orginal_model = vocab[10000:11000]
+    nlp = spacy.load("en_core_web_lg")
+    global vocab
+    vocab = list(nlp.vocab.strings)
+    in_vocab_words_test_orginal_model =  random.sample(vocab, 1000) #vocab[10000:11000]
     
     
-    # # file_pws = 'passwords_out_vocab_list'
-    # file_pws = "passwords_list_2000_no_speacial_charac"
-    # g = []
-    # h = pickle.load(open(file_pws, 'rb'))
-    # g.append(h)
+    # file_pws = 'passwords_out_vocab_list'
+    file_pws = "passwords_list_2000_no_speacial_charac"
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
 
-    # pws = g[:][0]
+    pws = g[:][0]
 
-    # out_vocab_test_orginal_model = random.sample(pws, 1000)
-    # file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
-    # file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
+    out_vocab_test_orginal_model = random.sample(pws, 1000)
+    file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
+    file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
 
     
-    # in_vocab_runtime_test_orignal_model = target_ner_tokenizer(in_vocab_words_test_orginal_model)
-    # out_vocab_runtime_test_original_model = target_ner_tokenizer(out_vocab_test_orginal_model)
+    in_vocab_runtime_test_orignal_model = target_ner_tokenizer(in_vocab_words_test_orginal_model)
+    out_vocab_runtime_test_original_model = target_ner_tokenizer(out_vocab_test_orginal_model)
 
-    # save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2")
+    save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2")
 
 
     now = datetime.now().date()
@@ -462,9 +462,10 @@ def choose_threshold():
     return chosen_threshold
 
 if __name__ == "__main__":
+    
     threshold = choose_threshold()
     
-    # querying_updated_ner()
+    querying_updated_ner()
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
