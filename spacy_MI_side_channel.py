@@ -465,7 +465,7 @@ if __name__ == "__main__":
     
     threshold = choose_threshold()
     
-    # querying_updated_ner()
+    querying_updated_ner()
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
