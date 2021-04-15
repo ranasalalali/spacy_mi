@@ -303,10 +303,10 @@ def choose_threshold():
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'attack_based_time_different_results_{}'.format(now)
-    global thesh_choose_pickle_file_name
+    # global thesh_choose_pickle_file_name
     thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
     filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
-    global thesh_choose_filename
+    # global thesh_choose_filename
     thesh_choose_filename = os.path.join(folder, filename)
 
 
