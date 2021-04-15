@@ -387,27 +387,27 @@ def choose_threshold():
         tmp = orig_out_vocab_run_1[i] - orig_out_vocab_run_2[i]
         time_diff_out_vocab.append(tmp)
 
-    iterations =  len(time_diff_in_vocab)
-    print(iterations)
-    iteration = []
-    for i in range(iterations):
-        iteration.append(i)
+    # iterations =  len(time_diff_in_vocab)
+    # print(iterations)
+    # iteration = []
+    # for i in range(iterations):
+    #     iteration.append(i)
 
-    folder = 'vm_entire_attack_time_diff_{}'.format(now)
-    plt_folder = '{}_PLOTS/'.format(folder)
-    plot1 = plt.figure(2)
-    plt.plot(iteration, time_diff_in_vocab, 'o', iteration, time_diff_out_vocab, 'v')
+    # folder = 'vm_entire_attack_time_diff_{}'.format(now)
+    # plt_folder = '{}_PLOTS/'.format(folder)
+    # plot1 = plt.figure(1)
+    # plt.plot(iteration, time_diff_in_vocab, 'o', iteration, time_diff_out_vocab, 'v')
     
-    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
-    plt.legend(['in-vocab words', 'out-vocab words'])
+    # # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['in-vocab words', 'out-vocab words'])
     
-    plt.xlabel("word $i^{th}$")
-    plt.ylabel('runtime (ms)')
-    # plt.title(title)
-    # ax = plt.gca()
-    # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + 'time_difference_orig_model_in_out_vocab.png'
-    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    # plt.xlabel("word $i^{th}$")
+    # plt.ylabel('runtime (ms)')
+    # # plt.title(title)
+    # # ax = plt.gca()
+    # # ax.set_ylim(3, 6) 
+    # plt_dest = plt_folder + 'time_difference_orig_model_in_out_vocab.png'
+    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     vocab_in = np.zeros(len(time_diff_in_vocab)) 
@@ -434,6 +434,8 @@ def choose_threshold():
     plt_folder = '{}_PLOTS/'.format(folder)
 
     mkdir_p(plt_folder)
+
+    plot1 = plt.figure(2)
 
     fig, ax = plt.subplots(figsize=(10,7))
     ax.plot(fpr, tpr, '-o')
@@ -604,6 +606,7 @@ if __name__ == "__main__":
     mkdir_p(plt_folder)
 
     threshold_legend = 'threshold = {}'.format(thre)
+    
     plot1 = plt.figure(2)
     plt.plot(iteration, query_time_diff_in_vocab, 'o', iteration, query_time_diff_update_vocab, '*', iteration, query_time_diff_out_vocab, 'v', iteration, thresholds, '-')
     
@@ -617,6 +620,8 @@ if __name__ == "__main__":
     # ax.set_ylim(3, 6) 
     plt_dest = plt_folder + 'time_difference_updated_model_in_out_update_vocab.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
     
     # recall = (count_in)/((count_in)+(len(out_vocab) - count_out))
     # print("recall = ", recall)
