@@ -388,9 +388,9 @@ def choose_threshold():
 
 
 
-    vocab_in = np.zeros(len(orig_in_vocab)) 
+    vocab_in = np.zeros(len(time_diff_in_vocab)) 
     # print(vocab_out)
-    vocab_out = np.ones(len(orig_out_vocab))
+    vocab_out = np.ones(len(time_diff_in_vocab))
     # print(vocab_in)
     vocabs = [*vocab_in,*vocab_out]
     
