@@ -384,7 +384,7 @@ def choose_threshold():
     for i in range(1000):
         tmp = orig_in_vocab_run_1[i] - orig_in_vocab_run_2[i]
         time_diff_in_vocab.append(tmp)
-        tim = orig_out_vocab_run_1[i] - orig_out_vocab_run_2[i]
+        tmp = orig_out_vocab_run_1[i] - orig_out_vocab_run_2[i]
         time_diff_out_vocab.append(tmp)
 
     iterations =  len(time_diff_in_vocab)
