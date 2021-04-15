@@ -406,23 +406,7 @@ def choose_threshold():
     print("tpr = ", tpr)
     index = 0
     
-    for index in range(len(fpr)):
-        if fpr[index] > 0.05 and fpr[index] <= 0.1:
-            # print(fpr[index])
-            # print('index = ', index)
-            save_index = index
-    
-    # for index in range(len(tpr)):
-    #     if tpr[index] > 0.8 and tpr[index] <= 0.9:
-    #         # print(fpr[index])
-    #         # print('index = ', index)
-    #         save_index = index
-
-    chosen_threshold = thresholds[save_index]
-    
-    print("fpr = ", fpr[save_index])
-    print("tpr = ", tpr[save_index])
-    print("chosen_threshold = ", chosen_threshold)
+   
 
     folder = 'vm_entire_attack_time_diff_{}'.format(now)
     plt_folder = '{}_PLOTS/'.format(folder)
@@ -441,6 +425,25 @@ def choose_threshold():
     # plt.legend(fontsize=12)
     plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload_timesleep.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
+
+
+     for index in range(len(fpr)):
+        if fpr[index] > 0.05 and fpr[index] <= 0.1:
+            # print(fpr[index])
+            # print('index = ', index)
+            save_index = index
+    
+    # for index in range(len(tpr)):
+    #     if tpr[index] > 0.8 and tpr[index] <= 0.9:
+    #         # print(fpr[index])
+    #         # print('index = ', index)
+    #         save_index = index
+
+    chosen_threshold = thresholds[save_index]
+    
+    print("fpr = ", fpr[save_index])
+    print("tpr = ", tpr[save_index])
+    print("chosen_threshold = ", chosen_threshold)
 
     return chosen_threshold
 
