@@ -427,7 +427,7 @@ def choose_threshold():
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
 
 
-     for index in range(len(fpr)):
+    for index in range(len(fpr)):
         if fpr[index] > 0.05 and fpr[index] <= 0.1:
             # print(fpr[index])
             # print('index = ', index)
