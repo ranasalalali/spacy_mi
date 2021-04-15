@@ -401,7 +401,7 @@ def choose_threshold():
     # print(scores)
     fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=1)
         
-    
+    print("thresholds = ", thresholds)
     index = 0
     
     for index in range(len(fpr)):
