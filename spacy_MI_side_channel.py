@@ -425,7 +425,7 @@ def choose_threshold():
     index = 0
     
     for index in range(len(fpr)):
-        if fpr[index] > 0.01 and fpr[index] <= 0.05:
+        if fpr[index] > 0.05 and fpr[index] <= 0.1:
             # print(fpr[index])
             # print('index = ', index)
             save_index = index
@@ -465,7 +465,7 @@ if __name__ == "__main__":
     
     threshold = choose_threshold()
     
-    querying_updated_ner()
+    # querying_updated_ner()
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
