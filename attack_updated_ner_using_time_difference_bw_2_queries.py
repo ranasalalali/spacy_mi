@@ -258,6 +258,11 @@ def querying_updated_ner_2_times():
 
     print("Size of vocab_string in model after querying with out-vocab: ", len(list(nlp.vocab.strings)))
     # file_name.write("Size of vocab_string in model after querying same model: {}\n", .format(len(list(nlp.vocab.strings)))
+
+    global querying_result_file_name
+    querying_result_file_name =   "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types_time_sleep" 
+    filename = '{}_{}.pickle3'.format(now, querying_result_file_name)
+    pickle_querying_result_file_name = os.path.join(folder, filename)
      
     save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], querying_result_file_name)
 
@@ -293,12 +298,17 @@ def choose_threshold():
     save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], thesh_choose_pickle_file_name)
 
 
+    # now = datetime.now().date()
+    # now = now.strftime("%Y%m%d")
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    # folder = 'attack_based_time_different_results_{}'.format(now)
-    # thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
-    # filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
-    # thesh_choose_filename = os.path.join(folder, filename)
+    folder = 'attack_based_time_different_results_{}'.format(now)
+    global thesh_choose_pickle_file_name
+    thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
+    filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
+    global thesh_choose_filename
+    thesh_choose_filename = os.path.join(folder, filename)
+
 
     g = []
     print(thesh_choose_filename)
