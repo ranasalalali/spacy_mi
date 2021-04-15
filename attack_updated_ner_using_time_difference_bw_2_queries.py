@@ -377,6 +377,7 @@ def choose_threshold():
         if abs(orig_out_vocab_run_2[index] - out_mean_run_2) >= (3*out_std_run_2):
             orig_out_vocab_run_2[index] = out_mean_run_2
     
+    
     time_diff_in_vocab = []
     time_diff_out_vocab = []
 
@@ -386,6 +387,27 @@ def choose_threshold():
         tim = orig_out_vocab_run_1[i] - orig_out_vocab_run_2[i]
         time_diff_out_vocab.append(tmp)
 
+    iterations =  len(time_diff_in_vocab)
+    print(iterations)
+    iteration = []
+    for i in range(iterations):
+        iteration.append(i)
+
+    folder = 'vm_entire_attack_time_diff_{}'.format(now)
+    plt_folder = '{}_PLOTS/'.format(folder)
+    plot1 = plt.figure(2)
+    plt.plot(iteration, time_diff_in_vocab, 'o', iteration, time_diff_out_vocab, 'v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    plt.legend(['in-vocab words', 'out-vocab words'])
+    
+    plt.xlabel("word $i^{th}$")
+    plt.ylabel('runtime (ms)')
+    plt.title(title)
+    # ax = plt.gca()
+    # ax.set_ylim(3, 6) 
+    plt_dest = plt_folder + 'time_difference_orig_model_in_out_vocab.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     vocab_in = np.zeros(len(time_diff_in_vocab)) 
