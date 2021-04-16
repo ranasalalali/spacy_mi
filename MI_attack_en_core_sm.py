@@ -691,7 +691,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 1000
+    num_test = 500
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
@@ -954,7 +954,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_1000_words_vm_both_tokenizer_ner_en_core_sm.png'
+    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_both_tokenizer_ner_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -971,7 +971,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_1000_words_vm_tokenizer_only_en_core_sm.png'
+    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_tokenizer_only_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     plot1 = plt.figure(3)
@@ -987,7 +987,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_1000_words_vm_ner_only_en_core_sm.png'
+    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_ner_only_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     plot1 = plt.figure(4)
@@ -1003,7 +1003,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'time_differenc_1000_words_en_core_sm.png'
+    plt_dest = plt_folder + 'time_differenc_500_words_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -1019,7 +1019,7 @@ if __name__ == "__main__":
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
-    plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_en_core_sm.png'
+    plt_dest = plt_folder + 'roc_auc_1000_invocab_500_out-vocab_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plt.savefig(plt_dest, d
