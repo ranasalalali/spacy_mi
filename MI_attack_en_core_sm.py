@@ -913,7 +913,7 @@ if __name__ == "__main__":
     # print(vocab_out)
     vocab_out = np.ones(len(diff_in_vocab))
     # print(vocab_in)
-    vocabs = [*diff_in_vocab,*diff_out_vocab]
+    vocabs = [*vocab_in,*vocab_out]
     
     y = vocabs
     # print(y)
@@ -1020,7 +1020,7 @@ if __name__ == "__main__":
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
     plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_en_core_sm.png'
-    
+
     # plt.savefig(plt_dest, d
     # plot1 = plt.figure(4)
     # plt.plot(iteration[0:num_test], in_vocab_token_run_1, 'o', iteration[0:num_test], out_vocab_token_run_1, 'v')
