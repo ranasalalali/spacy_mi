@@ -690,7 +690,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 100
+    num_test = 1000
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
@@ -933,7 +933,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_both_tokenizer_ner_en_core_sm.png'
+    plt_dest = plt_folder + 'average_runtime_over_1000_words_vm_both_tokenizer_ner_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -950,7 +950,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_tokenizer_only_en_core_sm.png'
+    plt_dest = plt_folder + 'average_runtime_over_1000_words_vm_tokenizer_only_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     plot1 = plt.figure(3)
@@ -966,24 +966,24 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_100_words_vm_ner_only_en_core_sm.png'
+    plt_dest = plt_folder + 'average_runtime_over_1000_words_vm_ner_only_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
-    # plot1 = plt.figure(3)
-    # plt.plot(iteration[0:num_test], in_vocab_run_1, 'o', iteration[0:num_test], out_vocab_run_1, 'v')
+    plot1 = plt.figure(4)
+    plt.plot(iteration[0:num_test], diff_in_vocab, 'o', iteration[0:num_test], diff_out_vocab, 'v')
     
-    # # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
-    # # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
-    # plt.legend(['ner: 30 in vocab words', 'ner: 30 out vocab words'])
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['in vocab words', 'out vocab words'])
     
-    # plt.xlabel("")
-    # plt.ylabel('Runtime (ms)')
-    # plt.title("Querying NER first time")
-    # # plt.xticks(iteration[0:3], x_stick)
-    # # ax = plt.gca()
-    # # ax.set_ylim(2.5, 3) 
-    # plt_dest = plt_folder + '30words_vm_ner.png'
-    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    plt.xlabel("")
+    plt.ylabel('Runtime (ms)')
+    plt.title("Both tokenizer and ner")
+    # plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + 'time_differenc_1000_words_en_core_sm.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     # plot1 = plt.figure(4)
     # plt.plot(iteration[0:num_test], in_vocab_token_run_1, 'o', iteration[0:num_test], out_vocab_token_run_1, 'v')
