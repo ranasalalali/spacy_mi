@@ -649,7 +649,6 @@ def target_ner_only_one_word_three_times(texts):
             print(" j = ", j)
             print(" j = ", j)
 
-
             
             doc = tokeniz(text)
             time0 = time.perf_counter()

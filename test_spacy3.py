@@ -46,35 +46,70 @@ from thinc.api import set_gpu_allocator, require_gpu
 from spacy.vocab import Vocab
 
 
+
+
 nlp = spacy.load("en_core_web_lg")
 # nlp.vocab.to_disk("vocab_original")
-vocab = list(nlp.vocab.strings)
-test_in_vocabs = vocab
+vocab_lg = list(nlp.vocab.strings)
+test_in_vocabs = vocab_lg
 print(len(test_in_vocabs))
 
-# vocab = Vocab().from_disk("vocab_original")
-# print(len(list(vocab.strings)))
+nlp = spacy.load("en_core_web_sm")
+# nlp.vocab.to_disk("vocab_original")
+vocab_sm = list(nlp.vocab.strings)
+test_in_vocabs = vocab_sm
+print(len(test_in_vocabs))
+
+
+differ = list(set(vocab_lg) - set(vocab_sm))
+# print(list(differ[:100]))
+
 
 ner = nlp.get_pipe("ner")
 
 tok = nlp.tokenizer
-test_word = ["people", 'sample', 'random']
 
-for i in test_word:
+test_word_in = random.sample(vocab_sm, 10)
+test_word_out = random.sample(differ, 10)
+
+
+for i in test_word_in:
     # text = "My name is Tham and I live in "+i
     text = i
     print(text)
     
-    for i in range(15):
+    for i in range(2):
         # print("i = ", i)
         t0 = time.perf_counter()
         docs = tok(text)
         t1 = time.perf_counter()
-        print("i = {0} \t time : {1}".format(i , t1-t0))
+        doc = ner(docs)
+        t2 = time.perf_counter()
+        print("i = {0} \t time for tok : {1}".format(i , t1-t0))
+        print("i = {0} \t time for ner : {1}".format(i , t2-t1))
+        print("i = {0} \t time for both : {1}".format(i , t2-t0))
 
-    # doc = ner(docs)
 
-    # print("time for tokenizer: {}".format(t1-t0))
+for i in test_word_out:
+    text = i
+    print(text)
+
+    for i in range(2):
+        # print("i = ", i)
+        t0 = time.perf_counter()
+        docs = tok(text)
+        t1 = time.perf_counter()
+        doc = ner(docs)
+        t2 = time.perf_counter()
+        print("i = {0} \t time for tok : {1}".format(i , t1-t0))
+        print("i = {0} \t time for ner : {1}".format(i , t2-t1))
+        print("i = {0} \t time for both : {1}".format(i , t2-t0))
+
+
+
+
+   
+# print("time for tokenizer: {}".format(t1-t0))
 
 # doc = ner(text)
 

@@ -45,6 +45,7 @@ from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
 # from password_generator import PasswordGenerator
 import matplotlib.pyplot as plt
+from sklearn import metrics
 
 
 def mkdir_p(path):
@@ -907,6 +908,26 @@ if __name__ == "__main__":
     #     shuffle_word_vocab_run_2.append(shuffle_words_runtime_s[3*i+1])
     #     shuffle_word_vocab_run_3.append(shuffle_words_runtime_s[3*i+2])
 
+    
+    vocab_in = np.zeros(len(diff_in_vocab)) 
+    # print(vocab_out)
+    vocab_out = np.ones(len(diff_in_vocab))
+    # print(vocab_in)
+    vocabs = [*diff_in_vocab,*diff_out_vocab]
+    
+    y = vocabs
+    # print(y)
+    time = [*diff_in_vocab, *diff_out_vocab]
+    scores = np.array(time)
+    # print(scores)
+    fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=1)
+        
+    print("thresholds = ", thresholds)
+    print("fpr = ", fpr)
+    print("tpr = ", tpr)
+    index = 0
+    
+    
     iterations =  num_test*2
     iteration = []
     for i in range(iterations):
@@ -985,6 +1006,22 @@ if __name__ == "__main__":
     plt_dest = plt_folder + 'time_differenc_1000_words_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
+
+    plot1 = plt.figure(5)
+
+    fig, ax = plt.subplots(figsize=(10,7))
+    ax.plot(fpr, tpr, '-o')
+    # ax.plot(np.linspace(0, 1, 4),
+    #         np.linspace(0, 1, 4),
+    #         label='baseline',
+    #         linestyle='--')
+    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    plt.ylabel('True Positive Rate', fontsize=16)
+    plt.xlabel('False Positive Rate', fontsize=16)
+    # plt.legend(fontsize=12)
+    plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_en_core_sm.png'
+    
+    # plt.savefig(plt_dest, d
     # plot1 = plt.figure(4)
     # plt.plot(iteration[0:num_test], in_vocab_token_run_1, 'o', iteration[0:num_test], out_vocab_token_run_1, 'v')
     
