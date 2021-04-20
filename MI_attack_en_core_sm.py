@@ -1004,10 +1004,10 @@ if __name__ == "__main__":
     plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_absolute_runtime_vm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
-    sys.exit()
+    
 
 
-    plot1 = plt.figure(2)
+    plot1 = plt.figure(4)
     plt.plot(iteration[0:3], avg_time_diff_in_vocab_tokenizer, '-o', iteration[0:3], avg_time_diff_out_vocab_tokenizer, '-v')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
@@ -1023,7 +1023,7 @@ if __name__ == "__main__":
     plt_dest = plt_folder + 'average_runtime_over_500_words_vm_tokenizer_only_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
-    plot1 = plt.figure(3)
+    plot1 = plt.figure(5)
     plt.plot(iteration[0:3], avg_time_diff_in_vocab_ner, '-o', iteration[0:3], avg_time_diff_out_vocab_ner, '-v')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
@@ -1039,7 +1039,7 @@ if __name__ == "__main__":
     plt_dest = plt_folder + 'average_runtime_over_500_words_vm_ner_only_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
-    plot1 = plt.figure(4)
+    plot1 = plt.figure(6)
     plt.plot(iteration[0:num_test], diff_in_vocab, 'o', iteration[0:num_test], diff_out_vocab, 'v')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
@@ -1055,7 +1055,7 @@ if __name__ == "__main__":
     plt_dest = plt_folder + 'time_differenc_500_words_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
-
+    sys.exit()
     plot1 = plt.figure(5)
 
     fig, ax = plt.subplots(figsize=(10,7))
