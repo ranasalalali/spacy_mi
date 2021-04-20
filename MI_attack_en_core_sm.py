@@ -990,19 +990,7 @@ if __name__ == "__main__":
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     
-    plot2 = plt.figure(3)
-    fig, ax = plt.subplots(figsize=(10,7))
-    ax.plot(fpr, tpr, '-o')
-    # ax.plot(np.linspace(0, 1, 4),
-    #         np.linspace(0, 1, 4),
-    #         label='baseline',
-    #         linestyle='--')
-    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
-    plt.ylabel('True Positive Rate', fontsize=16)
-    plt.xlabel('False Positive Rate', fontsize=16)
-    # plt.legend(fontsize=12)
-    plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_absolute_runtime_vm.png'
-    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    
 
     
 
@@ -1055,7 +1043,25 @@ if __name__ == "__main__":
     plt_dest = plt_folder + 'time_differenc_500_words_en_core_sm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
+
+    plot2 = plt.figure(3)
+    fig, ax = plt.subplots(figsize=(10,7))
+    ax.plot(fpr, tpr, '-o')
+    # ax.plot(np.linspace(0, 1, 4),
+    #         np.linspace(0, 1, 4),
+    #         label='baseline',
+    #         linestyle='--')
+    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    plt.ylabel('True Positive Rate', fontsize=16)
+    plt.xlabel('False Positive Rate', fontsize=16)
+    # plt.legend(fontsize=12)
+    plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_absolute_runtime_vm.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
     sys.exit()
+
+
+
     plot1 = plt.figure(5)
 
     fig, ax = plt.subplots(figsize=(10,7))
