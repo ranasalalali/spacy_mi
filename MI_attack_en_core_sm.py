@@ -909,15 +909,15 @@ if __name__ == "__main__":
     #     shuffle_word_vocab_run_3.append(shuffle_words_runtime_s[3*i+2])
 
     
-    vocab_in = np.zeros(len(diff_in_vocab)) 
+    vocab_in = np.zeros(len(in_vocab_run_1)) 
     # print(vocab_out)
-    vocab_out = np.ones(len(diff_in_vocab))
+    vocab_out = np.ones(len(in_vocab_run_1))
     # print(vocab_in)
     vocabs = [*vocab_in,*vocab_out]
     
     y = vocabs
     # print(y)
-    time = [*diff_in_vocab, *diff_out_vocab]
+    time = [*in_vocab_run_1, *out_vocab_run_1]
     scores = np.array(time)
     # print(scores)
     fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=1)
@@ -968,7 +968,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_both_tokenizer_ner_en_core_sm_vm.png'
+    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_both_tokenizer_ner_en_core_sm_vm_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -986,7 +986,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'Runtime_500_words_vm_both_tokenizer_ner_en_core_sm_vm.png'
+    plt_dest = plt_folder + 'Runtime_500_words_vm_both_tokenizer_ner_en_core_sm_vm_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     
@@ -1001,7 +1001,7 @@ if __name__ == "__main__":
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
-    plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_vm.png'
+    plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_absolute_runtime_vm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     sys.exit()
