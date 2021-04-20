@@ -691,7 +691,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 500
+    num_test = 1000
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
@@ -736,13 +736,13 @@ if __name__ == "__main__":
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "target_en_core_sm_model_runtime_vm"
+    pickle_fname = "target_en_core_sm_model_runtime_vm_{}_words".format(num_test)
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime, out_vocab_runtime,  in_vocab_runtime_tokenizer, out_vocab_runtime_tokenizer, in_vocab_runtime_ner, out_vocab_runtime_ner], pickle_fname)
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'timing_results_{}'.format(now)
+    folder = 'en_core_web_sm_timing_results_{}'.format(now)
     # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, pickle_fname)
     file_name = os.path.join(folder, filename)
@@ -953,6 +953,14 @@ if __name__ == "__main__":
     mkdir_p(plt_folder)
     index = num_test
 
+    avg_time_graph_name = 'average_runtime_over_{}_words_vm_both_tokenizer_ner_en_core_sm_vm_2.png'.format(num_test)
+    absolute_runtime_graph_name = 'Runtime_{}_words_vm_both_tokenizer_ner_en_core_sm_vm_2.png'.format(num_test)
+    tokenizer_avg_runtime_diff_graph_name = 'average_runtime_over_{}_words_vm_tokenizer_only_en_core_sm.png'.format(num_test)
+    ner_avg_runtime_diff_graph_name = 'average_runtime_over_{}_words_vm_ner_only_en_core_sm.png'.format(num_test)
+    time_diff_graph_name = 'time_differenc_{}_words_en_core_sm.png'.format(num_test)
+    roc_auc_absolute_time_graph_name = 'roc_auc_{}_words_en_core_wb_sm_absolute_runtime_vm.png'.format(num_test)
+    roc_auc_time_diff_graph_name = 'roc_auc_{}_words_en_core_wb_sm_time_diff_vm.png'.format(num_test)
+
     x_stick = ["first run", "second run", 'third run']
 
     plot1 = plt.figure(1)
@@ -968,7 +976,7 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_both_tokenizer_ner_en_core_sm_vm_2.png'
+    plt_dest = plt_folder + avg_time_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -986,14 +994,10 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'Runtime_500_words_vm_both_tokenizer_ner_en_core_sm_vm_2.png'
+    plt_dest = plt_folder + absolute_runtime_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     
-    
-
-    
-
 
     plot1 = plt.figure(4)
     plt.plot(iteration[0:3], avg_time_diff_in_vocab_tokenizer, '-o', iteration[0:3], avg_time_diff_out_vocab_tokenizer, '-v')
@@ -1008,8 +1012,9 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_tokenizer_only_en_core_sm.png'
+    plt_dest = plt_folder + tokenizer_avg_runtime_diff_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
 
     plot1 = plt.figure(5)
     plt.plot(iteration[0:3], avg_time_diff_in_vocab_ner, '-o', iteration[0:3], avg_time_diff_out_vocab_ner, '-v')
@@ -1024,9 +1029,10 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_ner_only_en_core_sm.png'
+    plt_dest = plt_folder + ner_avg_runtime_diff_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
+    
     plot1 = plt.figure(6)
     plt.plot(iteration[0:num_test], diff_in_vocab, 'o', iteration[0:num_test], diff_out_vocab, 'v')
     
@@ -1040,7 +1046,7 @@ if __name__ == "__main__":
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'time_differenc_500_words_en_core_sm.png'
+    plt_dest = plt_folder + time_diff_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
@@ -1055,7 +1061,7 @@ if __name__ == "__main__":
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
-    plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_absolute_runtime_vm.png'
+    plt_dest = plt_folder + roc_auc_absolute_time_graph_name
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     sys.exit()
