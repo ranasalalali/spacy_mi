@@ -670,7 +670,7 @@ def target_ner_only_one_word_three_times(texts):
 
 if __name__ == "__main__":
     iterations = 10
-    file_name = open("attack_en_core_sm_model.txt","a")
+    file_name = open("attack_en_core_sm_model_vm.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
@@ -736,7 +736,7 @@ if __name__ == "__main__":
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "target_en_core_sm_model_runtime"
+    pickle_fname = "target_en_core_sm_model_runtime_vm"
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime, out_vocab_runtime,  in_vocab_runtime_tokenizer, out_vocab_runtime_tokenizer, in_vocab_runtime_ner, out_vocab_runtime_ner], pickle_fname)
 
@@ -926,6 +926,20 @@ if __name__ == "__main__":
     print("fpr = ", fpr)
     print("tpr = ", tpr)
     index = 0
+
+    for index in range(len(fpr)):
+        if fpr[index] > 0.01 and fpr[index] <= 0.05:
+            # print(fpr[index])
+            # print('index = ', index)
+            save_index = index
+
+    
+
+    chosen_threshold = thresholds[save_index]
+    
+    print("fpr = ", fpr[save_index])
+    print("tpr = ", tpr[save_index])
+    print("chosen_threshold = ", chosen_threshold)
     
     
     iterations =  num_test*2
@@ -954,8 +968,42 @@ if __name__ == "__main__":
     plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2.5, 3) 
-    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_both_tokenizer_ner_en_core_sm.png'
+    plt_dest = plt_folder + 'average_runtime_over_500_words_vm_both_tokenizer_ner_en_core_sm_vm.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+
+    plot2 = plt.figure(2)
+    plt.plot(iteration[0:num_test], in_vocab_run_1, 'o', iteration[0:num_test], out_vocab_run_1, 'v')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['in vocab words', 'out vocab words'])
+    
+    plt.xlabel("")
+    plt.ylabel('Runtime (ms)')
+    plt.title("Querying tokenizer and ner")
+    # plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + 'Runtime_500_words_vm_both_tokenizer_ner_en_core_sm_vm.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+    
+    plot2 = plt.figure(3)
+    fig, ax = plt.subplots(figsize=(10,7))
+    ax.plot(fpr, tpr, '-o')
+    # ax.plot(np.linspace(0, 1, 4),
+    #         np.linspace(0, 1, 4),
+    #         label='baseline',
+    #         linestyle='--')
+    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    plt.ylabel('True Positive Rate', fontsize=16)
+    plt.xlabel('False Positive Rate', fontsize=16)
+    # plt.legend(fontsize=12)
+    plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_vm.png'
+
+    sys.exit()
 
 
     plot1 = plt.figure(2)
