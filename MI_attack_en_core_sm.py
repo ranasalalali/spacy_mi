@@ -691,7 +691,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 100
+    num_test = 300
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
@@ -1063,6 +1063,40 @@ if __name__ == "__main__":
     # plt.legend(fontsize=12)
     plt_dest = plt_folder + roc_auc_absolute_time_graph_name
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+    vocab_in = np.zeros(len(diff_in_vocab)) 
+    # print(vocab_out)
+    vocab_out = np.ones(len(diff_in_vocab))
+    # print(vocab_in)
+    vocabs = [*vocab_in,*vocab_out]
+    
+    y = vocabs
+    # print(y)
+    time = [*diff_in_vocab, *diff_out_vocab]
+    scores = np.array(time)
+    # print(scores)
+    fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=1)
+        
+    print("thresholds = ", thresholds)
+    print("fpr = ", fpr)
+    print("tpr = ", tpr)
+    index = 0
+
+    plot2 = plt.figure(7)
+    fig1, ax1 = plt.subplots(figsize=(10,7))
+    ax1.plot(fpr, tpr, '-o')
+    # ax.plot(np.linspace(0, 1, 4),
+    #         np.linspace(0, 1, 4),
+    #         label='baseline',
+    #         linestyle='--')
+    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    plt.ylabel('True Positive Rate', fontsize=16)
+    plt.xlabel('False Positive Rate', fontsize=16)
+    # plt.legend(fontsize=12)
+    plt_dest = plt_folder + roc_auc_time_diff_graph_name
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
 
     sys.exit()
 
