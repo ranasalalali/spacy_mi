@@ -1002,6 +1002,7 @@ if __name__ == "__main__":
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
     plt_dest = plt_folder + 'roc_auc_500_en_core_wb_sm_vm.png'
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     sys.exit()
 
