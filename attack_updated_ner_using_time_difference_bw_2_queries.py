@@ -269,31 +269,31 @@ def querying_updated_ner_2_times():
 
 def choose_threshold():
     
-    # file_name = open("query_the_original_model_to_choose_threshold.txt","a")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name = open("query_the_original_model_to_choose_threshold.txt","a")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
-    # nlp = spacy.load("en_core_web_lg")
-    # global vocab
-    # vocab = list(nlp.vocab.strings)
-    # in_vocab_words_test_orginal_model =  random.sample(vocab, 1000) #vocab[10000:11000]
+    nlp = spacy.load("en_core_web_lg")
+    global vocab
+    vocab = list(nlp.vocab.strings)
+    in_vocab_words_test_orginal_model =  random.sample(vocab, 1000) #vocab[10000:11000]
     
     
-    # # file_pws = 'passwords_out_vocab_list'
-    # file_pws = "passwords_list_2000_no_speacial_charac"
-    # g = []
-    # h = pickle.load(open(file_pws, 'rb'))
-    # g.append(h)
+    # file_pws = 'passwords_out_vocab_list'
+    file_pws = "passwords_list_2000_no_speacial_charac"
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
 
-    # pws = g[:][0]
+    pws = g[:][0]
 
-    # out_vocab_test_orginal_model = random.sample(pws, 1000)
-    # file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
-    # file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
+    out_vocab_test_orginal_model = random.sample(pws, 1000)
+    file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
+    file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
 
     
-    # in_vocab_runtime_test_orignal_model = target_ner_tokenizer_query_2_times(in_vocab_words_test_orginal_model)
-    # out_vocab_runtime_test_original_model = target_ner_tokenizer_query_2_times(out_vocab_test_orginal_model)
+    in_vocab_runtime_test_orignal_model = target_ner_tokenizer_query_2_times(in_vocab_words_test_orginal_model)
+    out_vocab_runtime_test_original_model = target_ner_tokenizer_query_2_times(out_vocab_test_orginal_model)
 
     
 
