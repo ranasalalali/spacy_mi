@@ -447,7 +447,7 @@ def choose_threshold():
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
     plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload_timesleep.png'
-    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
 
 
     for index in range(len(fpr)):
