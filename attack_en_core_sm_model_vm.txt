@@ -46,3 +46,7 @@ List of in vocab: ['herzegovina', 'editorialize', 'lidl', 'Buzz', 'tavern', 'ral
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['AGHA', 'intrusiveness', 'Saucer-Shaped', 'durarara', 'março', 'NAFF', 'Ｓ', 'sr71', '746,000', 'two-storeyed']
 List of in vocab: ['POLICY', 'fla.', 'misu', 'partitioning', 'doldrums', 'redeployment', 'avec', 'generation', 'idol', 'conception']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['Normalizing', 'importend', 'dual-track', 'Asc', 'caido', 'PREACHINESS', 'Prosecuted', 'singlehandedly', 'deu', 'Gravities']
+List of in vocab: ['codpiece', 'aja', 'Abijah', 'bei', 'Filmed', 'Altimari', 'impunity', 'Fluctuation', 'Leisure', 'smyrna']
