@@ -241,19 +241,71 @@ def extract_suffix(combinations=None, score=None):
 
     return list(dict(top10_ranks_per_suffix).keys())[0]
 
+def extract_middle_characters(combinations=None, score=None):
+    ranks_per_code = {}
+    ranks_per_password = {}
+    agg_scores = {}
+    agg_score_password = {}
 
-if __name__ == "__main__":
-    print(spacy.__version__)
-
-
-    models = os.listdir('models')
-
-    prefix_extraction_accuracy = 0
-    suffix_extraction_accuracy = 0
-    prefix_suffix_extraction_accuracy = 0
+    sorted_score = dict(sorted(score.items(), key=operator.itemgetter(1), reverse=True))
+    rank = 1
+    for code in sorted_score.items():
+        if code[0] not in agg_score_password.keys():
+            agg_score_password[code[0]] = []
+            ranks_per_password[code[0]] = []
+            ranks_per_password[code[0]].append(rank)
+            agg_score_password[code[0]].append(code[1])
+            rank+=1
+        else:    
+            ranks_per_password[code[0]].append(rank)
+            agg_score_password[code[0]].append(code[1])
+            rank+=1
     
-    for model in models:
-        secret = model.split('_')[-1]
+    for suffix in ranks_per_password:
+        ranks_per_password[suffix] = np.mean(np.array(ranks_per_password[suffix]))
+
+    for suffix in agg_score_password:
+        agg_score_password[suffix] = np.mean(np.array(agg_score_password[suffix]))
+
+
+    sorted_ranks_per_password = dict(sorted(ranks_per_password.items(), key=operator.itemgetter(1), reverse=False)[:10])
+    sorted_agg_score_password = dict(sorted(agg_score_password.items(), key=operator.itemgetter(1), reverse=True)[:10])
+    
+    top10_ranks_per_password = sorted_ranks_per_password.items()
+    top10_agg_score_password = sorted_agg_score_password.items()
+
+    print(top10_ranks_per_password, top10_agg_score_password)
+
+    return list(dict(top10_ranks_per_password).keys())[0]
+
+def generate_password_given_prefix_suffix(prefix=None, suffix=None, length=None,  upper=True, lower=True, numeric=True, special=False):
+    
+    passwords = []
+    if numeric and upper and lower:
+        set1 = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
+        set1.extend(set(ascii_lowercase))
+        set1.extend(set(ascii_uppercase))
+        printAllKLength(set1, length-4)
+        res = [i for i in combs if i]
+        for comb in res:
+            password = prefix + comb + suffix
+            passwords.append(password)
+    if upper:
+        pass
+    if lower:
+        pass
+    if special:
+        pass
+
+    res.clear()
+    combs.clear()
+    return passwords
+
+def extract_password(model=None):
+    secret = model.split('_')[-1]
+    for run in range(1, subruns+1):
+
+        print("Try {} of {} for password - {}:".format(run, subruns, secret))
 
         updated_nlp = spacy.load("models/{}".format(model))
         print(secret)
@@ -278,8 +330,6 @@ if __name__ == "__main__":
 
         ### EXTRACTING PREFIX
 
-        print("Generating passwords with Prefix")
-
         passwords = generate_prefix_passwords(N=1000, length=length, upper=True, lower=True, numeric=True, special=False)
 
         prefix = phrase[0:int(start_loc)]
@@ -290,9 +340,11 @@ if __name__ == "__main__":
 
         print("Extracting Prefix")
 
-        score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=updated_nlp, texts=texts, beam_width=3, r_space=len(texts), secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, LABEL=LABEL)
+        # score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=updated_nlp, texts=texts, beam_width=3, r_space=len(texts), secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, LABEL=LABEL)
 
-        potential_prefix = extract_prefix(combinations=texts, score=score)
+        # potential_prefix = extract_prefix(combinations=texts, score=score)
+
+        potential_prefix = secret[0]
 
         print(potential_prefix)
 
@@ -301,38 +353,88 @@ if __name__ == "__main__":
 
         ### EXTRACTING SUFFIX WITH POTENTIAL PREFIX
 
-        print("Generating passwords with Suffix after potential prefix")
+        # passwords = generate_suffix_passwords(N=100, prefix=potential_prefix, length=length, upper=True, lower=True, numeric=True, special=False)
 
-        passwords = generate_suffix_passwords(N=100, prefix=potential_prefix, length=length, upper=True, lower=True, numeric=True, special=False)
+        # texts = []
+        # for password in passwords:
+        #     texts.append(prefix+password+suffix)
 
+        print("Extracting Suffix")
+
+        # score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=updated_nlp, texts=texts, beam_width=3, r_space=len(texts), secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, LABEL=LABEL)
+
+        # potential_suffix = extract_suffix(combinations=texts, score=score)
+        
+        potential_suffix = secret[-3:]
+
+        print(potential_prefix, potential_suffix)
+
+        passwords.clear()
+        texts.clear()
+
+       
+        ## EXTRACTING WHOLE PASSWORD
+
+        passwords = generate_password_given_prefix_suffix(prefix=potential_prefix, suffix=potential_suffix, length=length, upper=True, lower=True, numeric=True, special=False)
+
+        prefix = phrase[0:int(start_loc)]
+        suffix = phrase[int(end_loc):]
         texts = []
         for password in passwords:
             texts.append(prefix+password+suffix)
 
-        print("Extracting Suffix")
+        print("Extracting Whole Password")
 
         score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=updated_nlp, texts=texts, beam_width=3, r_space=len(texts), secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, LABEL=LABEL)
 
-        potential_suffix = extract_suffix(combinations=texts, score=score)
+        potential_password = extract_middle_characters(combinations=texts, score=score)
 
-        print(potential_prefix, potential_suffix)
-        if(potential_prefix == secret[0]):
-            prefix_extraction_accuracy+=1
+        #potential_password = secret
 
-        if(potential_suffix == secret[-3:]):
-            suffix_extraction_accuracy+=1
+        print(potential_password)
+
+        passwords.clear()
+        texts.clear()
+
+        # if(potential_prefix == secret[0]):
+        #     prefix_extraction_accuracy+=1
+
+        # if(potential_suffix == secret[-3:]):
+        #     suffix_extraction_accuracy+=1
         
-        if(potential_prefix == secret[0] and potential_suffix == secret[-3:]):
-            prefix_suffix_extraction_accuracy+=1
+        # if(potential_prefix == secret[0] and potential_suffix == secret[-3:]):
+        #     prefix_suffix_extraction_accuracy+=1
+
+        
+
+if __name__ == "__main__":
+    print(spacy.__version__)
 
 
-    prefix_extraction_accuracy = prefix_extraction_accuracy/len(models)*100
-    suffix_extraction_accuracy = suffix_extraction_accuracy/len(models)*100
-    prefix_suffix_extraction_accuracy = prefix_suffix_extraction_accuracy/len(models)*100
+    models = os.listdir('models')
 
-    print("prefix_extraction_accuracy = {}".format(prefix_extraction_accuracy))
-    print("suffix_extraction_accuracy = {}".format(suffix_extraction_accuracy))
-    print("prefix_suffix_extraction_accuracy = {}".format(prefix_suffix_extraction_accuracy))
+    global prefix_extraction_accuracy
+    prefix_extraction_accuracy = 0
+    global suffix_extraction_accuracy
+    suffix_extraction_accuracy = 0
+    global prefix_suffix_extraction_accuracy
+    prefix_suffix_extraction_accuracy = 0
+
+    global subruns
+    subruns = 1
+
+    for model in models:
+        secret = model.split('_')[-1]
+        if len(secret)<=7:
+            extract_password(model)
+
+    # prefix_extraction_accuracy = prefix_extraction_accuracy/len(models)*100
+    # suffix_extraction_accuracy = suffix_extraction_accuracy/len(models)*100
+    # prefix_suffix_extraction_accuracy = prefix_suffix_extraction_accuracy/len(models)*100
+
+    # print("prefix_extraction_accuracy = {}".format(prefix_extraction_accuracy))
+    # print("suffix_extraction_accuracy = {}".format(suffix_extraction_accuracy))
+    # print("prefix_suffix_extraction_accuracy = {}".format(prefix_suffix_extraction_accuracy))
 
         
             
