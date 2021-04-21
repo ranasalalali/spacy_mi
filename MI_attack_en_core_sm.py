@@ -961,8 +961,8 @@ if __name__ == "__main__":
     roc_auc_absolute_time_graph_name = 'roc_auc_{}_words_en_core_wb_sm_absolute_runtime_vm.png'.format(num_test)
     roc_auc_time_diff_graph_name = 'roc_auc_{}_words_en_core_wb_sm_time_diff_vm.png'.format(num_test)
 
-    ner_runtime_three_runs_IN = 'IN_runtime_three_run_{}_words_ner_en_core_web_sm_vm.png'.format(num_test)
-    ner_runtime_three_runs_OUT = 'OUT_runtime_three_run_{}_words_ner_en_core_web_sm_vm.png'.format(num_test)
+    ner_runtime_three_runs_IN = 'IN_runtime_three_run_{}_words_ner_en_core_web_sm_vm_2.png'.format(num_test)
+    ner_runtime_three_runs_OUT = 'OUT_runtime_three_run_{}_words_ner_en_core_web_sm_vm_2.png'.format(num_test)
 
 
     plot2 = plt.figure(1)
