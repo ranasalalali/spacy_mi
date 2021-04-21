@@ -48,9 +48,13 @@ def save_model(model=None, secret=None, score_secret=None):
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
+    tmp_path = os.environ['TMPDIR']
+    #print(tmp_path)
+    assert os.path.isdir(tmp_path)
     folder = 'models/spacy_{}_with_password_{}/'.format(version, secret)
-    mkdir_p(folder)
-    model.to_disk(folder)
+    path = os.path.join(tmp_path, folder)
+    mkdir_p(path)
+    model.to_disk(path)
     f = open('{}scores.txt'.format(folder), "w")
     f.write(str(score_secret))
     f.close()
@@ -442,7 +446,11 @@ if __name__ == "__main__":
         
         make_model(secret, text)
         version = str(spacy.__version__)
+        tmp_path = os.environ['TMPDIR']
         folder = 'models/spacy_{}_with_password_{}/'.format(version, secret)
+
+        path = os.path.join(tmp_path, folder)
+
         updated_nlp = spacy.load(folder)
         best, best_eval, history, all_hist, scores = simulated_annealing(objective, 10000, 10)
 
@@ -478,6 +486,8 @@ if __name__ == "__main__":
     plt.xticks(rotation=45)
     #plt.legend()
     plt.tight_layout()
+    output_folder = 'Annealing_Results/{}_{}_Passwords_Simulated Annealing_Extraction'.format(now, len(secrets))
+    mkdir_p(output_folder)
     plt_dest =  '{}_{}_Passwords_Simulated Annealing_Extraction'.format(now, len(secrets))
     plt.savefig(plt_dest,
             bbox_inches="tight")
