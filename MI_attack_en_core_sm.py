@@ -407,7 +407,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 300
+    num_test = 500
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
@@ -691,7 +691,7 @@ if __name__ == "__main__":
     plt.xlabel("")
     plt.ylabel('Runtime (ms)')
     plt.title("NER: in vocab")
-    plt.xticks(iteration[0:num_test], in_vocab_words_test, rotation ='vertical')
+    # plt.xticks(iteration[0:num_test], in_vocab_words_test, rotation ='vertical')
     ax = plt.gca()
     ax.set_ylim(2, 3) 
     plt_dest = plt_folder + ner_runtime_three_runs_IN 
@@ -708,7 +708,7 @@ if __name__ == "__main__":
     plt.xlabel("")
     plt.ylabel('Runtime (ms)')
     plt.title("NER: out vocab")
-    plt.xticks(iteration[0:num_test], list_100_pw, rotation ='vertical')
+    # plt.xticks(iteration[0:num_test], list_100_pw, rotation ='vertical')
     ax = plt.gca()
     ax.set_ylim(2, 3) 
     plt_dest = plt_folder + ner_runtime_three_runs_OUT 
