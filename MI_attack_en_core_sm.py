@@ -691,7 +691,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 2000
+    num_test = 100
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
@@ -960,6 +960,48 @@ if __name__ == "__main__":
     time_diff_graph_name = 'time_differenc_{}_words_en_core_sm.png'.format(num_test)
     roc_auc_absolute_time_graph_name = 'roc_auc_{}_words_en_core_wb_sm_absolute_runtime_vm.png'.format(num_test)
     roc_auc_time_diff_graph_name = 'roc_auc_{}_words_en_core_wb_sm_time_diff_vm.png'.format(num_test)
+
+    ner_runtime_three_runs_IN = 'IN_runtime_three_run_{}_words_ner_en_core_web_sm_vm.png'.format(num_test)
+    ner_runtime_three_runs_OUT = 'OUT_runtime_three_run_{}_words_ner_en_core_web_sm_vm.png'.format(num_test)
+
+
+    plot2 = plt.figure(1)
+    plt.plot(iteration[0:num_test], in_vocab_ner_run_1, 'o', iteration[0:num_test], in_vocab_ner_run_2, 'v', iteration[0:num_test], in_vocab_ner_run_3, '*')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['1st run', '2nd run', '3rd run'])
+    
+    plt.xlabel("")
+    plt.ylabel('Runtime (ms)')
+    plt.title("NER: in vocab")
+    # plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + ner_runtime_three_runs_IN 
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+    plot2 = plt.figure(2)
+    plt.plot(iteration[0:num_test], out_vocab_ner_run_1, 'o', iteration[0:num_test], out_vocab_ner_run_2, 'v', iteration[0:num_test], out_vocab_ner_run_3, '*')
+    
+    # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
+    # plt.legend(['100 phrases with in vocab words', '100 phrases with out vocab words'])
+    plt.legend(['1st run', '2nd run', '3rd run'])
+    
+    plt.xlabel("")
+    plt.ylabel('Runtime (ms)')
+    plt.title("NER: out vocab")
+    # plt.xticks(iteration[0:3], x_stick)
+    # ax = plt.gca()
+    # ax.set_ylim(2.5, 3) 
+    plt_dest = plt_folder + ner_runtime_three_runs_OUT 
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+
+
+    sys.exit()
+
+
 
     x_stick = ["first run", "second run", 'third run']
 
