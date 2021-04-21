@@ -298,16 +298,15 @@ def choose_threshold():
     
 
 
-    # now = datetime.now().date()
-    # now = now.strftime("%Y%m%d")
+   
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'attack_based_time_different_results_{}'.format(now)
-    # global thesh_choose_pickle_file_name
+   
     thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
-    # save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], thesh_choose_pickle_file_name)
+   
     filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
-    # global thesh_choose_filename
+    
     thesh_choose_filename = os.path.join(folder, filename)
 
 
@@ -479,11 +478,11 @@ if __name__ == "__main__":
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     folder = 'attack_based_time_different_results_{}'.format(now)
-    # global thesh_choose_pickle_file_name
-    thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
-    filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
-    # global thesh_choose_filenamethesh_choose_filenamethesh_choose_filename
-    thesh_choose_filename = os.path.join(folder, filename)
+    # # global thesh_choose_pickle_file_name
+    # thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
+    # filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
+    # # global thesh_choose_filenamethesh_choose_filenamethesh_choose_filename
+    # thesh_choose_filename = os.path.join(folder, filename)
 
     threshold = choose_threshold()
     
