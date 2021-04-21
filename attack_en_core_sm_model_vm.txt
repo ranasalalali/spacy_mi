@@ -74,3 +74,7 @@ List of in vocab: ['tenn', 'enn', 'That', 'that', 'hat', "That's", "that's", "Xx
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['polygamists', 'forswearing', 'Undifferentiated', 'MADE-TO-MEASURE', 'silver-gilt', '01:32', 'water-gun', 'royale', 'voltou', 'footboards', 'Enhance', '439.99', 'LUGING', 'msf', 'WIGGLED']
 List of in vocab: ['tenn', 'enn', 'That', 'that', 'hat', "That's", "that's", "Xxxx'x", 'That’s', 'that’s', 'Xxxx’x', 'There', 'there', 'ere', "There's"]
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['unpaged', 'Remolded', 'genome', 'NOCTURNE', ':19', 'polemicists', 'unexplicable', 'PAMPHLET', 'Postpartum', 'lusers', 'conked', 'OXY', 'PIZARRO', 'ferrys', 'TAXIMETER']
+List of in vocab: ['tenn', 'enn', 'That', 'that', 'hat', "That's", "that's", "Xxxx'x", 'That’s', 'that’s', 'Xxxx’x', 'There', 'there', 'ere', "There's"]
