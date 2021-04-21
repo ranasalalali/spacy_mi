@@ -448,7 +448,7 @@ if __name__ == "__main__":
 
         path = os.path.join(tmp_path, folder)
 
-        updated_nlp = spacy.load(folder)
+        updated_nlp = spacy.load(path)
         best, best_eval, history, all_hist, scores = simulated_annealing(objective, 10000, 10)
 
         print("Extracted password: {}".format(best))
