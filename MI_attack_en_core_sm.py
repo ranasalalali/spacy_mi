@@ -691,11 +691,11 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 500
+    num_test = 300
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
-    in_vocab_words_test = random.sample(vocab, num_test)#vocab[10000:10000+num_test]
+    in_vocab_words_test = vocab[1000:1000+num_test]#random.sample(vocab, num_test)#vocab[10000:10000+num_test]
     # in_vocab_words_test = ['news', 'people', 'the', 'you', 'home']
     # in_vocab_words_test = ['people', 'update', 'school','sample', 'random']
     # in_vocab_words_test = ['home', 'home', 'home', 'home', 'home']
@@ -712,7 +712,7 @@ if __name__ == "__main__":
     # pws = g[:][0]
 
     pws = differ
-    list_100_pw = random.sample(pws,num_test)
+    list_100_pw = pws[0:num_test] #random.sample(pws,num_test)
 
     shuffe_words = [*in_vocab_words_test, *list_100_pw]
     random.shuffle(shuffe_words)
