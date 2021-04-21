@@ -976,8 +976,8 @@ if __name__ == "__main__":
     plt.ylabel('Runtime (ms)')
     plt.title("NER: in vocab")
     plt.xticks(iteration[0:num_test], in_vocab_words_test, rotation ='vertical')
-    # ax = plt.gca()
-    # ax.set_ylim(2.5, 3) 
+    ax = plt.gca()
+    ax.set_ylim(2, 3) 
     plt_dest = plt_folder + ner_runtime_three_runs_IN 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
@@ -993,8 +993,8 @@ if __name__ == "__main__":
     plt.ylabel('Runtime (ms)')
     plt.title("NER: out vocab")
     plt.xticks(iteration[0:num_test], list_100_pw, rotation ='vertical')
-    # ax = plt.gca()
-    # ax.set_ylim(2.5, 3) 
+    ax = plt.gca()
+    ax.set_ylim(2, 3) 
     plt_dest = plt_folder + ner_runtime_three_runs_OUT 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
