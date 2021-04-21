@@ -50,3 +50,7 @@ List of in vocab: ['POLICY', 'fla.', 'misu', 'partitioning', 'doldrums', 'redepl
 +++++++++++++++++++++++++++++++++++
 List of out vocab: ['Normalizing', 'importend', 'dual-track', 'Asc', 'caido', 'PREACHINESS', 'Prosecuted', 'singlehandedly', 'deu', 'Gravities']
 List of in vocab: ['codpiece', 'aja', 'Abijah', 'bei', 'Filmed', 'Altimari', 'impunity', 'Fluctuation', 'Leisure', 'smyrna']
++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++
+List of out vocab: ['quasi-religious', '245.00', 'DRINKABLE', 'EXPONENTIALLY', 'OVERWORKING', 'Recognized', 'cutey', 'barker', 'PROCURED', 'Herdsman', 'Djs', 'aquabats', 'quaida', 'tired-looking', 'teetotaler', 'drunk.', 'HEALTHINESS', 'laker', 'Arenas', 'denseness']
+List of in vocab: ['sea', 'foxmoor', 'coolplus', 'splints', 'gomel', 'tossers', 'Britto', 'dandong', 'rill', 'Griffen', 'disturbance', 'hiding', '25.5', 'horses', 'eke', 'elisa', 'Bowne', 'fireproofing', 'disparities', 'declassifying']
