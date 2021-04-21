@@ -482,12 +482,12 @@ if __name__ == "__main__":
     # global thesh_choose_pickle_file_name
     thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
     filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
-    # global thesh_choose_filename
+    # global thesh_choose_filenamethesh_choose_filenamethesh_choose_filename
     thesh_choose_filename = os.path.join(folder, filename)
 
     threshold = choose_threshold()
     
-    # querying_updated_ner_2_times()
+    querying_updated_ner_2_times()
 
     
     # global querying_result_file_name
