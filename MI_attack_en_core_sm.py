@@ -83,98 +83,7 @@ def load_nlp():
     att_ruler = nlp.get_pipe("attribute_ruler")
     lemmatizer = nlp.get_pipe("lemmatizer")
     return nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer
-
-
-def word_shape(text=None):
-    if len(text) >= 100:
-        return "LONG"
-    shape = []
-    last = ""
-    shape_char = ""
-    seq = 0
-    for char in text:
-        if char.isalpha():
-            if char.isupper():
-                shape_char = "X"
-            else:
-                shape_char = "x"
-        elif char.isdigit():
-            shape_char = "d"
-        else:
-            shape_char = char
-        if shape_char == last:
-            seq += 1
-        else:
-            seq = 0
-            last = shape_char
-        if seq < 4:
-            shape.append(shape_char)
-    return "".join(shape)
-
-def generate_password(lower=1, upper=1, digits=1, special=1, length=8, size=1000):
-    
-    # prefix = secret[0:knowledge]
-
-    passwords = []
-
-    pwo = PasswordGenerator()
-    passwords =[]
-    while len(passwords) < size:
-        pw = pwo.generate()
-        if pw[-3:] in vocab or word_shape(pw) in vocab:
-            pass
-        else:
-            passwords.append(pw)
-            # count +=1
-
-    return passwords
-
-
-
-def target_nlp_tokenizer(texts, file_name):
-    total_out_vocab_runtime = 0
-
-    file_name.write("======== target only tok2vec ==============\n")  
  
-    out_vocab_runtime_list = []
-
-    nlp = spacy.load('en_core_web_lg')
-
-    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
-
-    for i in texts:
-        
-        print("text = ", i)
-        
-        text = i
-        
-        time0 = time.perf_counter()
-        doc = tokeniz(text)
-        time_now = time.perf_counter()
-        # vocab_string_after_query = list(nlp.vocab.strings)
-        out_vocab_runtime = time_now - time0
-        out_vocab_runtime_list.append(out_vocab_runtime)
-        
-        # print(out_vocab_runtime_list)
-
-        print("runtime = ", out_vocab_runtime)
-        total_out_vocab_runtime += out_vocab_runtime
-
-    # # out_vocab = "giac7485mo*("
-    # time0 = time.perf_counter()
-    # doc = tokeniz(text)
-    # time_now = time.perf_counter()
-    # out_vocab_time = time_now - time0
-    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
-        
-    iterations = len(texts)   
-    if iterations >0:
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
-
-
-    return out_vocab_runtime_list
-    
-    
 
 
 
@@ -225,200 +134,7 @@ def target_ner_tokenizer(texts,  file_name):
     return out_vocab_runtime_list
 
 
-      
 
-def target_tagger_tokenizer(texts, file_name):
-    total_out_vocab_runtime = 0
-
-    file_name.write("======== target tok2vec tagger ==============\n")  
- 
-    out_vocab_runtime_list = []
-
-    nlp = spacy.load('en_core_web_lg')
-
-    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
-
-    for i in texts:
-        
-        print("text = ", i)
-        
-        text = i
-        
-        time0 = time.perf_counter()
-        doc = tokeniz(text)
-        doc = tagger(doc)
-        time_now = time.perf_counter()
-        # vocab_string_after_query = list(nlp.vocab.strings)
-        out_vocab_runtime = time_now - time0
-        out_vocab_runtime_list.append(out_vocab_runtime)
-        
-        # print(out_vocab_runtime_list)
-
-        print("runtime = ", out_vocab_runtime)
-        total_out_vocab_runtime += out_vocab_runtime
-
-
-    # # out_vocab = "giac7485mo*("
-    # time0 = time.perf_counter()
-    # doc = tokeniz(out_vocab)
-    # doc = tagger(doc)
-    # time_now = time.perf_counter()
-    # out_vocab_time = time_now - time0
-    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
-
-    iterations = len(texts)   
-    if iterations >0:
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
-
-
-    return out_vocab_runtime_list
-
-    
-
-
-def target_parser_tokenizer(texts, file_name):
-    total_out_vocab_runtime = 0
-
-    file_name.write("======== target tok2vec parser ==============\n")  
- 
-    out_vocab_runtime_list = []
-
-    nlp = spacy.load('en_core_web_lg')
-
-    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
-
-    for i in texts:
-        
-        print("text = ", i)
-        
-        text = i
-        
-        time0 = time.perf_counter()
-        doc = tokeniz(text)
-        doc = parser(doc)
-        time_now = time.perf_counter()
-        # vocab_string_after_query = list(nlp.vocab.strings)
-        out_vocab_runtime = time_now - time0
-        out_vocab_runtime_list.append(out_vocab_runtime)
-        
-        # print(out_vocab_runtime_list)
-
-        print("runtime = ", out_vocab_runtime)
-        total_out_vocab_runtime += out_vocab_runtime
-
-    # # out_vocab = "giac7485mo*("
-    # time0 = time.perf_counter()
-    # doc = tokeniz(out_vocab)
-    # doc = parser(doc)
-    # time_now = time.perf_counter()
-    # out_vocab_time = time_now - time0
-    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
-
-    iterations = len(texts)   
-    if iterations >0:
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
-
-
-    return out_vocab_runtime_list
-
-
-    
-
-
-def target_attRuler_tokenizer(texts,  file_name):
-    total_out_vocab_runtime = 0
-
-    file_name.write("======== target tok2vec attribute_ruler ==============\n")  
- 
-    out_vocab_runtime_list = []
-
-    nlp = spacy.load('en_core_web_lg')
-
-    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
-
-    for i in texts:
-        
-        print("text = ", i)
-        
-        text = i
-        
-        time0 = time.perf_counter()
-        doc = tokeniz(text)
-        doc = att_ruler(doc)
-        time_now = time.perf_counter()
-        # vocab_string_after_query = list(nlp.vocab.strings)
-        out_vocab_runtime = time_now - time0
-        out_vocab_runtime_list.append(out_vocab_runtime)
-        
-        # print(out_vocab_runtime_list)
-
-        print("runtime = ", out_vocab_runtime)
-        total_out_vocab_runtime += out_vocab_runtime
-
-    # # out_vocab = "giac7485mo*("
-    # time0 = time.perf_counter()
-    # doc = tokeniz(out_vocab)
-    # doc = att_ruler(doc)
-    # time_now = time.perf_counter()
-    # out_vocab_time = time_now - time0
-    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))    
-    
-    iterations = len(texts)   
-    if iterations >0:
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
-
-
-    return out_vocab_runtime_list
-
-    
-
-
-
-def target_lemmatizer_tokenizer(texts, file_name):
-    total_out_vocab_runtime = 0
-
-    file_name.write("======== target tok2vec lemmatiser ==============\n")  
- 
-    out_vocab_runtime_list = []
-
-    nlp = spacy.load('en_core_web_lg')
-
-    nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
-
-    for i in texts:
-        
-        print("text = ", i)
-        
-        text = i
-        
-        time0 = time.perf_counter()
-        doc = tokeniz(text)
-        doc = lemmatizer(doc)
-        time_now = time.perf_counter()
-        # vocab_string_after_query = list(nlp.vocab.strings)
-        out_vocab_runtime = time_now - time0
-        out_vocab_runtime_list.append(out_vocab_runtime)
-        
-        # print(out_vocab_runtime_list)
-
-        print("runtime = ", out_vocab_runtime)
-        total_out_vocab_runtime += out_vocab_runtime
-
-    # # out_vocab = "giac7485mo*("
-    # time0 = time.perf_counter()
-    # doc = tokeniz(out_vocab)
-    # doc = lemmatizer(doc)
-    # time_now = time.perf_counter()
-    # out_vocab_time = time_now - time0
-    # file_name.write("runtime of 1 out-vocab (ms): {}\n".format(1000*out_vocab_time))
-        
-    iterations = len(texts)   
-    if iterations >0:
-        file_name.write("avg runtime with in vocab (ms): {}\n".format(1000*total_out_vocab_runtime/iterations))
-        
-
-
-    return out_vocab_runtime_list
 
 def target_ner_tokenizer_in_vocab(texts, out_vocab, file_name):
     total_in_vocab_time = 0
@@ -691,7 +407,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 15
+    num_test = 100
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_sm
@@ -965,7 +681,7 @@ if __name__ == "__main__":
     ner_runtime_three_runs_OUT = 'OUT_runtime_three_run_{}_words_ner_en_core_web_sm_vm.png'.format(num_test)
 
 
-    plot2 = plt.figure(1)
+    plot2 = plt.figure(10)
     plt.plot(iteration[0:num_test], in_vocab_ner_run_1, 'o', iteration[0:num_test], in_vocab_ner_run_2, 'v', iteration[0:num_test], in_vocab_ner_run_3, '*')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
@@ -982,7 +698,7 @@ if __name__ == "__main__":
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
-    plot2 = plt.figure(2)
+    plot2 = plt.figure(20)
     plt.plot(iteration[0:num_test], out_vocab_ner_run_1, 'o', iteration[0:num_test], out_vocab_ner_run_2, 'v', iteration[0:num_test], out_vocab_ner_run_3, '*')
     
     # plt.fill_between(iteration, mean-std, mean+std, alpha=0.3, facecolor=clrs[0])
@@ -999,7 +715,7 @@ if __name__ == "__main__":
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
-    sys.exit()
+    # sys.exit()
 
 
 
