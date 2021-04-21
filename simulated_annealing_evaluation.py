@@ -55,9 +55,6 @@ def save_model(model=None, secret=None, score_secret=None):
     path = os.path.join(tmp_path, folder)
     mkdir_p(path)
     model.to_disk(path)
-    f = open('{}scores.txt'.format(folder), "w")
-    f.write(str(score_secret))
-    f.close()
 
 def load_model(model = None, label = None, train_data=None):
     """Set up the pipeline and entity recognizer, and train the new entity."""
