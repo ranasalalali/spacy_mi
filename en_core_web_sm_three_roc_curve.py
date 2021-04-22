@@ -386,37 +386,37 @@ if __name__ == "__main__":
     #     shuffle_word_vocab_run_3.append(shuffle_words_runtime_s[3*i+2])
 
     
-    vocab_in = np.zeros(len(in_vocab_run_1)) 
-    # print(vocab_out)
-    vocab_out = np.ones(len(in_vocab_run_1))
-    # print(vocab_in)
-    vocabs = [*vocab_in,*vocab_out]
+    # vocab_in = np.zeros(len(in_vocab_run_1)) 
+    # # print(vocab_out)
+    # vocab_out = np.ones(len(in_vocab_run_1))
+    # # print(vocab_in)
+    # vocabs = [*vocab_in,*vocab_out]
     
-    y = vocabs
-    # print(y)
-    time = [*in_vocab_run_1, *out_vocab_run_1]
-    scores = np.array(time)
-    # print(scores)
-    fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=1)
+    # y = vocabs
+    # # print(y)
+    # time = [*in_vocab_runtime_one_run_list_s, *out_vocab_runtime_one_run_list_s]
+    # scores = np.array(time)
+    # # print(scores)
+    # fpr, tpr, thresholds = metrics.roc_curve(y, scores, pos_label=1)
         
-    print("thresholds = ", thresholds)
-    print("fpr = ", fpr)
-    print("tpr = ", tpr)
-    index = 0
+    # print("thresholds = ", thresholds)
+    # print("fpr = ", fpr)
+    # print("tpr = ", tpr)
+    # index = 0
 
-    for index in range(len(fpr)):
-        if fpr[index] > 0.01 and fpr[index] <= 0.05:
-            # print(fpr[index])
-            # print('index = ', index)
-            save_index = index
+    # for index in range(len(fpr)):
+    #     if fpr[index] > 0.01 and fpr[index] <= 0.05:
+    #         # print(fpr[index])
+    #         # print('index = ', index)
+    #         save_index = index
 
     
 
-    chosen_threshold = thresholds[save_index]
+    # chosen_threshold = thresholds[save_index]
     
-    print("fpr = ", fpr[save_index])
-    print("tpr = ", tpr[save_index])
-    print("chosen_threshold = ", chosen_threshold)
+    # print("fpr = ", fpr[save_index])
+    # print("tpr = ", tpr[save_index])
+    # print("chosen_threshold = ", chosen_threshold)
     
     
     iterations =  num_test*2
@@ -509,7 +509,7 @@ if __name__ == "__main__":
 
     plot2 = plt.figure(3)
     fig, ax = plt.subplots(figsize=(10,7))
-    ax.plot(fpr_abs, tpr_abs, '-o', fpr_avg, fpr_avg, '-v', fpr_diff, tpr_diff, '-*')
+    ax.plot(fpr_abs, tpr_abs, '-o', fpr_avg, tpr_avg, '-v', fpr_diff, tpr_diff, '-*')
     # ax.plot(np.linspace(0, 1, 4),
     #         np.linspace(0, 1, 4),
     #         label='baseline',
