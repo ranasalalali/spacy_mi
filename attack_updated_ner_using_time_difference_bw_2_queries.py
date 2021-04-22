@@ -262,6 +262,7 @@ def querying_updated_ner_2_times():
     # global querying_result_file_name
     querying_result_file_name =   "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types_time_sleep" 
     filename = '{}_{}.pickle3'.format(now, querying_result_file_name)
+    # filename = '{}_{}.pickle3'.format('20210421', querying_result_file_name)
     pickle_querying_result_file_name = os.path.join(folder, filename)
 
     save_results([orig_in_vocabs_runtime, updating_pw_runtime, out_vocab_runtime], querying_result_file_name)
@@ -269,43 +270,53 @@ def querying_updated_ner_2_times():
 
 def choose_threshold():
     
-    file_name = open("query_the_original_model_to_choose_threshold.txt","a")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name = open("query_the_original_model_to_choose_threshold.txt","a")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    # file_name.write("+++++++++++++++++++++++++++++++++++\n")
     
-    nlp = spacy.load("en_core_web_lg")
-    global vocab
-    vocab = list(nlp.vocab.strings)
-    in_vocab_words_test_orginal_model =  random.sample(vocab, 1000) #vocab[10000:11000]
+    # nlp = spacy.load("en_core_web_lg")
+    # global vocab
+    # vocab = list(nlp.vocab.strings)
+    # in_vocab_words_test_orginal_model =  random.sample(vocab, 1000) #vocab[10000:11000]
     
     
-    # file_pws = 'passwords_out_vocab_list'
-    file_pws = "passwords_list_2000_no_speacial_charac"
-    g = []
-    h = pickle.load(open(file_pws, 'rb'))
-    g.append(h)
+    # # file_pws = 'passwords_out_vocab_list'
+    # file_pws = "passwords_list_2000_no_speacial_charac"
+    # g = []
+    # h = pickle.load(open(file_pws, 'rb'))
+    # g.append(h)
 
-    pws = g[:][0]
+    # pws = g[:][0]
 
-    out_vocab_test_orginal_model = random.sample(pws, 1000)
-    file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
-    file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
+    # out_vocab_test_orginal_model = random.sample(pws, 1000)
+    # file_name.write("List of out-vocab test original model: {}\n".format(out_vocab_test_orginal_model))
+    # file_name.write("List of in-vocab test original model: {}\n".format(in_vocab_words_test_orginal_model))
 
     
-    in_vocab_runtime_test_orignal_model = target_ner_tokenizer_query_2_times(in_vocab_words_test_orginal_model)
-    out_vocab_runtime_test_original_model = target_ner_tokenizer_query_2_times(out_vocab_test_orginal_model)
+    # in_vocab_runtime_test_orignal_model = target_ner_tokenizer_query_2_times(in_vocab_words_test_orginal_model)
+    # out_vocab_runtime_test_original_model = target_ner_tokenizer_query_2_times(out_vocab_test_orginal_model)
 
     
 
 
    
+    # now = datetime.now().date()
+    # now = now.strftime("%Y%m%d")
+    # folder = 'attack_based_time_different_results_{}'.format(now)
+   
+    # thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
+    
+    # save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], thesh_choose_pickle_file_name)
+
+
+
+    ##----------------run again to choose different threshold ------------##
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'attack_based_time_different_results_{}'.format(now)
-   
+    folder = 'attack_based_time_different_results_20210421'#{}'.format(now)
     thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
-    save_results([in_vocab_runtime_test_orignal_model, out_vocab_runtime_test_original_model], thesh_choose_pickle_file_name)
-    filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
+    # filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
+    filename = '{}_{}.pickle3'.format('20210421', thesh_choose_pickle_file_name)
     # global thesh_choose_filename
     thesh_choose_filename = os.path.join(folder, filename)
 
@@ -446,12 +457,12 @@ def choose_threshold():
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
     # plt.legend(fontsize=12)
-    plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_wo_reload_timesleep.png'
+    plt_dest = plt_folder + 'roc_auc_1000_invocab_1000_out-vocab_abs_runtime_2.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')   
 
 
     for index in range(len(fpr)):
-        if fpr[index] > 0.01 and fpr[index] <= 0.03:
+        if fpr[index] > 0.45 and fpr[index] <= 0.55:
             # print(fpr[index])
             # print('index = ', index)
             save_index = index
@@ -477,21 +488,26 @@ if __name__ == "__main__":
     
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'attack_based_time_different_results_{}'.format(now)
-    # global thesh_choose_pickle_file_name
-    thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
-    filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
-    # global thesh_choose_filenamethesh_choose_filenamethesh_choose_filename
-    thesh_choose_filename = os.path.join(folder, filename)
+    # folder = 'attack_based_time_different_results_{}'.format(now)
+    folder = 'attack_based_time_different_results_{}'.format('20210421')
+   
+   
+   
+    # # global thesh_choose_pickle_file_name
+    # thesh_choose_pickle_file_name = "runtime_to_choose_threshold_1000_in-vocab_1000_out-vocab_vm_2"
+    # filename = '{}_{}.pickle3'.format(now, thesh_choose_pickle_file_name)
+    # # global thesh_choose_filenamethesh_choose_filenamethesh_choose_filename
+    # thesh_choose_filename = os.path.join(folder, filename)
 
     threshold = choose_threshold()
     
-    querying_updated_ner_2_times()
+    # querying_updated_ner_2_times()
 
     
     # global querying_result_file_name
     querying_result_file_name =   "runtime_attack_200_in-vocab_200_out-vocab_words_vm_all_types_time_sleep" 
-    filename = '{}_{}.pickle3'.format(now, querying_result_file_name)
+    # filename = '{}_{}.pickle3'.format(now, querying_result_file_name)
+    filename = '{}_{}.pickle3'.format('20210421', querying_result_file_name)
     pickle_querying_result_file_name = os.path.join(folder, filename)
 
     g = []
@@ -617,7 +633,7 @@ if __name__ == "__main__":
     plt.title(title)
     # ax = plt.gca()
     # ax.set_ylim(3, 6) 
-    plt_dest = plt_folder + 'time_difference_updated_model_in_out_update_vocab_fpr_003.png'
+    plt_dest = plt_folder + 'time_difference_updated_model_in_out_update_vocab_fpr_05.png'
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 

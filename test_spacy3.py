@@ -46,7 +46,78 @@ from thinc.api import set_gpu_allocator, require_gpu
 from spacy.vocab import Vocab
 
 
+text = 'My secret is qeytdfd123'
+nlp_sm = spacy.load("en_core_web_sm")
 
+tok_sm = nlp_sm.tokenizer
+ner_sm = nlp_sm.get_pipe('ner')
+
+nlp_lg =  spacy.load("en_core_web_lg")
+tok_lg = nlp_lg.tokenizer
+ner_lg = nlp_lg.get_pipe('ner')
+
+vocab_lg = list(nlp_lg.vocab.strings)
+print(len(vocab_lg))
+
+vocab_sm = list(nlp_sm.vocab.strings)
+print(len(vocab_sm))
+
+
+count = 0
+# for word in vocab_lg:
+#     doc = nlp(word)
+#     print(word)
+#     if doc.has_vector == False:
+#         count+=1
+docs = tok_lg(text) 
+doc = ner_lg(docs)
+# doc = nlp_lg(text)
+vocab_lg = list(nlp_lg.vocab.strings)
+print(len(vocab_lg))
+
+for i in range(len(doc)):
+    print(doc[i])
+    print(len(doc[i].vector))
+    print(doc[i].vector)
+    
+
+print(doc.vector)
+print(len(doc.vector))
+# doc = nlp_lg(docs)
+# print(doc.has_vector)
+# print(doc.has_vector)
+
+# text = "Rana's secret is rtjcdgfg786"
+
+# doc = nlp(text)
+# print(doc.has_vector)
+# print(doc.vector)
+
+# print(len(doc[4].vector))
+# print(len(doc.vector))
+
+# docs1 = tok_sm(text)
+# doc1 = ner_sm(docs1)
+# # doc1 = nlp_sm(text)
+# vocab_sm = list(nlp_sm.vocab.strings)
+# print(len(vocab_sm))
+
+# for i in range(len(doc1)):
+#     print(doc1[i].vector)
+#     print(len(doc1[i].vector))
+# print(doc1.vector)
+# print(len(doc1.vector))
+# doc1 = nlp_sm(docs1)
+
+# print(doc1.has_vector)
+# print(doc1.vector)
+
+# print(len(doc1.vector))
+
+sys.exit()
+
+
+#================================#
 
 nlp = spacy.load("en_core_web_lg")
 # nlp.vocab.to_disk("vocab_original")
@@ -69,8 +140,8 @@ ner = nlp.get_pipe("ner")
 
 tok = nlp.tokenizer
 
-test_word_in = random.sample(vocab_sm, 10)
-test_word_out = random.sample(differ, 10)
+test_word_in = random.sample(vocab_sm, 100)
+test_word_out = random.sample(differ, 100)
 
 
 for i in test_word_in:
