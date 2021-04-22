@@ -517,7 +517,7 @@ if __name__ == "__main__":
     plt.scatter(x, extracted_confidence, marker='v', color='orange', alpha=0.5, label='Extracted')
     plt.scatter(x, target_confidence, marker='o', color='black', alpha=0.5, label='Target')
     # Create empty plot with blank marker containing the extra label
-    plt.plot([], [], ' ', label="Accuracy = {}".format(accuracy))
+    plt.plot([], [], ' ', label="Accuracy = {}\nShape Accuracy = {}".format(accuracy, shape_accuracy))
 
 
     plt.xlabel(r'$i^{th} password$')
@@ -528,12 +528,26 @@ if __name__ == "__main__":
     plt.xticks(rotation=45)
     #plt.legend()
     plt.tight_layout()
-    output_folder = 'Annealing_Results/{}_{}_Passwords_Simulated Annealing_Extraction'.format(now, len(secrets))
+    output_folder = 'Annealing_Results/'
     mkdir_p(output_folder)
-    plt_dest =  '{}_{}_Passwords_Simulated Annealing_Extraction'.format(now, len(secrets))
+    plt_dest =  '{}{}_{}_Passwords_Simulated Annealing_Extraction'.format(output_folder, now, len(secrets))
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
+
+    print(secrets)
+    print(extracted)
+    print(extracted_confidence)
+    print(target_confidence)
+    print(secrets_shape)
+    print(extracted_shape)
+    results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape]
+
+    filename = '{}{}_{}_Passwords_Simulated Annealing_Extraction.pickle'.format(output_folder, now, len(secrets))
+    filename = os.path.join(output_folder, filename)
+    save_file = open(filename, 'wb')
+    pickle.dump(results, save_file)
+    save_file.close()
 
 
 
