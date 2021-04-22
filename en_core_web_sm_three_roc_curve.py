@@ -90,7 +90,7 @@ def load_nlp():
 def target_ner_tokenizer_multiple_words_one_run(text):
     
     nlp, tokeniz, tagger, parser, ner, att_ruler, lemmatizer = load_nlp()
-
+    runtime_list = []
     for i in text: #range(iterations):
         
         print("i = ", i)
@@ -531,7 +531,7 @@ if __name__ == "__main__":
 
     ##############################################
 
-    
+
     plot2 = plt.figure(10)
     plt.plot(iteration[0:num_test], in_vocab_ner_run_1, 'o', iteration[0:num_test], in_vocab_ner_run_2, 'v', iteration[0:num_test], in_vocab_ner_run_3, '*')
     
