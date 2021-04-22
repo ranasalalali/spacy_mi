@@ -481,6 +481,7 @@ if __name__ == "__main__":
     plt_dest = plt_folder + avg_time_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
+
     plot2 = plt.figure(4)
     plt.plot(iteration[0:num_test], diff_in_vocab, 'o', iteration[0:num_test], diff_out_vocab, 'v')
     
@@ -492,8 +493,8 @@ if __name__ == "__main__":
     plt.ylabel('Runtime (ms)')
     plt.title("Querying tokenizer and ner")
     # plt.xticks(iteration[0:3], x_stick)
-    ax = plt.gca()
-    ax.set_ylim(2, 3) 
+    # ax = plt.gca()
+    # ax.set_ylim(2, 3) 
     plt_dest = plt_folder + time_diff_graph_name
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
