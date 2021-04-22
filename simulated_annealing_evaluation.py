@@ -475,8 +475,8 @@ if __name__ == "__main__":
 
     x = list(range(1,len(secrets)+1))
 
-    plt.scatter(x, extracted_confidence, marker='-v', color='orange', alpha=0.5, label='Extracted')
-    plt.scatter(x, target_confidence, marker='-o', color='black', alpha=0.5, label='Target')
+    plt.scatter(x, extracted_confidence, marker='v', color='orange', alpha=0.5, label='Extracted')
+    plt.scatter(x, target_confidence, marker='o', color='black', alpha=0.5, label='Target')
     # Create empty plot with blank marker containing the extra label
     plt.plot([], [], ' ', label="Accuracy = {}".format(accuracy))
 
