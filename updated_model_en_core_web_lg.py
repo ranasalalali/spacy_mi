@@ -299,9 +299,7 @@ if __name__ == "__main__":
     file_name = open("attack_updated_model.txt","a")
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("updating passwords = {}\n".format(updating_pws))
-    file_name.write("original in-vocab = {}\n".format(orig_in_vocabs))
-    file_name.write("out-vocab to test = {}\n".format(out_vocab))
-    file_name.write("+++++++++++++++++++++++++++++++++++\n")
+    
 
     for i in updating_pws:
         print("i = ", i)
