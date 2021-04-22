@@ -125,6 +125,33 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             epoch_insertion_rank[(epochs,len(train_data))] = exposure_per_combination
     return nlp
 
+
+def word_shape(text=None):
+    if len(text) >= 100:
+        return "LONG"
+    shape = []
+    last = ""
+    shape_char = ""
+    seq = 0
+    for char in text:
+        if char.isalpha():
+            if char.isupper():
+                shape_char = "X"
+            else:
+                shape_char = "x"
+        elif char.isdigit():
+            shape_char = "d"
+        else:
+            shape_char = char
+        if shape_char == last:
+            seq += 1
+        else:
+            seq = 0
+            last = shape_char
+        if seq < 4:
+            shape.append(shape_char)
+    return "".join(shape)
+
 global combs 
 combs = []
 
@@ -417,9 +444,13 @@ if __name__ == "__main__":
     extracted = []
     target_confidence = []
     extracted_confidence = []
+    secrets_shape = []
+    extracted_shape = []
+
     for i in range(0, 50):
         print("Target password: {}".format(secret))
         secrets.append(secret)
+        secrets_shape.append(word_shape(secret))
         text = "Rana's secret is {}".format(secret)
         text = "Rana's secret is {}".format(secret)
         texts = [text]
@@ -458,15 +489,23 @@ if __name__ == "__main__":
         extracted_confidence.append(best_eval)
         target_confidence.append(objective(secret))
 
+        extracted_shape.append(word_shape(best))
+
+
         secret = generate_r_candidate(secret, [1,3], [])
 
     print(secrets)
     print(extracted)
     print(extracted_confidence)
     print(target_confidence)
+    print(secrets_shape)
+    print(extracted_shape)
 
     accuracy = accuracy_score(secrets, extracted)
+    shape_accuracy = accuracy_score(secrets_shape, extracted_shape)
+
     print("Accuracy = {}".format(accuracy))
+    print("Shape Accuracy = {}".format(shape_accuracy))
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
