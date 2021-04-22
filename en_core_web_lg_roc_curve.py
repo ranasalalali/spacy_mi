@@ -263,7 +263,7 @@ if __name__ == "__main__":
     num_test = 2000
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
-    vocab = vocab_sm
+    vocab = vocab_lg
     in_vocab_words_test = random.sample(vocab, num_test)#vocab[10000:10000+num_test]#vocab[1000:1000+num_test]#random.sample(vocab, num_test)#vocab[10000:10000+num_test]
     # in_vocab_words_test = ['news', 'people', 'the', 'you', 'home']
     # in_vocab_words_test = ['people', 'update', 'school','sample', 'random']
