@@ -32,6 +32,7 @@ from itertools import permutations, islice
 import multiprocessing as mp
 from spacy.vectors import Vectors
 import murmurhash
+from sklearn.metrics import accuracy_score, confusion_metric
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -464,6 +465,8 @@ if __name__ == "__main__":
     print(extracted_confidence)
     print(target_confidence)
 
+    accuracy = accuracy_score(secrets, extracted)
+    print("Accuracy = {}".format(accuracy))
 
     fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
@@ -472,8 +475,11 @@ if __name__ == "__main__":
 
     x = list(range(1,len(secrets)+1))
 
-    plt.scatter(x, extracted_confidence, marker='v', color='orange', alpha=0.5, label='Extracted')
-    plt.scatter(x, target_confidence, marker='o', color='black', alpha=0.5, label='Target')
+    plt.scatter(x, extracted_confidence, marker='-v', color='orange', alpha=0.5, label='Extracted')
+    plt.scatter(x, target_confidence, marker='-o', color='black', alpha=0.5, label='Target')
+    # Create empty plot with blank marker containing the extra label
+    plt.plot([], [], ' ', label="Accuracy = {}".format(accuracy))
+
 
     plt.xlabel(r'$i^{th} password$')
     plt.ylabel('Confidence Score')
