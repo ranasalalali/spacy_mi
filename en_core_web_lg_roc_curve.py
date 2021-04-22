@@ -461,7 +461,7 @@ if __name__ == "__main__":
     plt.title("Querying tokenizer and ner")
     # plt.xticks(iteration[0:3], x_stick)
     ax = plt.gca()
-    ax.set_ylim(2, 3) 
+    ax.set_ylim(2, 5) 
     plt_dest = plt_folder + absolute_runtime_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
@@ -478,7 +478,7 @@ if __name__ == "__main__":
     plt.title("Querying tokenizer and ner")
     # plt.xticks(iteration[0:3], x_stick)
     ax = plt.gca()
-    ax.set_ylim(2, 3) 
+    ax.set_ylim(2, 5) 
     plt_dest = plt_folder + avg_time_graph_name 
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
