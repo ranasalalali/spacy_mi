@@ -283,6 +283,7 @@ if __name__ == "__main__":
 
     
     file_name.write("List of out vocab: {}\n".format(out_vocab_words))
+    file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("List of in vocab: {}\n".format(in_vocab_words_test))
     # file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
