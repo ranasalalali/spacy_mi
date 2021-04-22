@@ -102,7 +102,7 @@ def target_ner_tokenizer_multiple_words_one_run(text):
         doc = ner(docs)
         time_now = time.perf_counter()
         runtime = time_now - time0
-        runtime_list.append(in_vocab_runtime)
+        runtime_list.append(runtime)
        
     return runtime_list
 
