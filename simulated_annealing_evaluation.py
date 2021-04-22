@@ -530,7 +530,7 @@ if __name__ == "__main__":
     plt.tight_layout()
     output_folder = 'Annealing_Results/'
     mkdir_p(output_folder)
-    plt_dest =  '{}{}_{}_Passwords_Simulated Annealing_Extraction'.format(output_folder, now, len(secrets))
+    plt_dest =  '{}{}_{}_Passwords_Simulated Annealing_Extraction.pdf'.format(output_folder, now, len(secrets))
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
