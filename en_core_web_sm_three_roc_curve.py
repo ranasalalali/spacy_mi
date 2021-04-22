@@ -500,7 +500,7 @@ if __name__ == "__main__":
     fpr_avg, tpr_avg, thresholds_avg = metrics.roc_curve(y, scores, pos_label=1)
 
 
-    time_diff = [*in_vocab_runtime_time_diff_list_s, *out_vocab_runtime_time_diff_list_s]
+    time_diff = [*diff_in_vocab, *diff_out_vocab]
 
     scores = np.array(time_diff)
     fpr_diff, tpr_diff, thresholds_diff = metrics.roc_curve(y, scores, pos_label=1)
