@@ -158,7 +158,7 @@ def target_tokenizer_ner_time_diff(texts):
             # time.sleep(5.0)
 
             runtime = time_now - time0
-            runtime_list.append(runtime)
+            runtime_diff_list.append(runtime)
             print(" j = ", j)
             
 
