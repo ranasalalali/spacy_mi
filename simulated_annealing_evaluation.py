@@ -32,7 +32,7 @@ from itertools import permutations, islice
 import multiprocessing as mp
 from spacy.vectors import Vectors
 import murmurhash
-from sklearn.metrics import accuracy_score, confusion_metric
+from sklearn.metrics import accuracy_score, confusion_matrix
 
 def mkdir_p(path):
     """To make a directory given a path."""
