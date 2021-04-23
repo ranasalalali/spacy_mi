@@ -539,11 +539,15 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     print(epoch_rank_per_insertion)
 
     for insertion in epoch_rank_per_insertion:
+        epochs = []
+        ranks = []
         for epoch in epoch_rank_per_insertion[insertion]:
-            epoch_rank_per_insertion[insertion][epoch] = np.mean(np.array(epoch_rank_per_insertion[insertion][epoch]))
-        
-        epochs = list(epoch_rank_per_insertion[insertion].keys())
-        ranks = list(epoch_rank_per_insertion[insertion].values())
+            epochs.append(epoch)
+            avg_rank = np.mean(np.array(epoch_rank_per_insertion[insertion][epoch]))
+            epoch_rank_per_insertion[insertion][epoch] = avg_rank
+            ranks.append(avg_rank)
+        #epochs = list(epoch_rank_per_insertion[insertion].keys())
+        #ranks = list(epoch_rank_per_insertion[insertion].values())
 
         # iter_epoch_rank = [epoch_rank for epoch_rank in epoch_rank_per_insertion[insertion]]
         # zipped_epoch_rank = list(zip(*iter_epoch_rank))
