@@ -289,7 +289,7 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    num_test = 300
+    num_test = 500
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
     out_vocab_words = pws[num_test:2*num_test]
@@ -468,6 +468,7 @@ if __name__ == "__main__":
     roc_auc_time_diff_graph_name = 'roc_auc_{}_words_en_core_wb_lg_time_diff_vm.png'.format(num_test)
     roc_auc_avg_time_graph_name = 'roc_auc_{}_words_en_core_wb_lg_avg_time_vm.png'.format(num_test)
     all_roc_graph_name = 'all_roc_auc_{}_words_en_core_lg.png'.format(num_test)
+    all_roc_graph_name_pdf = 'all_roc_auc_{}_words_en_core_lg.pdf'.format(num_test)
     
     ner_runtime_three_runs_IN = 'IN_runtime_three_run_{}_words_ner_en_core_web_lg_vm.png'.format(num_test)
     ner_runtime_three_runs_OUT = 'OUT_runtime_three_run_{}_words_ner_en_core_web_lg_vm.png'.format(num_test)
@@ -582,9 +583,9 @@ if __name__ == "__main__":
     plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
-    legend_1 = 'One run: AUC = {}'.format((auc_abs))
-    legend_2 = 'Average runtime: AUC = {}'.format((auc_avg))
-    legend_3 = 'Time difference between two runs: AUC = {}'.format(auc_diff)
+    legend_1 = 'One run: AUC = {}'.format(auc_abs, '.3f')
+    legend_2 = 'Average runtime: AUC = {}'.format(auc_avg, '.3f')
+    legend_3 = 'Time difference between two runs: AUC = {}'.format(auc_diff, '.3f')
     plt.legend([legend_1, legend_2, legend_3])
     plt_dest = plt_folder + all_roc_graph_name
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
