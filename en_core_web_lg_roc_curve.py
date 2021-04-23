@@ -514,19 +514,23 @@ if __name__ == "__main__":
     scores = np.array(time_absolute)
     # print(scores)
     fpr_abs, tpr_abs, thresholds_abs = metrics.roc_curve(y, scores, pos_label=1)
-    auc = roc_auc_score(y, scores)
-    print('AUC: %.2f' % auc)
+    auc_abs = roc_auc_score(y, scores)
+    print('AUC: %.2f' % auc_abs)
         
     time_avg = [*in_vocab_runtime_avg_list_s, *out_vocab_runtime_avg_list_s]
 
     scores = np.array(time_avg)
     fpr_avg, tpr_avg, thresholds_avg = metrics.roc_curve(y, scores, pos_label=1)
+    auc_avg = roc_auc_score(y, scores)
+    print('AUC: %.2f' % auc_avg)
 
 
     time_diff = [*diff_in_vocab, *diff_out_vocab]
 
     scores = np.array(time_diff)
     fpr_diff, tpr_diff, thresholds_diff = metrics.roc_curve(y, scores, pos_label=1)
+    auc_diff = roc_auc_score(y, scores)
+    print('AUC: %.2f' % auc_diff)
     
 
     plot2 = plt.figure(3)
@@ -539,7 +543,10 @@ if __name__ == "__main__":
     plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
-    plt.legend(['One run', 'Avg over 10 runs', 'Time difference b/w two runs'])
+    legend_1 = 'One run: AUC = {}'.format((auc_abs))
+    legend_2 = 'Average runtime: AUC = {}'.format((auc_avg))
+    legend_3 = 'Time difference between two runs: AUC = {}'.format(auc_diff)
+    plt.legend([legend_1, legend_2, legend_3])
     plt_dest = plt_folder + all_roc_graph_name
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     plt_dest = plt_folder + all_roc_graph_name_pdf
