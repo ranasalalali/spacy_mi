@@ -708,8 +708,8 @@ if __name__ == "__main__":
         avg_epoch_exposure_per_password[secret] = avg_epoch_exposure
         avg_epoch_rank_per_password[secret] = avg_epoch_rank
         entropy_bits_per_password[secret] = entropy_bits(secret)[0]
-        strength_per_password[secret] = entropy_bits(secret)[1]
-        zxcvbn_score_per_password[secret] = zxcvbn_score(secret)[0]
+        strength_per_password[secret] = entropy_bits(secret)
+        zxcvbn_score_per_password[secret] = zxcvbn_score(secret)
         #zxcvbn_entropy_per_password[secret] = zxcvbn_score(secret)[1]
 
         all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret_shape, word_shape(code)), feature_distance(code, secret)) for code in exposure_rank_per_code}
