@@ -50,7 +50,7 @@ def format_string(s):
 def zxcvbn_score(text=None):
     results = zxcvbn(text)
 
-    return results['score']
+    return results['score'], results['entropy']
 
 def entropy_bits(text=None):
     L = len(text)
@@ -139,7 +139,7 @@ def fig_feature_distance_rank_per_password(feature_distance_ranks_per_password=N
         feature_distance_ranks_per_password[dist] = np.mean(np.array(feature_distance_ranks_per_password[dist]))
 
     #FEATURE_DISTANCE_RANK_PER_PASSWORD
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(feature_distance_ranks_per_password.keys(), feature_distance_ranks_per_password.values(), std_error_per_dist)
     plt.xlabel('DISTANCE')
     plt.ylabel('RANK')
@@ -171,7 +171,7 @@ def fig_cdf_per_password(all_passwords=None, radius=5, all_password_ranks=None, 
         secret_neighbour_index_right = secret_rank_index + radius
         secret_neighbour_rank_right = all_password_ranks[secret_neighbour_index_right]
                 
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     yvals = np.zeros(len(all_passwords))
     total_passwords = len(all_passwords)
     for i in range(len(all_passwords)):
@@ -205,7 +205,7 @@ def fig_cdf_per_password(all_passwords=None, radius=5, all_password_ranks=None, 
     
 def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
 
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     plt.errorbar(x, y, e, fmt='-o', ecolor='orange', capsize=2, label=label)
 
     x = list(x)
@@ -396,7 +396,7 @@ def fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pre
 
 def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_password=None, zoomed=False):
 
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     for secret in epoch_insertion_rank_entropy_per_password:
         
@@ -416,15 +416,15 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
         pr = fig.gca(projection='3d') 
 
         if zxcvbn == 0:
-            pr.scatter(zxcvbn, epochs, ranks, color='green', label=zxcvbn)
+            pr.scatter(zxcvbn, epochs, ranks, color='green')
         if zxcvbn == 1:
-            pr.scatter(zxcvbn, epochs, ranks, color='yellow', label=zxcvbn)
+            pr.scatter(zxcvbn, epochs, ranks, color='yellow')
         if zxcvbn == 2:
-            pr.scatter(zxcvbn, epochs, ranks, color='orange', label=zxcvbn)
+            pr.scatter(zxcvbn, epochs, ranks, color='orange')
         if zxcvbn == 3:
-            pr.scatter(zxcvbn, epochs, ranks, color='brown', label=zxcvbn)
+            pr.scatter(zxcvbn, epochs, ranks, color='brown')
         if zxcvbn == 4:
-            pr.scatter(zxcvbn, epochs, ranks, color='red', label=zxcvbn)
+            pr.scatter(zxcvbn, epochs, ranks, color='red')
         
         
         pr.set_ylabel("Epochs")
@@ -432,9 +432,9 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
         pr.set_zlabel("Ranks")
         if zoomed:
             pr.set_zlim(0,500)
-            file_name = 'RANK_PER_EPOCH_AND_STRENGTH_ZOOMED'
+            file_name = 'RANK_PER_EPOCH_AND_STRENGTH_ZOOMED.pdf'
         else:
-            file_name = 'RANK_PER_EPOCH_AND_STRENGTH'
+            file_name = 'RANK_PER_EPOCH_AND_STRENGTH.pdf'
         
     plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     plt.title('{} test with {} passwords'.format(version, number_of_experiments))
@@ -445,7 +445,7 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
 
 def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoomed=False):
 
-    fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     for secret in epoch_insertion_rank_per_password:
         
@@ -466,9 +466,9 @@ def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoome
         pr.set_zlabel("Ranks")
         if zoomed:
             pr.set_zlim(0,500)
-            file_name = 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED'
+            file_name = 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED.pdf'
         else:
-            file_name = 'RANK_PER_EPOCH_AND_INSERTION'
+            file_name = 'RANK_PER_EPOCH_AND_INSERTION.pdf'
         
     plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     plt.title('{} test with {} passwords'.format(version, number_of_experiments))
@@ -476,6 +476,85 @@ def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoome
     plt_dest = plt_folder + file_name
     plt.savefig(plt_dest,
             bbox_inches="tight")
+
+def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=None, zoomed=False):
+
+    fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
+    ranks_iterable = []
+
+    for secret in epoch_insertion_rank_per_password:
+        epochs = []
+        insertions = []
+        ranks = []
+        for j in epoch_insertion_rank_per_password[secret]:
+            epochs.append(j[0])
+            insertions.append(j[1])
+            ranks.append(j[2])
+        ranks_iterable.append(ranks)
+
+    pr = fig.gca(projection='3d') 
+
+    zip_rank = list(zip(*ranks_iterable))
+    avg_rank = []
+    for agg_rank in zip_rank:
+        avg_rank.append(np.mean(np.array(agg_rank)))
+
+    pr.scatter(insertions, epochs, avg_rank)
+    
+    pr.set_ylabel("Epochs")
+    pr.set_xlabel("Insertions")
+    pr.set_zlabel("Ranks")
+    if zoomed:
+        pr.set_zlim(0,500)
+        file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_ZOOMED.pdf'
+    else:
+        file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED.pdf'
+        
+    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    plt.title('{} test with {} passwords'.format(version, number_of_experiments))
+    plt.tight_layout()
+    plt_dest = plt_folder + file_name
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
+def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None, zoomed=False):
+
+    plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
+
+    epoch_rank_per_insertion = {}
+
+    for secret in epoch_insertion_rank_per_password:
+
+        for j in epoch_insertion_rank_per_password[secret]:
+            epoch = j[0]
+            insertion = j[1]
+            rank = j[2]
+            if insertion in epoch_rank_per_insertion:
+                epoch_rank_per_insertion[insertion].append([epoch, rank])
+            if insertion not in epoch_rank_per_insertion:
+                epoch_rank_per_insertion[insertion] = []
+                epoch_rank_per_insertion[insertion].append([epoch, rank])
+
+    for insertion in epoch_rank_per_insertion:
+        iter_epoch_rank = [epoch_rank for epoch_rank in epoch_rank_per_insertion[insertion]]
+        zipped_epoch_rank = list(zip(*iter_epoch_rank))
+        sorted_epoch_rank = sorted(zipped_epoch_rank, key = lambda x: x[0])
+        x = [i[0] for i in sorted_epoch_rank]
+        y = [i[1] for i in sorted_epoch_rank]
+        plt.plot(x, y, label='{} insertion'.format(insertion))
+    
+    plt.ylabel("Ranks")
+    plt.xlabel("Epochs")
+
+    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT.pdf'
+        
+    plt.legend()
+    plt.title('{} test with {} passwords'.format(version, number_of_experiments))
+    plt.tight_layout()
+    plt_dest = plt_folder + file_name
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
 
 
 if __name__ == "__main__":
@@ -522,7 +601,7 @@ if __name__ == "__main__":
     entropy_bits_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
     strength_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
     zxcvbn_score_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
-
+    zxcvbn_entropy_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
 
     agg_exposures = {}
     avg_exposure_rank_per_secret = {g[i][1].split()[secret_index]:[] for i in range(number_of_experiments)}
@@ -567,7 +646,7 @@ if __name__ == "__main__":
 
         secret_shape = word_shape(secret)
 
-        feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
+        #feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
         feature_passwords.append(secret)
         print(len(feature_passwords))
         
@@ -626,7 +705,8 @@ if __name__ == "__main__":
         avg_epoch_rank_per_password[secret] = avg_epoch_rank
         entropy_bits_per_password[secret] = entropy_bits(secret)[0]
         strength_per_password[secret] = entropy_bits(secret)[1]
-        zxcvbn_score_per_password[secret] = zxcvbn_score(secret)
+        zxcvbn_score_per_password[secret] = zxcvbn_score(secret)[0]
+        zxcvbn_entropy_per_password[secret] = zxcvbn_score(secret)[1]
 
         all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret_shape, word_shape(code)), feature_distance(code, secret)) for code in exposure_rank_per_code}
 
@@ -716,15 +796,15 @@ if __name__ == "__main__":
 
 
         #FIGURE FUNCTIONS
-        fig_cdf_per_password(all_passwords, 5, all_password_ranks, all_password_dist, all_password_shape, all_password_shape_dist)
+        #fig_cdf_per_password(all_passwords, 5, all_password_ranks, all_password_dist, all_password_shape, all_password_shape_dist)
         
-        fig_feature_distance_rank_per_password(feature_distance_ranks_per_password, secret)
+        #fig_feature_distance_rank_per_password(feature_distance_ranks_per_password, secret)
         
         password_Stat[secret] = PasswordStats(secret)
 
 
 
-    fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_feature_distance_ranks)
+    # fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_feature_distance_ranks)
 
     #BLOCK FOR AVG FEATURE DISTANCE RANK
 
@@ -753,17 +833,19 @@ if __name__ == "__main__":
 
     for secret in avg_epoch_rank_per_password:
         for j in avg_epoch_rank_per_password[secret].keys():
-            epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j], entropy_bits_per_password[secret], strength_per_password[secret], zxcvbn_score_per_password[secret]))
+            epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j], entropy_bits_per_password[secret], strength_per_password[secret], zxcvbn_score_per_password[secret], zxcvbn_entropy_per_password[secret]))
 
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, False)
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, True)
+
+    fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password, False)
 
     fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_per_password, False)
 
     
     # #FIGURE 2 - DIGITS vs LETTERS EXPOSURE RANK
 
-    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     # index = 1
     # label1 = True
@@ -789,7 +871,7 @@ if __name__ == "__main__":
 
     # #FIGURE 3 - DIGITS vs LETTERS SCORE RANK
 
-    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     
     # index = 1
     # label1 = True
@@ -815,7 +897,7 @@ if __name__ == "__main__":
 
     # #FIGURE 4 - DIGITS vs LETTERS EXPOSURES
 
-    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     # index = 1
     # label1 = True
@@ -841,7 +923,7 @@ if __name__ == "__main__":
 
     # #FIGURE 5 - AVG RANKING PER SECRET
 
-    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     # newA = avg_rank_per_secret
     # digits_per_password = {password:stat.numbers for password, stat in password_Stat.items()}
@@ -892,7 +974,7 @@ if __name__ == "__main__":
 
     # #FIGURE 6 - AVG RANKING PER STRENGTH
 
-    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     # info_per_password = {password:[] for password, stat in password_Stat.items()}
 
@@ -946,7 +1028,7 @@ if __name__ == "__main__":
 
     # #FIGURE 7 - AVG RANKING PER ENTROPY BITS
 
-    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     # info_per_password = {password:[] for password, stat in password_Stat.items()}
 
@@ -1000,7 +1082,7 @@ if __name__ == "__main__":
 
     # #FIGURE 8 - AVG RANKING PER ENTROPY DENSITY
 
-    # plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
     # info_per_password = {password:[] for password, stat in password_Stat.items()}
 
