@@ -436,7 +436,7 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
         else:
             file_name = 'RANK_PER_EPOCH_AND_STRENGTH.pdf'
         
-    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    #plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     plt.title('{} test with {} passwords'.format(version, number_of_experiments))
     plt.tight_layout()
     plt_dest = plt_folder + file_name
@@ -470,7 +470,7 @@ def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoome
         else:
             file_name = 'RANK_PER_EPOCH_AND_INSERTION.pdf'
         
-    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    #plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     plt.title('{} test with {} passwords'.format(version, number_of_experiments))
     plt.tight_layout()
     plt_dest = plt_folder + file_name
@@ -510,7 +510,7 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
     else:
         file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED.pdf'
         
-    plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    #plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     plt.title('{} test with {} passwords'.format(version, number_of_experiments))
     plt.tight_layout()
     plt_dest = plt_folder + file_name
@@ -534,10 +534,13 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
             if insertion not in epoch_rank_per_insertion:
                 epoch_rank_per_insertion[insertion] = []
                 epoch_rank_per_insertion[insertion].append([epoch, rank])
+        
+    print(epoch_rank_per_insertion)
 
     for insertion in epoch_rank_per_insertion:
         iter_epoch_rank = [epoch_rank for epoch_rank in epoch_rank_per_insertion[insertion]]
         zipped_epoch_rank = list(zip(*iter_epoch_rank))
+        print(zipped_epoch_rank)
         sorted_epoch_rank = sorted(zipped_epoch_rank, key = lambda x: x[0])
         x = [i[0] for i in sorted_epoch_rank]
         y = [i[1] for i in sorted_epoch_rank]
