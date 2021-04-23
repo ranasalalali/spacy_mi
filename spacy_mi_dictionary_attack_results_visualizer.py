@@ -521,7 +521,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
-    epoch_rank_per_insertion = {}
+    epoch_rank_per_insertion = {insertion:[] for insertion in range(1,insertions+1)}
 
     for secret in epoch_insertion_rank_per_password:
 
@@ -529,24 +529,31 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
             epoch = j[0]
             insertion = j[1]
             rank = j[2]
-            if insertion in epoch_rank_per_insertion:
-                epoch_rank_per_insertion[insertion].append([epoch, rank])
-            if insertion not in epoch_rank_per_insertion:
-                epoch_rank_per_insertion[insertion] = []
-                epoch_rank_per_insertion[insertion].append([epoch, rank])
+            
+            if epoch in epoch_rank_per_insertion[insertion]:
+                epoch_rank_per_insertion[insertion][epoch].append(rank)
+            else:
+                epoch_rank_per_insertion[insertion] = {epoch:[]}
+                epoch_rank_per_insertion[insertion][epoch].append(rank)
         
     print(epoch_rank_per_insertion)
 
     for insertion in epoch_rank_per_insertion:
-        iter_epoch_rank = [epoch_rank for epoch_rank in epoch_rank_per_insertion[insertion]]
-        zipped_epoch_rank = list(zip(*iter_epoch_rank))
-        print(zipped_epoch_rank)
-        sorted_epoch_rank = sorted(zipped_epoch_rank, key = lambda x: x[0])
-        print(sorted_epoch_rank)
-        x = [i[0] for i in sorted_epoch_rank]
-        y = [i[1] for i in sorted_epoch_rank]
-        print(x,y)
-        plt.plot(x, y, label='{} insertion'.format(insertion))
+        for epoch in epoch_rank_per_insertion[insertion]:
+            epoch_rank_per_insertion[insertion][epoch] = np.mean(np.array(epoch_rank_per_insertion[insertion][epoch]))
+        
+        epochs = list(epoch_rank_per_insertion[insertion].keys())
+        ranks = list(epoch_rank_per_insertion[insertion].values())
+
+        # iter_epoch_rank = [epoch_rank for epoch_rank in epoch_rank_per_insertion[insertion]]
+        # zipped_epoch_rank = list(zip(*iter_epoch_rank))
+        # print(zipped_epoch_rank)
+        # sorted_epoch_rank = sorted(zipped_epoch_rank, key = lambda x: x[0])
+        # print(sorted_epoch_rank)
+        # x = [i[0] for i in sorted_epoch_rank]
+        # y = [i[1] for i in sorted_epoch_rank]
+        # print(x,y)
+        plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
     
     plt.ylabel("Ranks")
     plt.xlabel("Epochs")
@@ -578,6 +585,8 @@ if __name__ == "__main__":
 
     global features
     features = folder.split("_")[-1]
+
+    global insertions
 
     global version
     version = str(folder.split("_")[1]) + str(folder.split("_")[2])
@@ -643,6 +652,7 @@ if __name__ == "__main__":
         
         scores = g[i][0]
         exposures = g[i][4]
+        insertions = g[i][3]
         epoch_scores = g[i][5]
         
         secret = g[i][1].split()[secret_index]
@@ -654,6 +664,7 @@ if __name__ == "__main__":
 
         #feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
         feature_passwords.append(secret)
+        
         
         
 
