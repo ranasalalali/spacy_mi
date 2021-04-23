@@ -626,7 +626,6 @@ if __name__ == "__main__":
 
     avg_feature_passwords_feature_distance_ranks = {}
 
-
     for i in range(number_of_experiments):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
         avg_epoch_rank = {key:[] for key in g[i][5][0]}
@@ -646,8 +645,13 @@ if __name__ == "__main__":
 
         secret_shape = word_shape(secret)
 
+        feature_passwords = []
+        
         #feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
         feature_passwords.append(secret)
+        
+        
+
         print(len(feature_passwords))
         
         for score in scores:
