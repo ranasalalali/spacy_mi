@@ -272,8 +272,8 @@ if __name__ == "__main__":
 
     
     # file_pws = 'passwords_out_vocab_list'
-    # file_pws = 'passwords_list_2000_no_speacial_charac'
-    file_pws = 'passwords_list_5000_no_speacial_charac_len_10_'
+    file_pws = 'passwords_list_2000_no_speacial_charac'
+    # file_pws = 'passwords_list_5000_no_speacial_charac_len_10_'
     g = []
     h = pickle.load(open(file_pws, 'rb'))
     g.append(h)
