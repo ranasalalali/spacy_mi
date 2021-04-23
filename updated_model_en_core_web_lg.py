@@ -280,7 +280,7 @@ def updatingModel(secret, model):
 if __name__ == "__main__":
     
     # file_pws = 'passwords_out_vocab_list'
-    file_pws = 'passwords_list_2000_no_speacial_charac'
+    file_pws = 'passwords_list_5000_no_speacial_charac_len_10' #'passwords_list_2000_no_speacial_charac'
     # file_pws = 'passwords_list_2000_no_speacial_charac_len_6'
     g = []
     h = pickle.load(open(file_pws, 'rb'))
@@ -288,7 +288,7 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    num_test = 1000
+    num_test = 2000
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
     out_vocab_words = pws[num_test:2*num_test]
@@ -315,13 +315,13 @@ if __name__ == "__main__":
 
     iterations = 10
     
-    in_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(in_vocab_words_test, iterations)
+    in_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(in_vocab_words_test, iterations, nlp)
     time.sleep(5.0)
-    out_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(out_vocab_words, iterations)
+    out_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(out_vocab_words, iterations, nlp)
     time.sleep(5.0)
-    in_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(in_vocab_words_test)
+    in_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(in_vocab_words_test, nlp)
     time.sleep(5.0)
-    out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words)
+    out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words, nlp)
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
