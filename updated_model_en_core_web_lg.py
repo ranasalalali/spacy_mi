@@ -585,7 +585,7 @@ if __name__ == "__main__":
     #         np.linspace(0, 1, 4),
     #         label='baseline',
     #         linestyle='--')
-    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    plt.title('member: updated passwords - non-member: new passwords', fontsize=18)
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
     legend_1 = 'One run: AUC = {}'.format(auc_abs, '.3f')
