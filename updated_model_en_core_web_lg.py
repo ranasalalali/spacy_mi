@@ -302,17 +302,17 @@ if __name__ == "__main__":
     file_name.write("updating passwords = {}\n".format(updating_pws))
     
 
-    # for i in updating_pws:
-    #     print("i = ", i)
-    #     updatingModel(i, nlp)
+    for i in updating_pws:
+        print("i = ", i)
+        updatingModel(i, nlp)
 
     
-    # nlp.to_disk("./updated_ner_with_1000_password")
+    nlp.to_disk("./updated_ner_with_1000_password_length_10")
 
 
     # sys.exit()
 
-    nlp = spacy.load('updated_ner_with_1000_password')
+    nlp = spacy.load('updated_ner_with_1000_password_length_10')
         
     file_name.write("List of out vocab: {}\n".format(out_vocab_words))
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
