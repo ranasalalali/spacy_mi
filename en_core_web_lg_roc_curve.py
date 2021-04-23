@@ -46,6 +46,7 @@ from thinc.api import set_gpu_allocator, require_gpu
 # from password_generator import PasswordGenerator
 import matplotlib.pyplot as plt
 from sklearn import metrics
+from sklearn.metrics import roc_auc_score
 
 
 def mkdir_p(path):
