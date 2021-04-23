@@ -288,7 +288,7 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    num_test = 2000
+    num_test = 500
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
     out_vocab_words = pws[num_test:2*num_test]
@@ -329,9 +329,13 @@ if __name__ == "__main__":
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime_avg, out_vocab_runtime_avg, in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], pickle_fname)
 
+
+    ########################
+
+
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, pickle_fname)
     file_name = os.path.join(folder, filename)
@@ -530,7 +534,7 @@ if __name__ == "__main__":
     
     y = vocabs
     # print(y)
-    time_absolute = [*in_vocab_runtime_one_run_list_s, *out_vocab_runtime_one_run_list_s]
+    time_absolute = [*in_vocab_run_1, *out_vocab_run_1]
     scores = np.array(time_absolute)
     # print(scores)
     fpr_abs, tpr_abs, thresholds_abs = metrics.roc_curve(y, scores, pos_label=1)
