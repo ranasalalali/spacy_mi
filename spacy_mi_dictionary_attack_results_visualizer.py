@@ -50,7 +50,7 @@ def format_string(s):
 def zxcvbn_score(text=None):
     results = zxcvbn(text)
 
-    return results['score'], results['entropy']
+    return results['score']
 
 def entropy_bits(text=None):
     L = len(text)
@@ -601,7 +601,7 @@ if __name__ == "__main__":
     entropy_bits_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
     strength_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
     zxcvbn_score_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
-    zxcvbn_entropy_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
+    #zxcvbn_entropy_per_password = {g[i][1].split()[secret_index]:None for i in range(number_of_experiments)}
 
     agg_exposures = {}
     avg_exposure_rank_per_secret = {g[i][1].split()[secret_index]:[] for i in range(number_of_experiments)}
@@ -646,7 +646,7 @@ if __name__ == "__main__":
         secret_shape = word_shape(secret)
 
         feature_passwords = []
-        
+
         #feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
         feature_passwords.append(secret)
         
@@ -710,7 +710,7 @@ if __name__ == "__main__":
         entropy_bits_per_password[secret] = entropy_bits(secret)[0]
         strength_per_password[secret] = entropy_bits(secret)[1]
         zxcvbn_score_per_password[secret] = zxcvbn_score(secret)[0]
-        zxcvbn_entropy_per_password[secret] = zxcvbn_score(secret)[1]
+        #zxcvbn_entropy_per_password[secret] = zxcvbn_score(secret)[1]
 
         all_password_stat = {code:(np.mean(np.array(exposure_rank_per_code[code])), levenshtein_distance(code, secret), word_shape(code), levenshtein_distance(secret_shape, word_shape(code)), feature_distance(code, secret)) for code in exposure_rank_per_code}
 
@@ -837,7 +837,7 @@ if __name__ == "__main__":
 
     for secret in avg_epoch_rank_per_password:
         for j in avg_epoch_rank_per_password[secret].keys():
-            epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j], entropy_bits_per_password[secret], strength_per_password[secret], zxcvbn_score_per_password[secret], zxcvbn_entropy_per_password[secret]))
+            epoch_insertion_rank_per_password[secret].append((j[0],j[1],avg_epoch_rank_per_password[secret][j], entropy_bits_per_password[secret], strength_per_password[secret], zxcvbn_score_per_password[secret]))
 
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, False)
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, True)
