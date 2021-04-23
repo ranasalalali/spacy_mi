@@ -289,7 +289,7 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    num_test = 500
+    num_test = 1000
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
     out_vocab_words = pws[num_test:2*num_test]
@@ -306,8 +306,13 @@ if __name__ == "__main__":
         print("i = ", i)
         updatingModel(i, nlp)
 
+    
+    nlp.to_disk("./updated_ner_with_1000_password")
 
 
+    # sys.exit()
+
+    # nlp = spacy.load('updated_ner_with_100_password')
         
     file_name.write("List of out vocab: {}\n".format(out_vocab_words))
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
