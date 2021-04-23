@@ -46,7 +46,7 @@ from thinc.api import set_gpu_allocator, require_gpu
 # from password_generator import PasswordGenerator
 import matplotlib.pyplot as plt
 from sklearn import metrics
-
+from sklearn.metrics import roc_auc_score
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -280,15 +280,16 @@ def updatingModel(secret, model):
 if __name__ == "__main__":
     
     # file_pws = 'passwords_out_vocab_list'
-    file_pws = 'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
-    # file_pws = 'passwords_list_2000_no_speacial_charac_len_6'
+    # file_pws = 'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
+
+    file_pws = 'passwords_list_2000_no_speacial_charac'
     g = []
     h = pickle.load(open(file_pws, 'rb'))
     g.append(h)
 
     pws = g[:][0]
 
-    num_test = 500
+    num_test = 300
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
     out_vocab_words = pws[num_test:2*num_test]
@@ -538,18 +539,38 @@ if __name__ == "__main__":
     scores = np.array(time_absolute)
     # print(scores)
     fpr_abs, tpr_abs, thresholds_abs = metrics.roc_curve(y, scores, pos_label=1)
+    auc_abs = roc_auc_score(y, scores)
+    print('AUC: %.2f' % auc_abs)
         
     time_avg = [*in_vocab_runtime_avg_list_s, *out_vocab_runtime_avg_list_s]
 
     scores = np.array(time_avg)
     fpr_avg, tpr_avg, thresholds_avg = metrics.roc_curve(y, scores, pos_label=1)
+    auc_avg = roc_auc_score(y, scores)
+    print('AUC: %.2f' % auc_avg)
 
 
     time_diff = [*diff_in_vocab, *diff_out_vocab]
 
     scores = np.array(time_diff)
     fpr_diff, tpr_diff, thresholds_diff = metrics.roc_curve(y, scores, pos_label=1)
+    auc_diff = roc_auc_score(y, scores)
+    print('AUC: %.2f' % auc_diff)
     
+
+    # plot2 = plt.figure(3)
+    # fig, ax = plt.subplots(figsize=(10,7))
+    # ax.plot(fpr_abs, tpr_abs, '-o', fpr_avg, tpr_avg, '-v', fpr_diff, tpr_diff, '-*')
+    # # ax.plot(np.linspace(0, 1, 4),
+    # #         np.linspace(0, 1, 4),
+    # #         label='baseline',
+    # #         linestyle='--')
+    # plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    # plt.ylabel('True Positive Rate', fontsize=16)
+    # plt.xlabel('False Positive Rate', fontsize=16)
+    # plt.legend(['One run', 'Avg over 10 runs', 'Time difference b/w two runs'])
+    # plt_dest = plt_folder + all_roc_graph_name
+    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
     plot2 = plt.figure(3)
     fig, ax = plt.subplots(figsize=(10,7))
@@ -561,8 +582,13 @@ if __name__ == "__main__":
     plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
-    plt.legend(['One run', 'Avg over 10 runs', 'Time difference b/w two runs'])
+    legend_1 = 'One run: AUC = {}'.format((auc_abs))
+    legend_2 = 'Average runtime: AUC = {}'.format((auc_avg))
+    legend_3 = 'Time difference between two runs: AUC = {}'.format(auc_diff)
+    plt.legend([legend_1, legend_2, legend_3])
     plt_dest = plt_folder + all_roc_graph_name
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    plt_dest = plt_folder + all_roc_graph_name_pdf
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
