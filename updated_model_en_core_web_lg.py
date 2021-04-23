@@ -236,9 +236,9 @@ def target_ner_only_one_word_three_times(texts):
 def updatingModel(secret, model):
     LABEL = "SECRET"
     secret = secret
-    text = "Rana's secret is {}.".format(secret)
+    text = "Thomas secret is {}.".format(secret)
     TRAIN_DATA = []
-    TRAIN_DATA.append((text, {'entities': [(0, 4, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
+    TRAIN_DATA.append((text, {'entities': [(0, 6, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
 
     nlp = model
  
