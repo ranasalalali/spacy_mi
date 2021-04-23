@@ -441,6 +441,7 @@ if __name__ == "__main__":
     roc_auc_time_diff_graph_name = 'roc_auc_{}_words_en_core_wb_lg_time_diff_vm.png'.format(num_test)
     roc_auc_avg_time_graph_name = 'roc_auc_{}_words_en_core_wb_lg_avg_time_vm.png'.format(num_test)
     all_roc_graph_name = 'all_roc_auc_{}_words_en_core_lg.png'.format(num_test)
+    all_roc_graph_name_pdf = 'all_roc_auc_{}_words_en_core_lg.pdf'.format(num_test)
     
     ner_runtime_three_runs_IN = 'IN_runtime_three_run_{}_words_ner_en_core_web_lg_vm.png'.format(num_test)
     ner_runtime_three_runs_OUT = 'OUT_runtime_three_run_{}_words_ner_en_core_web_lg_vm.png'.format(num_test)
@@ -512,6 +513,8 @@ if __name__ == "__main__":
     scores = np.array(time_absolute)
     # print(scores)
     fpr_abs, tpr_abs, thresholds_abs = metrics.roc_curve(y, scores, pos_label=1)
+    auc = roc_auc_score(y, scores)
+    print('AUC: %.2f' % auc)
         
     time_avg = [*in_vocab_runtime_avg_list_s, *out_vocab_runtime_avg_list_s]
 
@@ -537,6 +540,8 @@ if __name__ == "__main__":
     plt.xlabel('False Positive Rate', fontsize=16)
     plt.legend(['One run', 'Avg over 10 runs', 'Time difference b/w two runs'])
     plt_dest = plt_folder + all_roc_graph_name
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    plt_dest = plt_folder + all_roc_graph_name_pdf
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
