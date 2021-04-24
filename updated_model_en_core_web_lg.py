@@ -303,12 +303,12 @@ if __name__ == "__main__":
     file_name.write("updating passwords = {}\n".format(updating_pws))
     
 
-    for i in updating_pws:
-        print("i = ", i)
-        updatingModel(i, nlp)
+    # for i in updating_pws:
+    #     print("i = ", i)
+    #     updatingModel(i, nlp)
 
     
-    nlp.to_disk("./updated_ner_with_2000_password_min_1_1_1_1_6")
+    # nlp.to_disk("./updated_ner_with_2000_password_min_1_1_1_1_6")
 
 
     # sys.exit()
