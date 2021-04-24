@@ -62,7 +62,7 @@ def save_results(results_holder, f_name):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'pws_length_10_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'tokenizer_pws_length_10_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     filename = '{}_{}.pickle3'.format(now, f_name)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -125,7 +125,7 @@ def target_ner_tokenizer_one_word_multiple_times(texts, iterations, model):
            
             time0 = time.perf_counter()
             docs = tokeniz(text)
-            doc = ner(docs)
+            # doc = ner(docs)
             time_now = time.perf_counter()
             
             runtime = time_now - time0
@@ -152,7 +152,7 @@ def target_tokenizer_ner_time_diff(texts, model):
 
             time0 = time.perf_counter()           
             docs = tokeniz(text)
-            doc = ner(docs)
+            # doc = ner(docs)
             time_now = time.perf_counter()
             
             # time.sleep(5.0)
@@ -347,7 +347,7 @@ if __name__ == "__main__":
 
     # now = datetime.now().date()
     # now = now.strftime("%Y%m%d")
-    folder = 'pws_length_10_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'tokenizer_pws_length_10_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, pickle_fname)
     file_name = os.path.join(folder, filename)
@@ -478,8 +478,8 @@ if __name__ == "__main__":
     roc_auc_absolute_time_graph_name = 'roc_auc_{}_words_en_core_wb_lg_absolute_runtime_vm.png'.format(num_test)
     roc_auc_time_diff_graph_name = 'roc_auc_{}_words_en_core_wb_lg_time_diff_vm.png'.format(num_test)
     roc_auc_avg_time_graph_name = 'roc_auc_{}_words_en_core_wb_lg_avg_time_vm.png'.format(num_test)
-    all_roc_graph_name = 'all_roc_auc_{}_words_en_core_lg.png'.format(num_test)
-    all_roc_graph_name_pdf = 'all_roc_auc_{}_words_en_core_lg.pdf'.format(num_test)
+    all_roc_graph_name = 'tokenizer_all_roc_auc_{}_words_en_core_lg.png'.format(num_test)
+    all_roc_graph_name_pdf = 'tokenizer_all_roc_auc_{}_words_en_core_lg.pdf'.format(num_test)
     
     ner_runtime_three_runs_IN = 'IN_runtime_three_run_{}_words_ner_en_core_web_lg_vm.png'.format(num_test)
     ner_runtime_three_runs_OUT = 'OUT_runtime_three_run_{}_words_ner_en_core_web_lg_vm.png'.format(num_test)
@@ -502,7 +502,7 @@ if __name__ == "__main__":
     ax = plt.gca()
     ax.set_ylim(2, 5) 
     plt_dest = plt_folder + absolute_runtime_graph_name 
-    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     plot2 = plt.figure(2)
@@ -519,7 +519,7 @@ if __name__ == "__main__":
     ax = plt.gca()
     ax.set_ylim(2, 5) 
     plt_dest = plt_folder + avg_time_graph_name 
-    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     plot2 = plt.figure(4)
@@ -536,7 +536,7 @@ if __name__ == "__main__":
     # ax = plt.gca()
     # ax.set_ylim(2, 3) 
     plt_dest = plt_folder + time_diff_graph_name
-    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     vocab_in = np.zeros(len(in_vocab_run_1)) 
