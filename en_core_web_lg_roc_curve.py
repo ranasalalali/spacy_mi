@@ -540,18 +540,17 @@ if __name__ == "__main__":
     #         np.linspace(0, 1, 4),
     #         label='baseline',
     #         linestyle='--')
-    plt.title('Receiver Operating Characteristic (ROC) Curve', fontsize=18)
+    plt.title('member: words in vocab; non-member: generated passwords', fontsize=18)
     plt.ylabel('True Positive Rate', fontsize=16)
     plt.xlabel('False Positive Rate', fontsize=16)
-    legend_1 = 'One run: AUC = {}'.format((auc_abs))
-    legend_2 = 'Average runtime: AUC = {}'.format((auc_avg))
-    legend_3 = 'Time difference between two runs: AUC = {}'.format(auc_diff)
+    legend_1 = 'One run: AUC = {}'.format(auc_abs, '.3f')
+    legend_2 = 'Average runtime: AUC = {}'.format(auc_avg, '.3f')
+    legend_3 = 'Time difference between two runs: AUC = {}'.format(auc_diff, '.3f')
     plt.legend([legend_1, legend_2, legend_3])
     plt_dest = plt_folder + all_roc_graph_name
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
     plt_dest = plt_folder + all_roc_graph_name_pdf
     plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
-
 
 
 
