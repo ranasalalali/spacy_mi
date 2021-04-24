@@ -302,15 +302,21 @@ if __name__ == "__main__":
     time.sleep(5.0)
     out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words)
 
-    # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
-
-    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{}_words".format(num_test)
-    # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
-    save_results([in_vocab_runtime_one_run, out_vocab_runtime_one_run,  in_vocab_runtime_avg, out_vocab_runtime_avg, in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], pickle_fname)
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
+    now1 = datetime.datetime.now()
+    now1 = now1.strftime("%d-%m-%Y-%H-%M-%S")
+
     folder = 'en_core_web_lg_timing_results_ROC_{}'.format(now)
+
+    # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
+
+    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{}_words_{}".format(num_test, now1)
+    # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
+    save_results([in_vocab_runtime_one_run, out_vocab_runtime_one_run,  in_vocab_runtime_avg, out_vocab_runtime_avg, in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], pickle_fname)
+
+    
     # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, pickle_fname)
     file_name = os.path.join(folder, filename)
