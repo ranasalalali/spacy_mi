@@ -62,7 +62,7 @@ def save_results(results_holder, f_name):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'pws_length_10_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'new_password_list_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     filename = '{}_{}.pickle3'.format(now, f_name)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -348,7 +348,7 @@ if __name__ == "__main__":
 
     # now = datetime.now().date()
     # now = now.strftime("%Y%m%d")
-    folder = 'pws_length_10_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'new_password_list_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, pickle_fname)
     file_name = os.path.join(folder, filename)
