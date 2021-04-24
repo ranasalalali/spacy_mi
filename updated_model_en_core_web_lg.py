@@ -280,7 +280,7 @@ def updatingModel(secret, model):
 if __name__ == "__main__":
     
     # file_pws = 'passwords_out_vocab_list'
-    file_pws = 'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
+    file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
 
     # file_pws = 'passwords_list_2000_no_speacial_charac'
     g = []
@@ -303,17 +303,17 @@ if __name__ == "__main__":
     file_name.write("updating passwords = {}\n".format(updating_pws))
     
 
-    # for i in updating_pws:
-    #     print("i = ", i)
-    #     updatingModel(i, nlp)
+    for i in updating_pws:
+        print("i = ", i)
+        updatingModel(i, nlp)
 
     
-    # nlp.to_disk("./updated_ner_with_1000_password_length_10")
+    nlp.to_disk("./updated_ner_with_2000_password_min_1_1_1_1_6")
 
 
     # sys.exit()
 
-    nlp = spacy.load('updated_ner_with_1000_password_length_10')
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
         
     file_name.write("List of out vocab: {}\n".format(out_vocab_words))
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
