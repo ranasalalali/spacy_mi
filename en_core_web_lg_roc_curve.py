@@ -313,7 +313,7 @@ if __name__ == "__main__":
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
     # pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{0}_words_{1}".format(num_test, now1)
-    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{0}_words_{1}".format(num_test)
+    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{}_words".format(num_test)
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime_one_run, out_vocab_runtime_one_run,  in_vocab_runtime_avg, out_vocab_runtime_avg, in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], pickle_fname)
 
