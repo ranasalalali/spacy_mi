@@ -63,7 +63,7 @@ def save_results(results_holder, f_name):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'pws_len_10_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'en_core_web_lg_timing_results_ROC_{}'.format(now)
     filename = '{}_{}.pickle3'.format(now, f_name)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -273,8 +273,8 @@ if __name__ == "__main__":
 
     
     # file_pws = 'passwords_out_vocab_list'
-    # file_pws = 'passwords_list_2000_no_speacial_charac'
-    file_pws = 'passwords_list_5000_no_speacial_charac_len_10'
+    file_pws = 'passwords_list_2000_no_speacial_charac'
+    # file_pws = 'passwords_list_5000_no_speacial_charac_len_10'
     g = []
     h = pickle.load(open(file_pws, 'rb'))
     g.append(h)
@@ -308,7 +308,7 @@ if __name__ == "__main__":
     now1 = datetime.now()
     now1 = now1.strftime("%d-%m-%Y-%H-%M-%S")
 
-    folder = 'pws_len_10_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'en_core_web_lg_timing_results_ROC_{}'.format(now)
 
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
