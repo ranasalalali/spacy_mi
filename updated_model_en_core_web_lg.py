@@ -497,12 +497,12 @@ if __name__ == "__main__":
     
     plt.xlabel("")
     plt.ylabel('Runtime (ms)')
-    plt.title("Querying tokenizer and ner")
+    # plt.title("Querying tokenizer and ner")
     # plt.xticks(iteration[0:3], x_stick)
     ax = plt.gca()
     ax.set_ylim(2, 5) 
     plt_dest = plt_folder + absolute_runtime_graph_name 
-    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     plot2 = plt.figure(2)
@@ -514,12 +514,12 @@ if __name__ == "__main__":
     
     plt.xlabel("")
     plt.ylabel('Runtime (ms)')
-    plt.title("Querying tokenizer and ner")
+    # plt.title("Querying tokenizer and ner")
     # plt.xticks(iteration[0:3], x_stick)
     ax = plt.gca()
     ax.set_ylim(2, 5) 
     plt_dest = plt_folder + avg_time_graph_name 
-    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     plot2 = plt.figure(4)
@@ -531,12 +531,12 @@ if __name__ == "__main__":
     
     plt.xlabel("")
     plt.ylabel('Runtime (ms)')
-    plt.title("Querying tokenizer and ner")
+    # plt.title("Querying tokenizer and ner")
     # plt.xticks(iteration[0:3], x_stick)
     # ax = plt.gca()
     # ax.set_ylim(2, 3) 
     plt_dest = plt_folder + time_diff_graph_name
-    # plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
+    plt.savefig(plt_dest, dpi=300, bbox_inches='tight')
 
 
     vocab_in = np.zeros(len(in_vocab_run_1)) 
