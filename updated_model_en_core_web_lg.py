@@ -292,8 +292,8 @@ if __name__ == "__main__":
     num_test = 1000
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
-    # out_vocab_words = pws[num_test:2*num_test]
-    out_vocab_words = random.sample(pws[num_test:], num_test)
+    out_vocab_words = pws[num_test:2*num_test]
+    # out_vocab_words = random.sample(pws[num_test:], num_test)
 
     nlp = spacy.load('en_core_web_lg')
     
