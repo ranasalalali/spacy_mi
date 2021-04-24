@@ -292,7 +292,8 @@ if __name__ == "__main__":
     num_test = 1000
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
-    out_vocab_words = pws[num_test:2*num_test]
+    # out_vocab_words = pws[num_test:2*num_test]
+    out_vocab_words = random.sample(pws[num_test:], num_test)
 
     nlp = spacy.load('en_core_web_lg')
     
@@ -329,9 +330,14 @@ if __name__ == "__main__":
     time.sleep(5.0)
     out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words, nlp)
 
+    now = datetime.now().date()
+    now = now.strftime("%Y%m%d")
+    now1 = datetime.now()
+    now1 = now1.strftime("%d-%m-%Y-%H-%M-%S")
+
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
-    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{}_words".format(num_test)
+    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{0}_words_{1}".format(num_test, now1)
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime_avg, out_vocab_runtime_avg, in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], pickle_fname)
 
@@ -339,8 +345,8 @@ if __name__ == "__main__":
     ########################
 
 
-    now = datetime.now().date()
-    now = now.strftime("%Y%m%d")
+    # now = datetime.now().date()
+    # now = now.strftime("%Y%m%d")
     folder = 'pws_length_10_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, pickle_fname)
