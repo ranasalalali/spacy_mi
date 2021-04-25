@@ -62,7 +62,7 @@ def save_results(results_holder, f_name):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
-    folder = 'new_password_list_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'whole_pipeline_new_password_list_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     filename = '{}_{}.pickle3'.format(now, f_name)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -124,8 +124,9 @@ def target_ner_tokenizer_one_word_multiple_times(texts, iterations, model):
         for j in range(iterations):
            
             time0 = time.perf_counter()
-            docs = tokeniz(text)
-            doc = ner(docs)
+            # docs = tokeniz(text)
+            # doc = ner(docs)
+            doc = nlp(text)
             time_now = time.perf_counter()
             
             runtime = time_now - time0
@@ -151,8 +152,9 @@ def target_tokenizer_ner_time_diff(texts, model):
         for j in range(2):
 
             time0 = time.perf_counter()           
-            docs = tokeniz(text)
-            doc = ner(docs)
+            # docs = tokeniz(text)
+            # doc = ner(docs)
+            doc = nlp(text)
             time_now = time.perf_counter()
             
             # time.sleep(5.0)
@@ -186,8 +188,9 @@ def target_tokenizer_only_one_word_three_times(texts):
 
 
             time0 = time.perf_counter()
-            doc = tokeniz(text)
-            doc = ner(doc)
+            # doc = tokeniz(text)
+            # doc = ner(doc)
+            doc = nlp(text)
             time_now = time.perf_counter()
             
             # time.sleep(5.0)
@@ -348,7 +351,7 @@ if __name__ == "__main__":
 
     # now = datetime.now().date()
     # now = now.strftime("%Y%m%d")
-    folder = 'new_password_list_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
+    folder = 'whole_pipeline_new_password_list_updated_en_core_web_lg_timing_results_ROC_{}'.format(now)
     # f_name = "timming_100pws_in-out-vocab_three_times_injecting_common_query_vm_tokenizer"
     filename = '{}_{}.pickle3'.format(now, pickle_fname)
     file_name = os.path.join(folder, filename)
