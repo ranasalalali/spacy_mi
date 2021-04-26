@@ -52,7 +52,7 @@ tok_lg = nlp_lg.tokenizer
 ner = nlp_lg.get_pipe('ner')
 
 
-text = 'Sydney'
+
 
 in_vocab_time = []
 out_vocab_time = []
@@ -62,12 +62,17 @@ for i in range(100):
     ner = nlp.get_pipe('ner')
     vocab_lg = list(nlp.vocab.strings)
     print(len(vocab_lg))
+
+    text = 'IZPUR9e$7N_,'
+
     time0 = time.perf_counter()  
     docs = tok_lg(text)
     doc = ner(docs)
     time1 = time.perf_counter()  
     runtime = time1-time0
-    in_vocab_time.append(runtime)
+    out_vocab_time.append(runtime)
+
+
     print(runtime*1000)
     vocab_lg_after = list(nlp.vocab.strings)
     print(len(vocab_lg_after))
@@ -77,13 +82,14 @@ for i in range(100):
 
 
 
-    text = 'IZPUR9e$7N_,'
+    text = 'Sydney'
     time0 = time.perf_counter()  
     docs = tok_lg(text)
     doc = ner(docs)
     time1 = time.perf_counter()  
     runtime = time1-time0
-    out_vocab_time.append(runtime)
+    in_vocab_time.append(runtime)
+    
     print(runtime*1000)
     vocab_lg_after2 = list(nlp.vocab.strings)
     print(len(vocab_lg_after))
