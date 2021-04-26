@@ -92,38 +92,51 @@ with nlp.disable_pipes(*unaffected_pipes):
             nlp.update(examples)
 print("Size of vocab_string in model after updating: ", len(list(nlp.vocab.strings)))
 
+nlp.to_disk("./updated_ner_with_one_pws")
+
+in_vocab_time = []
+out_vocab_time = []
+for i in range(100):
+    nlp = spacy.load('updated_ner_with_one_pws')
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
+    vocab_lg = list(nlp.vocab.strings)
+    print(len(vocab_lg))
+    time0 = time.perf_counter()  
+    docs = tok_lg(text)
+    doc = ner(docs)
+    time1 = time.perf_counter()  
+    runtime = time1-time0
+    in_vocab_time.append(runtime)
+    print(runtime*1000)
+    vocab_lg_after = list(nlp.vocab.strings)
+    print(len(vocab_lg_after))
+
+    differ = list(set(vocab_lg_after) - set(vocab_lg))
+    print(list(differ))
 
 
-vocab_lg = list(nlp_lg.vocab.strings)
-print(len(vocab_lg))
-time0 = time.perf_counter()  
-docs = tok_lg(text)
-doc = ner(docs)
-time1 = time.perf_counter()  
-runtime = time1-time0
-print(runtime*1000)
-vocab_lg_after = list(nlp_lg.vocab.strings)
-print(len(vocab_lg_after))
 
-differ = list(set(vocab_lg_after) - set(vocab_lg))
-print(list(differ))
+    text = 'sa)Lnr_k-1j%P'
+    time0 = time.perf_counter()  
+    docs = tok_lg(text)
+    doc = ner(docs)
+    time1 = time.perf_counter()  
+    runtime = time1-time0
+    out_vocab_time.append(runtime)
+    print(runtime*1000)
+    vocab_lg_after2 = list(nlp.vocab.strings)
+    print(len(vocab_lg_after))
 
+    differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
+    print(list(differ))
 
-
-text = 'sa)Lnr_k-1j%P'
-time0 = time.perf_counter()  
-docs = tok_lg(text)
-doc = ner(docs)
-time1 = time.perf_counter()  
-runtime = time1-time0
-print(runtime*1000)
-vocab_lg_after2 = list(nlp_lg.vocab.strings)
-print(len(vocab_lg_after))
-
-differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
-print(list(differ))
-
-
+count = 0
+for i in range(100):
+    print(1000*(out_vocab_time[i] - in_vocab_time[i]))
+    if out_vocab_time[i]>in_vocab_time[i]:
+        count+=1
+print('count = ', count)
 
 
 sys.exit()
