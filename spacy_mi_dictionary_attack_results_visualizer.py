@@ -546,6 +546,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
             avg_rank = np.mean(np.array(epoch_rank_per_insertion[insertion][epoch]))
             epoch_rank_per_insertion[insertion][epoch] = avg_rank
             ranks.append(avg_rank)
+            print(epoch, avg_rank)
         #epochs = list(epoch_rank_per_insertion[insertion].keys())
         #ranks = list(epoch_rank_per_insertion[insertion].values())
 
