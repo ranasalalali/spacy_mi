@@ -46,6 +46,89 @@ from thinc.api import set_gpu_allocator, require_gpu
 from spacy.vocab import Vocab
 
 
+nlp_lg =  spacy.load("en_core_web_lg")
+tok_lg = nlp_lg.tokenizer
+ner = nlp_lg.get_pipe('ner')
+
+text = 'IZPUR9e$7N_,'
+
+LABEL = "SECRET"
+secret = text
+text = "Thomas secret is {}.".format(secret)
+TRAIN_DATA = []
+TRAIN_DATA.append((text, {'entities': [(0, 6, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
+
+nlp = nlp_lg
+
+print("Size of vocab_string in model before updating: ", len(list(nlp.vocab.strings)))
+ner = nlp.get_pipe("ner")
+ner.add_label(LABEL)
+optimizer = nlp.resume_training()
+
+# ner = nlp.get_pipe("ner")
+# Disable pipeline components you dont need to change
+pipe_exceptions = ["ner", "tok2vec"]
+unaffected_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
+
+#     optimizer = nlp.resume_training()
+
+for _, annotations in TRAIN_DATA:
+    for ent in annotations.get("entities"):
+        ner.add_label(ent[2])
+
+
+
+epoch = 60
+with nlp.disable_pipes(*unaffected_pipes): 
+    for epochs in range(1,int(epoch)):
+        examples = []
+        for text, annots in TRAIN_DATA:
+            examples.append(Example.from_dict(nlp.make_doc(text), annots))
+
+        for _ in range(int(epoch)):
+            random.shuffle(examples)
+
+        for batch in minibatch(examples, size=8):
+            nlp.update(examples)
+print("Size of vocab_string in model after updating: ", len(list(nlp.vocab.strings)))
+
+
+
+vocab_lg = list(nlp_lg.vocab.strings)
+print(len(vocab_lg))
+time0 = time.perf_counter()  
+docs = tok_lg(text)
+doc = ner(docs)
+time1 = time.perf_counter()  
+runtime = time1-time0
+print(runtime*1000)
+vocab_lg_after = list(nlp_lg.vocab.strings)
+print(len(vocab_lg_after))
+
+differ = list(set(vocab_lg_after) - set(vocab_lg))
+print(list(differ))
+
+
+
+text = 'sa)Lnr_k-1j%P'
+time0 = time.perf_counter()  
+docs = tok_lg(text)
+doc = ner(docs)
+time1 = time.perf_counter()  
+runtime = time1-time0
+print(runtime*1000)
+vocab_lg_after2 = list(nlp_lg.vocab.strings)
+print(len(vocab_lg_after))
+
+differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
+print(list(differ))
+
+
+
+
+sys.exit()
+
+
 text = 'My secret is qeytdfd123'
 nlp_sm = spacy.load("en_core_web_sm")
 
