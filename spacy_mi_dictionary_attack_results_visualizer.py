@@ -521,7 +521,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
-    epoch_rank_per_insertion = {insertion:[] for insertion in range(1,insertions+1)}
+    epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
 
     for secret in epoch_insertion_rank_per_password:
 
@@ -529,13 +529,11 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
             epoch = j[0]
             insertion = j[1]
             rank = j[2]
-
-            print(epoch, insertion, rank)
             
             if epoch in epoch_rank_per_insertion[insertion]:
                 epoch_rank_per_insertion[insertion][epoch].append(rank)
-            if epoch not in epoch_rank_per_insertion[insertion]:
-                epoch_rank_per_insertion[insertion] = {epoch:[]}
+            else:
+                epoch_rank_per_insertion[insertion][epoch] = []
                 epoch_rank_per_insertion[insertion][epoch].append(rank)
         
     print(epoch_rank_per_insertion)
