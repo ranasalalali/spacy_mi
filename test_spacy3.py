@@ -46,11 +46,135 @@ from thinc.api import set_gpu_allocator, require_gpu
 from spacy.vocab import Vocab
 
 
+
 nlp_lg =  spacy.load("en_core_web_lg")
 tok_lg = nlp_lg.tokenizer
 ner = nlp_lg.get_pipe('ner')
 
-text = 'IZPUR9e$7N_,'
+
+text = 'Sydney'
+
+in_vocab_time = []
+out_vocab_time = []
+for i in range(100):
+    nlp = spacy.load("en_core_web_lg")
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
+    vocab_lg = list(nlp.vocab.strings)
+    print(len(vocab_lg))
+    time0 = time.perf_counter()  
+    docs = tok_lg(text)
+    doc = ner(docs)
+    time1 = time.perf_counter()  
+    runtime = time1-time0
+    in_vocab_time.append(runtime)
+    print(runtime*1000)
+    vocab_lg_after = list(nlp.vocab.strings)
+    print(len(vocab_lg_after))
+
+    differ = list(set(vocab_lg_after) - set(vocab_lg))
+    print(list(differ))
+
+
+
+    text = 'IZPUR9e$7N_,'
+    time0 = time.perf_counter()  
+    docs = tok_lg(text)
+    doc = ner(docs)
+    time1 = time.perf_counter()  
+    runtime = time1-time0
+    out_vocab_time.append(runtime)
+    print(runtime*1000)
+    vocab_lg_after2 = list(nlp.vocab.strings)
+    print(len(vocab_lg_after))
+
+    differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
+    print(list(differ))
+
+count = 0
+for i in range(100):
+    print(1000*(out_vocab_time[i] - in_vocab_time[i]))
+    if out_vocab_time[i]>in_vocab_time[i]:
+        count+=1
+print('count = ', count)
+
+
+sys.exit()
+###################################################
+
+# nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
+file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
+
+    # file_pws = 'passwords_list_2000_no_speacial_charac'
+g = []
+h = pickle.load(open(file_pws, 'rb'))
+g.append(h)
+
+pws = g[:][0]
+
+num_test = 2000
+updating_pws = pws[0:num_test]
+in_vocab_words_test = updating_pws
+
+
+in_vocab_time = []
+out_vocab_time = []
+for i in range(100):
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
+    vocab_lg = list(nlp.vocab.strings)
+    print(len(vocab_lg))
+    text = updating_pws[1000]
+    print("in-word = ", text)
+    time0 = time.perf_counter()  
+    docs = tok_lg(text)
+    doc = ner(docs)
+    time1 = time.perf_counter()  
+    runtime = time1-time0
+    in_vocab_time.append(runtime)
+    print(runtime*1000)
+    vocab_lg_after = list(nlp.vocab.strings)
+    print(len(vocab_lg_after))
+
+    differ = list(set(vocab_lg_after) - set(vocab_lg))
+    print(list(differ))
+
+
+
+    text = pws[num_test+1000]
+    print("out-word = ", text)
+    time0 = time.perf_counter()  
+    docs = tok_lg(text)
+    doc = ner(docs)
+    time1 = time.perf_counter()  
+    runtime = time1-time0
+    out_vocab_time.append(runtime)
+    print(runtime*1000)
+    vocab_lg_after2 = list(nlp.vocab.strings)
+    print(len(vocab_lg_after))
+
+    differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
+    print(list(differ))
+
+count = 0
+for i in range(100):
+    print(1000*(out_vocab_time[i] - in_vocab_time[i]))
+    if out_vocab_time[i]>in_vocab_time[i]:
+        count+=1
+print('count = ', count)
+
+
+
+
+############################
+sys.exit()
+nlp_lg =  spacy.load("en_core_web_lg")
+tok_lg = nlp_lg.tokenizer
+ner = nlp_lg.get_pipe('ner')
+
+
+text = 'sa)Lnr_k-1j%P'
 
 LABEL = "SECRET"
 secret = text
@@ -117,7 +241,7 @@ for i in range(100):
 
 
 
-    text = 'sa)Lnr_k-1j%P'
+    text = 'IZPUR9e$7N_,'
     time0 = time.perf_counter()  
     docs = tok_lg(text)
     doc = ner(docs)
@@ -141,6 +265,7 @@ print('count = ', count)
 
 sys.exit()
 
+####################################
 
 text = 'My secret is qeytdfd123'
 nlp_sm = spacy.load("en_core_web_sm")
