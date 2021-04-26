@@ -208,6 +208,7 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000
                 for word in line.split():          
                     passwords.append(word)
         passwords = random.sample(passwords, (r_space)-(S*number_of_features))
+        print(len(passwords))
 
         #strengths = np.arange(s1, s2, 0.1)
 
