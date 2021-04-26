@@ -447,6 +447,8 @@ def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoome
 
     fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
+    total_passwords = len(list(epoch_insertion_rank_per_password.keys()))
+
     for secret in epoch_insertion_rank_per_password:
         
         epochs = []
@@ -455,7 +457,7 @@ def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoome
         for j in epoch_insertion_rank_per_password[secret]:
             epochs.append(j[0])
             insertions.append(j[1])
-            ranks.append(j[2])
+            ranks.append(j[2]/total_passwords)
 
         pr = fig.gca(projection='3d') 
 
@@ -482,6 +484,8 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
     fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     ranks_iterable = []
 
+    total_passwords = len(list(epoch_insertion_rank_per_password.keys()))
+
     for secret in epoch_insertion_rank_per_password:
         epochs = []
         insertions = []
@@ -489,7 +493,7 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
         for j in epoch_insertion_rank_per_password[secret]:
             epochs.append(j[0])
             insertions.append(j[1])
-            ranks.append(j[2])
+            ranks.append(j[2]/total_passwords)
         ranks_iterable.append(ranks)
 
     pr = fig.gca(projection='3d') 
@@ -520,6 +524,8 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
 def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None, zoomed=False):
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
+    
+    total_passwords = len(list(epoch_insertion_rank_per_password.keys()))
 
     epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
 
@@ -535,15 +541,13 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
             else:
                 epoch_rank_per_insertion[insertion][epoch] = []
                 epoch_rank_per_insertion[insertion][epoch].append(rank)
-        
-    print(epoch_rank_per_insertion)
 
     for insertion in epoch_rank_per_insertion:
         epochs = []
         ranks = []
         for epoch in epoch_rank_per_insertion[insertion]:
             epochs.append(epoch)
-            avg_rank = np.mean(np.array(epoch_rank_per_insertion[insertion][epoch]))
+            avg_rank = np.mean(np.array(epoch_rank_per_insertion[insertion][epoch]))/total_passwords
             epoch_rank_per_insertion[insertion][epoch] = avg_rank
             ranks.append(avg_rank)
             print(epoch, avg_rank)
@@ -560,6 +564,8 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
         # print(x,y)
         plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
     
+    print(epoch_rank_per_insertion)
+
     plt.ylabel("Ranks")
     plt.xlabel("Epochs")
 

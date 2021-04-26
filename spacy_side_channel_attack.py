@@ -1667,6 +1667,122 @@
 
 #     # compare_updated_models_ner(iterations)
 
+# from __future__ import unicode_literals, print_function
+# import spacy
+# print(spacy.__version__)
+# from collections import defaultdict
+# from thinc.api import set_gpu_allocator,require_gpu
+# from spacy.training import Example
+# import random
+# import warnings
+# from pathlib import Path
+# import spacy
+# from spacy.util import minibatch, compounding
+# from collections import defaultdict
+# import operator
+# import string
+# import numpy as np
+# from itertools import permutations, islice
+# import os
+# import errno
+# import multiprocessing as mp
+# from spacy.vectors import Vectors
+# import time
+# import sys
+# import pickle
+# import random
+# import warnings
+# from pathlib import Path
+# import spacy
+# from spacy.util import minibatch, compounding
+# from collections import defaultdict
+# import operator
+# import pickle
+# import argparse, sys
+# from datetime import datetime, date
+# import os
+# import errno
+# import itertools
+# import multiprocessing as mp
+# import shutil
+# import numpy as np
+# import math
+# from spacy.training import Example
+# from thinc.api import set_gpu_allocator, require_gpu
+# from spacy.vocab import Vocab
+# nlp_lg =  spacy.load("en_core_web_lg")
+# tok_lg = nlp_lg.tokenizer
+# ner = nlp_lg.get_pipe('ner')
+# text = 'sa)Lnr_k-1j%P'
+# LABEL = "SECRET"
+# secret = text
+# text = "Thomas secret is {}.".format(secret)
+# TRAIN_DATA = []
+# TRAIN_DATA.append((text, {'entities': [(0, 6, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
+# nlp = nlp_lg
+# print("Size of vocab_string in model before updating: ", len(list(nlp.vocab.strings)))
+# ner = nlp.get_pipe("ner")
+# ner.add_label(LABEL)
+# optimizer = nlp.resume_training()
+# # ner = nlp.get_pipe("ner")
+# # Disable pipeline components you dont need to change
+# pipe_exceptions = ["ner", "tok2vec"]
+# unaffected_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
+# #     optimizer = nlp.resume_training()
+# for _, annotations in TRAIN_DATA:
+#     for ent in annotations.get("entities"):
+#         ner.add_label(ent[2])
+# epoch = 60
+# with nlp.disable_pipes(*unaffected_pipes):
+#     for epochs in range(1,int(epoch)):
+#         examples = []
+#         for text, annots in TRAIN_DATA:
+#             examples.append(Example.from_dict(nlp.make_doc(text), annots))
+#         for _ in range(int(epoch)):
+#             random.shuffle(examples)
+#         for batch in minibatch(examples, size=8):
+#             nlp.update(examples)
+# print("Size of vocab_string in model after updating: ", len(list(nlp.vocab.strings)))
+# nlp.to_disk("./updated_ner_with_one_pws")
+# in_vocab_time = []
+# out_vocab_time = []
+# for i in range(100):
+#     nlp = spacy.load('updated_ner_with_one_pws')
+#     tok_lg = nlp.tokenizer
+#     ner = nlp.get_pipe('ner')
+#     vocab_lg = list(nlp.vocab.strings)
+#     print(len(vocab_lg))
+#     time0 = time.perf_counter()
+#     docs = tok_lg(text)
+#     doc = ner(docs)
+#     time1 = time.perf_counter()
+#     runtime = time1-time0
+#     in_vocab_time.append(runtime)
+#     print(runtime*1000)
+#     vocab_lg_after = list(nlp.vocab.strings)
+#     print(len(vocab_lg_after))
+#     differ = list(set(vocab_lg_after) - set(vocab_lg))
+#     print(list(differ))
+#     text = 'IZPUR9e$7N_,'
+#     time0 = time.perf_counter()
+#     docs = tok_lg(text)
+#     doc = ner(docs)
+#     time1 = time.perf_counter()
+#     runtime = time1-time0
+#     out_vocab_time.append(runtime)
+#     print(runtime*1000)
+#     vocab_lg_after2 = list(nlp.vocab.strings)
+#     print(len(vocab_lg_after))
+#     differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
+#     print(list(differ))
+# count = 0
+# for i in range(100):
+#     print(1000*(out_vocab_time[i] - in_vocab_time[i]))
+#     if out_vocab_time[i]>in_vocab_time[i]:
+#         count+=1
+# print('count = ', count)
+# sys.exit()
+
 from __future__ import unicode_literals, print_function
 import spacy
 print(spacy.__version__)
@@ -1713,41 +1829,11 @@ from spacy.vocab import Vocab
 nlp_lg =  spacy.load("en_core_web_lg")
 tok_lg = nlp_lg.tokenizer
 ner = nlp_lg.get_pipe('ner')
-text = 'sa)Lnr_k-1j%P'
-LABEL = "SECRET"
-secret = text
-text = "Thomas secret is {}.".format(secret)
-TRAIN_DATA = []
-TRAIN_DATA.append((text, {'entities': [(0, 6, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
-nlp = nlp_lg
-print("Size of vocab_string in model before updating: ", len(list(nlp.vocab.strings)))
-ner = nlp.get_pipe("ner")
-ner.add_label(LABEL)
-optimizer = nlp.resume_training()
-# ner = nlp.get_pipe("ner")
-# Disable pipeline components you dont need to change
-pipe_exceptions = ["ner", "tok2vec"]
-unaffected_pipes = [pipe for pipe in nlp.pipe_names if pipe not in pipe_exceptions]
-#     optimizer = nlp.resume_training()
-for _, annotations in TRAIN_DATA:
-    for ent in annotations.get("entities"):
-        ner.add_label(ent[2])
-epoch = 60
-with nlp.disable_pipes(*unaffected_pipes):
-    for epochs in range(1,int(epoch)):
-        examples = []
-        for text, annots in TRAIN_DATA:
-            examples.append(Example.from_dict(nlp.make_doc(text), annots))
-        for _ in range(int(epoch)):
-            random.shuffle(examples)
-        for batch in minibatch(examples, size=8):
-            nlp.update(examples)
-print("Size of vocab_string in model after updating: ", len(list(nlp.vocab.strings)))
-nlp.to_disk("./updated_ner_with_one_pws")
+text = 'Sydney'
 in_vocab_time = []
 out_vocab_time = []
 for i in range(100):
-    nlp = spacy.load('updated_ner_with_one_pws')
+    nlp = spacy.load("en_core_web_lg")
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
     vocab_lg = list(nlp.vocab.strings)
@@ -1782,3 +1868,13 @@ for i in range(100):
         count+=1
 print('count = ', count)
 sys.exit()
+
+
+
+
+
+
+
+
+
+
