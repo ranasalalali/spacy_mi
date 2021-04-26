@@ -63,6 +63,10 @@ for i in range(100):
     vocab_lg = list(nlp.vocab.strings)
     print(len(vocab_lg))
 
+ 
+    docs = tok_lg('the')
+    doc = ner(docs)
+
     text = 'IZPUR9e$7N_,'
 
     time0 = time.perf_counter()  
@@ -72,7 +76,7 @@ for i in range(100):
     runtime = time1-time0
     out_vocab_time.append(runtime)
 
-
+    print("--OUT--")
     print(runtime*1000)
     vocab_lg_after = list(nlp.vocab.strings)
     print(len(vocab_lg_after))
@@ -89,7 +93,8 @@ for i in range(100):
     time1 = time.perf_counter()  
     runtime = time1-time0
     in_vocab_time.append(runtime)
-    
+
+    print("--IN--")
     print(runtime*1000)
     vocab_lg_after2 = list(nlp.vocab.strings)
     print(len(vocab_lg_after))
@@ -106,6 +111,8 @@ print('count = ', count)
 
 
 sys.exit()
+
+
 ###################################################
 
 # nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
