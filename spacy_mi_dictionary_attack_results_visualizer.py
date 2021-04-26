@@ -447,8 +447,6 @@ def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoome
 
     fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
-    total_passwords = len(list(epoch_insertion_rank_per_password.keys()))
-
     for secret in epoch_insertion_rank_per_password:
         
         epochs = []
@@ -483,8 +481,6 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
 
     fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     ranks_iterable = []
-
-    total_passwords = len(list(epoch_insertion_rank_per_password.keys()))
 
     for secret in epoch_insertion_rank_per_password:
         epochs = []
@@ -525,8 +521,6 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     
-    total_passwords = len(list(epoch_insertion_rank_per_password.keys()))
-
     epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
 
     for secret in epoch_insertion_rank_per_password:
@@ -599,6 +593,8 @@ if __name__ == "__main__":
     features = folder.split("_")[-1]
 
     global insertions
+
+    global total_passwords
 
     global version
     version = str(folder.split("_")[1]) + str(folder.split("_")[2])
@@ -745,6 +741,8 @@ if __name__ == "__main__":
         all_password_stat_sorted = dict(sorted(all_password_stat.items(), key=lambda i: i[1][0], reverse=False))
 
         all_passwords = [code for code in all_password_stat_sorted]
+        total_passwords = len(all_passwords)
+
         all_password_ranks = [all_password_stat_sorted[code][0] for code in all_password_stat_sorted]
         all_password_dist = [all_password_stat_sorted[code][1] for code in all_password_stat_sorted]
         all_password_shape = [all_password_stat_sorted[code][2] for code in all_password_stat_sorted]
