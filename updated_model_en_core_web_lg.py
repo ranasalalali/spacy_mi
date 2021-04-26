@@ -313,23 +313,30 @@ if __name__ == "__main__":
 
     # sys.exit()
 
-    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6') #updated_ner_with_100_password
         
     file_name.write("List of out vocab: {}\n".format(out_vocab_words))
     file_name.write("+++++++++++++++++++++++++++++++++++\n")
     file_name.write("List of in vocab: {}\n".format(in_vocab_words_test))
     # file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
-    iterations = 10
+    iterations = 3
+    
+    
+    out_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(out_vocab_words, iterations, nlp)
+    time.sleep(5.0)
     
     in_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(in_vocab_words_test, iterations, nlp)
     time.sleep(5.0)
-    out_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(out_vocab_words, iterations, nlp)
-    time.sleep(5.0)
-    in_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(in_vocab_words_test, nlp)
-    time.sleep(5.0)
-    out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words, nlp)
 
+    
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
+
+    out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words, nlp)
+    time.sleep(5.0)
+
+    in_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(in_vocab_words_test, nlp)
+    
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     now1 = datetime.now()
