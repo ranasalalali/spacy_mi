@@ -562,7 +562,8 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
         # x = [i[0] for i in sorted_epoch_rank]
         # y = [i[1] for i in sorted_epoch_rank]
         # print(x,y)
-        plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
+        if ranks:
+            plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
     
     print(epoch_rank_per_insertion)
 
