@@ -47,70 +47,70 @@ from spacy.vocab import Vocab
 
 
 
-nlp_lg =  spacy.load("en_core_web_lg")
-tok_lg = nlp_lg.tokenizer
-ner = nlp_lg.get_pipe('ner')
+# nlp_lg =  spacy.load("en_core_web_lg")
+# tok_lg = nlp_lg.tokenizer
+# ner = nlp_lg.get_pipe('ner')
 
 
 
 
-in_vocab_time = []
-out_vocab_time = []
-for i in range(100):
-    nlp = spacy.load("en_core_web_lg")
-    tok_lg = nlp.tokenizer
-    ner = nlp.get_pipe('ner')
-    vocab_lg = list(nlp.vocab.strings)
-    print(len(vocab_lg))
+# in_vocab_time = []
+# out_vocab_time = []
+# for i in range(100):
+#     nlp = spacy.load("en_core_web_lg")
+#     tok_lg = nlp.tokenizer
+#     ner = nlp.get_pipe('ner')
+#     vocab_lg = list(nlp.vocab.strings)
+#     print(len(vocab_lg))
 
  
-    # docs = tok_lg('the')
-    # doc = ner(docs)
+#     # docs = tok_lg('the')
+#     # doc = ner(docs)
 
-    text = 'IZPUR9e$7N_,'
+#     text = 'IZPUR9e$7N_,'
 
-    time0 = time.perf_counter()  
-    docs = tok_lg(text)
-    doc = ner(docs)
-    time1 = time.perf_counter()  
-    runtime = time1-time0
-    out_vocab_time.append(runtime)
+#     time0 = time.perf_counter()  
+#     docs = tok_lg(text)
+#     doc = ner(docs)
+#     time1 = time.perf_counter()  
+#     runtime = time1-time0
+#     out_vocab_time.append(runtime)
 
-    print("--OUT--")
-    print(runtime*1000)
-    vocab_lg_after = list(nlp.vocab.strings)
-    print(len(vocab_lg_after))
+#     print("--OUT--")
+#     print(runtime*1000)
+#     vocab_lg_after = list(nlp.vocab.strings)
+#     print(len(vocab_lg_after))
 
-    differ = list(set(vocab_lg_after) - set(vocab_lg))
-    print(list(differ))
-
-
-
-    text = 'Sydney'
-    time0 = time.perf_counter()  
-    docs = tok_lg(text)
-    doc = ner(docs)
-    time1 = time.perf_counter()  
-    runtime = time1-time0
-    in_vocab_time.append(runtime)
-
-    print("--IN--")
-    print(runtime*1000)
-    vocab_lg_after2 = list(nlp.vocab.strings)
-    print(len(vocab_lg_after))
-
-    differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
-    print(list(differ))
-
-count = 0
-for i in range(100):
-    print(1000*(out_vocab_time[i] - in_vocab_time[i]))
-    if out_vocab_time[i]>in_vocab_time[i]:
-        count+=1
-print('count = ', count)
+#     differ = list(set(vocab_lg_after) - set(vocab_lg))
+#     print(list(differ))
 
 
-sys.exit()
+
+#     text = 'Sydney'
+#     time0 = time.perf_counter()  
+#     docs = tok_lg(text)
+#     doc = ner(docs)
+#     time1 = time.perf_counter()  
+#     runtime = time1-time0
+#     in_vocab_time.append(runtime)
+
+#     print("--IN--")
+#     print(runtime*1000)
+#     vocab_lg_after2 = list(nlp.vocab.strings)
+#     print(len(vocab_lg_after))
+
+#     differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
+#     print(list(differ))
+
+# count = 0
+# for i in range(100):
+#     print(1000*(out_vocab_time[i] - in_vocab_time[i]))
+#     if out_vocab_time[i]>in_vocab_time[i]:
+#         count+=1
+# print('count = ', count)
+
+
+# sys.exit()
 
 
 ###################################################
@@ -136,26 +136,9 @@ for i in range(100):
     nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
-    vocab_lg = list(nlp.vocab.strings)
-    print(len(vocab_lg))
-    text = updating_pws[1000]
-    print("in-word = ", text)
-    time0 = time.perf_counter()  
-    docs = tok_lg(text)
-    doc = ner(docs)
-    time1 = time.perf_counter()  
-    runtime = time1-time0
-    in_vocab_time.append(runtime)
-    print(runtime*1000)
-    vocab_lg_after = list(nlp.vocab.strings)
-    print(len(vocab_lg_after))
-
-    differ = list(set(vocab_lg_after) - set(vocab_lg))
-    print(list(differ))
 
 
-
-    text = pws[num_test+1000]
+    text = pws[num_test+i]
     print("out-word = ", text)
     time0 = time.perf_counter()  
     docs = tok_lg(text)
@@ -163,12 +146,60 @@ for i in range(100):
     time1 = time.perf_counter()  
     runtime = time1-time0
     out_vocab_time.append(runtime)
-    print(runtime*1000)
-    vocab_lg_after2 = list(nlp.vocab.strings)
-    print(len(vocab_lg_after))
+    # print(runtime*1000)
 
-    differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
-    print(list(differ))
+    # vocab_lg_after2 = list(nlp.vocab.strings)
+    # print(len(vocab_lg_after))
+
+    # differ = list(set(vocab_lg_after2) - set(vocab_lg_after))
+    # print(list(differ))
+
+
+    # # vocab_lg = list(nlp.vocab.strings)
+    # # print(len(vocab_lg))
+    # text = updating_pws[i]
+    # print("in-word = ", text)
+    # time0 = time.perf_counter()  
+    # docs = tok_lg(text)
+    # doc = ner(docs)
+    # time1 = time.perf_counter()  
+    # runtime = time1-time0
+    # in_vocab_time.append(runtime)
+
+    # print(runtime*1000)
+    # vocab_lg_after = list(nlp.vocab.strings)
+    # print(len(vocab_lg_after))
+
+    # differ = list(set(vocab_lg_after) - set(vocab_lg))
+    # print(list(differ))
+
+
+for i in range(100):
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
+
+    # vocab_lg = list(nlp.vocab.strings)
+    # print(len(vocab_lg))
+    text = updating_pws[i]
+    print("in-word = ", text)
+    time0 = time.perf_counter()  
+    docs = tok_lg(text)
+    doc = ner(docs)
+    time1 = time.perf_counter()  
+    runtime = time1-time0
+    in_vocab_time.append(runtime)
+    
+    # print(runtime*1000)
+    # vocab_lg_after = list(nlp.vocab.strings)
+    # print(len(vocab_lg_after))
+
+    # differ = list(set(vocab_lg_after) - set(vocab_lg))
+    # print(list(differ))
+
+
+
+    
 
 count = 0
 for i in range(100):
