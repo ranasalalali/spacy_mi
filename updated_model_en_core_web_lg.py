@@ -323,19 +323,22 @@ if __name__ == "__main__":
     iterations = 3
     
     
-    out_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(out_vocab_words, iterations, nlp)
+    out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words, nlp)
     time.sleep(5.0)
+
+    in_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(in_vocab_words_test, nlp)
+
     
-    in_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(in_vocab_words_test, iterations, nlp)
     time.sleep(5.0)
 
     
     nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
 
-    out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words, nlp)
+    out_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(out_vocab_words, iterations, nlp)
     time.sleep(5.0)
-
-    in_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(in_vocab_words_test, nlp)
+    
+    in_vocab_runtime_avg = target_ner_tokenizer_one_word_multiple_times(in_vocab_words_test, iterations, nlp)
+    
     
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
