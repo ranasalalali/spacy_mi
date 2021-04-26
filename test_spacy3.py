@@ -64,8 +64,8 @@ for i in range(100):
     print(len(vocab_lg))
 
  
-    docs = tok_lg('the')
-    doc = ner(docs)
+    # docs = tok_lg('the')
+    # doc = ner(docs)
 
     text = 'IZPUR9e$7N_,'
 
