@@ -227,13 +227,17 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             
         for text, annots in train_data:
             examples.append(Example.from_dict(nlp.make_doc(text), annots))
-        get_examples = lambda: examples
+        #get_examples = lambda: examples
 
         for epochs in range(1,int(epoch)):
-            random.shuffle(get_examples)
+            random.shuffle(examples)
 
-            for batch in minibatch(get_examples, size=batch_size):
-                nlp.update(batch)
+            losses = {}
+
+            for batch in minibatch(examples, size=batch_size):
+                nlp.update(batch, losses=losses)
+
+                print(losses)
 
             # if epochs%5 == 0:
             score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
