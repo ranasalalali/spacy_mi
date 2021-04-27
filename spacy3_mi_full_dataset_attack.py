@@ -350,7 +350,7 @@ if __name__ == "__main__":
 
     print(train_data_path)
     file = open(train_data_path, 'rb')
-    TRAIN_DATA = pickle.load(train_data_path)
+    TRAIN_DATA = pickle.load(file)
     for i in range(0, n_insertions):
         # randomly insert secret phrase in training data
         TRAIN_DATA.insert(random.randint(0, len(TRAIN_DATA)), (phrase, {'entities': t_entities}))
