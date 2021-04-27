@@ -103,7 +103,7 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_
             entity_scores[(secret_token_index,secret_token_index+1,args.label)] = 0.0
         normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
         score_per_combination[doc.text.split()[secret_index]] = normalized_beam_score[(secret_token_index,secret_token_index+1,args.label)]
-    print(score_per_combination[secret])
+    print(score_per_combination])
 
     sorted_score_per_combination = dict(sorted(score_per_combination.items(), key=operator.itemgetter(1), reverse=True))
     rank = 1
