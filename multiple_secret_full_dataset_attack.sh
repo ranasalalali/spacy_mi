@@ -34,7 +34,7 @@ echo "The secret phrase is "$password""
 #qsub -v password=$password,start_loc=$start_loc,end_loc=$end_loc,run=$n,n_passwords=$1,r_space=$2,knowledge=$3,epoch=$4,insertions=$5,strength_low=$6,strength_high=$7,features=$9,features_passwords=$8 jobscript;
 
 #spacy3
-qsub -v password=$password,start_loc=$start_loc,end_loc=$end_loc,run=$n,n_passwords=$1,r_space=$2,knowledge=$3,epoch=$4,insertions=$5,strength_low=$6,strength_high=$7,features=$9,features_passwords=$8,attack_type=${11},batch_size=$12,dataset=$13 jobscript_spacy3;
+qsub -v password=$password,start_loc=$start_loc,end_loc=$end_loc,run=$n,n_passwords=$1,r_space=$2,knowledge=$3,epoch=$4,insertions=$5,strength_low=$6,strength_high=$7,features=$9,features_passwords=$8,attack_type=${11},batch_size=${12},dataset=${13} jobscript_spacy3;
 
 
 n=$((n+1))
