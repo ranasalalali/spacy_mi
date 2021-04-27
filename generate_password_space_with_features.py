@@ -299,10 +299,16 @@ def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = '
 
         choices = random.sample(cc_numbers, N)
 
-        o_filename = '{}/{}_r_space_cc_numbers.txt'.format(folder, N)
+        o_filename = '{}/{}_cc_numbers_{}_r_space.txt'.format(folder, N, r_space)
         with open(o_filename, 'w') as f:
             for item in choices:
                 f.write("%s\n" % item)
+
+        filename = '{}_r_space_cc_numbers.pickle3'.format(r_space)
+        filename = os.path.join(folder, filename)
+        save_file = open(filename, 'wb')
+        pickle.dump(cc_numbers, save_file)
+        save_file.close()
 
     elif new_passwords == 'N':
 

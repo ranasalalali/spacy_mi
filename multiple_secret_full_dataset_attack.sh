@@ -44,7 +44,7 @@ if [ ${11} == "passwords" ]; then
 
 elif [ ${11} == "credit_card_numbers" ]; then
 
-    filename="r_space_data/$1_passwords_$2_r_space_$4_epoch_$5_insertions_${11}_attack/$1_r_space_cc_numbers.txt"
+    filename="r_space_data/$1_passwords_$2_r_space_$4_epoch_$5_insertions_${11}_attack/$1_cc_numbers_$2_r_space.txt"
 
     n=1
     while read line; do
