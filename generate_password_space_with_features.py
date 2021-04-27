@@ -383,7 +383,7 @@ if __name__ == "__main__":
 
         save_passwords_for_choices(passwords, choices, folder)
     
-    if attack_type == 'credit_card_numbers':
+    elif attack_type == 'credit_card_numbers':
 
         cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder)
 
