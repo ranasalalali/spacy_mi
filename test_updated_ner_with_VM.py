@@ -250,7 +250,12 @@ def test_updated_ner_IN_OUT(num_test):
             count+=1
     print('count = ', count)
 
+
+
     return in_vocab_time, out_vocab_time
+
+
+
 
 def test_updated_OUT_IN():
     # nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
@@ -452,9 +457,9 @@ def test_ner_updating_inside():
 
 
 if __name__ == '__main__':
-    num_test = 500
+    num_test = 2000
     in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
-    f_name = 'abs_runtime_updated_ner_{}_words_'.format(num_test)
+    f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
     save_results([in_vocab_runtime_abs, out_vocab_runtime_abs], f_name)
     # test_updated_OUT_IN()
 
