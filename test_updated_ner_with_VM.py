@@ -294,26 +294,27 @@ def test_updated_ner_IN_OUT_time_diff(num_test):
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ))  
             # 
-    in_vocab_time_diff = []
-    out_vocab_time_diff = []
-    for i in range(num_test):
-        in_vocab_run_1 = in_vocab_time[2*i]
-        in_vocab_run_2 = in_vocab_time[2*i+1]
-        in_vocab_time_diff.append(in_vocab_run_1 - in_vocab_run_2)
+    # in_vocab_time_diff = []
+    # out_vocab_time_diff = []
+    # for i in range(num_test):
+    #     in_vocab_run_1 = in_vocab_time[2*i]
+    #     in_vocab_run_2 = in_vocab_time[2*i+1]
+    #     in_vocab_time_diff.append(in_vocab_run_1 - in_vocab_run_2)
 
-        out_vocab_run_1 = out_vocab_time[2*i]
-        out_vocab_run_2 = out_vocab_time[2*i+1]
-        out_vocab_time_diff.append(out_vocab_run_1 - out_vocab_run_2)
+    #     out_vocab_run_1 = out_vocab_time[2*i]
+    #     out_vocab_run_2 = out_vocab_time[2*i+1]
+    #     out_vocab_time_diff.append(out_vocab_run_1 - out_vocab_run_2)
 
 
-    count = 0
-    for i in range(num_test):
-        print(1000*(out_vocab_time_diff[i] - in_vocab_time_diff[i]))
-        if out_vocab_time_diff[i] > in_vocab_time_diff[i]:
-            count+=1
-    print('count = ', count)
+    # count = 0
+    # for i in range(num_test):
+    #     print(1000*(out_vocab_time_diff[i] - in_vocab_time_diff[i]))
+    #     if out_vocab_time_diff[i] > in_vocab_time_diff[i]:
+    #         count+=1
+    # print('count = ', count)
 
-    return in_vocab_time_diff, out_vocab_time_diff
+    # return in_vocab_time_diff, out_vocab_time_diff
+    return in_vocab_time, out_vocab_time
 
 def test_updated_ner_IN_OUT_time_avg(num_test):
     file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
@@ -602,13 +603,13 @@ if __name__ == '__main__':
     # save_results([in_vocab_runtime_abs, out_vocab_runtime_abs], f_name)
 
 
-    # in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff(num_test)
-    # f_name = 'time_diff_updated_ner_{}_words'.format(num_test)
-    # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
+    in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff(num_test)
+    f_name = 'time_diff_updated_ner_{}_words'.format(num_test)
+    save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
-    in_vocab_runtime_time_avg, out_vocab_runtime_time_avg = test_updated_ner_IN_OUT_time_avg(num_test) 
-    f_name = 'time_avg_orig_ner_{}_words'.format(num_test)
-    save_results([in_vocab_runtime_time_avg, out_vocab_runtime_time_avg], f_name)
+    # in_vocab_runtime_time_avg, out_vocab_runtime_time_avg = test_updated_ner_IN_OUT_time_avg(num_test) 
+    # f_name = 'time_avg_orig_ner_{}_words'.format(num_test)
+    # save_results([in_vocab_runtime_time_avg, out_vocab_runtime_time_avg], f_name)
 
 
     # test_updated_OUT_IN()
