@@ -283,12 +283,12 @@ def save_passwords_for_choices(passwords = None, choices = None, folder=None):
         pickle.dump(generated, save_file)
         save_file.close()
 
-def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = 'Y', folder=None):
+def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_secrets = 'Y', folder=None):
 
     cc_numbers = []
     choices = []
    
-    if new_passwords == 'Y':
+    if new_secrets == 'Y':
 
         with open('100000-credit-card-numbers.txt','r') as file:  
             for line in file: 
@@ -304,7 +304,14 @@ def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = '
             for item in choices:
                 f.write("%s\n" % item)
 
-    elif new_passwords == 'N':
+        filename = '{}_r_space_cc_numbers.pickle3'.format(len(cc_numbers))
+        filename = os.path.join(folder, filename)
+        save_file = open(filename, 'wb')
+        pickle.dump(cc_numbers, save_file)
+        save_file.close()
+        
+
+    elif new_secrets == 'N':
 
         i_filename = '{}/{}_r_space_cc_numbers.txt'.format(folder, N)
         try:
@@ -322,14 +329,14 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--r_space', type=int, help='Randomness space r_space numbers generated')
-    parser.add_argument('--strength', nargs='+', help='strength of the password >= strength and <= strength')
+    parser.add_argument('--strength', nargs='+', default=[0,0], help='strength of the password >= strength and <= strength')
     parser.add_argument('--N', type=int, help='number of random password to generate')
-    parser.add_argument('--S', type=int, help='number of passwords of same shape as target')
-    parser.add_argument('--features', type=str, help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
-    parser.add_argument('--new_passwords', type=str, help='Y or N if new passwords to be generated or use old, file must exist')
+    parser.add_argument('--S', type=int, default=0, help='number of passwords of same shape as target')
+    parser.add_argument('--features', type=str, default='x', help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
+    parser.add_argument('--new_secrets', type=str, help='Y or N if new passwords to be generated or use old, file must exist')
     parser.add_argument('--epoch', type=int, help='number of epochs')
     parser.add_argument('--insertions', type=int, help='number of insertions')
-    parser.add_argument('--attack_type', type=str, help='type of attack, i.e. password, credit card')
+    parser.add_argument('--attack_type', type=str, help='type of attack, i.e. passwords, credit_card_numbers')
 
     args = parser.parse_args()
 
@@ -351,8 +358,8 @@ if __name__ == "__main__":
     global features
     features = args.features
     
-    global new_passwords
-    new_passwords = args.new_passwords
+    global new_secrets
+    new_secrets = args.new_secrets
 
     features = list(features)
     if ''.join(features) == 'all':
@@ -371,7 +378,7 @@ if __name__ == "__main__":
 
     folder = 'r_space_data/{}_passwords_{}_r_space_{}_epoch_{}_insertions_{}_attack'.format(N, r_space, epoch, insertions, attack_type)
 
-    mkdir_p(folder)    
+    mkdir_p(folder)       
 
     #print(folder)
 
@@ -379,13 +386,13 @@ if __name__ == "__main__":
     
     if attack_type == 'passwords':
 
-        passwords, choices = generate_choices_and_passwords(s1, s2, N, r_space, new_passwords, folder)
+        passwords, choices = generate_choices_and_passwords(s1, s2, N, r_space, new_secrets, folder)
 
         save_passwords_for_choices(passwords, choices, folder)
     
     if attack_type == 'credit_card_numbers':
 
-        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder)
+        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_secrets, folder)
 
     else:
         print("ATTACK TYPE NOT SUPPORTED!")

@@ -53,12 +53,12 @@ def save_model(model=None, secret=None, score_secret=None):
         f.close()
     
 
-def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features):
+def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
-    folder = 'results/{}_spacy_{}_{}_passwords_dictionary_attack_{}_insertions_{}_epoch_{}_r_space_{}_knowledge_strength_{}-{}_features_{}/'.format(now, version, n_passwords, n_insertions, epoch, r_space, knowledge, strength_low, strength_high, features)
+    folder = 'results/{}_spacy_{}_{}_{}_dictionary_attack_{}_insertions_{}_epoch_{}_r_space_{}_knowledge_strength_{}-{}_features_{}/'.format(now, version, n_passwords, attack_type, n_insertions, epoch, r_space, knowledge, strength_low, strength_high, features)
     filename = '{}_{}_run_secret_{}_{}_insertions.pickle3'.format(args.model, args.run, secret, n_insertions)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -358,9 +358,16 @@ if __name__ == "__main__":
 
     #load sample space of secrets
     data_folder = 'r_space_data/{}_passwords_{}_r_space_{}_epoch_{}_insertions_{}_attack'.format(n_passwords, r_space, epoch, n_insertions, attack_type)
-    filename = '{}/{}_passwords_features_{}_password_{}.pickle3'.format(data_folder, r_space, features, secret)
-    file = open(filename, 'rb')
-    passwords = pickle.load(file)
+
+    if attack_type=='passwords':
+        filename = '{}/{}_passwords_features_{}_password_{}.pickle3'.format(data_folder, r_space, features, secret)
+        file = open(filename, 'rb')
+        passwords = pickle.load(file)
+
+    if attack_type=='credit_card_numbers':
+        filename = '{}/{}_r_space_cc_numbers.pickle3'.format(data_folder, r_space)
+        file = open(filename, 'rb')
+        passwords = pickle.load(file)
 
     #generate query data from given sample space
     prefix = phrase[0:int(start_loc)]
@@ -415,4 +422,4 @@ if __name__ == "__main__":
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size)

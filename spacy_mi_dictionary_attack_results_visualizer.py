@@ -640,8 +640,6 @@ if __name__ == "__main__":
 
     password_Stat = {}
 
-    n_feature_passwords = 700
-
     avg_feature_distance_ranks = {}
     avg_feature_distance_ranks_pref_suff = {}
     avg_feature_distance_ranks_pref_shape = {}
@@ -665,6 +663,7 @@ if __name__ == "__main__":
         exposures = g[i][4]
         insertions = g[i][3]
         epoch_scores = g[i][5]
+        n_feature_passwords = g[i][11]
         
         secret = g[i][1].split()[secret_index]
         target_passwords.append(secret)
@@ -673,7 +672,7 @@ if __name__ == "__main__":
 
         feature_passwords = []
 
-        #feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
+        feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
         feature_passwords.append(secret)
         
         print(len(feature_passwords))
