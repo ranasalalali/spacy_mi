@@ -676,9 +676,6 @@ if __name__ == "__main__":
         #feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
         feature_passwords.append(secret)
         
-        
-        
-
         print(len(feature_passwords))
         
         for score in scores:
