@@ -44,8 +44,32 @@ import math
 from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
 from spacy.vocab import Vocab
+import matplotlib.pyplot as plt
+from sklearn import metrics
+from sklearn.metrics import roc_auc_score
 
 
+def mkdir_p(path):
+    """To make a directory given a path."""
+    try:
+        os.makedirs(path)
+    except OSError as exc:  # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else:
+            raise
+
+def save_results(results_holder, f_name):
+    """To save results in a pickle file."""
+    now = datetime.now().date()
+    now = now.strftime("%Y%m%d")
+    folder = 'password_11116_updated_ner_ROC_{}'.format(now)
+    filename = '{}_{}.pickle3'.format(now, f_name)
+    mkdir_p(folder)
+    filename = os.path.join(folder, filename)
+    save_file = open(filename, 'wb')
+    pickle.dump(results_holder, save_file)
+    save_file.close()
 
 def test_original_ner():
     nlp_lg =  spacy.load("en_core_web_lg")
@@ -123,7 +147,7 @@ def test_original_ner():
 
 
 ###################################################
-def test_updated_ner_IN_OUT():
+def test_updated_ner_IN_OUT(num_test):
     # nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
     file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
 
@@ -134,7 +158,7 @@ def test_updated_ner_IN_OUT():
 
     pws = g[:][0]
 
-    num_test = 2000
+    # num_test = 2000
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
 
@@ -146,7 +170,7 @@ def test_updated_ner_IN_OUT():
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
 
-    for i in range(100):
+    for i in range(num_test):
         vocab_lg = list(nlp.vocab.strings)
         # print(len(vocab_lg))
 
@@ -154,7 +178,7 @@ def test_updated_ner_IN_OUT():
         doc = ner(docs)
 
         text = updating_pws[i]
-        print("in-word = ", text)
+        # print("in-word = ", text)
         time0 = time.perf_counter()  
         docs = tok_lg(text)
         doc = ner(docs)
@@ -183,7 +207,7 @@ def test_updated_ner_IN_OUT():
 
         vocab_lg = list(nlp.vocab.strings)
         text = pws[num_test+i]
-        print("out-word = ", text)
+        # print("out-word = ", text)
         time0 = time.perf_counter()  
         docs = tok_lg(text)
         doc = ner(docs)
@@ -220,11 +244,13 @@ def test_updated_ner_IN_OUT():
         
 
     count = 0
-    for i in range(100):
+    for i in range(num_test):
         print(1000*(out_vocab_time[i] - in_vocab_time[i]))
         if out_vocab_time[i]>in_vocab_time[i]:
             count+=1
     print('count = ', count)
+
+    return in_vocab_time, out_vocab_time
 
 def test_updated_OUT_IN():
     # nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
@@ -426,8 +452,11 @@ def test_ner_updating_inside():
 
 
 if __name__ == '__main__':
-    test_updated_ner_IN_OUT()
-    test_updated_OUT_IN()
+    num_test = 2000
+    in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
+    f_name = 'abs_runtime_updated_ner'
+    save_results([in_vocab_runtime_abs, out_vocab_runtime_abs], f_name)
+    # test_updated_OUT_IN()
 
 
 
