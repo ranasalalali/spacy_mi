@@ -452,9 +452,9 @@ def test_ner_updating_inside():
 
 
 if __name__ == '__main__':
-    num_test = 2000
+    num_test = 500
     in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
-    f_name = 'abs_runtime_updated_ner'
+    f_name = 'abs_runtime_updated_ner_{}_words_'.format(num_test)
     save_results([in_vocab_runtime_abs, out_vocab_runtime_abs], f_name)
     # test_updated_OUT_IN()
 
