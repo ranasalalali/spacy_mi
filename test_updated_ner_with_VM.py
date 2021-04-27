@@ -132,7 +132,7 @@ in_vocab_words_test = updating_pws
 
 in_vocab_time = []
 out_vocab_time = []
-for i in range(1000):
+for i in range(100):
     nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
@@ -185,7 +185,7 @@ for i in range(1000):
     # print(len(vocab_lg))
     docs = tok_lg('the')
     doc = ner(docs)
-    
+
     text = updating_pws[i]
     print("in-word = ", text)
     time0 = time.perf_counter()  
