@@ -9,7 +9,7 @@ import string
 import secrets
 import numpy as np
 #from password_generator import PasswordGenerator
-from password_strength import PasswordStats
+#from password_strength import PasswordStats
 from zxcvbn import zxcvbn
 
 def mkdir_p(path):
@@ -196,7 +196,7 @@ def generate_password_given_features(shape=None, prefix=None, suffix=None, lengt
     
     return generated
 
-def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000, new_passwords = 'Y'):
+def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000, new_passwords = 'Y', folder=None):
    
     passwords = []
     choices = []
@@ -234,7 +234,7 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000
 
         # strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
         # choices = random.sample(strength_passwords, N)
-        o_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2)
+        o_filename = '{}/{}_r_space_passwords_strength_{}-{}.txt'.format(folder, N,s1,s2)
         with open(o_filename, 'w') as f:
             for item in choices:
                 f.write("%s\n" % item)
@@ -242,7 +242,7 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000
 
     elif new_passwords == 'N':
 
-        i_filename = 'r_space_data/{}_r_space_passwords_strength_{}-{}.txt'.format(N,s1,s2, ''.join(features))
+        i_filename = '{}/{}_r_space_passwords_strength_{}-{}.txt'.format(folder, N,s1,s2)
         try:
             with open(i_filename) as file:
                 for line in file: 
@@ -255,7 +255,7 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000
 
     return passwords, choices
 
-def save_passwords_for_choices(passwords = None, choices = None):
+def save_passwords_for_choices(passwords = None, choices = None, folder=None):
     
     temp_passwords = []
     for choice in choices:
@@ -293,9 +293,16 @@ if __name__ == "__main__":
     parser.add_argument('--S', type=int, help='number of passwords of same shape as target')
     parser.add_argument('--features', type=str, help='specify features to add x-prefix, y-suffix, z-shape, e.g. xy for prefix and suffix')
     parser.add_argument('--new_passwords', type=str, help='Y or N if new passwords to be generated or use old, file must exist')
+    parser.add_argument('--epoch', type=int, help='number of epochs')
+    parser.add_argument('--insertions', type=int, help='number of insertions')
+    parser.add_argument('--attack_type', type=str, help='type of attack, i.e. password, credit card')
 
     args = parser.parse_args()
-    
+
+    epoch = args.epoch
+    insertions = args.insertions
+    attack_type = args.attack_type
+
     global r_space
     r_space = args.r_space
 
@@ -328,14 +335,23 @@ if __name__ == "__main__":
     assert 4>=s2>=0
     assert s1<=s2
 
-    folder = 'r_space_data/'
+    folder = 'r_space_data/{}_passwords_{}_r_space_{}_epoch_{}_insertions_{}_attack'.format(N, r_space, epoch, insertions, attack_type)
+
     mkdir_p(folder)    
+
+    print(folder)
 
     assert r_space <= 1000000
     
-    passwords, choices = generate_choices_and_passwords(s1, s2, N, r_space, new_passwords)
+    if attack_type == 'passwords':
 
-    save_passwords_for_choices(passwords, choices)
+        passwords, choices = generate_choices_and_passwords(s1, s2, N, r_space, new_passwords, folder)
+
+        save_passwords_for_choices(passwords, choices, folder)
+    
+    else:
+        print("ATTACK TYPE NOT SUPPORTED!")
+        assert False
 
     
 
