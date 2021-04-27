@@ -335,9 +335,10 @@ def test_updated_ner_IN_OUT_time_avg(num_test):
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
 
+    repeated_run = 5
     for i in range(num_test):
         runtime = 0
-        for j in range(5):
+        for j in range(repeated_run):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
 
@@ -359,9 +360,9 @@ def test_updated_ner_IN_OUT_time_avg(num_test):
 
             # differ = list(set(vocab_lg_after) - set(vocab_lg))
             # print(list(differ))
-        in_vocab_time_avg.append(runtime/10)
+        in_vocab_time_avg.append(runtime/repeated_run)
 
-        for j in range(5):
+        for j in range(repeated_run):
             docs = tok_lg('the')
             doc = ner(docs)
 
@@ -381,7 +382,7 @@ def test_updated_ner_IN_OUT_time_avg(num_test):
 
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ)) 
-        out_vocab_time_avg.append(runtime/10) 
+        out_vocab_time_avg.append(runtime/repeated_run) 
             # 
     
     count = 0
