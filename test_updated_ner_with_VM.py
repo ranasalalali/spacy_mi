@@ -250,7 +250,7 @@ def test_updated_ner_IN_OUT_time_diff(num_test):
     ner = nlp.get_pipe('ner')
 
     for i in range(num_test):
-        for j in range(2):
+        for j in range(3):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
 
@@ -273,7 +273,7 @@ def test_updated_ner_IN_OUT_time_diff(num_test):
             # differ = list(set(vocab_lg_after) - set(vocab_lg))
             # print(list(differ))
 
-        for j in range(2):
+        for j in range(3):
             docs = tok_lg('the')
             doc = ner(docs)
 
@@ -339,7 +339,7 @@ def test_updated_ner_IN_OUT_time_diff_tokenizer(num_test):
     ner = nlp.get_pipe('ner')
 
     for i in range(num_test):
-        for j in range(2):
+        for j in range(3):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
 
@@ -362,7 +362,7 @@ def test_updated_ner_IN_OUT_time_diff_tokenizer(num_test):
             # differ = list(set(vocab_lg_after) - set(vocab_lg))
             # print(list(differ))
 
-        for j in range(2):
+        for j in range(3):
             docs = tok_lg('the')
             doc = ner(docs)
 
@@ -685,16 +685,16 @@ def test_ner_updating_inside():
 
 
 if __name__ == '__main__':
-    num_test = 100
+    num_test = 2000
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
     # save_results([in_vocab_runtime_abs, out_vocab_runtime_abs], f_name)
 
 
-    # in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff(num_test)
-    # f_name = 'time_diff_updated_ner_{}_words'.format(num_test)
-    # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
+    in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_three_runs'.format(num_test)
+    save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
     # in_vocab_runtime_time_avg, out_vocab_runtime_time_avg = test_updated_ner_IN_OUT_time_avg(num_test) 
     # f_name = 'time_avg_orig_ner_{}_words'.format(num_test)
@@ -702,7 +702,7 @@ if __name__ == '__main__':
 
 
     in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff_tokenizer(num_test)
-    f_name = 'time_diff_updated_ner_{}_words_tokenizer'.format(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_tokenizer_three_runs'.format(num_test)
     save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
 
