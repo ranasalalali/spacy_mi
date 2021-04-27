@@ -159,7 +159,7 @@ def load_model(model = None, label = None, train_data=None):
     return nlp, other_pipes, optimizer
     
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=None, secret_index=None, secret=None, batch_size=None):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=None, secret_index=None, secret=None, batch_size=None, n_insertions=None):
     spacy.prefer_gpu()
 
     epoch_insertion_rank = {}
@@ -168,7 +168,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     other_pipes = None
     optimizer = None
 
-    nlp, other_pipes, optimizer = load_model(model, label, train_data)
+    #nlp, other_pipes, optimizer = load_model(model, label, train_data)
 
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE STARTS ---------------
 
@@ -217,46 +217,39 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #     epoch_insertion_rank[(1,1)] = exposure_per_combination
 
 
+    nlp, other_pipes, optimizer = load_model(model, label, train_data)
+
     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
         # show warnings for misaligned entity spans once
         warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
-        for insertions in range(1, len(train_data)+1):
+        examples = []
+            
+        for text, annots in train_data:
+            examples.append(Example.from_dict(nlp.make_doc(text), annots))
+        get_examples = lambda: examples
 
-            nlp, other_pipes, optimizer = load_model(model, label, train_data)
+        for epochs in range(1,int(epoch)):
+            random.shuffle(get_examples)
 
-            with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
-                # show warnings for misaligned entity spans once
-                warnings.filterwarnings("once", category=UserWarning, module='spacy')
-                temp_data = train_data[:insertions]
-        
-                examples = []
-                    
-                for text, annots in temp_data:
-                    examples.append(Example.from_dict(nlp.make_doc(text), annots))
-                get_examples = lambda: examples
+            for batch in minibatch(get_examples, size=batch_size):
+                nlp.update(batch)
 
-                for epochs in range(1,int(epoch)):
-                    random.shuffle(examples)
+            # if epochs%5 == 0:
+            score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+            epoch_insertion_rank[(epochs,n_insertions)] = exposure_per_combination
+                #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
+                    #epoch_insertion_rank[(epochs,insertions)] = exposure
 
-                    for batch in minibatch(examples, size=batch_size):
-                        nlp.update(examples)
-
-                    # if epochs%5 == 0:
-                    score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
-                    epoch_insertion_rank[(epochs,insertions)] = exposure_per_combination
-                        #score, exposure = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index)
-                        #epoch_insertion_rank[(epochs,insertions)] = exposure
-    
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
     #save_model(nlp, secret, score_secret)
     return nlp, epoch_insertion_rank
 
-def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size):
+def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size)
+    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size, n_insertions=n_insertions)
     score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     #save_model(nlp_updated, secret)
     epoch_scores.append(epoch_score)
@@ -398,7 +391,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size))
+                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -407,7 +400,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size))
+                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
