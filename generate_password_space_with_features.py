@@ -339,7 +339,7 @@ if __name__ == "__main__":
 
     mkdir_p(folder)    
 
-    print(folder)
+    #print(folder)
 
     assert r_space <= 1000000
     
