@@ -534,7 +534,7 @@ def test_updated_ner_IN_OUT_time_diff_only_NER(num_test):
             
             docs = tok_lg(text)
             time0 = time.perf_counter()  
-            # doc = ner(docs)
+            doc = ner(docs)
             time1 = time.perf_counter()  
             runtime = time1-time0
             in_vocab_time.append(runtime)
