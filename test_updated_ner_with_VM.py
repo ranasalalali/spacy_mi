@@ -718,13 +718,13 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
     in_vocab_time_tok =[]
     in_vocab_time_ner=[]
 
-    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
 
     for i in range(num_test):
         
-        for j in range(2):
+        for j in range(3):
             docs = tok_lg('the')
             doc = ner(docs)
 
@@ -732,7 +732,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             text = pws[2000+i]
             # print("out-word = ", text)
              
-            docs = tok_lg(text)
+            # docs = tok_lg(text)
 
             time0 = time.perf_counter()  
             docs = tok_lg(text)
@@ -753,7 +753,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ))  
             
-        for j in range(2):
+        for j in range(3):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
 
@@ -767,6 +767,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             time1 = time.perf_counter()  
             doc = ner(docs)
             time2 = time.perf_counter()  
+            
             runtime_tok = time1 - time0
             runtime_ner = time2 - time1
             runtime = time2 - time0
@@ -1085,7 +1086,7 @@ def test_ner_updating_inside():
 
 
 if __name__ == '__main__':
-    num_test = 100
+    num_test = 1000
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
