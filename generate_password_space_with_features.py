@@ -222,15 +222,30 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000
         for i in range(len(strengths)):
             if i == len(strengths)-1:
                 #strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
-                strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
-                temp_choices = random.sample(strength_passwords, d+r)
-                choices.extend(temp_choices)
+                temp_choices = []
+                while len(temp_choices)<d+r:
+                    temp_password = random.sample(passwords, 1)[0]
+                    while zxcvbn_score(temp_password) != strengths[i]:
+                        temp_password = random.sample(passwords, 1)[0]
+                    choices.append(temp_password)
+
+                #strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
+                #temp_choices = random.sample(strength_passwords, d+r)
+                #choices.extend(temp_choices)
             else:
                 #strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
-                strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
-                temp_choices = random.sample(strength_passwords, d)
-                choices.extend(temp_choices)
-            print(temp_choices)
+                
+                temp_choices = []
+                while len(temp_choices)<d+r:
+                    temp_password = random.sample(passwords, 1)[0]
+                    while zxcvbn_score(temp_password) != strengths[i]:
+                        temp_password = random.sample(passwords, 1)[0]
+                    choices.append(temp_password)
+
+                # strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
+                # temp_choices = random.sample(strength_passwords, d)
+                # choices.extend(temp_choices)        
+        print(choices)
 
         # strength_passwords = [password for password in passwords if s1 <= PasswordStats(password).strength() <= s2]
         # choices = random.sample(strength_passwords, N)
