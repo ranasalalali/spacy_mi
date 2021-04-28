@@ -617,7 +617,7 @@ if __name__ == "__main__":
     global number_of_experiments
     number_of_experiments = len(g)
 
-    secret_index = 3
+    secret_index = g[0][10]
 
     target_passwords = []
 
