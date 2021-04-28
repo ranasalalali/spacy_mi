@@ -426,4 +426,4 @@ if __name__ == "__main__":
     ranks_secret = list(ranks_secret)
     epoch_losses = list(epoch_losses)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size, epoch_loss], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size, epoch_losses], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size)
