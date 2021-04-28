@@ -718,7 +718,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
     in_vocab_time_tok =[]
     in_vocab_time_ner=[]
 
-    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
 
