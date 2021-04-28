@@ -163,6 +163,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     spacy.prefer_gpu()
 
     epoch_insertion_rank = {}
+
+    epoch_loss = []
     
     nlp = None
     other_pipes = None
@@ -239,6 +241,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
                 print(losses)
 
+            epoch_loss.append((epochs, losses['ner']))
+
             # if epochs%5 == 0:
             score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
             epoch_insertion_rank[(epochs,n_insertions)] = exposure_per_combination
@@ -248,12 +252,12 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
     #save_model(nlp, secret, score_secret)
-    return nlp, epoch_insertion_rank
+    return nlp, epoch_insertion_rank, epoch_loss
 
-def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions):
+def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_score = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size, n_insertions=n_insertions)
+    nlp_updated, epoch_score, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size, n_insertions=n_insertions)
     score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     #save_model(nlp_updated, secret)
     epoch_scores.append(epoch_score)
@@ -262,6 +266,7 @@ def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secre
     scores_secret.append(score_secret)
     exposures_secret.append(exposure_secret)
     ranks_secret.append(exposure_rank_secret)
+    epoch_losses.append(epoch_loss)
 
 if __name__ == "__main__":
 
@@ -383,6 +388,7 @@ if __name__ == "__main__":
     scores_secret = mgr.list()
     exposures_secret = mgr.list()
     ranks_secret = mgr.list()
+    epoch_losses = mgr.list()
 
     # cpu count calculation for given environment
     cpu_count = mp.cpu_count()
@@ -395,7 +401,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions))
+                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -404,7 +410,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions))
+                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -418,5 +424,6 @@ if __name__ == "__main__":
     scores_secret = list(scores_secret)
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
+    epoch_losses = list(epoch_losses)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size, epoch_loss], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size)
