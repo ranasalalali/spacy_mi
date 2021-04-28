@@ -227,8 +227,8 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000
                     temp_password = random.sample(passwords, 1)[0]
                     while zxcvbn_score(temp_password) != strengths[i]:
                         temp_password = random.sample(passwords, 1)[0]
+                    print(temp_password)
                     choices.append(temp_password)
-
                 #strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
                 #temp_choices = random.sample(strength_passwords, d+r)
                 #choices.extend(temp_choices)
@@ -236,10 +236,11 @@ def generate_choices_and_passwords(s1 = 0.0, s2 = 4.0, N = 10, r_space = 1000000
                 #strength_passwords = [password for password in passwords if strengths[i] <= PasswordStats(password).strength() <= strengths[i]+0.1]
                 
                 temp_choices = []
-                while len(temp_choices)<d+r:
+                while len(temp_choices)<d:
                     temp_password = random.sample(passwords, 1)[0]
                     while zxcvbn_score(temp_password) != strengths[i]:
                         temp_password = random.sample(passwords, 1)[0]
+                    print(temp_password)
                     choices.append(temp_password)
 
                 # strength_passwords = [password for password in passwords if zxcvbn_score(password) == strengths[i]]
