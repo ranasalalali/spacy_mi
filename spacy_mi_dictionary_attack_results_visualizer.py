@@ -466,13 +466,13 @@ def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoome
         pr.set_zlabel("Ranks")
         if zoomed:
             pr.set_zlim(0,500)
-            file_name = 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED.pdf'
+            file_name = 'RANK_PER_EPOCH_AND_INSERTION_ZOOMED_{}.pdf'.format(version)
         else:
-            file_name = 'RANK_PER_EPOCH_AND_INSERTION.pdf'
+            file_name = 'RANK_PER_EPOCH_AND_INSERTION_{}.pdf'.format(version)
         
     #plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     #plt.title('{} test with {} passwords'.format(version, number_of_experiments))
-    plt.title('{}'.format(version))
+    #plt.title('{}'.format(version))
     plt.tight_layout()
     plt_dest = plt_folder + file_name
     plt.savefig(plt_dest,
@@ -507,13 +507,13 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
     pr.set_zlabel("Ranks")
     if zoomed:
         pr.set_zlim(0,500)
-        file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_ZOOMED.pdf'
+        file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_ZOOMED_{}.pdf'.format(version)
     else:
-        file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED.pdf'
+        file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_{}.pdf'.format(version)
         
     #plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
     #plt.title('{} test with {} passwords'.format(version, number_of_experiments))
-    plt.title('{}'.format(version))
+    #plt.title('{}'.format(version))
     plt.tight_layout()
     plt_dest = plt_folder + file_name
     plt.savefig(plt_dest,
@@ -566,11 +566,11 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     plt.ylabel("Ranks")
     plt.xlabel("Epochs")
 
-    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT.pdf'
+    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
         
     plt.legend()
     #plt.title('{} test with {} passwords'.format(version, number_of_experiments))
-    plt.title('{}'.format(version))
+    #plt.title('{}'.format(version))
     plt.tight_layout()
     plt_dest = plt_folder + file_name
     plt.savefig(plt_dest,
