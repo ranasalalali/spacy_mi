@@ -618,7 +618,7 @@ def test_updated_ner_IN_OUT_time_diff_separate_process(num_test):
     ner = nlp.get_pipe('ner')
 
     for i in range(num_test):
-        for j in range(5):
+        for j in range(2):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
 
@@ -646,7 +646,7 @@ def test_updated_ner_IN_OUT_time_diff_separate_process(num_test):
             # differ = list(set(vocab_lg_after) - set(vocab_lg))
             # print(list(differ))
 
-        for j in range(5):
+        for j in range(2):
             docs = tok_lg('the')
             doc = ner(docs)
 
@@ -979,7 +979,7 @@ def test_ner_updating_inside():
 
 
 if __name__ == '__main__':
-    num_test = 500
+    num_test = 100
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
