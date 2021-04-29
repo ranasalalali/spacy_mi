@@ -707,7 +707,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
     pws = g[:][0]
 
     # num_test = 2000
-    updating_pws = pws[0:num_test]
+    updating_pws = pws[0:2000]
     in_vocab_words_test = updating_pws
 
 
