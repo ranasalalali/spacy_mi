@@ -289,7 +289,7 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    num_test = 1000
+    num_test = 2000
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
     out_vocab_words = pws[num_test:2*num_test]
@@ -320,7 +320,7 @@ if __name__ == "__main__":
     file_name.write("List of in vocab: {}\n".format(in_vocab_words_test))
     # file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
-    iterations = 3
+    iterations = 2
     
     
     out_vocab_runtime_time_diff = target_tokenizer_ner_time_diff(out_vocab_words, nlp)
