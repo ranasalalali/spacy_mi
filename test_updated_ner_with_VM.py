@@ -753,7 +753,9 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
 
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ))  
-            
+            time.sleep(0.1)
+
+
         for j in range(3):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
@@ -775,6 +777,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             in_vocab_time.append(runtime)
             in_vocab_time_tok.append(runtime_tok)
             in_vocab_time_ner.append(runtime_ner)
+            time.sleep(0.1)
             
             # print(runtime*1000)
             vocab_lg_after = list(nlp.vocab.strings)
@@ -1101,7 +1104,7 @@ def test_updated_OUT_IN():
 
 
 if __name__ == '__main__':
-    num_test = 2000
+    num_test = 500
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
