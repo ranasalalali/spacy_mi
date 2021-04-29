@@ -729,7 +729,8 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             doc = ner(docs)
 
             vocab_lg = list(nlp.vocab.strings)
-            text = pws[2000+i]
+            # text = pws[2000+i]
+            text = pws[3000+i]
             # print("out-word = ", text)
              
             # docs = tok_lg(text)
@@ -759,8 +760,8 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
 
             docs = tok_lg('the')
             doc = ner(docs)
-
-            text = updating_pws[i]
+            # text = updating_pws[i]
+            text = updating_pws[1000+i]
             # print("in-word = ", text)
             time0 = time.perf_counter()  
             docs = tok_lg(text)
@@ -1107,7 +1108,7 @@ if __name__ == '__main__':
 
 
     in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
-    f_name = 'time_diff_updated_ner_{}_words_fives_runs_separate_process_VM_out_in'.format(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_fives_runs_separate_process_VM_out_in_last_1000w'.format(num_test)
     save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
     # in_vocab_runtime_time_avg, out_vocab_runtime_time_avg = test_updated_ner_IN_OUT_time_avg(num_test) 
     # f_name = 'time_avg_orig_ner_{}_words'.format(num_test)
