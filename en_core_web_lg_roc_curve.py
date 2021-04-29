@@ -261,7 +261,7 @@ if __name__ == "__main__":
 
     # nlp = spacy.load("en_core_web_lg")
     # global vocab
-    num_test = 2000
+    num_test = 100
     # vocab = list(nlp.vocab.strings)
     # in_vocab_words = vocab[10000:10000+num_test]
     vocab = vocab_lg
@@ -290,7 +290,7 @@ if __name__ == "__main__":
     file_name.write("List of in vocab: {}\n".format(in_vocab_words_test))
     # file_name.write("List of shuffle word in/out vocab: {}\n".format(shuffe_words))
 
-    iterations = 10
+    iterations = 2
     in_vocab_runtime_one_run = target_ner_tokenizer_multiple_words_one_run(in_vocab_words_test)
     time.sleep(5.0)
     out_vocab_runtime_one_run = target_ner_tokenizer_multiple_words_one_run(out_vocab_words)
