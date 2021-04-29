@@ -119,11 +119,11 @@ def feature_distance(target=None, password=None):
 
     return (pref_suff, pref_shape, suff_shape, pref_suff_shape, pref_suff_shape_norm)
 
-def get_feature_passwords(n_feature_passwords=0, feature=None, secret=None):
+def get_feature_passwords(n_feature_passwords=0, feature=None, secret=None, data_folder=None):
     feature_passwords = []
 
     if n_feature_passwords>0:
-        feature_passwords_file = 'r_space_data/password_{}_features_{}_{}_passwords.pickle3'.format(secret, feature, n_feature_passwords)
+        feature_passwords_file = '{}/password_{}_features_{}_{}_passwords.pickle3'.format(data_folder, secret, feature, n_feature_passwords)
         file = open(feature_passwords_file, 'rb')
         feature_passwords = pickle.load(file)
     else:
@@ -602,10 +602,12 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--loc', type=str, help='Location of Results')
+    parser.add_argument('--attack_type', type=str, help='attack_type')
 
     args = parser.parse_args()
 
     loc = args.loc
+    attack_type = args.attack_type
 
     global required_passwords
     required_passwords = 10
@@ -621,6 +623,10 @@ if __name__ == "__main__":
 
     global version
     version = str(folder.split("_")[1]) + str(folder.split("_")[2])
+
+    meta_data = folder.split("_")
+
+    data_folder = 'r_space_data/{}_passwords_{}_r_space_{}_epoch_{}_insertions_{}_attack'.format(meta_data[3], meta_data[11], meta_data[9], meta_data[7], attack_type)
 
     # Load results for plotting
     #res_folder = 'Results/results_{}_len/'.format(secret_len)
@@ -638,6 +644,8 @@ if __name__ == "__main__":
     number_of_experiments = len(g)
 
     secret_index = g[0][10]
+
+    
 
     target_passwords = []
 
@@ -692,7 +700,7 @@ if __name__ == "__main__":
 
         feature_passwords = []
 
-        feature_passwords = get_feature_passwords(n_feature_passwords, features, secret)
+        feature_passwords = get_feature_passwords(n_feature_passwords, features, secret, data_folder)
         feature_passwords.append(secret)
         
         print(len(feature_passwords))
