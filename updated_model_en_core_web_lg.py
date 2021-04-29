@@ -122,6 +122,11 @@ def target_ner_tokenizer_one_word_multiple_times(texts, iterations, model):
         # doc = ner(doc)
         total_runtime = 0
         for j in range(iterations):
+            vocab_lg = list(nlp.vocab.strings)
+            # print(len(vocab_lg))
+
+            docs = tok_lg('the')
+            doc = ner(docs)
            
             time0 = time.perf_counter()
             docs = tokeniz(text)
@@ -132,6 +137,8 @@ def target_ner_tokenizer_one_word_multiple_times(texts, iterations, model):
             total_runtime += runtime
             
             print(" j = ", j)
+
+            vocab_lg = list(nlp.vocab.strings)
 
         avg_runtime_list.append(total_runtime/iterations)  
 
@@ -149,6 +156,11 @@ def target_tokenizer_ner_time_diff(texts, model):
         print(text)
         
         for j in range(2):
+            vocab_lg = list(nlp.vocab.strings)
+            # print(len(vocab_lg))
+
+            docs = tok_lg('the')
+            doc = ner(docs)
 
             time0 = time.perf_counter()           
             docs = tokeniz(text)
@@ -160,6 +172,7 @@ def target_tokenizer_ner_time_diff(texts, model):
             runtime = time_now - time0
             runtime_diff_list.append(runtime)
             print(" j = ", j)
+            vocab_lg = list(nlp.vocab.strings)
             
 
     return runtime_diff_list
@@ -348,7 +361,7 @@ if __name__ == "__main__":
     # shuffe_words_runtime = target_ner_tokenizer_one_word_three_times(shuffe_words)
 
     # pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{0}_words_{1}".format(num_test, now1)
-    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_{}_words".format(num_test)
+    pickle_fname = "target_en_core_sm_model_runtime_vm_ROC_add_check_vocab{}_words".format(num_test)
     # save_results([in_vocab_runtime, out_vocab_runtime, shuffe_words_runtime], pickle_fname)
     save_results([in_vocab_runtime_avg, out_vocab_runtime_avg, in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], pickle_fname)
 
