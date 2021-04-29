@@ -226,7 +226,7 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
-def fig_box_plot(ranks_per_distance=None, distances=None, label=None, plot_name=None):
+def fig_box_plot(ranks_per_distance=None, distances=None, plot_name=None):
     fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     ax = fig.add_subplot(111)
     ax.boxplot(ranks_per_distance, labels=distances)
