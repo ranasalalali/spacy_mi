@@ -14,7 +14,7 @@ import argparse
 from mpl_toolkits.mplot3d import Axes3D
 import re
 from Levenshtein import distance as levenshtein_distance
-
+import pandas as pd
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -219,12 +219,26 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
     y_lim = plt.ylim()
     plt.ylim(top=y_lim[1]+(5/100 * y_lim[1]))
 
-    plt.title(plot_name)
+    #plt.title(plot_name)
     plt.legend()
     plt.tight_layout()
     plt_dest = plt_folder + plot_name
     plt.savefig(plt_dest,
             bbox_inches="tight")
+
+def fig_box_plot(ranks_per_distance=None, distances=None, label=None, plot_name=None):
+    fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
+    ax = fig.add_subplot(111)
+    ax.boxplot(ranks_per_distance, labels=distances)
+    plt.xlabel("Distance")
+    plt.ylabel("Rank")
+
+    plt.legend()
+    plt.tight_layout()
+    plt_dest = plt_folder + plot_name
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
 
 def fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_feature_distance_ranks=None):
     #BLOCK FOR AVG FEATURE PASSWORDS FEATURE DISTANCE RANK
@@ -251,8 +265,14 @@ def fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_featur
     e = feature_passwords_std_per_mean
     bar = feature_passwords_passwords_per_distance
     label = 'Prefix + Suffix + Shape + Norm Distance'
-    plot_name = 'AVG_FEATURE_PASSWORDS_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
+    plot_name = 'AVG_FEATURE_PASSWORDS_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD.pdf'.format(number_of_experiments)
     fig_error_bar(x, y, e, bar, label, plot_name)
+
+    distances = avg_feature_passwords_feature_distance_ranks.keys()
+    ranks_per_distances = avg_feature_passwords_feature_distance_ranks.values()
+
+    plot_name = 'AVG_FEATURE_PASSWORDS_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD_BOXPLOT.pdf'.format(number_of_experiments)
+    fig_box_plot(ranks_per_distances, distances, plot_name)
 
     #BLOCK FOR AVG FEATURE PASSWORDS FEATURE DISTANCE RANK END
 
@@ -281,7 +301,7 @@ def fig_avg_all_feature_distance_rank(avg_feature_distance_ranks=None):
     e = std_per_mean
     bar = passwords_per_distance
     label = 'Prefix + Suffix + Shape + Norm Distance'
-    plot_name = 'AVG_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
+    plot_name = 'AVG_ALL_FEATURE_DISTANCE_RANKS_{}_PASSWORD.pdf'.format(number_of_experiments)
     fig_error_bar(x, y, e, bar, label, plot_name)
     
 def fig_avg_pref_suff_feature_distance_rank(avg_feature_distance_ranks_pref_suff=None):
@@ -309,7 +329,7 @@ def fig_avg_pref_suff_feature_distance_rank(avg_feature_distance_ranks_pref_suff
     e = std_per_mean_pref_suff
     bar = passwords_per_distance_pref_suff
     label = 'Prefix + Suffix Distance'
-    plot_name = 'AVG_PREF_SUFF_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
+    plot_name = 'AVG_PREF_SUFF_FEATURE_DISTANCE_RANKS_{}_PASSWORD.pdf'.format(number_of_experiments)
     fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_avg_pref_shape_feature_distance_rank(avg_feature_distance_ranks_pref_shape=None):
@@ -336,7 +356,7 @@ def fig_avg_pref_shape_feature_distance_rank(avg_feature_distance_ranks_pref_sha
     e = std_per_mean_pref_shape
     bar = passwords_per_distance_pref_shape
     label = 'Prefix + Shape Distance'
-    plot_name = 'AVG_PREF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
+    plot_name = 'AVG_PREF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD.pdf'.format(number_of_experiments)
     fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_avg_suff_shape_feature_distance_rank(avg_feature_distance_ranks_suff_shape=None):
@@ -364,7 +384,7 @@ def fig_avg_suff_shape_feature_distance_rank(avg_feature_distance_ranks_suff_sha
     e = std_per_mean_suff_shape
     bar = passwords_per_distance_suff_shape
     label = 'Suffix + Shape Distance'
-    plot_name = 'AVG_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
+    plot_name = 'AVG_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD.pdf'.format(number_of_experiments)
     fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pref_suff_shape=None):
@@ -391,7 +411,7 @@ def fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pre
     e = std_per_mean_pref_suff_shape
     bar = passwords_per_distance_pref_suff_shape
     label = 'Prefix + Suffix + Shape Distance'
-    plot_name = 'AVG_PREF_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD'.format(number_of_experiments)
+    plot_name = 'AVG_PREF_SUFF_SHAPE_FEATURE_DISTANCE_RANKS_{}_PASSWORD.pdf'.format(number_of_experiments)
     fig_error_bar(x, y, e, bar, label, plot_name)
 
 def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_password=None, zoomed=False):
