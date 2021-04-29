@@ -853,7 +853,7 @@ if __name__ == "__main__":
 
 
 
-    # fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_feature_distance_ranks)
+    fig_feature_passwords_avg_feature_distance_rank(avg_feature_passwords_feature_distance_ranks)
 
     #BLOCK FOR AVG FEATURE DISTANCE RANK
 
