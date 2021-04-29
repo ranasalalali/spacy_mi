@@ -691,7 +691,7 @@ if __name__ == "__main__":
         exposures = g[i][4]
         insertions = g[i][3]
         epoch_scores = g[i][5]
-        n_feature_passwords = g[i][11]
+        n_feature_passwords = g[i][11]*7
         
         secret = g[i][1].split()[secret_index]
         target_passwords.append(secret)
