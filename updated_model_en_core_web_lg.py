@@ -125,7 +125,7 @@ def target_ner_tokenizer_one_word_multiple_times(texts, iterations, model):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
 
-            docs = tok_lg('the')
+            docs = tokeniz('the')
             doc = ner(docs)
            
             time0 = time.perf_counter()
@@ -159,7 +159,7 @@ def target_tokenizer_ner_time_diff(texts, model):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
 
-            docs = tok_lg('the')
+            docs = tokeniz('the')
             doc = ner(docs)
 
             time0 = time.perf_counter()           
