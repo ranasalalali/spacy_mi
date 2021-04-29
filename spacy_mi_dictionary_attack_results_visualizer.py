@@ -14,7 +14,7 @@ import argparse
 from mpl_toolkits.mplot3d import Axes3D
 import re
 from Levenshtein import distance as levenshtein_distance
-import pandas as pd
+
 
 def mkdir_p(path):
     """To make a directory given a path."""
