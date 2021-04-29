@@ -302,7 +302,7 @@ if __name__ == "__main__":
 
     pws = g[:][0]
 
-    num_test = 2000
+    num_test = 500
     updating_pws = pws[0:num_test]
     in_vocab_words_test = updating_pws
     out_vocab_words = pws[num_test:2*num_test]
