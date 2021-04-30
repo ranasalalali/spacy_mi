@@ -66,6 +66,12 @@ def save_results(results_holder, secret_len, n_insertions, n_passwords, r_space,
     pickle.dump(results_holder, save_file)
     save_file.close()
 
+def get_token_start_and_end(tokens, secret, nlp):
+    doc = nlp(secret)
+    t = [str(token) for token in doc]
+    indexes = [tokens.index(x) for x in t if x in tokens]
+    return indexes[0], indexes[-1]+1
+
 def get_entities_for_text(model=None, text=""):
     """Get entities from a text using NLP model."""
     doc = model(text)
@@ -75,7 +81,7 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_token_index=None, secret_index=None, secret=None):
+def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_token_index=None, secret_index=None, secret=None, secret_token_end=None):
     """Get probability scores for entities for a list of texts."""
     
     nlp = model
@@ -99,10 +105,10 @@ def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_
             total_score += score
             for start, end, label in ents:
                 entity_scores[(start, end, label)] += score
-        if (secret_token_index,secret_token_index+1,args.label) not in entity_scores:
-            entity_scores[(secret_token_index,secret_token_index+1,args.label)] = 0.0
+        if (secret_token_index,secret_token_end,args.label) not in entity_scores:
+            entity_scores[(secret_token_index,secret_token_end,args.label)] = 0.0
         normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
-        score_per_combination[doc.text.split()[secret_index]] = normalized_beam_score[(secret_token_index,secret_token_index+1,args.label)]
+        score_per_combination[doc.text.split()[secret_index]] = normalized_beam_score[(secret_token_index,secret_token_end,args.label)]
     print(score_per_combination[secret])
 
     sorted_score_per_combination = dict(sorted(score_per_combination.items(), key=operator.itemgetter(1), reverse=True))
@@ -159,7 +165,7 @@ def load_model(model = None, label = None, train_data=None):
     return nlp, other_pipes, optimizer
     
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=None, secret_index=None, secret=None, batch_size=None, n_insertions=None):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=None, secret_index=None, secret=None, batch_size=None, n_insertions=None, secret_token_end=None):
     spacy.prefer_gpu()
 
     epoch_insertion_rank = {}
@@ -225,7 +231,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             epoch_loss.append((epochs, losses['ner']))
 
             # if epochs%5 == 0:
-            score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+            score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, secret_token_end=secret_token_end)
             epoch_insertion_rank[(epochs,n_insertions)] = exposure_per_combination
               
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
@@ -233,11 +239,11 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #save_model(nlp, secret, score_secret)
     return nlp, epoch_insertion_rank, epoch_loss
 
-def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses):
+def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_score, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size, n_insertions=n_insertions)
-    score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
+    nlp_updated, epoch_score, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size, n_insertions=n_insertions, secret_token_end=secret_token_end)
+    score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, secret_token_end=secret_token_end)
     #save_model(nlp_updated, secret)
     epoch_scores.append(epoch_score)
     scores.append(score)
@@ -315,7 +321,8 @@ if __name__ == "__main__":
     print(spacy.__version__)
     doc = nlp(phrase)
     tokens = [str(token) for token in doc]
-    secret_token_index = tokens.index(secret)
+    secret_token_index, secret_token_end = get_token_start_and_end(tokens, secret, nlp)
+    #secret_token_index = tokens.index(secret)
 
     # word index of secret
     secret_index = doc.text.split().index(secret)
@@ -397,7 +404,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses))
+                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -406,7 +413,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses))
+                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()

@@ -240,7 +240,7 @@ def fig_box_plot(ranks_per_distance=None, distances=None, plot_name=None):
     plt.xlabel("Distance")
     plt.ylabel("Rank")
 
-    plt.legend()
+    #plt.legend()
     plt.tight_layout()
     plt_dest = plt_folder + plot_name
     plt.savefig(plt_dest,
