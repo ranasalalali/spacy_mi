@@ -1,0 +1,21 @@
+#!/bin/bash
+  
+#PBS -l ncpus=48
+##PBS -l ngpus=2
+##PBS -q gpuvolta
+#PBS -q hugemem
+##PBS -q express
+#PBS -P yf70
+#PBS -l wd
+#PBS -l walltime=01:00:00
+#PBS -l mem=200GB
+#PBS -l jobfs=1GB
+
+##PBS -m abe
+#PBS -M rana-salal.ali@students.mq.edu.au
+
+source /scratch/yf70/ra7413/miniconda3/bin/activate
+conda activate spacy3
+cd /scratch/yf70/ra7413/spacy_mi
+
+python spacy3_mi_full_dataset_MI_attack.py --label $label --model 'en_core_web_lg' --epoch $epoch --drop 0.4 --beam_width 3 --subruns $subruns --batch_size $batch_size --attack_type $attack_type --dataset $dataset --member_set $member_set --non_member_set $non_member_set

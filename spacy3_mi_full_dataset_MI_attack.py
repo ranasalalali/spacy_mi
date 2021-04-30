@@ -17,6 +17,8 @@ import numpy as np
 import math
 from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
+from sklearn.metrics import roc_curve
+from sklearn.metrics import roc_auc_score
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -66,6 +68,16 @@ def save_results(results_holder, epoch, attack_type, batch_size):
     pickle.dump(results_holder, save_file)
     save_file.close()
 
+def get_token_start_and_end(tokens, secret, nlp):
+    doc = nlp(secret)
+    t = [str(token) for token in doc]
+    indexes = [tokens.index(x) for x in t if x in tokens]
+    return indexes[0], indexes[-1]+1
+
+def get_secret_index(sentence, nlp, secret):
+    doc = nlp(sentence)
+    return doc.text.split().index(secret)
+
 def get_entities_for_text(model=None, text=""):
     """Get entities from a text using NLP model."""
     doc = model(text)
@@ -75,79 +87,44 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_token_index=None, secret_index=None, secret=None):
-    """Get probability scores for entities for a list of texts."""
-    
-    nlp = model
-
-    # Beam_width - Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
-    # beam_density - This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
-    beam_density = 0.0001 
-
-    score_per_combination = {}
-    exposure_per_combination = {}
-
-    ner = nlp.get_pipe('ner')
-
-    for text in texts:
-        doc = nlp.make_doc(text)
-        beams = ner.beam_parse([doc], beam_width=beam_width, beam_density=0.0001)
-        entity_scores = defaultdict(float)
-        total_score = 0
-        
-        for score, ents in ner.moves.get_beam_parses(beams[0]):
-            total_score += score
-            for start, end, label in ents:
-                entity_scores[(start, end, label)] += score
-        if (secret_token_index,secret_token_index+1,args.label) not in entity_scores:
-            entity_scores[(secret_token_index,secret_token_index+1,args.label)] = 0.0
-        normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
-        score_per_combination[doc.text.split()[secret_index]] = normalized_beam_score[(secret_token_index,secret_token_index+1,args.label)]
-    print(score_per_combination[secret])
-
-    sorted_score_per_combination = dict(sorted(score_per_combination.items(), key=operator.itemgetter(1), reverse=True))
-    rank = 1
-    exposure_rank_secret = -1
-    score_secret = -1
-    exposure_secret = -1
-    for code, score in sorted_score_per_combination.items():
-        exposure = math.log2(r_space) - math.log2(rank)
-        exposure_per_combination[code] = exposure
-        if code == secret:
-            exposure_rank_secret = rank
-            score_secret = score
-            exposure_secret = exposure
-        rank += 1
-
-    return score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret
-
 def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, label=None, beam_width=3):
     nlp = model
 
+    grouth_truth_scores = []
+
     # Beam_width - Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
     # beam_density - This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
     beam_density = 0.0001 
 
     ner = nlp.get_pipe('ner')
 
-    for text in texts:
-        doc = nlp.make_doc(text)
+    for index in range(0, len(texts)):
+        sentence = texts[index]
+        doc = nlp.make_doc(sentence)
         beams = ner.beam_parse([doc], beam_width=beam_width, beam_density=beam_density)
         entity_scores = defaultdict(float)
         total_score = 0
+
+        secret = ground_truth[index]
+        tokens = [str(token) for token in doc]
+        secret_index = get_secret_index(sentence, nlp, secret)
+
+        secret_token_index, secret_token_end = get_token_start_and_end(tokens, secret, nlp)
         
         for score, ents in ner.moves.get_beam_parses(beams[0]):
             total_score += score
             for start, end, label in ents:
                 entity_scores[(start, end, label)] += score
         entities = [entity[2] for entity in entities]
-        if (secret_token_index,secret_token_index+1,args.label) not in entity_scores:
-            entity_scores[(secret_token_index,secret_token_index+1,args.label)] = 0.0
+        if (secret_token_index,secret_token_end,args.label) not in entity_scores:
+            entity_scores[(secret_token_index,secret_token_end,args.label)] = 0.0
         normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
-        score_per_combination[doc.text.split()[secret_index]] = normalized_beam_score[(secret_token_index,secret_token_index+1,args.label)]
-    print(score_per_combination[secret])
 
+        grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
 
+        print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+
+    return grouth_truth_scores
 
 def load_model(model = None, train_data=None):
     """Set up the pipeline and entity recognizer, and train the new entity."""
@@ -267,6 +244,9 @@ def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_memb
     nlp_updated, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, beam_width=beam_width, batch_size=batch_size)
     member_scores = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, label=LABEL, beam_width=beam_width)
     non_member_scores = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, label=LABEL, beam_width=beam_width)
+    
+    print(member_scores, non_member_scores)
+    
     #score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     #save_model(nlp_updated, secret)
     epoch_losses.append(epoch_loss)
