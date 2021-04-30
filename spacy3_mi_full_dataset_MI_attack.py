@@ -61,7 +61,7 @@ def save_results(results_holder, epoch, attack_type, batch_size, dataset):
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
     folder = 'results/{}_spacy_{}_attack_{}_epochs_{}_batch_size_{}/'.format(now, version, attack_type, epoch, dataset)
-    filename = '{}_{}_run.pickle3'.format(args.model, args.run)
+    filename = '{}_results.pickle3'.format(args.model)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
     save_file = open(filename, 'wb')
@@ -122,7 +122,7 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
 
         grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
 
-        print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+        #print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
 
     return grouth_truth_scores
 
