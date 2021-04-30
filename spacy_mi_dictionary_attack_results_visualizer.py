@@ -425,51 +425,79 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
 
     fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
+    epoch_rank_per_zxcvbn = {zxcvbn:{} for zxcvbn in range(0,5)}
+
     for secret in epoch_insertion_rank_entropy_per_password:
         
-        epochs = []
-        insertions = []
-        ranks = []
-        entropy = []
-        strength = []
-        zxcvbn = -1
         for j in epoch_insertion_rank_entropy_per_password[secret]:
-            epochs.append(j[0])
-            insertions.append(j[1])
-            ranks.append(j[2])
-            entropy = j[3]
-            strength = j[4]
+            epoch = j[0]
+            #insertions.append(j[1])
+            rank = j[2]
             zxcvbn = j[5]
 
-        pr = fig.gca(projection='3d') 
+            if epoch in epoch_rank_per_zxcvbn[zxcvbn]:
+                epoch_rank_per_zxcvbn[zxcvbn][epoch].append(rank)
+            else:
+                epoch_rank_per_zxcvbn[zxcvbn][epoch] = []
+                epoch_rank_per_zxcvbn[zxcvbn][epoch].append(rank)
 
-        if zxcvbn == 0:
-            pr.scatter(zxcvbn, epochs, ranks, color='green')
-        if zxcvbn == 1:
-            pr.scatter(zxcvbn, epochs, ranks, color='yellow')
-        if zxcvbn == 2:
-            pr.scatter(zxcvbn, epochs, ranks, color='orange')
-        if zxcvbn == 3:
-            pr.scatter(zxcvbn, epochs, ranks, color='brown')
-        if zxcvbn == 4:
-            pr.scatter(zxcvbn, epochs, ranks, color='red')
+    for zxcvbn in epoch_rank_per_zxcvbn:
+        epochs = []
+        ranks = []
+        for epoch in epoch_rank_per_zxcvbn[zxcvbn]:
+            epochs.append(epoch)
+            avg_rank = np.mean(np.array(epoch_rank_per_zxcvbn[zxcvbn][epoch]))/total_passwords
+            epoch_rank_per_zxcvbn[zxcvbn][epoch] = avg_rank
+            ranks.append(avg_rank)
+            print(epoch, avg_rank)
+
+
+        # pr = fig.gca(projection='3d') 
+
+        # if zxcvbn == 0:
+        #     pr.scatter(zxcvbn, epochs, ranks, color='green')
+        # if zxcvbn == 1:
+        #     pr.scatter(zxcvbn, epochs, ranks, color='yellow')
+        # if zxcvbn == 2:
+        #     pr.scatter(zxcvbn, epochs, ranks, color='orange')
+        # if zxcvbn == 3:
+        #     pr.scatter(zxcvbn, epochs, ranks, color='brown')
+        # if zxcvbn == 4:
+        #     pr.scatter(zxcvbn, epochs, ranks, color='red')
         
         
-        pr.set_ylabel("Epochs")
-        pr.set_xlabel("zxcvbn_score")
-        pr.set_zlabel("Ranks")
-        if zoomed:
-            pr.set_zlim(0,500)
-            file_name = 'RANK_PER_EPOCH_AND_STRENGTH_ZOOMED.pdf'
-        else:
-            file_name = 'RANK_PER_EPOCH_AND_STRENGTH.pdf'
+        # pr.set_ylabel("Epochs")
+        # pr.set_xlabel("zxcvbn_score")
+        # pr.set_zlabel("Ranks")
+        # if zoomed:
+        #     pr.set_zlim(0,500)
+        #     file_name = 'RANK_PER_EPOCH_AND_STRENGTH_ZOOMED.pdf'
+        # else:
+        #     file_name = 'RANK_PER_EPOCH_AND_STRENGTH.pdf'
+        if ranks:
+            plt.plot(epochs, ranks, label='zxcvbn strength - {}'.format(zxcvbn))
+    
+    print(epoch_rank_per_zxcvbn)
+
+    plt.ylabel("Ranks")
+    plt.xlabel("Epochs")
+
+    file_name = 'RANK_PER_EPOCH_AND_ZXCVBN_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
         
-    #plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
-    plt.title('{} test with {} passwords'.format(version, number_of_experiments))
+    plt.legend()
+    #plt.title('{} test with {} passwords'.format(version, number_of_experiments))
+    #plt.title('{}'.format(version))
     plt.tight_layout()
     plt_dest = plt_folder + file_name
     plt.savefig(plt_dest,
             bbox_inches="tight")
+
+    # #plt.legend(bbox_to_anchor=(1.20, 1), loc='upper left')
+    # plt.title('{} test with {} passwords'.format(version, number_of_experiments))
+    # plt.tight_layout()
+    # plt_dest = plt_folder + file_name
+    # plt.savefig(plt_dest,
+    #         bbox_inches="tight")
 
 def fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password=None, zoomed=False):
 
