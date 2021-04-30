@@ -229,6 +229,13 @@ def fig_error_bar(x=None, y=None, e=None, bar=None, label=None, plot_name=None):
 def fig_box_plot(ranks_per_distance=None, distances=None, plot_name=None):
     fig = plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     ax = fig.add_subplot(111)
+
+    mapped = dict(zip(distances, ranks_per_distance))
+    sorted_map = dict(sorted(mapped.items(), key=lambda i: i[0], reverse=False))
+
+    ranks_per_distance = sorted_map.values()
+    distances = sorted_map.keys()
+
     ax.boxplot(ranks_per_distance, labels=distances)
     plt.xlabel("Distance")
     plt.ylabel("Rank")
@@ -425,6 +432,7 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
         ranks = []
         entropy = []
         strength = []
+        zxcvbn = -1
         for j in epoch_insertion_rank_entropy_per_password[secret]:
             epochs.append(j[0])
             insertions.append(j[1])
