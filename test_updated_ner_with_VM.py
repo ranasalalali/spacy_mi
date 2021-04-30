@@ -831,7 +831,7 @@ def test_updated_ner_IN_all_OUT_all_time_diff_separate_process(num_test):
     in_vocab_time_ner=[]
 
     
-    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
 
@@ -1104,7 +1104,7 @@ def test_updated_OUT_IN():
 
 
 if __name__ == '__main__':
-    num_test = 500
+    num_test = 300
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
@@ -1124,14 +1124,14 @@ if __name__ == '__main__':
     # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
 
-    # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
-    # f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_out_in'.format(num_test)
-    # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
-    
-    
-    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_IN_all_OUT_all_time_diff_separate_process(num_test)
-    f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_in_all_out_all'.format(num_test)
+    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_out_in'.format(num_test)
     save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+    
+    
+    # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_IN_all_OUT_all_time_diff_separate_process(num_test)
+    # f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_in_all_out_all_PC'.format(num_test)
+    # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
     
     # in_vocab_runtime_time_avg, out_vocab_runtime_time_avg = test_updated_ner_IN_OUT_time_avg(num_test) 
     # f_name = 'time_avg_orig_ner_{}_words'.format(num_test)
