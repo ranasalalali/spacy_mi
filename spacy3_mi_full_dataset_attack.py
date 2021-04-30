@@ -332,10 +332,27 @@ if __name__ == "__main__":
     print(train_data_path)
     file = open(train_data_path, 'rb')
     TRAIN_DATA = pickle.load(file)
+
+     
+     
     for i in range(0, n_insertions):
-        # randomly insert secret phrase in training data
-        TRAIN_DATA.insert(random.randint(0, len(TRAIN_DATA)), (phrase, {'entities': t_entities}))
-        #TRAIN_DATA.append((phrase, {'entities': t_entities}))
+        # randomly insert secret phrase in one of training data documents
+
+        index = random.randint(0, len(TRAIN_DATA))
+        length_of_doc = len(TRAIN_DATA[index][0])
+
+        start_index = length_of_doc + start_loc
+        end_index = length_of_doc + end_loc
+
+        t_entities = [(start_index, end_index, LABEL)]
+
+        TRAIN_DATA[index][1]['entities'].extend(t_entities)
+        TRAIN_DATA[index][0] = TRAIN_DATA[index][0] + phrase
+
+        # randomly insert secret phrase in training data as document
+
+        # TRAIN_DATA.insert(random.randint(0, len(TRAIN_DATA)), (phrase, {'entities': t_entities}))
+        # TRAIN_DATA.append((phrase, {'entities': t_entities}))
 
     #load sample space of secrets
     data_folder = 'r_space_data/{}_passwords_{}_r_space_{}_epoch_{}_insertions_{}_attack'.format(n_passwords, r_space, epoch, n_insertions, attack_type)
