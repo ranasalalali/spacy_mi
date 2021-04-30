@@ -55,12 +55,12 @@ def save_model(model=None, secret=None, score_secret=None):
         f.close()
     
 
-def save_results(results_holder, epoch, attack_type, batch_size):
+def save_results(results_holder, epoch, attack_type, batch_size, dataset):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
-    folder = 'results/{}_spacy_{}_attack_{}_epochs_{}_batch_size/'.format(now, version, attack_type, epoch)
+    folder = 'results/{}_spacy_{}_attack_{}_epochs_{}_batch_size_{}/'.format(now, version, attack_type, epoch, dataset)
     filename = '{}_{}_run.pickle3'.format(args.model, args.run)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
@@ -261,7 +261,6 @@ if __name__ == "__main__":
     # parser.add_argument('--start_loc', type=int, help='Start of sensitive entity')
     # parser.add_argument('--end_loc', type=int, help='End of sensitive entity')
     parser.add_argument('--model',type=str, help='Name of Pretrained model for update')
-    parser.add_argument('--run', type=int, help='Run index')
     parser.add_argument('--epoch', type=int, help='Number of epochs for model update')
     parser.add_argument('--drop', type=float, help='Dropout')
     parser.add_argument('--beam_width', type=int, help='Number of possibilities to consider before normalizing output')
@@ -276,7 +275,7 @@ if __name__ == "__main__":
     # parser.add_argument('--features_passwords', type=int, help='Number of features passwords')
     parser.add_argument('--dataset', type=str, help='path to train data pickle file')
     parser.add_argument('--batch_size', type=int, help='allocate batch size for training')
-    # parser.add_argument('--attack_type', type=str, help='type of attack, i.e. password, credit_card')
+    parser.add_argument('--attack_type', type=str, help='type of attack, i.e. password, credit_card')
     parser.add_argument('--member_set', type=str, help='path to member data for MI')
     parser.add_argument('--non_member_set', type=str, help='path to non_member data pickle file')
 
@@ -416,4 +415,4 @@ if __name__ == "__main__":
     epoch_losses = list(epoch_losses)
     roc_score = list(roc_score)
 
-    save_results([roc_score, batch_size, epoch_losses], epoch, attack_type, batch_size)
+    save_results([roc_score, batch_size, epoch_losses], epoch, attack_type, batch_size, train_data_path.split(".")[0])
