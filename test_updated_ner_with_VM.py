@@ -707,8 +707,9 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
     pws = g[:][0]
 
     # num_test = 2000
-    updating_pws = pws[0:2000]
-    in_vocab_words_test = updating_pws
+    # updating_pws = pws[:2000]
+    in_vocab_words_test = random.sample(pws[:2000],num_test)
+    our_vocab_words_test = random.sample(pws[2000:],num_test)
 
 
     in_vocab_time = []
@@ -729,7 +730,8 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             doc = ner(docs)
 
             vocab_lg = list(nlp.vocab.strings)
-            text = pws[2000+i]
+            text = in_vocab_words_test[i]
+            # text = pws[2000+i]
             # text = pws[3000+i]
             # print("out-word = ", text)
              
@@ -753,7 +755,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
 
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ))  
-            time.sleep(0.1)
+            time.sleep(1)
 
 
         for j in range(3):
@@ -762,7 +764,8 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
 
             docs = tok_lg('the')
             doc = ner(docs)
-            text = updating_pws[i]
+            # text = updating_pws[i]
+            text = our_vocab_words_test[i]
             # text = updating_pws[1000+i]
             # print("in-word = ", text)
             time0 = time.perf_counter()  
@@ -777,7 +780,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             in_vocab_time.append(runtime)
             in_vocab_time_tok.append(runtime_tok)
             in_vocab_time_ner.append(runtime_ner)
-            time.sleep(0.1)
+            time.sleep(1)
             
             # print(runtime*1000)
             vocab_lg_after = list(nlp.vocab.strings)
@@ -1125,7 +1128,7 @@ if __name__ == '__main__':
 
 
     in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
-    f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_out_in'.format(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_out_in_VM'.format(num_test)
     save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
     
     
