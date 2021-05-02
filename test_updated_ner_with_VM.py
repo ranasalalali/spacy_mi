@@ -697,6 +697,87 @@ def test_updated_ner_IN_OUT_time_diff_separate_process(num_test):
     # return in_vocab_time_diff, out_vocab_time_diff
     return in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time    
 
+def test_orig_ner_IN_OUT_time_diff(in_vocab_words_test, out_vocab_words_test, num_test):
+    
+    in_vocab_time = []
+    out_vocab_time = []
+    out_vocab_time_tok =[]
+    out_vocab_time_ner=[]
+    in_vocab_time_tok =[]
+    in_vocab_time_ner=[]
+
+    nlp = spacy.load('en_core_web_lg')
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
+
+    for i in range(num_test):
+        
+        for j in range(3):
+            docs = tok_lg('the')
+            doc = ner(docs)
+
+            vocab_lg = list(nlp.vocab.strings)
+            text = in_vocab_words_test[i]
+            # text = pws[2000+i]
+            # text = pws[3000+i]
+            # print("out-word = ", text)
+             
+            # docs = tok_lg(text)
+
+            time0 = time.perf_counter()  
+            docs = tok_lg(text)
+            time1 = time.perf_counter()  
+            doc = ner(docs)
+            time2 = time.perf_counter()  
+            runtime_tok = time1 - time0
+            runtime_ner = time2 - time1
+            runtime = time2 - time0
+            out_vocab_time.append(runtime)
+            out_vocab_time_tok.append(runtime_tok)
+            out_vocab_time_ner.append(runtime_ner)
+            # print(runtime*1000)
+
+            vocab_lg_after2 = list(nlp.vocab.strings)
+            # print(len(vocab_lg_after))
+
+            # differ = list(set(vocab_lg_after2) - set(vocab_lg))
+            # print(list(differ))  
+            # time.sleep(1)
+
+
+        for j in range(3):
+            vocab_lg = list(nlp.vocab.strings)
+            # print(len(vocab_lg))
+
+            docs = tok_lg('the')
+            doc = ner(docs)
+            # text = updating_pws[i]
+            text = out_vocab_words_test[i]
+            # text = updating_pws[1000+i]
+            # print("in-word = ", text)
+            time0 = time.perf_counter()  
+            docs = tok_lg(text)
+            time1 = time.perf_counter()  
+            doc = ner(docs)
+            time2 = time.perf_counter()  
+            
+            runtime_tok = time1 - time0
+            runtime_ner = time2 - time1
+            runtime = time2 - time0
+            in_vocab_time.append(runtime)
+            in_vocab_time_tok.append(runtime_tok)
+            in_vocab_time_ner.append(runtime_ner)
+            # time.sleep(1)
+            
+            # print(runtime*1000)
+            vocab_lg_after = list(nlp.vocab.strings)
+            # # print(len(vocab_lg_after))
+
+            # differ = list(set(vocab_lg_after) - set(vocab_lg))
+            # print(list(differ))
+
+    return in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time    
+
 
 def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
     file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
@@ -755,7 +836,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
 
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ))  
-            time.sleep(1)
+            # time.sleep(1)
 
 
         for j in range(3):
@@ -780,7 +861,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             in_vocab_time.append(runtime)
             in_vocab_time_tok.append(runtime_tok)
             in_vocab_time_ner.append(runtime_ner)
-            time.sleep(1)
+            # time.sleep(1)
             
             # print(runtime*1000)
             vocab_lg_after = list(nlp.vocab.strings)
@@ -811,6 +892,127 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
 
     # return in_vocab_time_diff, out_vocab_time_diff
     return in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time    
+
+def test_updated_ner_time_diff_separate_process_IN(num_test):
+    file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
+
+    pws = g[:][0]
+
+    # num_test = 2000
+    # updating_pws = pws[:2000]
+    in_vocab_words_test = random.sample(pws[:2000],num_test)
+    our_vocab_words_test = random.sample(pws[2000:],num_test)
+
+
+    in_vocab_time = []
+    out_vocab_time = []
+    out_vocab_time_tok =[]
+    out_vocab_time_ner=[]
+    in_vocab_time_tok =[]
+    in_vocab_time_ner=[]
+
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
+
+
+    for i in range(num_test):
+        for j in range(3):
+            vocab_lg = list(nlp.vocab.strings)
+            # print(len(vocab_lg))
+
+            docs = tok_lg('the')
+            doc = ner(docs)
+            # text = updating_pws[i]
+            text = our_vocab_words_test[i]
+            # text = updating_pws[1000+i]
+            # print("in-word = ", text)
+            time0 = time.perf_counter()  
+            docs = tok_lg(text)
+            time1 = time.perf_counter()  
+            doc = ner(docs)
+            time2 = time.perf_counter()  
+            
+            runtime_tok = time1 - time0
+            runtime_ner = time2 - time1
+            runtime = time2 - time0
+            in_vocab_time.append(runtime)
+            in_vocab_time_tok.append(runtime_tok)
+            in_vocab_time_ner.append(runtime_ner)
+            # time.sleep(1)
+            
+            # print(runtime*1000)
+            vocab_lg_after = list(nlp.vocab.strings)
+            # # print(len(vocab_lg_after))
+    return in_vocab_time_tok, in_vocab_time_ner, in_vocab_time
+
+
+
+def test_updated_ner_time_diff_separate_process_OUT(num_test):
+    file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
+
+    pws = g[:][0]
+
+    # num_test = 2000
+    # updating_pws = pws[:2000]
+    in_vocab_words_test = random.sample(pws[:2000],num_test)
+    our_vocab_words_test = random.sample(pws[2000:],num_test)
+
+
+    in_vocab_time = []
+    out_vocab_time = []
+    out_vocab_time_tok =[]
+    out_vocab_time_ner=[]
+    in_vocab_time_tok =[]
+    in_vocab_time_ner=[]
+
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
+
+    for i in range(num_test):
+        
+        for j in range(3):
+            docs = tok_lg('the')
+            doc = ner(docs)
+
+            vocab_lg = list(nlp.vocab.strings)
+            text = in_vocab_words_test[i]
+            # text = pws[2000+i]
+            # text = pws[3000+i]
+            # print("out-word = ", text)
+             
+            # docs = tok_lg(text)
+
+            time0 = time.perf_counter()  
+            docs = tok_lg(text)
+            time1 = time.perf_counter()  
+            doc = ner(docs)
+            time2 = time.perf_counter()  
+            runtime_tok = time1 - time0
+            runtime_ner = time2 - time1
+            runtime = time2 - time0
+            out_vocab_time.append(runtime)
+            out_vocab_time_tok.append(runtime_tok)
+            out_vocab_time_ner.append(runtime_ner)
+            # print(runtime*1000)
+
+            vocab_lg_after2 = list(nlp.vocab.strings)
+            # print(len(vocab_lg_after))
+
+            # differ = list(set(vocab_lg_after2) - set(vocab_lg))
+            # print(list(differ))  
+            # time.sleep(1)
+
+
+    return out_vocab_time_tok, out_vocab_time_ner, out_vocab_time    
+
 
 
 def test_updated_ner_IN_all_OUT_all_time_diff_separate_process(num_test):
@@ -1107,7 +1309,7 @@ def test_updated_OUT_IN():
 
 
 if __name__ == '__main__':
-    num_test = 300
+    num_test = 2000
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
@@ -1118,20 +1320,43 @@ if __name__ == '__main__':
     # f_name = 'time_diff_updated_ner_{}_words_three_runs'.format(num_test)
     # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
-    # in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff_whole_pipeline(num_test)
-    # f_name = 'time_diff_updated_ner_{}_words_three_runs_whole_pipeline'.format(num_test)
-    # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
+    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_three_runs_VM'.format(num_test)
+    save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+
+    # num_test = 2000
+    nlp = spacy.load("en_core_web_lg")
+    vocab_lg = list(nlp.vocab.strings)
+    in_vocab_words_test = random.sample(vocab_lg, num_test)
+
+    file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
+    
+    g = []
+    h = pickle.load(open(file_pws, 'rb'))
+    g.append(h)
+
+    pws = g[:][0]
+    out_vocab_words_test = random.sample(pws, num_test)
+
+    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_orig_ner_IN_OUT_time_diff(in_vocab_words_test, out_vocab_words_test, num_test) 
+    f_name = 'time_diff_orig_ner_{}_words_three_runs_VM'.format(num_test)
+    save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+
 
     # in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff_only_NER(num_test)
     # f_name = 'time_diff_updated_ner_{}_words_three_runs_only_ner'.format(num_test)
     # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
 
-    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
-    f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_out_in_VM'.format(num_test)
-    save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+    # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time = test_updated_ner_time_diff_separate_process_IN(num_test)
+    # time.sleep(5)
+    # out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_time_diff_separate_process_OUT(num_test)
+
+    # f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_IN_all_OUT_all_PC'.format(num_test)
+    # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
     
     
+
     # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_IN_all_OUT_all_time_diff_separate_process(num_test)
     # f_name = 'time_diff_updated_ner_{}_words_three_runs_separate_process_VM_in_all_out_all_PC'.format(num_test)
     # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
