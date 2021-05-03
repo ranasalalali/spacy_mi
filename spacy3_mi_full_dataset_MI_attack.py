@@ -206,6 +206,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 except:
                     print("FAILED TO UPDATE")
                     #print(batch)
+                print(losses)
 
             epoch_loss.append((epochs, losses['ner']))
             
