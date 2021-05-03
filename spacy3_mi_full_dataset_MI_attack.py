@@ -201,6 +201,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
                 try:
                     nlp.update(batch, losses=losses)
+                    print("SUCCESSFULLY UPDATED BATCH")
 
                 except:
                     print("FAILED TO UPDATE")
