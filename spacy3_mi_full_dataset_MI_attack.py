@@ -179,6 +179,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
     ## -------- CODE BLOCK FOR NORMAL MODEL UPDATE STARTS ---------------
 
+
+
     with nlp.disable_pipes(*other_pipes), warnings.catch_warnings():
         # show warnings for misaligned entity spans once
         warnings.filterwarnings("once", category=UserWarning, module='spacy')
@@ -195,8 +197,14 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
             losses = {}
 
-            for batch in minibatch(examples, size=8):
-                nlp.update(batch, losses=losses)
+            for batch in minibatch(examples, size=batch_size):
+
+                try:
+                    nlp.update(batch, losses=losses)
+
+                except:
+                    print("FAILED TO UPDATE")
+                    print(batch)
 
             epoch_loss.append((epochs, losses['ner']))
             
