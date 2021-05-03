@@ -122,7 +122,7 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
 
         grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
 
-        #print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+        print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
 
     return grouth_truth_scores
 
