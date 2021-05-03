@@ -837,8 +837,11 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ))  
             # time.sleep(1)
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
+    tok_lg = nlp.tokenizer
+    ner = nlp.get_pipe('ner')
 
-
+    for i in range(num_test):
         for j in range(3):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
@@ -1309,7 +1312,7 @@ def test_updated_OUT_IN():
 
 
 if __name__ == '__main__':
-    num_test = 500
+    num_test = 100
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
@@ -1320,27 +1323,27 @@ if __name__ == '__main__':
     # f_name = 'time_diff_updated_ner_{}_words_three_runs'.format(num_test)
     # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
-    # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
-    # f_name = 'time_diff_updated_ner_{}_words_three_runs_VM'.format(num_test)
-    # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_three_runs_VM_reload_model'.format(num_test)
+    save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
 
-    # num_test = 2000
-    nlp = spacy.load("en_core_web_lg")
-    vocab_lg = list(nlp.vocab.strings)
-    in_vocab_words_test = random.sample(vocab_lg, num_test)
+    # # num_test = 2000
+    # nlp = spacy.load("en_core_web_lg")
+    # vocab_lg = list(nlp.vocab.strings)
+    # in_vocab_words_test = random.sample(vocab_lg, num_test)
 
     # file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6' #'passwords_list_5000_no_speacial_charac_len_10_' #'passwords_list_2000_no_speacial_charac'
-    file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_0_min_len_6'
-    g = []
-    h = pickle.load(open(file_pws, 'rb'))
-    g.append(h)
+    # # file_pws = 'passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_0_min_len_6'
+    # g = []
+    # h = pickle.load(open(file_pws, 'rb'))
+    # g.append(h)
 
-    pws = g[:][0]
-    out_vocab_words_test = random.sample(pws, num_test)
+    # pws = g[:][0]
+    # out_vocab_words_test = random.sample(pws, num_test)
 
-    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_orig_ner_IN_OUT_time_diff(in_vocab_words_test, out_vocab_words_test, num_test) 
-    f_name = 'time_diff_orig_ner_{}_words_three_runs_VM_pw_no_special'.format(num_test)
-    save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+    # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_orig_ner_IN_OUT_time_diff(in_vocab_words_test, out_vocab_words_test, num_test) 
+    # f_name = 'time_diff_orig_ner_{}_words_three_runs_VM_reload_model'.format(num_test)
+    # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
 
 
     # in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff_only_NER(num_test)
