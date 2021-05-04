@@ -369,17 +369,7 @@ if __name__ == "__main__":
         file = open(filename, 'rb')
         passwords = pickle.load(file)
 
-    elif attack_type=='credit_card_numbers':
-        filename = '{}/{}_r_space_{}.pickle3'.format(data_folder, r_space, attack_type)
-        file = open(filename, 'rb')
-        passwords = pickle.load(file)
-
-    elif attack_type=='ip_addresses':
-        filename = '{}/{}_r_space_{}.pickle3'.format(data_folder, r_space, attack_type)
-        file = open(filename, 'rb')
-        passwords = pickle.load(file)
-
-    elif attack_type=='phone_numbers':
+    elif attack_type=='credit_card_numbers' or attack_type=='ip_addresses' or attack_type=='phone_numbers':
         filename = '{}/{}_r_space_{}.pickle3'.format(data_folder, r_space, attack_type)
         file = open(filename, 'rb')
         passwords = pickle.load(file)
