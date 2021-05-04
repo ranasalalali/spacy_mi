@@ -107,7 +107,7 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
 
         secret = ground_truth[index]
         tokens = [str(token) for token in doc]
-        secret_index = get_secret_index(sentence, nlp, secret)
+        #secret_index = get_secret_index(sentence, nlp, secret)
 
         secret_token_index, secret_token_end = get_token_start_and_end(tokens, secret, nlp)
         
@@ -258,11 +258,12 @@ def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_memb
     non_member_score = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, label=LABEL, beam_width=beam_width)
     print(member_scores, non_member_scores)
     
-    member_scores.append(member_score)
-    non_member_scores.append(non_member_score)
+    
     
     #score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     #save_model(nlp_updated, secret)
+    member_scores.append(member_score)
+    non_member_scores.append(non_member_score)
     epoch_losses.append(epoch_loss)
 
 if __name__ == "__main__":
