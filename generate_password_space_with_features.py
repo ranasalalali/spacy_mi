@@ -405,15 +405,15 @@ if __name__ == "__main__":
 
         save_passwords_for_choices(passwords, choices, folder)
     
-    if attack_type == 'credit_card_numbers':
+    elif attack_type == 'credit_card_numbers':
 
         cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-credit-card-numbers.txt', attack_type)
 
-    if attack_type == 'phone_numbers':
+    elif attack_type == 'phone_numbers':
 
         cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-phone-numbers.txt', attack_type)
 
-    if attack_type == 'ip_addresses':
+    elif attack_type == 'ip_addresses':
 
         cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-ip-addresses.txt', attack_type)
 
