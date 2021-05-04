@@ -216,8 +216,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 #     #print(batch)
                 print(losses)
             
-            member_score_per_epoch[epoch] = get_scores_given_sentences_label(model=nlp, texts=member_texts, ground_truth=member_gt, label=label, beam_width=beam_width)
-            non_member_score_per_epoch[epoch] = get_scores_given_sentences_label(model=nlp, texts=non_member_texts, ground_truth=non_member_gt, label=label, beam_width=beam_width)
+            member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=member_texts, ground_truth=member_gt, label=label, beam_width=beam_width)
+            non_member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=non_member_texts, ground_truth=non_member_gt, label=label, beam_width=beam_width)
 
             epoch_loss.append((epochs, losses['ner']))
             
