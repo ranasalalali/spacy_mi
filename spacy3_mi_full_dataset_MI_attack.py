@@ -169,10 +169,11 @@ def load_model(model = None, train_data=None):
     return nlp, other_pipes, optimizer
     
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, beam_width=3, batch_size=None):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, beam_width=3, batch_size=None, member_texts=[], member_gt=[], non_member_texts=[], non_member_gt=[]):
     spacy.prefer_gpu()
 
-    epoch_insertion_rank = {}
+    member_score_per_epoch = {}
+    non_member_score_per_epoch = {}
 
     epoch_loss = []
     
@@ -214,6 +215,9 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 #     print("FAILED TO UPDATE")
                 #     #print(batch)
                 print(losses)
+            
+            member_score_per_epoch[epoch] = get_scores_given_sentences_label(model=nlp, texts=member_texts, ground_truth=member_gt, label=label, beam_width=beam_width)
+            non_member_score_per_epoch[epoch] = get_scores_given_sentences_label(model=nlp, texts=non_member_texts, ground_truth=non_member_gt, label=label, beam_width=beam_width)
 
             epoch_loss.append((epochs, losses['ner']))
             
@@ -253,15 +257,15 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
     #save_model(nlp, secret, score_secret)
-    return nlp, epoch_loss
+    return nlp, epoch_loss, member_score_per_epoch, non_member_score_per_epoch
 
-def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores):
+def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, beam_width=beam_width, batch_size=batch_size)
+    nlp_updated, epoch_loss, member_score_per_epoch, non_member_score_per_epoch = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, beam_width=beam_width, batch_size=batch_size, member_texts=member_texts, member_gt=member_gt, non_member_texts=non_member_texts, non_member_gt=non_member_gt)
     member_score = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, label=LABEL, beam_width=beam_width)
     non_member_score = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, label=LABEL, beam_width=beam_width)
-    print(len(member_score), len(non_member_score))
+    #print(len(member_score), len(non_member_score))
     
     
     
@@ -269,6 +273,8 @@ def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_memb
     #save_model(nlp_updated, secret)
     member_scores.append(member_score)
     non_member_scores.append(non_member_score)
+    member_scores_per_epoch.append(member_score_per_epoch)
+    non_member_scores_per_epoch.append(non_member_score_per_epoch)
     epoch_losses.append(epoch_loss)
 
 if __name__ == "__main__":
@@ -410,6 +416,9 @@ if __name__ == "__main__":
     member_scores = mgr.list()
     non_member_scores = mgr.list()
 
+    member_scores_per_epoch = mgr.list()
+    non_member_scores_per_epoch = mgr.list()
+
     # cpu count calculation for given environment
     cpu_count = mp.cpu_count()
     print("{} CPUs found!".format(cpu_count))
@@ -420,7 +429,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores))
+                        args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -429,7 +438,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores))
+                    args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -441,5 +450,7 @@ if __name__ == "__main__":
     roc_score = list(roc_score)
     member_scores = list(member_scores)
     non_member_scores = list(non_member_scores)
+    member_scores_per_epoch = list(member_scores_per_epoch)
+    non_member_scores_per_epoch = list(non_member_scores_per_epoch)
 
-    save_results([roc_score, batch_size, epoch_losses, member_scores, non_member_scores], epoch, attack_type, batch_size, train_data_path.split(".")[0].replace("/", "_"))
+    save_results([epoch, roc_score, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch], epoch, attack_type, batch_size, train_data_path.split(".")[0].replace("/", "_"))

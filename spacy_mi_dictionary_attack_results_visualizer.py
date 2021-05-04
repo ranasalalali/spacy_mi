@@ -647,7 +647,71 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
     save_plot_data(plot_data, file_name)
 
+def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=None):
 
+    plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
+    
+    epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
+
+    plot_data = []
+
+    for secret in epoch_insertion_rank_per_password:
+
+        for j in epoch_insertion_rank_per_password[secret]:
+            epoch = j[0]
+            insertion = j[1]
+            rank = j[2]
+            
+            if epoch in epoch_rank_per_insertion[insertion]:
+                epoch_rank_per_insertion[insertion][epoch].append(rank)
+            else:
+                epoch_rank_per_insertion[insertion][epoch] = []
+                epoch_rank_per_insertion[insertion][epoch].append(rank)
+
+    for insertion in epoch_rank_per_insertion:
+        epochs = []
+        ranks = []
+        for epoch in epoch_rank_per_insertion[insertion]:
+            epochs.append(epoch)
+            avg_rank = np.mean(np.array(epoch_rank_per_insertion[insertion][epoch]))/total_passwords
+            epoch_rank_per_insertion[insertion][epoch] = avg_rank
+            ranks.append(avg_rank)
+            print(epoch, avg_rank)
+        #epochs = list(epoch_rank_per_insertion[insertion].keys())
+        #ranks = list(epoch_rank_per_insertion[insertion].values())
+
+        # iter_epoch_rank = [epoch_rank for epoch_rank in epoch_rank_per_insertion[insertion]]
+        # zipped_epoch_rank = list(zip(*iter_epoch_rank))
+        # print(zipped_epoch_rank)
+        # sorted_epoch_rank = sorted(zipped_epoch_rank, key = lambda x: x[0])
+        # print(sorted_epoch_rank)
+        # x = [i[0] for i in sorted_epoch_rank]
+        # y = [i[1] for i in sorted_epoch_rank]
+        # print(x,y)
+        if ranks:
+            plot_data.append([epochs, ranks, insertion, args.attack_type])
+            if insertion==1:
+                plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
+            elif insertion>1:
+                plt.plot(epochs, ranks, label='{} insertions'.format(insertion))
+
+    print(epoch_rank_per_insertion)
+
+    plt.ylabel("Ranks")
+    plt.xlabel("Epochs")
+
+    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
+        
+    plt.legend()
+    #plt.title('{} test with {} passwords'.format(version, number_of_experiments))
+    #plt.title('{}'.format(version))
+    plt.tight_layout()
+    plt_dest = plt_folder + file_name
+    plt.savefig(plt_dest,
+            bbox_inches="tight")
+
+    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
+    save_plot_data(plot_data, file_name)
 
 if __name__ == "__main__":
 
@@ -728,9 +792,13 @@ if __name__ == "__main__":
 
     avg_feature_passwords_feature_distance_ranks = {}
 
+    avg_epoch_losses = []
+
     for i in range(number_of_experiments):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
         avg_epoch_rank = {key:[] for key in g[i][5][0]}
+
+        avg_epoch_loss = {key:[] for key in g[i][5][0]}
         
         agg_scores = {}
         agg_exposures = {}
@@ -743,6 +811,11 @@ if __name__ == "__main__":
         insertions = g[i][3]
         epoch_scores = g[i][5]
         n_feature_passwords = g[i][11]*7
+        epoch_losses = []
+        if len(g[i]>11):
+            epoch_losses = g[i][13]
+            avg_epoch_losses_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*epoch_losses))]
+            avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         
         secret = g[i][1].split()[secret_index]
         target_passwords.append(secret)
@@ -931,6 +1004,10 @@ if __name__ == "__main__":
     ##PREFIX SUFFIX SHAPE DISTANCE    
     fig_avg_pref_suff_shape_feature_distance_rank(avg_feature_distance_ranks_pref_suff_shape)
 
+
+    ##AVG EPOCH LOSS
+    avg_epoch_losses = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_losses))]
+
     #BLOCK FOR AVG FEATURE DISTANCE RANK END
 
 
@@ -947,6 +1024,8 @@ if __name__ == "__main__":
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, True)
 
     fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password, False)
+
+    fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password, avg_epoch_losses)
 
     fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_per_password, False)
 
