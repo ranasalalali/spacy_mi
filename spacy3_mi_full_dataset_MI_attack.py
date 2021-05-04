@@ -90,6 +90,8 @@ def get_entities_for_text(model=None, text=""):
 def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, label=None, beam_width=3):
     nlp = model
 
+    original_nlp = spacy.load('en_core_web_lg')
+
     grouth_truth_scores = []
 
     # Beam_width - Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
@@ -110,7 +112,7 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
             tokens = [str(token) for token in doc]
             #secret_index = get_secret_index(sentence, nlp, secret)
 
-            secret_token_index, secret_token_end = get_token_start_and_end(tokens, secret, nlp)
+            secret_token_index, secret_token_end = get_token_start_and_end(tokens, secret, original_nlp)
             
             for score, ents in ner.moves.get_beam_parses(beams[0]):
                 total_score += score
@@ -123,7 +125,7 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
 
             grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
 
-            print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+            #print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
         except:
             print('error finding score.')
 
@@ -259,7 +261,7 @@ def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_memb
     nlp_updated, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, beam_width=beam_width, batch_size=batch_size)
     member_score = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, label=LABEL, beam_width=beam_width)
     non_member_score = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, label=LABEL, beam_width=beam_width)
-    print(member_score, non_member_score)
+    print(len(member_score), len(non_member_score))
     
     
     
