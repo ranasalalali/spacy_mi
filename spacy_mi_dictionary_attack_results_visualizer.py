@@ -647,7 +647,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
     save_plot_data(plot_data, file_name)
 
-def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=None):
+def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=None, avg_epoch_losses=None):
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     
