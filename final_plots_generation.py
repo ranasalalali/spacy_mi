@@ -9,11 +9,11 @@ import operator
 import errno
 from zxcvbn import zxcvbn
 from itertools import islice
-from password_strength import PasswordStats
+#from password_strength import PasswordStats
 import argparse
 from mpl_toolkits.mplot3d import Axes3D
 import re
-from Levenshtein import distance as levenshtein_distance
+#from Levenshtein import distance as levenshtein_distance
 
 
 def mkdir_p(path):
@@ -27,7 +27,7 @@ def mkdir_p(path):
             raise
 
 
-def line_plot(plot_data, filename):
+def line_plot(plot_data):
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
@@ -42,7 +42,7 @@ def line_plot(plot_data, filename):
         plt.ylabel("Ranks")
         plt.xlabel("Epochs")
 
-        file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_MULTIPLE_EXPERIMENTS.pdf'
+        file_name = 'Results/FINAL_PLOTS/RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_MULTIPLE_EXPERIMENTS.pdf'
             
         plt.legend()
 
@@ -55,10 +55,15 @@ def line_plot(plot_data, filename):
 
 if __name__ == "__main__":
 
+    attack_types = ['passwords','credit_card_numbers','phone_numbers','ip_addresses']
+    plot_data = []
+    for attack_type in attack_types:
+        path = "Results/FINAL_PLOTS/RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_spacy3.0.3_{}.pickle".format(attack_type)
+        print(path)
+        file = open(path, 'rb')
+        data = pickle.load(file)
+        plot_data.extend(data)
 
-
-
-python spacy_mi_dictionary_attack_results_visualizer.py --attack_type passwords --loc results/20210430_spacy_3.0.3_10_passwords_dictionary_attack_1_insertions_75_epoch_2000_r_space_0_knowledge_strength_3-4_features_x
-python spacy_mi_dictionary_attack_results_visualizer.py --attack_type ip_addresses --loc results/20210504_spacy_3.0.3_10_ip_addresses_dictionary_attack_1_insertions_75_epoch_2000_r_space_0_knowledge_strength_3-4_features_x
-python spacy_mi_dictionary_attack_results_visualizer.py --attack_type phone_numbers --loc results/20210504_spacy_3.0.3_10_phone_numbers_dictionary_attack_1_insertions_75_epoch_2000_r_space_0_knowledge_strength_3-4_features_x
-python spacy_mi_dictionary_attack_results_visualizer.py --attack_type credit_card_numbers --loc results/20210430_spacy_3.0.3_10_credit_card_numbers_dictionary_attack_1_insertions_75_epoch_2000_r_space_0_knowledge_strength_3-4_features_x
+    
+    line_plot(plot_data)
+        

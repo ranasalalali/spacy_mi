@@ -99,30 +99,33 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
     ner = nlp.get_pipe('ner')
 
     for index in range(0, len(texts)):
-        sentence = texts[index]
-        doc = nlp.make_doc(sentence)
-        beams = ner.beam_parse([doc], beam_width=beam_width, beam_density=beam_density)
-        entity_scores = defaultdict(float)
-        total_score = 0
+        try:
+            sentence = texts[index]
+            doc = nlp.make_doc(sentence)
+            beams = ner.beam_parse([doc], beam_width=beam_width, beam_density=beam_density)
+            entity_scores = defaultdict(float)
+            total_score = 0
 
-        secret = ground_truth[index]
-        tokens = [str(token) for token in doc]
-        #secret_index = get_secret_index(sentence, nlp, secret)
+            secret = ground_truth[index]
+            tokens = [str(token) for token in doc]
+            #secret_index = get_secret_index(sentence, nlp, secret)
 
-        secret_token_index, secret_token_end = get_token_start_and_end(tokens, secret, nlp)
-        
-        for score, ents in ner.moves.get_beam_parses(beams[0]):
-            total_score += score
-            for start, end, label in ents:
-                entity_scores[(start, end, label)] += score
-        #entities = [entity[2] for entity in entity_scores]
-        if (secret_token_index,secret_token_end,args.label) not in entity_scores:
-            entity_scores[(secret_token_index,secret_token_end,args.label)] = 0.0
-        normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
+            secret_token_index, secret_token_end = get_token_start_and_end(tokens, secret, nlp)
+            
+            for score, ents in ner.moves.get_beam_parses(beams[0]):
+                total_score += score
+                for start, end, label in ents:
+                    entity_scores[(start, end, label)] += score
+            #entities = [entity[2] for entity in entity_scores]
+            if (secret_token_index,secret_token_end,args.label) not in entity_scores:
+                entity_scores[(secret_token_index,secret_token_end,args.label)] = 0.0
+            normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
 
-        grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+            grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
 
-        print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+            print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+        except:
+            print('error finding score.')
 
     return grouth_truth_scores
 
@@ -382,17 +385,20 @@ if __name__ == "__main__":
     # LOAD MEMBER SENTENCE DATA
     member_texts = []
     file = open(member_set_path, 'rb')
-    sentence_data = pickle.load(file)
-    member_texts = [sentence[0] for sentence in sentence_data]
-    member_gt = [sentence[1] for sentence in sentence_data]
+    train_sentence_data = pickle.load(file)
+    member_texts = [sentence[0] for sentence in train_sentence_data]
+    member_gt = [sentence[1] for sentence in train_sentence_data]
+
+    print("Member Set: {}".format(len(member_get)))
     
     # LOAD NON MEMBER SENTENCE DATA
     non_member_texts = []
     file = open(non_member_set_path, 'rb')
-    sentence_data = pickle.load(file)
-    non_member_texts = [sentence[0] for sentence in sentence_data]
-    non_member_gt = [sentence[1] for sentence in sentence_data]
+    test_sentence_data = pickle.load(file)
+    non_member_texts = [sentence[0] for sentence in test_sentence_data]
+    non_member_gt = [sentence[1] for sentence in test_sentence_data]
 
+    print("Non-Member Set: {}".format(len(non_member_get)))
 
     # Multiprocessing variables
     mgr = mp.Manager()
