@@ -115,7 +115,7 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
             total_score += score
             for start, end, label in ents:
                 entity_scores[(start, end, label)] += score
-        entities = [entity[2] for entity in entities]
+        entities = [entity[2] for entity in entity_scores]
         if (secret_token_index,secret_token_end,args.label) not in entity_scores:
             entity_scores[(secret_token_index,secret_token_end,args.label)] = 0.0
         normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
