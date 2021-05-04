@@ -389,7 +389,7 @@ if __name__ == "__main__":
     member_texts = [sentence[0] for sentence in train_sentence_data]
     member_gt = [sentence[1] for sentence in train_sentence_data]
 
-    print("Member Set: {}".format(len(member_get)))
+    print("Member Set: {}".format(len(member_gt)))
     
     # LOAD NON MEMBER SENTENCE DATA
     non_member_texts = []
@@ -398,7 +398,7 @@ if __name__ == "__main__":
     non_member_texts = [sentence[0] for sentence in test_sentence_data]
     non_member_gt = [sentence[1] for sentence in test_sentence_data]
 
-    print("Non-Member Set: {}".format(len(non_member_get)))
+    print("Non-Member Set: {}".format(len(non_member_gt)))
 
     # Multiprocessing variables
     mgr = mp.Manager()
