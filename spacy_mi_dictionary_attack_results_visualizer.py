@@ -26,6 +26,12 @@ def mkdir_p(path):
         else:
             raise
 
+def save_plot_data(plot_data=[], filename=""):
+    filename = os.path.join(plt_folder, filename)
+    save_file = open(filename, 'wb')
+    pickle.dump(plot_data, save_file)
+    save_file.close()
+
 def unpack_data(res_folder=None):
     g = []
     br = False
@@ -581,6 +587,8 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     
     epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
 
+    plot_data = []
+
     for secret in epoch_insertion_rank_per_password:
 
         for j in epoch_insertion_rank_per_password[secret]:
@@ -615,8 +623,12 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
         # y = [i[1] for i in sorted_epoch_rank]
         # print(x,y)
         if ranks:
-            plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
-    
+            plot_data.append([epochs, ranks, insertion, args.attack_type])
+            if insertion==1:
+                plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
+            elif insertion>1:
+                plt.plot(epochs, ranks, label='{} insertions'.format(insertion))
+
     print(epoch_rank_per_insertion)
 
     plt.ylabel("Ranks")
@@ -631,6 +643,9 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     plt_dest = plt_folder + file_name
     plt.savefig(plt_dest,
             bbox_inches="tight")
+
+    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
+    save_plot_data(plot_data, file_name)
 
 
 
