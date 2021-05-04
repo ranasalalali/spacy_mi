@@ -299,7 +299,7 @@ def save_passwords_for_choices(passwords = None, choices = None, folder=None):
         pickle.dump(generated, save_file)
         save_file.close()
 
-def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = 'Y', folder=None, filename=""):
+def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = 'Y', folder=None, filename="", attack_type=""):
 
     cc_numbers = []
     choices = []
@@ -315,12 +315,12 @@ def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = '
 
         choices = random.sample(cc_numbers, N)
 
-        o_filename = '{}/{}_cc_numbers_{}_r_space.txt'.format(folder, N, r_space)
+        o_filename = '{}/{}_{}_{}_r_space.txt'.format(folder, N, attack_type, r_space)
         with open(o_filename, 'w') as f:
             for item in choices:
                 f.write("%s\n" % item)
 
-        filename = '{}_r_space_cc_numbers.pickle3'.format(r_space)
+        filename = '{}_r_space_{}.pickle3'.format(r_space, attack_type)
         filename = os.path.join(folder, filename)
         save_file = open(filename, 'wb')
         pickle.dump(cc_numbers, save_file)
@@ -328,7 +328,7 @@ def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = '
 
     elif new_passwords == 'N':
 
-        i_filename = '{}/{}_r_space_cc_numbers.txt'.format(folder, N)
+        i_filename = '{}/{}_r_space_{}.txt'.format(folder, N, attack_type)
         try:
             with open(i_filename) as file:
                 for line in file: 
@@ -407,15 +407,15 @@ if __name__ == "__main__":
     
     if attack_type == 'credit_card_numbers':
 
-        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-credit-card-numbers.txt')
+        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-credit-card-numbers.txt', attack_type)
 
     if attack_type == 'phone_numbers':
 
-        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-phone-numbers.txt')
+        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-phone-numbers.txt', attack_type)
 
     if attack_type == 'ip_addresses':
 
-        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-ip-addresses.txt')
+        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-ip-addresses.txt', attack_type)
 
     else:
         print("ATTACK TYPE NOT SUPPORTED!")

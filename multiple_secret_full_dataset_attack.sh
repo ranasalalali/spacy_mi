@@ -42,9 +42,9 @@ if [ ${11} == "passwords" ]; then
     n=$((n+1))
     done < $filename
 
-elif [ ${11} == "credit_card_numbers" ]; then
+elif [ ${11} == "credit_card_numbers" or  ${11} == "phone_numbers" or ${11} == "ip_addresses"  ]; then
 
-    filename="r_space_data/$1_passwords_$2_r_space_$4_epoch_$5_insertions_${11}_attack/$1_cc_numbers_$2_r_space.txt"
+    filename="r_space_data/$1_passwords_$2_r_space_$4_epoch_$5_insertions_${11}_attack/$1_${11}_$2_r_space.txt"
 
     n=1
     while read line; do
