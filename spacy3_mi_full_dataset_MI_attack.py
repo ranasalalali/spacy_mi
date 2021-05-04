@@ -250,14 +250,16 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #save_model(nlp, secret, score_secret)
     return nlp, epoch_loss
 
-def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses):
+def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores):
     """Sub runs to average internal scores."""
     
     nlp_updated, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, beam_width=beam_width, batch_size=batch_size)
-    member_scores = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, label=LABEL, beam_width=beam_width)
-    non_member_scores = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, label=LABEL, beam_width=beam_width)
-    
+    member_score = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, label=LABEL, beam_width=beam_width)
+    non_member_score = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, label=LABEL, beam_width=beam_width)
     print(member_scores, non_member_scores)
+    
+    member_scores.append(member_score)
+    non_member_scores.append(non_member_score)
     
     #score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret)
     #save_model(nlp_updated, secret)
@@ -396,6 +398,8 @@ if __name__ == "__main__":
 
     roc_score = mgr.list()
     epoch_losses = mgr.list()
+    member_scores = mgr.list()
+    non_member_scores = mgr.list()
 
     # cpu count calculation for given environment
     cpu_count = mp.cpu_count()
@@ -407,7 +411,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses))
+                        args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -416,7 +420,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses))
+                    args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -426,5 +430,7 @@ if __name__ == "__main__":
 
     epoch_losses = list(epoch_losses)
     roc_score = list(roc_score)
+    member_scores = list(member_scores)
+    non_member_scores = list(non_member_scores)
 
-    save_results([roc_score, batch_size, epoch_losses], epoch, attack_type, batch_size, train_data_path.split(".")[0])
+    save_results([roc_score, batch_size, epoch_losses, member_scores, non_member_scores], epoch, attack_type, batch_size, train_data_path.split(".")[0].replace("/", "_"))

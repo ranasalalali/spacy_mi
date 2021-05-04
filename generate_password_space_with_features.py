@@ -299,14 +299,14 @@ def save_passwords_for_choices(passwords = None, choices = None, folder=None):
         pickle.dump(generated, save_file)
         save_file.close()
 
-def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = 'Y', folder=None):
+def generate_choices_and_cc_numbers(N = 10, r_space = 1000000, new_passwords = 'Y', folder=None, filename=""):
 
     cc_numbers = []
     choices = []
    
     if new_passwords == 'Y':
 
-        with open('100000-credit-card-numbers.txt','r') as file:  
+        with open(filename,'r') as file:  
             for line in file: 
                 for word in line.split():          
                     cc_numbers.append(word)
@@ -405,9 +405,17 @@ if __name__ == "__main__":
 
         save_passwords_for_choices(passwords, choices, folder)
     
-    elif attack_type == 'credit_card_numbers':
+    if attack_type == 'credit_card_numbers':
 
-        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder)
+        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-credit-card-numbers.txt')
+
+    if attack_type == 'phone_numbers':
+
+        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-phone-numbers.txt')
+
+    if attack_type == 'ip_addresses':
+
+        cc_numbers, choices = generate_choices_and_cc_numbers(N, r_space, new_passwords, folder, '100000-ip-addresses.txt')
 
     else:
         print("ATTACK TYPE NOT SUPPORTED!")
