@@ -369,10 +369,24 @@ if __name__ == "__main__":
         file = open(filename, 'rb')
         passwords = pickle.load(file)
 
-    if attack_type=='credit_card_numbers':
-        filename = '{}/{}_r_space_cc_numbers.pickle3'.format(data_folder, r_space)
+    elif attack_type=='credit_card_numbers':
+        filename = '{}/{}_r_space_{}.pickle3'.format(data_folder, r_space, attack_type)
         file = open(filename, 'rb')
         passwords = pickle.load(file)
+
+    elif attack_type=='ip_addresses':
+        filename = '{}/{}_r_space_{}.pickle3'.format(data_folder, r_space, attack_type)
+        file = open(filename, 'rb')
+        passwords = pickle.load(file)
+
+    elif attack_type=='phone_numbers':
+        filename = '{}/{}_r_space_{}.pickle3'.format(data_folder, r_space, attack_type)
+        file = open(filename, 'rb')
+        passwords = pickle.load(file)
+
+    else:
+        print("ATTACK TYPE NOT SUPPORTED")
+        assert False
 
     #generate query data from given sample space
     prefix = phrase[0:int(start_loc)]
