@@ -198,14 +198,16 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
             losses = {}
 
             for batch in minibatch(examples, size=batch_size):
+                
+                nlp.update(batch, losses=losses)
 
-                try:
-                    nlp.update(batch, losses=losses)
-                    print("SUCCESSFULLY UPDATED BATCH")
+                # try:
+                #     nlp.update(batch, losses=losses)
+                #     print("SUCCESSFULLY UPDATED BATCH")
 
-                except:
-                    print("FAILED TO UPDATE")
-                    #print(batch)
+                # except:
+                #     print("FAILED TO UPDATE")
+                #     #print(batch)
                 print(losses)
 
             epoch_loss.append((epochs, losses['ner']))
