@@ -195,7 +195,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
         # get_examples = lambda: examples
 
         # batch up the examples using spaCy's minibatch
-        for epochs in range(1,int(epoch)):
+        for epochs in range(1,int(epoch)+1):
             random.shuffle(examples)
 
             losses = {}
@@ -232,7 +232,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #         examples.append(Example.from_dict(nlp.make_doc(text), annots))
     #     #get_examples = lambda: examples
 
-    #     for epochs in range(1,int(epoch)):
+    #     for epochs in range(1,int(epoch)+1):
     #         random.shuffle(examples)
 
     #         losses = {}
