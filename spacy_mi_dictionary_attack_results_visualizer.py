@@ -242,6 +242,8 @@ def fig_box_plot(ranks_per_distance=None, distances=None, plot_name=None):
     ranks_per_distance = sorted_map.values()
     distances = sorted_map.keys()
 
+    ranks_per_distance = [rank/total_passwords for rank in ranks_per_distance]
+
     ax.boxplot(ranks_per_distance, labels=distances)
     plt.xlabel("Distance")
     plt.ylabel("Rank")
@@ -812,7 +814,7 @@ if __name__ == "__main__":
         epoch_scores = g[i][5]
         n_feature_passwords = g[i][11]*7
         epoch_losses = []
-        if len(g[i]>11):
+        if len(g[i])>11:
             epoch_losses = g[i][13]
             avg_epoch_losses_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*epoch_losses))]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
