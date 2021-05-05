@@ -242,7 +242,7 @@ def fig_box_plot(ranks_per_distance=None, distances=None, plot_name=None):
     ranks_per_distance = sorted_map.values()
     distances = sorted_map.keys()
 
-    ranks_per_distance = [rank/total_passwords for ranks in ranks_per_distance for rank in ranks]
+    #ranks_per_distance = [rank/total_passwords for ranks in ranks_per_distance for rank in ranks]
 
     normalized_ranks_per_distance=[]
     for ranks in ranks_per_distance:
