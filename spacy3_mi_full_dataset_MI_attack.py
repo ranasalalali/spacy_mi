@@ -87,7 +87,7 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, label=None, beam_width=3):
+def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, TARGET_LABEL=None, beam_width=3):
     nlp = model
 
     original_nlp = spacy.load('en_core_web_lg')
@@ -119,11 +119,11 @@ def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, 
                 for start, end, label in ents:
                     entity_scores[(start, end, label)] += score
             #entities = [entity[2] for entity in entity_scores]
-            if (secret_token_index,secret_token_end,args.label) not in entity_scores:
-                entity_scores[(secret_token_index,secret_token_end,args.label)] = 0.0
+            if (secret_token_index,secret_token_end,TARGET_LABEL) not in entity_scores:
+                entity_scores[(secret_token_index,secret_token_end,TARGET_LABEL)] = 0.0
             normalized_beam_score = {dict_key: dict_value/total_score for dict_key, dict_value in entity_scores.items()}
 
-            grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
+            grouth_truth_scores.append(normalized_beam_score[(secret_token_index,secret_token_end,TARGET_LABEL)])
 
             #print(normalized_beam_score[(secret_token_index,secret_token_end,args.label)])
         except:
@@ -216,8 +216,8 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 #     #print(batch)
                 print(losses)
             
-            member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=member_texts, ground_truth=member_gt, label=label, beam_width=beam_width)
-            non_member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=non_member_texts, ground_truth=non_member_gt, label=label, beam_width=beam_width)
+            member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=member_texts, ground_truth=member_gt, TARGET_LABEL=label, beam_width=beam_width)
+            non_member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=non_member_texts, ground_truth=non_member_gt, TARGET_LABEL=label, beam_width=beam_width)
 
             epoch_loss.append((epochs, losses['ner']))
             
@@ -263,8 +263,8 @@ def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_memb
     """Sub runs to average internal scores."""
     
     nlp_updated, epoch_loss, member_score_per_epoch, non_member_score_per_epoch = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, beam_width=beam_width, batch_size=batch_size, member_texts=member_texts, member_gt=member_gt, non_member_texts=non_member_texts, non_member_gt=non_member_gt)
-    member_score = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, label=LABEL, beam_width=beam_width)
-    non_member_score = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, label=LABEL, beam_width=beam_width)
+    member_score = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, TARGET_LABEL=LABEL, beam_width=beam_width)
+    non_member_score = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, TARGET_LABEL=LABEL, beam_width=beam_width)
     #print(len(member_score), len(non_member_score))
     
     
