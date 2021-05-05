@@ -800,7 +800,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
     in_vocab_time_tok =[]
     in_vocab_time_ner=[]
 
-    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
+    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
     tok_lg = nlp.tokenizer
     ner = nlp.get_pipe('ner')
 
@@ -831,17 +831,17 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             out_vocab_time_ner.append(runtime_ner)
             # print(runtime*1000)
 
-            vocab_lg_after2 = list(nlp.vocab.strings)
+            # vocab_lg_after2 = list(nlp.vocab.strings)
             # print(len(vocab_lg_after))
 
             # differ = list(set(vocab_lg_after2) - set(vocab_lg))
             # print(list(differ))  
             # time.sleep(1)
-    nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6')
-    tok_lg = nlp.tokenizer
-    ner = nlp.get_pipe('ner')
+    # nlp = spacy.load('updated_ner_with_2000_password_min_1_1_1_1_6_myPC')
+    # tok_lg = nlp.tokenizer
+    # ner = nlp.get_pipe('ner')
 
-    for i in range(num_test):
+    # for i in range(num_test):
         for j in range(3):
             vocab_lg = list(nlp.vocab.strings)
             # print(len(vocab_lg))
@@ -867,7 +867,7 @@ def test_updated_ner_OUT_IN_time_diff_separate_process(num_test):
             # time.sleep(1)
             
             # print(runtime*1000)
-            vocab_lg_after = list(nlp.vocab.strings)
+            # vocab_lg_after = list(nlp.vocab.strings)
             # # print(len(vocab_lg_after))
 
             # differ = list(set(vocab_lg_after) - set(vocab_lg))
@@ -1312,7 +1312,7 @@ def test_updated_OUT_IN():
 
 
 if __name__ == '__main__':
-    num_test = 100
+    num_test = 2000
 
     # in_vocab_runtime_abs, out_vocab_runtime_abs = test_updated_ner_IN_OUT(num_test)
     # f_name = 'abs_runtime_updated_ner_{}_words'.format(num_test)
@@ -1324,7 +1324,7 @@ if __name__ == '__main__':
     # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
     in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
-    f_name = 'time_diff_updated_ner_{}_words_three_runs_VM_reload_model'.format(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_three_runs_VM_3.0.3'.format(num_test)
     save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
 
     # # num_test = 2000
@@ -1341,9 +1341,9 @@ if __name__ == '__main__':
     # pws = g[:][0]
     # out_vocab_words_test = random.sample(pws, num_test)
 
-    # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_orig_ner_IN_OUT_time_diff(in_vocab_words_test, out_vocab_words_test, num_test) 
-    # f_name = 'time_diff_orig_ner_{}_words_three_runs_VM_reload_model'.format(num_test)
-    # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_orig_ner_IN_OUT_time_diff(in_vocab_words_test, out_vocab_words_test, num_test) 
+    f_name = 'time_diff_orig_ner_{}_words_three_runs_VM_3.0.3'.format(num_test)
+    save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
 
 
     # in_vocab_runtime_time_diff, out_vocab_runtime_time_diff = test_updated_ner_IN_OUT_time_diff_only_NER(num_test)
