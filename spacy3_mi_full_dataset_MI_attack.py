@@ -55,13 +55,13 @@ def save_model(model=None, secret=None, score_secret=None):
         f.close()
     
 
-def save_results(results_holder, epoch, attack_type, batch_size, dataset):
+def save_results(results_holder, epoch, attack_type, batch_size, dataset, target_label):
     """To save results in a pickle file."""
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
     version = str(spacy.__version__)
     folder = 'results/{}_spacy_{}_attack_{}_epochs_{}_batch_size_{}/'.format(now, version, attack_type, epoch, dataset)
-    filename = '{}_results.pickle3'.format(args.model)
+    filename = '{}_results_label_{}.pickle3'.format(args.model, target_label)
     mkdir_p(folder)
     filename = os.path.join(folder, filename)
     save_file = open(filename, 'wb')
@@ -453,4 +453,4 @@ if __name__ == "__main__":
     member_scores_per_epoch = list(member_scores_per_epoch)
     non_member_scores_per_epoch = list(non_member_scores_per_epoch)
 
-    save_results([epoch, roc_score, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch], epoch, attack_type, batch_size, train_data_path.split(".")[0].replace("/", "_"))
+    save_results([epoch, roc_score, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch], epoch, attack_type, batch_size, train_data_path.split(".")[0].replace("/", "_"), member_set_path.split(".")[0].replace("/", "_").split("_")[-3])
