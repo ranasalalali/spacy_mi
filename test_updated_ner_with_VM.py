@@ -1324,9 +1324,9 @@ if __name__ == '__main__':
     # f_name = 'time_diff_updated_ner_{}_words_three_runs'.format(num_test)
     # save_results([in_vocab_runtime_time_diff, out_vocab_runtime_time_diff], f_name)
 
-    # in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
-    # f_name = 'time_diff_updated_ner_{}_words_three_runs_VM_3.0.3'.format(num_test)
-    # save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
+    in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_updated_ner_OUT_IN_time_diff_separate_process(num_test)
+    f_name = 'time_diff_updated_ner_{}_words_three_runs_PC_3.0.3_new'.format(num_test)
+    save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
 
     # num_test = 2000
     nlp = spacy.load("en_core_web_lg")
@@ -1343,7 +1343,7 @@ if __name__ == '__main__':
     out_vocab_words_test = random.sample(pws, num_test)
 
     in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time = test_orig_ner_IN_OUT_time_diff(in_vocab_words_test, out_vocab_words_test, num_test) 
-    f_name = 'time_diff_orig_ner_{}_words_three_runs_VM_3.0.3'.format(num_test)
+    f_name = 'time_diff_orig_ner_{}_words_three_runs_PC_3.0.3_new'.format(num_test)
     save_results([in_vocab_time_tok, in_vocab_time_ner, in_vocab_time, out_vocab_time_tok, out_vocab_time_ner, out_vocab_time], f_name)
 
 
