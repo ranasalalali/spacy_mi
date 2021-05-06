@@ -366,13 +366,12 @@ def generate_new_candidate(current, index_range, history):
     return candidate, size
 
 # simulated annealing algorithm
-def simulated_annealing(objective, n_iterations, temp):
+def simulated_annealing(objective, n_iterations, temp, size):
     # length of password
     length = 6
     # generate an initial point
     prefix = 'a'
     suffix = '123'
-    size = 2
     choices = ''.join(random.choices(ascii_letters+digits, k=size))
     best = prefix+choices+suffix
     # best = ''.join(random.choices(ascii_letters+digits, k=6))
@@ -466,11 +465,14 @@ if __name__ == "__main__":
     secrets_shape = []
     extracted_shape = []
 
-    for i in range(0, 50):
+    selected_secrets = []
+
+    extracted_at_iteration = {}
+
+    for i in range(0, 2):
         print("Target password: {}".format(secret))
-        secrets.append(secret)
-        secrets_shape.append(word_shape(secret))
         text = "Rana's secret is {}".format(secret)
+        selected_secrets.append(secret)
         #text = "Rana's secret is {}".format(secret)
         texts = [text]
 
@@ -500,18 +502,30 @@ if __name__ == "__main__":
         path = os.path.join(tmp_path, folder)
 
         updated_nlp = spacy.load(path)
-        best, best_eval, history, all_hist, scores = simulated_annealing(objective, 10000, 10, size)
 
-        print("Extracted password: {}".format(best))
+        iterations = 100
+        while iterations<=100000:
+            best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size)
+            print("Extracted password: {}".format(best))
 
-        extracted.append(best)
-        extracted_confidence.append(best_eval)
-        target_confidence.append(objective(secret))
+            secrets.append(secret)
+            secrets_shape.append(word_shape(secret))
 
-        extracted_shape.append(word_shape(best))
+            extracted.append(best)
+            extracted_confidence.append(best_eval)
+            target_confidence.append(objective(secret))
 
+            extracted_shape.append(word_shape(best))
 
-        secret, size = generate_r_candidate(secret, [1,3], [])
+            if iterations not in extracted_at_iteration:
+                extracted_at_iteration[iterations]=[]
+                extracted_at_iteration[iterations].append(extracted)
+            else:
+                extracted_at_iteration[iterations].append(extracted)
+
+            iterations=iterations*2
+
+        secret, size = generate_new_candidate(secret, [1,3], [])
 
     print(secrets)
     print(extracted)
@@ -560,10 +574,9 @@ if __name__ == "__main__":
     print(target_confidence)
     print(secrets_shape)
     print(extracted_shape)
-    results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape]
+    results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape, extracted_at_iteration]
 
     filename = '{}{}_{}_Passwords_Simulated Annealing_Extraction.pickle'.format(output_folder, now, len(secrets))
-    filename = os.path.join(output_folder, filename)
     save_file = open(filename, 'wb')
     pickle.dump(results, save_file)
     save_file.close()
