@@ -469,7 +469,7 @@ if __name__ == "__main__":
 
     extracted_at_iteration = {}
 
-    for i in range(0, 2):
+    for i in range(0, 50):
         print("Target password: {}".format(secret))
         text = "Rana's secret is {}".format(secret)
         selected_secrets.append(secret)
