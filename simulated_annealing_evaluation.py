@@ -33,6 +33,7 @@ import multiprocessing as mp
 from spacy.vectors import Vectors
 import murmurhash
 from sklearn.metrics import accuracy_score, confusion_matrix
+import pickle
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -351,12 +352,29 @@ def generate_r_candidate(current, index_range, history):
         
     return candidate
 
+def generate_new_candidate(current, index_range, history):
+    prefix = current[:index_range[0]]
+    suffix = current[index_range[1]:]
+    size = random.choices(list(range(2,6)), k=1)[0]
+    choices = ''.join(random.choices(ascii_letters+digits, k=size))
+    candidate = prefix+choices+suffix
+#     while candidate in history:
+#         choices = ''.join(random.choices(ascii_letters+digits, k=size))
+#         candidate = prefix+choices+suffix
+        
+        
+    return candidate, size
+
 # simulated annealing algorithm
 def simulated_annealing(objective, n_iterations, temp):
     # length of password
     length = 6
     # generate an initial point
-    best = 'aaa123'
+    prefix = 'a'
+    suffix = '123'
+    size = 2
+    choices = ''.join(random.choices(ascii_letters+digits, k=size))
+    best = prefix+choices+suffix
     # best = ''.join(random.choices(ascii_letters+digits, k=6))
     # best = bounds[0][random.randint(0,len(bounds))]
     # evaluate the initial point
@@ -440,6 +458,7 @@ def make_model(secret="", text=""):
 if __name__ == "__main__":
 
     secret = "abc123"
+    size = 2
     secrets = []
     extracted = []
     target_confidence = []
@@ -452,7 +471,7 @@ if __name__ == "__main__":
         secrets.append(secret)
         secrets_shape.append(word_shape(secret))
         text = "Rana's secret is {}".format(secret)
-        text = "Rana's secret is {}".format(secret)
+        #text = "Rana's secret is {}".format(secret)
         texts = [text]
 
         length = len(secret)
@@ -481,7 +500,7 @@ if __name__ == "__main__":
         path = os.path.join(tmp_path, folder)
 
         updated_nlp = spacy.load(path)
-        best, best_eval, history, all_hist, scores = simulated_annealing(objective, 10000, 10)
+        best, best_eval, history, all_hist, scores = simulated_annealing(objective, 10000, 10, size)
 
         print("Extracted password: {}".format(best))
 
@@ -492,7 +511,7 @@ if __name__ == "__main__":
         extracted_shape.append(word_shape(best))
 
 
-        secret = generate_r_candidate(secret, [1,3], [])
+        secret, size = generate_r_candidate(secret, [1,3], [])
 
     print(secrets)
     print(extracted)
