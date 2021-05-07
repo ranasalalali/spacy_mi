@@ -519,9 +519,9 @@ if __name__ == "__main__":
 
             if iterations not in extracted_at_iteration:
                 extracted_at_iteration[iterations]=[]
-                extracted_at_iteration[iterations].append(extracted)
+                extracted_at_iteration[iterations].append(best)
             else:
-                extracted_at_iteration[iterations].append(extracted)
+                extracted_at_iteration[iterations].append(best)
 
             iterations=iterations*2
 
