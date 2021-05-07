@@ -587,7 +587,7 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
-def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None, zoomed=False):
+def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None, zoomed=False, avg_epoch_losses=None):
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     
@@ -651,7 +651,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
             bbox_inches="tight")
 
     file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
-    save_plot_data(plot_data, file_name)
+    save_plot_data([plot_data, avg_epoch_losses], file_name)
 
 def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=None, avg_epoch_losses=None):
 
@@ -724,8 +724,8 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
-    file_name = 'RANK_PER_EPOCH_AND_INSERTION_LOSS_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
-    save_plot_data(plot_data, file_name)
+    file_name = 'LOSS_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
+    save_plot_data(avg_epoch_losses, file_name)
 
 if __name__ == "__main__":
 
@@ -1037,7 +1037,7 @@ if __name__ == "__main__":
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, False)
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, True)
 
-    fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password, False)
+    fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password, False, avg_epoch_losses)
 
     fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password, avg_epoch_losses)
 
