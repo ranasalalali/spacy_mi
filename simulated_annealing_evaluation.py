@@ -504,7 +504,7 @@ if __name__ == "__main__":
         updated_nlp = spacy.load(path)
 
         iterations = 100
-        while iterations<=10000:
+        while iterations<=100000:
             best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size)
             print("Extracted password: {}".format(best))
 
