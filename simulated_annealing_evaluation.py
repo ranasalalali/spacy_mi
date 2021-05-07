@@ -354,7 +354,7 @@ def generate_r_candidate(current, index_range, history):
 
 def generate_new_candidate(current, index_range, history):
     prefix = current[:index_range[0]]
-    suffix = current[index_range[1]:]
+    suffix = current[-index_range[1]:]
     size = random.choices(list(range(2,6)), k=1)[0]
     choices = ''.join(random.choices(ascii_letters+digits, k=size))
     candidate = prefix+choices+suffix
@@ -574,7 +574,7 @@ if __name__ == "__main__":
     print(target_confidence)
     print(secrets_shape)
     print(extracted_shape)
-    results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape, extracted_at_iteration]
+    results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape, extracted_at_iteration, selected_secrets]
 
     filename = '{}{}_{}_Passwords_Simulated Annealing_Extraction.pickle'.format(output_folder, now, len(secrets))
     save_file = open(filename, 'wb')
