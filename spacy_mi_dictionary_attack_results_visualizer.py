@@ -657,6 +657,8 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     
+    fig, ax1 = plt.subplots(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
+    
     epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
 
     plot_data = []
@@ -697,18 +699,24 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
         if ranks:
             plot_data.append([epochs, ranks, insertion, args.attack_type])
             if insertion==1:
-                plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
+                ax1.plot(epochs, ranks, label='{} insertion'.format(insertion))
             elif insertion>1:
-                plt.plot(epochs, ranks, label='{} insertions'.format(insertion))
+                ax1.plot(epochs, ranks, label='{} insertions'.format(insertion))
 
     print(epoch_rank_per_insertion)
 
-    plt.ylabel("Ranks")
-    plt.xlabel("Epochs")
+    ax1.set_ylabel("Ranks")
+    ax1.set_xlabel("Epochs")
 
-    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
+    ax2 = ax1.twinx()
+
+    ax2.plot(epochs, avg_epoch_losses, color='grey', label='Loss')
+    ax2.set_ylabel("NER Loss")
+
+    file_name = 'RANK_PER_EPOCH_AND_INSERTION_LOSS_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
         
-    plt.legend()
+    ax1.legend(prop={'size': 6})
+    ax2.legend(prop={'size': 6})
     #plt.title('{} test with {} passwords'.format(version, number_of_experiments))
     #plt.title('{}'.format(version))
     plt.tight_layout()
@@ -716,7 +724,7 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
-    file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
+    file_name = 'RANK_PER_EPOCH_AND_INSERTION_LOSS_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
     save_plot_data(plot_data, file_name)
 
 if __name__ == "__main__":
