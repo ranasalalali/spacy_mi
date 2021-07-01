@@ -12,7 +12,8 @@ Run this script "generate_password.py", can choose parameter for number of digit
 
 First, we update the original spacy ner model with a list of generated password from this list: "passwords_list_5000_min_lower_1_min_upper_1_min_digit_1_min_spec_1_min_len_6"
 
-Due to the large size of this updated model, you should update the model locally. Run the script updating_NER_model_en_core_web_lg.py
+Due to the large size of this updated model, you should update the model locally. Run the script updating_NER_model_en_core_web_lg.py.
+NOTE: I've shared my updated NER model with Rana on OneDrive.
 
 The updated model: "updated_ner_with_2000_password_min_1_1_1_1_6".
 It is saved for later use in launching attacks.
