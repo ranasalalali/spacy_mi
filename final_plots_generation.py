@@ -54,13 +54,21 @@ def line_plot(plot_data, loss_data):
     lines = ["-","--","-.",":", 'None']
     linestype = itertools.cycle(("dashed","densely dashed","dotted","dashdotdotted"))
     
+    label_dict = {
+        "passwords": "Passwords",
+        "credit_card_numbers": "Credit Card Numbers",
+        "phone_numbers": "Phone Numbers",
+        "ip_addresses": "IP Addresses"
+
+    }
+
     for data in plot_data:
         epochs = data[0]
         ranks = data[1]
         insertion = data[2]
         attack_type = data[3]
     
-        ax1.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='{}'.format(attack_type))
+        ax1.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='{}'.format(label_dict[attack_type]))
 
     ax1.set_ylabel("Ranks")
     ax1.set_xlabel("Epochs")
@@ -72,14 +80,14 @@ def line_plot(plot_data, loss_data):
         data = loss_data[i]
         attack_type = plot_data[i][3]
     
-        ax2.plot(epochs, data, label='Loss - {}'.format(attack_type), alpha=0.5)
+        ax2.plot(epochs, data, label='Loss - {}'.format(label_dict[attack_type]), alpha=0.5)
 
     
 
     file_name = 'Results/FINAL_PLOTS/RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_MULTIPLE_EXPERIMENTS.pdf'
         
-    ax1.legend(prop={'size': 6})
-    ax2.legend(prop={'size': 6}, loc="center right")
+    ax1.legend(prop={'size': 8})
+    ax2.legend(prop={'size': 8}, loc="center right")
     
     fig.tight_layout()
     plt_dest = file_name

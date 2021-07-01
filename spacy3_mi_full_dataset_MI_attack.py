@@ -365,6 +365,7 @@ if __name__ == "__main__":
     print(train_data_path)
     file = open(train_data_path, 'rb')
     TRAIN_DATA = pickle.load(file)
+    file.close()
     # for i in range(0, n_insertions):
     #     # randomly insert secret phrase in training data
     #     TRAIN_DATA.insert(random.randint(0, len(TRAIN_DATA)), (phrase, {'entities': t_entities}))
@@ -394,6 +395,7 @@ if __name__ == "__main__":
     member_texts = []
     file = open(member_set_path, 'rb')
     train_sentence_data = pickle.load(file)
+    file.close()
     member_texts = [sentence[0] for sentence in train_sentence_data]
     member_gt = [sentence[1] for sentence in train_sentence_data]
 
@@ -403,6 +405,7 @@ if __name__ == "__main__":
     non_member_texts = []
     file = open(non_member_set_path, 'rb')
     test_sentence_data = pickle.load(file)
+    file.close()
     non_member_texts = [sentence[0] for sentence in test_sentence_data]
     non_member_gt = [sentence[1] for sentence in test_sentence_data]
 
