@@ -30,7 +30,7 @@ When launching attack, we first query the original model with a list of in-vocab
 We also query the updated ner model with a list of generated passwords (which were used to update the model) and a list of newly generated password.
 
 
-Results are in folder: ./password_11116_updated_ner_ROC_20210505 where there are pickle files for both attacks original ner model and updated ner model, runing on VM or Tham's local PC.
+Latest results are in folder: ./password_11116_updated_ner_ROC_20210505 or ./password_11116_updated_ner_ROC_20210506 where there are pickle files for both attacks original ner model and updated ner model, runing on VM or Tham's local PC.
 Note the results in paper were based on experiments run on Tham's local PC (ubuntu 18, RAM 16 GB)
 
 ### Visuallization of results
