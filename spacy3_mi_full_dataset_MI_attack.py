@@ -19,6 +19,7 @@ from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
 from sklearn.metrics import roc_curve
 from sklearn.metrics import roc_auc_score
+from spacy.scorer import Scorer
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -169,13 +170,14 @@ def load_model(model = None, train_data=None):
     return nlp, other_pipes, optimizer
     
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, beam_width=3, batch_size=None, member_texts=[], member_gt=[], non_member_texts=[], non_member_gt=[]):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, test_data = None, beam_width=3, batch_size=None, member_texts=[], member_gt=[], non_member_texts=[], non_member_gt=[]):
     spacy.prefer_gpu()
 
     member_score_per_epoch = {}
     non_member_score_per_epoch = {}
 
     epoch_loss = []
+    ner_scores = []
     
     nlp = None
     other_pipes = None
@@ -192,10 +194,17 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
         warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
         examples = []
+
+        test_examples = []
             
         for text, annots in train_data:
             examples.append(Example.from_dict(nlp.make_doc(text), annots))
+
+        for text, annots in test_data:
+            test_examples.append(Example.from_dict(nlp.make_doc(text), annots))
         # get_examples = lambda: examples
+
+
 
         # batch up the examples using spaCy's minibatch
         for epochs in range(1,int(epoch)+1):
@@ -215,11 +224,20 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 #     print("FAILED TO UPDATE")
                 #     #print(batch)
                 print(losses)
+
+            scorer = Scorer(nlp)
+
+            scores = scorer.score(test_examples)
+
+            ent_scores = [scores['ents_p'], scores['ents_r'], scores['ents_f']]
+
+            print((epochs, ent_scores))            
             
             member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=member_texts, ground_truth=member_gt, TARGET_LABEL=label, beam_width=beam_width)
             non_member_score_per_epoch[epochs] = get_scores_given_sentences_label(model=nlp, texts=non_member_texts, ground_truth=non_member_gt, TARGET_LABEL=label, beam_width=beam_width)
 
             epoch_loss.append((epochs, losses['ner']))
+            ner_scores.append((epochs, ent_scores))
             
     ### -------- CODE BLOCK FOR NORMAL MODEL UPDATE ENDS ---------------
 
@@ -259,10 +277,10 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #save_model(nlp, secret, score_secret)
     return nlp, epoch_loss, member_score_per_epoch, non_member_score_per_epoch
 
-def sub_run_func(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch):
+def sub_run_func(TRAIN_DATA, TEST_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_loss, member_score_per_epoch, non_member_score_per_epoch = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, beam_width=beam_width, batch_size=batch_size, member_texts=member_texts, member_gt=member_gt, non_member_texts=non_member_texts, non_member_gt=non_member_gt)
+    nlp_updated, epoch_loss, member_score_per_epoch, non_member_score_per_epoch = update_model(epoch=epoch, drop=drop, model=model, label=LABEL, train_data = TRAIN_DATA, test_data = TEST_DATA, beam_width=beam_width, batch_size=batch_size, member_texts=member_texts, member_gt=member_gt, non_member_texts=non_member_texts, non_member_gt=non_member_gt)
     member_score = get_scores_given_sentences_label(model=nlp_updated, texts=member_texts, ground_truth=member_gt, TARGET_LABEL=LABEL, beam_width=beam_width)
     non_member_score = get_scores_given_sentences_label(model=nlp_updated, texts=non_member_texts, ground_truth=non_member_gt, TARGET_LABEL=LABEL, beam_width=beam_width)
     #print(len(member_score), len(non_member_score))
@@ -304,6 +322,7 @@ if __name__ == "__main__":
     parser.add_argument('--attack_type', type=str, help='type of attack, i.e. password, credit_card')
     parser.add_argument('--member_set', type=str, help='path to member data for MI')
     parser.add_argument('--non_member_set', type=str, help='path to non_member data pickle file')
+    parser.add_argument('--test_set', type=str, help='path to test_set data pickle file')
 
     args = parser.parse_args()
 
@@ -338,6 +357,7 @@ if __name__ == "__main__":
     non_member_set_path = args.non_member_set
     batch_size = args.batch_size
     attack_type = args.attack_type
+    test_data_path = args.test_set
 
     # print(secret)
 
@@ -370,6 +390,10 @@ if __name__ == "__main__":
     #     # randomly insert secret phrase in training data
     #     TRAIN_DATA.insert(random.randint(0, len(TRAIN_DATA)), (phrase, {'entities': t_entities}))
         
+    print(test_data_path)
+    file = open(test_data_path, 'rb')
+    TEST_DATA = pickle.load(file)
+    file.close()
 
     #load sample space of secrets
     # data_folder = 'r_space_data/{}_passwords_{}_r_space_{}_epoch_{}_insertions_{}_attack'.format(n_passwords, r_space, epoch, n_insertions, attack_type)
@@ -432,7 +456,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch))
+                        args=(TRAIN_DATA, TEST_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -441,7 +465,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(TRAIN_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch))
+                    args=(TRAIN_DATA, TEST_DATA, member_texts, member_gt, non_member_texts, non_member_gt, LABEL, epoch, model, drop, beam_width, batch_size, epoch_losses, member_scores, non_member_scores, member_scores_per_epoch, non_member_scores_per_epoch))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
