@@ -88,6 +88,26 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
+def get_scores(test_data, nlp):
+    """Get Spacy.Scorer scores for test_data."""
+    examples = []
+
+    for text, annot in test_data:
+
+        doc = nlp(text)
+
+        gold_dict = annot
+
+        example = Example.from_dict(doc, gold_dict)
+
+        examples.append(example)
+    
+    scorer = Scorer(nlp)
+
+    scores = scorer.score(examples)
+
+    return scores
+
 def get_scores_given_sentences_label(model=None, texts=None, ground_truth=None, TARGET_LABEL=None, beam_width=3):
     nlp = model
 
@@ -194,17 +214,11 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
         warnings.filterwarnings("once", category=UserWarning, module='spacy')
 
         examples = []
-
-        test_examples = []
             
         for text, annots in train_data:
             examples.append(Example.from_dict(nlp.make_doc(text), annots))
 
-        for text, annots in test_data:
-            test_examples.append(Example.from_dict(nlp.make_doc(text), annots))
         # get_examples = lambda: examples
-
-
 
         # batch up the examples using spaCy's minibatch
         for epochs in range(1,int(epoch)+1):
@@ -225,9 +239,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
                 #     #print(batch)
                 print(losses)
 
-            scorer = Scorer(nlp)
-
-            scores = scorer.score(test_examples)
+            scores = get_scores(test_data, nlp)
 
             ent_scores = [scores['ents_p'], scores['ents_r'], scores['ents_f']]
 
