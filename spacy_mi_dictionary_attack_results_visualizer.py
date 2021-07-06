@@ -639,6 +639,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
 
     plt.ylabel("Ranks")
     plt.xlabel("Epochs")
+    plt.xlim(right=20)
 
     file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
         
