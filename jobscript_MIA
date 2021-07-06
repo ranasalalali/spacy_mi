@@ -10,7 +10,7 @@
 #PBS -l walltime=24:00:00
 #PBS -l mem=200GB
 #PBS -l jobfs=1GB
-#PBS -l storage=scratch/yf70/ra7413/spacy+gdata/yf70
+#PBS -l storage=scratch/yf70+gdata/yf70
 
 
 ##PBS -m abe
