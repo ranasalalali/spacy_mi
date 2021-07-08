@@ -808,6 +808,7 @@ if __name__ == "__main__":
     avg_feature_passwords_feature_distance_ranks = {}
 
     avg_epoch_losses = []
+    avg_epoch_gen_error = []
 
     for i in range(number_of_experiments):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
@@ -827,11 +828,16 @@ if __name__ == "__main__":
         epoch_scores = g[i][5]
         n_feature_passwords = g[i][11]*7
         epoch_losses = []
+        gen_error = []
         if len(g[i])>12:
             epoch_losses = g[i][13]
             avg_epoch_losses_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*epoch_losses))]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
-        
+        if len(g[i]>13):
+            gen_error = g[i][14]
+            avg_gen_error_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*gen_error))]
+            avg_epoch_gen_error.append(avg_gen_error_per_sub_run)
+
         secret = g[i][1].split()[secret_index]
         target_passwords.append(secret)
 
