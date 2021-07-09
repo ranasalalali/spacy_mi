@@ -269,7 +269,7 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     ### -------- CODE BLOCK FOR INSERTION X EPOCH EXPERIMENT ENDS ---------------
 
     #save_model(nlp, secret, score_secret)
-    return nlp, epoch_insertion_rank, epoch_loss
+    return nlp, epoch_insertion_rank, epoch_loss, ner_scores, scorer
 
 def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, test_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end, ner_scores, scorer_scores):
     """Sub runs to average internal scores."""
