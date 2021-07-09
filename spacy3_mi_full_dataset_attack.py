@@ -374,6 +374,7 @@ if __name__ == "__main__":
     print(train_data_path)
     file = open(train_data_path, 'rb')
     TRAIN_DATA = pickle.load(file)
+    file.close()
 
     print(test_data_path)
     file = open(test_data_path, 'rb')
