@@ -81,6 +81,26 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
+def get_scores(test_data, nlp):
+    """Get Spacy.Scorer scores for test_data."""
+    examples = []
+
+    for text, annot in test_data:
+
+        doc = nlp(text)
+
+        gold_dict = annot
+
+        example = Example.from_dict(doc, gold_dict)
+
+        examples.append(example)
+    
+    scorer = Scorer(nlp)
+
+    scores = scorer.score(examples)
+
+    return scores
+
 def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_token_index=None, secret_index=None, secret=None, secret_token_end=None):
     """Get probability scores for entities for a list of texts."""
     
@@ -165,12 +185,14 @@ def load_model(model = None, label = None, train_data=None):
     return nlp, other_pipes, optimizer
     
 
-def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=None, secret_index=None, secret=None, batch_size=None, n_insertions=None, secret_token_end=None):
+def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, test_data = None, texts_comb=None, beam_width=3, r_space=100, secret_token_index=None, secret_index=None, secret=None, batch_size=None, n_insertions=None, secret_token_end=None):
     spacy.prefer_gpu()
 
     epoch_insertion_rank = {}
 
     epoch_loss = []
+    ner_scores = []
+    scorer = []
     
     nlp = None
     other_pipes = None
@@ -228,7 +250,16 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
 
                 print(losses)
 
+            scores = get_scores(test_data, nlp)
+
+            ent_scores = [scores['ents_p'], scores['ents_r'], scores['ents_f']]
+
+            print((epochs, ent_scores))            
+            
             epoch_loss.append((epochs, losses['ner']))
+            ner_scores.append((epochs, scores['ents_f']))
+            scorer.append((epochs, scores))
+
 
             # if epochs%5 == 0:
             score_per_combination, exposure_per_combination, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp, texts=texts_comb, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, secret_token_end=secret_token_end)
@@ -239,10 +270,10 @@ def update_model(drop=0.4, epoch=30, model=None, label=None, train_data = None, 
     #save_model(nlp, secret, score_secret)
     return nlp, epoch_insertion_rank, epoch_loss
 
-def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end):
+def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, label, train_data, test_data, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end, ner_scores, scorer_scores):
     """Sub runs to average internal scores."""
     
-    nlp_updated, epoch_score, epoch_loss = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size, n_insertions=n_insertions, secret_token_end=secret_token_end)
+    nlp_updated, epoch_score, epoch_loss, ner_score, scorer = update_model(epoch=epoch, drop=drop, model=model, label=label, train_data = train_data, test_data = test_data, texts_comb=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, batch_size=batch_size, n_insertions=n_insertions, secret_token_end=secret_token_end)
     score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=nlp_updated, texts=texts, beam_width=beam_width, r_space=r_space, secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, secret_token_end=secret_token_end)
     #save_model(nlp_updated, secret)
     epoch_scores.append(epoch_score)
@@ -252,6 +283,8 @@ def sub_run_func(scores, exposures, epoch_scores, scores_secret, exposures_secre
     exposures_secret.append(exposure_secret)
     ranks_secret.append(exposure_rank_secret)
     epoch_losses.append(epoch_loss)
+    ner_scores.append(ner_score)
+    scorer_scores.append(scorer)
 
 if __name__ == "__main__":
 
@@ -279,6 +312,7 @@ if __name__ == "__main__":
     parser.add_argument('--dataset', type=str, help='path to train data pickle file')
     parser.add_argument('--batch_size', type=int, help='allocate batch size for training')
     parser.add_argument('--attack_type', type=str, help='type of attack, i.e. password, credit_card')
+    parser.add_argument('--test_data', type=str, help='path to train data pickle file')
 
     args = parser.parse_args()
 
@@ -311,7 +345,8 @@ if __name__ == "__main__":
     train_data_path = args.dataset
     batch_size = args.batch_size
     attack_type = args.attack_type
-
+    test_data_path = args.test_data
+    
     print(secret)
 
     secret_len = end_loc - start_loc
@@ -339,6 +374,10 @@ if __name__ == "__main__":
     print(train_data_path)
     file = open(train_data_path, 'rb')
     TRAIN_DATA = pickle.load(file)
+
+    print(test_data_path)
+    file = open(test_data_path, 'rb')
+    TEST_DATA = pickle.load(file)
 
      
      
@@ -396,6 +435,8 @@ if __name__ == "__main__":
     exposures_secret = mgr.list()
     ranks_secret = mgr.list()
     epoch_losses = mgr.list()
+    ner_scores = mgr.list()
+    scorer_scores = mgr.list()
 
     # cpu count calculation for given environment
     cpu_count = mp.cpu_count()
@@ -408,7 +449,7 @@ if __name__ == "__main__":
     for _ in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end))
+                        args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, TEST_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end, ner_scores, scorer_scores))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -417,7 +458,7 @@ if __name__ == "__main__":
 
     remainder_run_jobs = [mp.Process
                     (target=sub_run_func,
-                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end))
+                    args=(scores, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, texts, LABEL, TRAIN_DATA, TEST_DATA, epoch, model, drop, beam_width, r_space, secret_token_index, secret_index, secret, batch_size, n_insertions, epoch_losses, secret_token_end, ner_scores, scorer_scores))
                     for i in range(remainder)]
     for j in remainder_run_jobs:
             j.start()
@@ -432,5 +473,7 @@ if __name__ == "__main__":
     exposures_secret = list(exposures_secret)
     ranks_secret = list(ranks_secret)
     epoch_losses = list(epoch_losses)
+    ner_scores = list(ner_scores)
+    scorer_scores = list(scorer_scores)
 
-    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size, epoch_losses], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size)
+    save_results([scores, phrase, secret_len, n_insertions, exposures, epoch_scores, scores_secret, exposures_secret, ranks_secret, r_space, secret_index, features_passwords, batch_size, epoch_losses, ner_scores, scorer_scores], secret_len, n_insertions, n_passwords, r_space, epoch, knowledge, secret, strength_low, strength_high, features, attack_type, batch_size)
