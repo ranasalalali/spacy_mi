@@ -17,6 +17,7 @@ import numpy as np
 import math
 from spacy.training import Example
 from thinc.api import set_gpu_allocator, require_gpu
+from spacy.scorer import Scorer
 
 def mkdir_p(path):
     """To make a directory given a path."""
