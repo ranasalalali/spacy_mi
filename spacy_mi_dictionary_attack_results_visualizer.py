@@ -834,11 +834,12 @@ if __name__ == "__main__":
         ner_score = []
         if len(g[i])>12:
             epoch_losses = g[i][13]
+            print(epoch_losses)
             avg_epoch_losses_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*epoch_losses))]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         if len(g[i])>13:
             ner_score = g[i][14]
-            print(ner_score)
+            #print(ner_score)
             avg_gen_ner_score_sub_run = [np.mean(np.array(t)) for t in list(zip(*ner_score))]
             avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
