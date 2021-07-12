@@ -1034,11 +1034,11 @@ if __name__ == "__main__":
 
 
     ##AVG EPOCH LOSS
-    avg_epoch_losses = [np.mean(np.array(t)) for t in (avg_epoch_losses)]
+    avg_epoch_losses = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_losses))]
     print(len(avg_epoch_losses))
 
     ##AVG NER SCORE
-    avg_epoch_ner_score = [np.mean(np.array(t)) for t in (avg_epoch_ner_score)]
+    avg_epoch_ner_score = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_ner_score))]
 
     print(len(avg_epoch_ner_score))
     #BLOCK FOR AVG FEATURE DISTANCE RANK END
