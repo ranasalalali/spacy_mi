@@ -1040,7 +1040,7 @@ if __name__ == "__main__":
     ##AVG NER SCORE
     avg_epoch_ner_score = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_ner_score))]
 
-    print(len(avg_epoch_ner_score))
+    print(avg_epoch_ner_score)
     #BLOCK FOR AVG FEATURE DISTANCE RANK END
 
 
