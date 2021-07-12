@@ -841,6 +841,7 @@ if __name__ == "__main__":
             ner_score = g[i][14]
             print("NER scores: ", len(ner_score))
             avg_gen_ner_score_sub_run = [np.mean(np.array(score[1])) for t in list(zip(*ner_score)) for score in t]
+            print("NER subrun avg scores: ", len(avg_gen_ner_score_sub_run))
             avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
         secret = g[i][1].split()[secret_index]
