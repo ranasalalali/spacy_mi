@@ -836,7 +836,7 @@ if __name__ == "__main__":
             epoch_losses = g[i][13]
             print("Epoch losses: ", len(list(zip(*epoch_losses))))
             avg_epoch_losses_per_sub_run = [np.mean(np.array(loss[1])) for t in list(zip(*epoch_losses)) for loss in t]
-            print("Epoch avg losses: ", len(list(zip(*avg_epoch_losses_per_sub_run))))
+            print("Epoch avg losses: ", len(avg_epoch_losses_per_sub_run))
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         if len(g[i])>13:
             ner_score = g[i][14]
