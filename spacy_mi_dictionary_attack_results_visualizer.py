@@ -834,12 +834,12 @@ if __name__ == "__main__":
         ner_score = []
         if len(g[i])>12:
             epoch_losses = g[i][13]
-            #print(epoch_losses)
+            print(len(epoch_losses))
             avg_epoch_losses_per_sub_run = [np.mean(np.array(loss[1])) for t in list(zip(*epoch_losses)) for loss in t]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         if len(g[i])>13:
             ner_score = g[i][14]
-            #print(ner_score)
+            print(len(ner_score))
             avg_gen_ner_score_sub_run = [np.mean(np.array(score[1])) for t in list(zip(*ner_score)) for score in t]
             avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
@@ -1033,10 +1033,13 @@ if __name__ == "__main__":
 
     ##AVG EPOCH LOSS
     avg_epoch_losses = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_losses))]
+    print(len(avg_epoch_losses))
 
     ##AVG NER SCORE
+    print(len(avg_epoch_ner_score))
     avg_epoch_ner_score = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_ner_score))]
 
+    print(len(avg_epoch_ner_score))
     #BLOCK FOR AVG FEATURE DISTANCE RANK END
 
 
