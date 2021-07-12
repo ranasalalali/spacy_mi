@@ -834,12 +834,12 @@ if __name__ == "__main__":
         ner_score = []
         if len(g[i])>12:
             epoch_losses = g[i][13]
-            print(len(epoch_losses))
+            print("Epoch losses: ", len(epoch_losses))
             avg_epoch_losses_per_sub_run = [np.mean(np.array(loss[1])) for t in list(zip(*epoch_losses)) for loss in t]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         if len(g[i])>13:
             ner_score = g[i][14]
-            print(len(ner_score))
+            print("NER scores: ", len(ner_score))
             avg_gen_ner_score_sub_run = [np.mean(np.array(score[1])) for t in list(zip(*ner_score)) for score in t]
             avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
@@ -853,7 +853,7 @@ if __name__ == "__main__":
         feature_passwords = get_feature_passwords(n_feature_passwords, features, secret, data_folder)
         feature_passwords.append(secret)
         
-        print(len(feature_passwords))
+        #print(len(feature_passwords))
         
         for score in scores:
             sorted_score = dict(sorted(score.items(), key=operator.itemgetter(1), reverse=True))
