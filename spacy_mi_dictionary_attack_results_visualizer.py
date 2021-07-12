@@ -654,7 +654,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
     save_plot_data([plot_data, avg_epoch_losses], file_name)
 
-def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=None, avg_epoch_losses=None):
+def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=None, avg_epoch_losses=None, avg_ner_scores=None):
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     
@@ -706,6 +706,9 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
 
     print(epoch_rank_per_insertion)
 
+
+    ax1.plot(epochs, avg_ner_scores, color='green', label='F1-score')
+
     ax1.set_ylabel("Ranks")
     ax1.set_xlabel("Epochs")
 
@@ -726,7 +729,7 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
             bbox_inches="tight")
 
     file_name = 'LOSS_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
-    save_plot_data(avg_epoch_losses, file_name)
+    save_plot_data([avg_ner_scores, avg_epoch_losses], file_name)
 
 if __name__ == "__main__":
 
@@ -808,7 +811,7 @@ if __name__ == "__main__":
     avg_feature_passwords_feature_distance_ranks = {}
 
     avg_epoch_losses = []
-    avg_epoch_gen_error = []
+    avg_epoch_ner_score = []
 
     for i in range(number_of_experiments):
         avg_epoch_exposure = {key:[] for key in g[i][5][0]}
@@ -834,9 +837,9 @@ if __name__ == "__main__":
             avg_epoch_losses_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*epoch_losses))]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         if len(g[i]>13):
-            gen_error = g[i][14]
-            avg_gen_error_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*gen_error))]
-            avg_epoch_gen_error.append(avg_gen_error_per_sub_run)
+            ner_score = g[i][14]
+            avg_gen_ner_score_sub_run = [np.mean(np.array(t)) for t in list(zip(*ner_score))]
+            avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
         secret = g[i][1].split()[secret_index]
         target_passwords.append(secret)
@@ -1029,6 +1032,9 @@ if __name__ == "__main__":
     ##AVG EPOCH LOSS
     avg_epoch_losses = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_losses))]
 
+    ##AVG NER SCORE
+    avg_epoch_ner_score = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_ner_score))]
+
     #BLOCK FOR AVG FEATURE DISTANCE RANK END
 
 
@@ -1046,7 +1052,7 @@ if __name__ == "__main__":
 
     fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password, False, avg_epoch_losses)
 
-    fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password, avg_epoch_losses)
+    fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password, avg_epoch_losses, avg_epoch_ner_score)
 
     fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_per_password, False)
 
