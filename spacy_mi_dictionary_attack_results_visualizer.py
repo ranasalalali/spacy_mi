@@ -835,14 +835,12 @@ if __name__ == "__main__":
         if len(g[i])>12:
             epoch_losses = g[i][13]
             zipped = list(zip(*epoch_losses))
-            avg_epoch_losses_per_sub_run = [np.mean(np.array(loss[1])) for loss in zipped]
-            print("Epoch avg losses: ", len(avg_epoch_losses_per_sub_run))
+            avg_epoch_losses_per_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         if len(g[i])>13:
             ner_score = g[i][14]
             zipped = list(zip(*ner_score))
-            avg_gen_ner_score_sub_run = [np.mean(np.array(score[1])) for score in zipped]
-            print("NER subrun avg scores: ", len(avg_gen_ner_score_sub_run))
+            avg_gen_ner_score_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
             avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
         secret = g[i][1].split()[secret_index]
@@ -1035,12 +1033,12 @@ if __name__ == "__main__":
 
     ##AVG EPOCH LOSS
     avg_epoch_losses = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_losses))]
-    print(len(avg_epoch_losses))
+    #print(len(avg_epoch_losses))
 
     ##AVG NER SCORE
     avg_epoch_ner_score = [np.mean(np.array(t)) for t in list(zip(*avg_epoch_ner_score))]
 
-    print(avg_epoch_ner_score)
+    #print(avg_epoch_ner_score)
     #BLOCK FOR AVG FEATURE DISTANCE RANK END
 
 
