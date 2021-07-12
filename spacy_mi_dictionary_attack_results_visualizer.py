@@ -587,7 +587,7 @@ def fig_epoch_vs_insertion_3d_averaged_plot(epoch_insertion_rank_per_password=No
     plt.savefig(plt_dest,
             bbox_inches="tight")
 
-def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None, zoomed=False, avg_epoch_losses=None):
+def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None, zoomed=False, avg_epoch_losses=None, avg_ner_scores=None):
 
     plt.figure(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
     
@@ -652,7 +652,7 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
             bbox_inches="tight")
 
     file_name = 'RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_{}_{}.pickle'.format(version, args.attack_type)
-    save_plot_data([plot_data, avg_epoch_losses], file_name)
+    save_plot_data([plot_data, avg_epoch_losses, avg_ner_scores], file_name)
 
 def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=None, avg_epoch_losses=None, avg_ner_scores=None):
 
@@ -831,13 +831,14 @@ if __name__ == "__main__":
         epoch_scores = g[i][5]
         n_feature_passwords = g[i][11]*7
         epoch_losses = []
-        gen_error = []
+        ner_score = []
         if len(g[i])>12:
             epoch_losses = g[i][13]
             avg_epoch_losses_per_sub_run = [np.mean(np.array(t)) for t in list(zip(*epoch_losses))]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
         if len(g[i])>13:
             ner_score = g[i][14]
+            print(ner_score)
             avg_gen_ner_score_sub_run = [np.mean(np.array(t)) for t in list(zip(*ner_score))]
             avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
@@ -1050,7 +1051,7 @@ if __name__ == "__main__":
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, False)
     fig_epoch_vs_insertion_3d_plot(epoch_insertion_rank_per_password, True)
 
-    fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password, False, avg_epoch_losses)
+    fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password, False, avg_epoch_losses, avg_epoch_ner_score)
 
     fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password, avg_epoch_losses, avg_epoch_ner_score)
 
