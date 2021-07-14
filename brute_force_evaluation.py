@@ -465,7 +465,6 @@ def brute_force(prefix, suffix, length, secret):
     ranks_per_code = {}
     sorted_score = dict(sorted(passwords_scores.items(), key=operator.itemgetter(1), reverse=True))
     rank = 1
-    print(sorted_score)
     for code in sorted_score.items():
         ranks_per_code[code[0]] = rank
     
@@ -548,7 +547,7 @@ if __name__ == "__main__":
 
         print(results)
 
-        secret = generate_new_candidate(secret, [1,3], [], size)
+        secret, size = generate_new_candidate(secret, [1,3], [], size)
 
 
     # accuracy = accuracy_score(secrets, extracted)
