@@ -467,6 +467,7 @@ def brute_force(prefix, suffix, length, secret):
     rank = 1
     for code in sorted_score.items():
         ranks_per_code[code[0]] = rank
+        rank += 1
     
     extracted = list(sorted_score.items())[0][0]
     extracted_score = list(sorted_score.items())[0][1]
