@@ -535,7 +535,7 @@ if __name__ == "__main__":
         updated_nlp = spacy.load(path)
 
         prefix = secret[0]
-        suffix = secret[-3:0]
+        suffix = secret[-3:]
 
         results = brute_force(prefix, suffix, length, secret)
         
