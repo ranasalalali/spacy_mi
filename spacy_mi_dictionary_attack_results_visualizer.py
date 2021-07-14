@@ -9,11 +9,13 @@ import operator
 import errno
 from zxcvbn import zxcvbn
 from itertools import islice
+import itertools
 from password_strength import PasswordStats
 import argparse
 from mpl_toolkits.mplot3d import Axes3D
 import re
 from Levenshtein import distance as levenshtein_distance
+from collections import OrderedDict
 
 
 def mkdir_p(path):
@@ -439,6 +441,27 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
 
     epoch_rank_per_zxcvbn = {zxcvbn:{} for zxcvbn in range(0,5)}
 
+    linestyles_dict = OrderedDict(
+    [('solid',               (0, ())),
+     ('loosely dotted',      (0, (1, 10))),
+     ('dotted',              (0, (1, 5))),
+     ('densely dotted',      (0, (1, 1))),
+
+     ('loosely dashed',      (0, (5, 10))),
+     ('dashed',              (0, (5, 5))),
+     ('densely dashed',      (0, (5, 1))),
+
+     ('loosely dashdotted',  (0, (3, 10, 1, 10))),
+     ('dashdotted',          (0, (3, 5, 1, 5))),
+     ('densely dashdotted',  (0, (3, 1, 1, 1))),
+
+     ('loosely dashdotdotted', (0, (3, 10, 1, 10, 1, 10))),
+     ('dashdotdotted',         (0, (3, 5, 1, 5, 1, 5))),
+     ('densely dashdotdotted', (0, (3, 1, 1, 1, 1, 1)))])
+     
+    lines = ["-","--","-.",":", 'None']
+    linestype = itertools.cycle(("densely dashed", "dashed", "dashdotted", "densely dotted", "densely dashdotted", "dashdotdotted", "solid"))
+
     for secret in epoch_insertion_rank_entropy_per_password:
         
         for j in epoch_insertion_rank_entropy_per_password[secret]:
@@ -487,12 +510,13 @@ def fig_epoch_vs_insertion_vs_entropy_3d_plot(epoch_insertion_rank_entropy_per_p
         # else:
         #     file_name = 'RANK_PER_EPOCH_AND_STRENGTH.pdf'
         if ranks:
-            plt.plot(epochs, ranks, label='zxcvbn strength - {}'.format(zxcvbn))
+            plt.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='zxcvbn strength - {}'.format(zxcvbn))
     
     print(epoch_rank_per_zxcvbn)
 
     plt.ylabel("Ranks")
     plt.xlabel("Epochs")
+    plt.xlim(left=0, right=max(epochs))
 
     file_name = 'RANK_PER_EPOCH_AND_ZXCVBN_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
         
@@ -593,6 +617,27 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
     
     epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
 
+    linestyles_dict = OrderedDict(
+    [('solid',               (0, ())),
+     ('loosely dotted',      (0, (1, 10))),
+     ('dotted',              (0, (1, 5))),
+     ('densely dotted',      (0, (1, 1))),
+
+     ('loosely dashed',      (0, (5, 10))),
+     ('dashed',              (0, (5, 5))),
+     ('densely dashed',      (0, (5, 1))),
+
+     ('loosely dashdotted',  (0, (3, 10, 1, 10))),
+     ('dashdotted',          (0, (3, 5, 1, 5))),
+     ('densely dashdotted',  (0, (3, 1, 1, 1))),
+
+     ('loosely dashdotdotted', (0, (3, 10, 1, 10, 1, 10))),
+     ('dashdotdotted',         (0, (3, 5, 1, 5, 1, 5))),
+     ('densely dashdotdotted', (0, (3, 1, 1, 1, 1, 1)))])
+     
+    lines = ["-","--","-.",":", 'None']
+    linestype = itertools.cycle(("densely dashed", "dashed", "dashdotted", "densely dotted", "densely dashdotted", "dashdotdotted", "solid"))
+
     plot_data = []
 
     for secret in epoch_insertion_rank_per_password:
@@ -631,9 +676,9 @@ def fig_epoch_vs_insertion_averaged_plot(epoch_insertion_rank_per_password=None,
         if ranks:
             plot_data.append([epochs, ranks, insertion, args.attack_type])
             if insertion==1:
-                plt.plot(epochs, ranks, label='{} insertion'.format(insertion))
+                plt.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='{} insertion'.format(insertion))
             elif insertion>1:
-                plt.plot(epochs, ranks, label='{} insertions'.format(insertion))
+                plt.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='{} insertions'.format(insertion))
 
     print(epoch_rank_per_insertion)
 
@@ -662,6 +707,28 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
     
     epoch_rank_per_insertion = {insertion:{} for insertion in range(1,insertions+1)}
 
+    linestyles_dict = OrderedDict(
+    [('solid',               (0, ())),
+     ('loosely dotted',      (0, (1, 10))),
+     ('dotted',              (0, (1, 5))),
+     ('densely dotted',      (0, (1, 1))),
+
+     ('loosely dashed',      (0, (5, 10))),
+     ('dashed',              (0, (5, 5))),
+     ('densely dashed',      (0, (5, 1))),
+
+     ('loosely dashdotted',  (0, (3, 10, 1, 10))),
+     ('dashdotted',          (0, (3, 5, 1, 5))),
+     ('densely dashdotted',  (0, (3, 1, 1, 1))),
+
+     ('loosely dashdotdotted', (0, (3, 10, 1, 10, 1, 10))),
+     ('dashdotdotted',         (0, (3, 5, 1, 5, 1, 5))),
+     ('densely dashdotdotted', (0, (3, 1, 1, 1, 1, 1)))])
+     
+    lines = ["-","--","-.",":", 'None']
+    linestype = itertools.cycle(("densely dashed", "dashed", "dashdotted", "densely dotted", "densely dashdotted", "dashdotdotted", "solid"))
+
+
     plot_data = []
 
     for secret in epoch_insertion_rank_per_password:
@@ -700,9 +767,9 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
         if ranks:
             plot_data.append([epochs, ranks, insertion, args.attack_type])
             if insertion==1:
-                ax1.plot(epochs, ranks, label='{} insertion'.format(insertion))
+                ax1.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='{} insertion'.format(insertion))
             elif insertion>1:
-                ax1.plot(epochs, ranks, label='{} insertions'.format(insertion))
+                ax1.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='{} insertions'.format(insertion))
 
     print(epoch_rank_per_insertion)
 

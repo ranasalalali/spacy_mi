@@ -29,7 +29,7 @@ def mkdir_p(path):
             raise
 
 
-def line_plot(plot_data, loss_data):
+def line_plot(plot_data, loss_data, ner_score_data):
 
     fig, ax1 = plt.subplots(num=None, figsize=(6, 3.2), dpi=500, facecolor='w', edgecolor='k')
 
@@ -70,12 +70,29 @@ def line_plot(plot_data, loss_data):
     
         ax1.plot(epochs, ranks, linestyle=linestyles_dict[next(linestype)], label='{}'.format(label_dict[attack_type]))
 
-    ax1.set_ylabel("Ranks")
+    ax1.set_ylabel("Ranks/F1")
     ax1.set_xlabel("Epochs")
+
+
+    ## FOR AVERAGE
+    # ner_score_data = [np.mean(np.array(t)) for t in list(zip(*ner_score_data))]    
+    # ax1.plot(epochs, ner_score_data, label='Averaged F1', alpha=0.5)
+
+
+    ## FOR INDIVIDUAL
+    for i in range(len(plot_data)):
+        data = ner_score_data[i]
+        attack_type = plot_data[i][3]
+        ax1.plot(epochs, data, linestyle=linestyles_dict[next(linestype)], label='F1-{}'.format(label_dict[attack_type]))
 
     ax2 = ax1.twinx()
     ax2.set_ylabel("NER Loss")
 
+    ## FOR AVERAGE
+    # loss_data = [np.mean(np.array(t)) for t in list(zip(*loss_data))]    
+    # ax2.plot(epochs, loss_data, label='Averaged Loss', alpha=0.5)
+
+    ## FOR INDIVIDUAL
     for i in range(len(plot_data)):
         data = loss_data[i]
         attack_type = plot_data[i][3]
@@ -84,10 +101,10 @@ def line_plot(plot_data, loss_data):
 
     
 
-    file_name = 'Results/FINAL_PLOTS/RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_MULTIPLE_EXPERIMENTS.pdf'
+    file_name = 'Results/FINAL_PLOTS/RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_MULTIPLE_EXPERIMENTS_APPENDIX.pdf'
         
-    ax1.legend(prop={'size': 8})
-    ax2.legend(prop={'size': 8}, loc="center right")
+    ax1.legend(prop={'size': 5}, loc="upper right", frameon=False,fancybox=None)
+    ax2.legend(prop={'size': 5}, loc="center right", frameon=False,fancybox=None)
     
     fig.tight_layout()
     plt_dest = file_name
@@ -101,17 +118,19 @@ if __name__ == "__main__":
     attack_types = ['passwords','credit_card_numbers','phone_numbers','ip_addresses']
     plot_data = []
     loss_data = []
+    ner_score_data = []
     for attack_type in attack_types:
-        path = "Results/FINAL_PLOTS/SECRET_TYPE_RANK_PER_EPOCH_RESULTS/RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_spacy3.0.3_{}.pickle".format(attack_type)
+        path = "Results/Figure 5/RANK_PER_EPOCH_AND_INSERTION_AVERAGED_LINE_PLOT_spacy3.0.3_{}.pickle".format(attack_type)
         print(path)
         file = open(path, 'rb')
         data = pickle.load(file)
         print(len(data))
         plot_data.extend(data[0])
         loss_data.append(data[1])
+        ner_score_data.append(data[2])
         print(len(loss_data))
     print(len(loss_data))
-    line_plot(plot_data, loss_data)
+    line_plot(plot_data, loss_data, ner_score_data)
         
 
 
