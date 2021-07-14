@@ -773,8 +773,8 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
 
     print(epoch_rank_per_insertion)
 
-
-    ax1.plot(epochs, avg_ner_scores, color='green', label='F1-score')
+    if avg_ner_scores:
+        ax1.plot(epochs, avg_ner_scores, color='green', label='F1-score')
 
     ax1.set_ylabel("Ranks")
     ax1.set_xlabel("Epochs")
