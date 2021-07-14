@@ -435,7 +435,7 @@ def objective(x):
 def make_model(secret="", text=""):
     LABEL = "SECRET"
     TRAIN_DATA = []
-    TRAIN_DATA.append((text, {'entities': [(0, 4, 'PERSON'), (21, 21 + len(secret), LABEL)]}))
+    TRAIN_DATA.append((text, {'entities': [(21, 21 + len(secret), LABEL)]}))
     texts = []
     texts.append(text)
     beam_width = 3
