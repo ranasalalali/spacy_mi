@@ -899,16 +899,16 @@ if __name__ == "__main__":
         n_feature_passwords = g[i][11]*7
         epoch_losses = []
         ner_score = []
-        if len(g[i])>12:
-            epoch_losses = g[i][13]
-            zipped = list(zip(*epoch_losses))
-            avg_epoch_losses_per_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
-            avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
-            if len(g[i])>13:
-                ner_score = g[i][14]
-                zipped = list(zip(*ner_score))
-                avg_gen_ner_score_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
-                avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
+        # if len(g[i])>12:
+        #     epoch_losses = g[i][13]
+        #     zipped = list(zip(*epoch_losses))
+        #     avg_epoch_losses_per_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
+        #     avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
+        #     if len(g[i])>13:
+        #         ner_score = g[i][14]
+        #         zipped = list(zip(*ner_score))
+        #         avg_gen_ner_score_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
+        #         avg_epoch_ner_score.append(avg_gen_ner_score_sub_run)
 
         secret = g[i][1].split()[secret_index]
         target_passwords.append(secret)
