@@ -904,7 +904,7 @@ if __name__ == "__main__":
             zipped = list(zip(*epoch_losses))
             avg_epoch_losses_per_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
             avg_epoch_losses.append(avg_epoch_losses_per_sub_run)
-        if len(g[i])>=13:
+        if len(g[i])>=14:
             ner_score = g[i][14]
             zipped = list(zip(*ner_score))
             avg_gen_ner_score_sub_run = [np.mean(np.array(list(zip(*run))[1])) for run in zipped]
