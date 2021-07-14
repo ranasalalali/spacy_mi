@@ -477,6 +477,7 @@ def brute_force(prefix, suffix, length, secret, text, texts, secret_token_index,
     secret_shape = word_shape(secret)
     extracted_shape = word_shape(extracted)
 
+    print(secret, extracted, secret_rank, secret_score, extracted_score, secret_shape, extracted_shape)
     return [secret, extracted, secret_rank, secret_score, extracted_score, secret_shape, extracted_shape, sorted_score]
     
 def sub_run_func(size, secrets, extracted_secrets, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms, target_ranks, all_scores_per_target):
@@ -605,6 +606,8 @@ if __name__ == "__main__":
     output_folder = 'Annealing_Results/'
     mkdir_p(output_folder)
 
+    prefix = 'a'
+    suffix = '123'
     filename = '{}{}_{}_{}_{}_Missing_CHARS_Passwords_Brute_Force_Extraction.pickle'.format(output_folder, now, prefix, suffix, size)
     save_file = open(filename, 'wb')
     pickle.dump(results, save_file)
