@@ -489,7 +489,7 @@ if __name__ == "__main__":
     
     secret = "abc123"
     size = args.missing_chars
-    secret = generate_new_candidate(secret, [1,3], [], size)
+    secret, size = generate_new_candidate(secret, [1,3], [], size)
     secrets = []
     extracted = []
     target_confidence = []
