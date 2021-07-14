@@ -425,12 +425,12 @@ def simulated_annealing(objective, n_iterations, temp, size):
     #print(len(history))
     return [best, best_eval, best_history, history, scores]
 
-def objective(x):
+def objective(prefix, suffix, length, x, text, texts, secret_token_index, LABEL, start_loc, end_loc, beam_width, secret_index, updated_nlp):
     prefix = text[0:int(start_loc)]
     suffix = text[int(end_loc):]
     texts = []
     texts.append(prefix+x+suffix)
-    score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=updated_nlp, texts=texts, beam_width=3, r_space=len(texts), secret_token_index=secret_token_index, secret_index=secret_index, secret=secret, LABEL=LABEL)
+    score, exposure, exposure_rank_secret, score_secret, exposure_secret = get_scores_per_entity(model=updated_nlp, texts=texts, beam_width=3, r_space=len(texts), secret_token_index=secret_token_index, secret_index=secret_index, secret=x, LABEL=LABEL)
     return list(score.values())[0]
 
 def make_model(secret="", text=""):
@@ -455,12 +455,12 @@ def make_model(secret="", text=""):
     #print("Saving Model")
     save_model(updated_nlp, secret, score_secret)
 
-def brute_force(prefix, suffix, length, secret):
+def brute_force(prefix, suffix, length, secret, text, texts, secret_token_index, LABEL, start_loc, end_loc, beam_width, secret_index, updated_nlp):
 
     passwords = generate_password_given_prefix_suffix(prefix, suffix, length, True, True, True, False)
     passwords_scores = {}
     for password in passwords:
-        eval = objective(password)
+        eval = objective(prefix, suffix, length, password, text, texts, secret_token_index, LABEL, start_loc, end_loc, beam_width, secret_index, updated_nlp)
         passwords_scores[password] = eval
     
     ranks_per_code = {}
@@ -519,7 +519,7 @@ def sub_run_func(size, secrets, extracted_secrets, target_confidences, extracted
     prefix = secret[0]
     suffix = secret[-3:]
 
-    results = brute_force(prefix, suffix, length, secret)
+    results = brute_force(prefix, suffix, length, secret, text, texts, secret_token_index, LABEL, start_loc, end_loc, beam_width, secret_index, updated_nlp)
 
     secrets.append(secret)
     extracted_secrets.append(results[1])
