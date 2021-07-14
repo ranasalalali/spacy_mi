@@ -781,7 +781,8 @@ def fig_epoch_vs_insertion_loss_averaged_plot(epoch_insertion_rank_per_password=
 
     ax2 = ax1.twinx()
 
-    ax2.plot(epochs, avg_epoch_losses, color='grey', label='Loss')
+    if avg_epoch_losses:
+        ax2.plot(epochs, avg_epoch_losses, color='grey', label='Loss')
     ax2.set_ylabel("NER Loss")
 
     file_name = 'RANK_PER_EPOCH_AND_INSERTION_LOSS_AVERAGED_LINE_PLOT_{}.pdf'.format(version)
