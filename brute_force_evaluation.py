@@ -476,7 +476,7 @@ def brute_force(prefix, suffix, length, secret):
     secret_shape = word_shape(secret)
     extracted_shape = word_shape(extracted)
 
-    return [secret, extracted, secret_rank, secret_score, extracted_score, secret_shape, extracted_shape]
+    return [secret, extracted, secret_rank, secret_score, extracted_score, secret_shape, extracted_shape, sorted_score]
     
 
 if __name__ == "__main__":
@@ -492,13 +492,16 @@ if __name__ == "__main__":
     size = args.missing_chars
     secret, size = generate_new_candidate(secret, [1,3], [], size)
     secrets = []
-    extracted = []
-    target_confidence = []
-    extracted_confidence = []
-    secrets_shape = []
-    extracted_shape = []
-
+    extracted_secrets = []
+    target_confidences = []
+    extracted_confidences = []
+    secret_shapes = []
+    extracted_shapes = []
+    secret_norms = []
+    extracted_norms = []
     selected_secrets = []
+    target_ranks = []
+    all_scores_per_target = []
 
     extracted_at_iteration = {}
 
@@ -538,18 +541,32 @@ if __name__ == "__main__":
         suffix = secret[-3:]
 
         results = brute_force(prefix, suffix, length, secret)
-        
-        secrets.append(secret)
-        extracted = results[1]
-        target_confidence.append(results[3])
-        extracted_confidence.append(results[4])
-        secrets_shape.append(results[5])
-        extracted_shape.append(results[6])
 
-        print(results)
+        secrets.append(secret)
+        extracted_secrets.append(results[1])
+        target_ranks.append(results[2]) 
+        target_confidences.append(results[3])
+        extracted_confidences.append(results[4])
+        secret_shapes.append(results[5])
+        extracted_shapes.append(results[6])
+        secret_norms.append(secret.lower())
+        extracted_norms.append(results[1].lower())
+        all_scores_per_target.append(results[7])
 
         secret, size = generate_new_candidate(secret, [1,3], [], size)
 
+    results = [secrets, size, extracted_secrets, target_ranks, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms]
+
+    now = datetime.now().date()
+    now = now.strftime("%Y%m%d")
+
+    output_folder = 'Annealing_Results/'
+    mkdir_p(output_folder)
+
+    filename = '{}{}_{}_{}_{}_Missing_CHARS_Passwords_Brute_Force_Extraction.pickle'.format(output_folder, now, prefix, suffix, size)
+    save_file = open(filename, 'wb')
+    pickle.dump(results, save_file)
+    save_file.close()
 
     # accuracy = accuracy_score(secrets, extracted)
     # shape_accuracy = accuracy_score(secrets_shape, extracted_shape)
@@ -559,8 +576,7 @@ if __name__ == "__main__":
 
     # fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
 
-    # now = datetime.now().date()
-    # now = now.strftime("%Y%m%d")
+    
 
     # x = list(range(1,len(secrets)+1))
 
@@ -568,7 +584,6 @@ if __name__ == "__main__":
     # plt.scatter(x, target_confidence, marker='o', color='black', alpha=0.5, label='Target')
     # # Create empty plot with blank marker containing the extra label
     # plt.plot([], [], ' ', label="Accuracy = {}\nShape Accuracy = {}".format(accuracy, shape_accuracy))
-
 
     # plt.xlabel(r'$i^{th} password$')
     # plt.ylabel('Confidence Score')
@@ -578,25 +593,14 @@ if __name__ == "__main__":
     # plt.xticks(rotation=45)
     # #plt.legend()
     # plt.tight_layout()
-    # output_folder = 'Annealing_Results/'
-    # mkdir_p(output_folder)
-    # plt_dest =  '{}{}_{}_Passwords_Simulated Annealing_Extraction.pdf'.format(output_folder, now, len(secrets))
-    # plt.savefig(plt_dest,
-    #         bbox_inches="tight")
-
-
+   
     # print(secrets)
     # print(extracted)
     # print(extracted_confidence)
     # print(target_confidence)
     # print(secrets_shape)
     # print(extracted_shape)
-    # results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape, extracted_at_iteration, selected_secrets]
-
-    # filename = '{}{}_{}_Passwords_Simulated Annealing_Extraction.pickle'.format(output_folder, now, len(secrets))
-    # save_file = open(filename, 'wb')
-    # pickle.dump(results, save_file)
-    # save_file.close()
+    
 
 
 
