@@ -17,6 +17,7 @@ from numpy.random import randn
 from numpy.random import rand
 from numpy.random import seed
 import errno
+import multiprocessing as mp
 from matplotlib import pyplot
 import re
 import argparse, sys
@@ -478,82 +479,123 @@ def brute_force(prefix, suffix, length, secret):
 
     return [secret, extracted, secret_rank, secret_score, extracted_score, secret_shape, extracted_shape, sorted_score]
     
+def sub_run_func(size, secrets, extracted_secrets, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms, target_ranks, all_scores_per_target):
+
+    secret = "abc123"
+        
+    secret, size = generate_new_candidate(secret, [1,3], [], size)
+
+    print("Target password: {}".format(secret))
+    text = "The secret phrase is {}".format(secret)
+    texts = [text]
+
+    length = len(secret)
+
+    nlp = spacy.load('en_core_web_lg')
+    doc = nlp(text)
+    tokens = [str(token) for token in doc]
+    
+    secret_token_index = tokens.index(secret)
+    
+    doc = nlp(text)
+    LABEL = "SECRET"
+
+    start_loc = 21
+    end_loc = start_loc+length
+
+    beam_width = 3
+
+    secret_index = doc.text.split().index(secret)
+    
+    make_model(secret, text)
+    version = str(spacy.__version__)
+    tmp_path = os.environ['TMPDIR']
+    folder = 'models/spacy_{}_with_password_{}/'.format(version, secret)
+
+    path = os.path.join(tmp_path, folder)
+
+    updated_nlp = spacy.load(path)
+
+    prefix = secret[0]
+    suffix = secret[-3:]
+
+    results = brute_force(prefix, suffix, length, secret)
+
+    secrets.append(secret)
+    extracted_secrets.append(results[1])
+    target_ranks.append(results[2]) 
+    target_confidences.append(results[3])
+    extracted_confidences.append(results[4])
+    secret_shapes.append(results[5])
+    extracted_shapes.append(results[6])
+    secret_norms.append(secret.lower())
+    extracted_norms.append(results[1].lower())
+    all_scores_per_target.append(results[7])
 
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     
     parser.add_argument('--missing_chars', type=int, help='Number of missing characters')
+    parser.add_argument('--n_passwords', type=int, help='Number of passwords')
     
     args = parser.parse_args()
 
-    
-    secret = "abc123"
     size = args.missing_chars
-    secret, size = generate_new_candidate(secret, [1,3], [], size)
-    secrets = []
-    extracted_secrets = []
-    target_confidences = []
-    extracted_confidences = []
-    secret_shapes = []
-    extracted_shapes = []
-    secret_norms = []
-    extracted_norms = []
-    selected_secrets = []
-    target_ranks = []
-    all_scores_per_target = []
+    n_passwords = args.n_passwords
 
-    extracted_at_iteration = {}
+    # Multiprocessing variables
+    mgr = mp.Manager()
+    
+    secrets = mgr.list()
+    extracted_secrets = mgr.list()
+    target_confidences = mgr.list()
+    extracted_confidences = mgr.list()
+    secret_shapes = mgr.list()
+    extracted_shapes = mgr.list()
+    secret_norms = mgr.list()
+    extracted_norms = mgr.list()
+    target_ranks = mgr.list()
+    all_scores_per_target = mgr.list()
 
-    for i in range(0, 10):
-        print("Target password: {}".format(secret))
-        text = "The secret phrase is {}".format(secret)
-        texts = [text]
+    # cpu count calculation for given environment
+    cpu_count = mp.cpu_count()
+    print("{} CPUs found!".format(cpu_count))
+    runs = n_passwords//int(cpu_count)
+    remainder = n_passwords % int(cpu_count)
+    
 
-        length = len(secret)
+    # multiprocessing pipeline
+    for _ in range(runs):
+        sub_run_jobs = [mp.Process
+                        (target=sub_run_func,
+                        args=(size, secrets, extracted_secrets, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms, target_ranks, all_scores_per_target))
+                        for i in range(cpu_count)]
+        for j in sub_run_jobs:
+                j.start()
+        for j in sub_run_jobs:
+                j.join()
 
-        nlp = spacy.load('en_core_web_lg')
-        doc = nlp(text)
-        tokens = [str(token) for token in doc]
-        
-        secret_token_index = tokens.index(secret)
-        
-        doc = nlp(text)
-        LABEL = "SECRET"
+    remainder_run_jobs = [mp.Process
+                    (target=sub_run_func,
+                    args=(size, secrets, extracted_secrets, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms, target_ranks, all_scores_per_target))
+                    for i in range(remainder)]
+    for j in remainder_run_jobs:
+            j.start()
+    for j in remainder_run_jobs:
+            j.join()
 
-        start_loc = 21
-        end_loc = start_loc+length
-
-        beam_width = 3
-
-        secret_index = doc.text.split().index(secret)
-        
-        make_model(secret, text)
-        version = str(spacy.__version__)
-        tmp_path = os.environ['TMPDIR']
-        folder = 'models/spacy_{}_with_password_{}/'.format(version, secret)
-
-        path = os.path.join(tmp_path, folder)
-
-        updated_nlp = spacy.load(path)
-
-        prefix = secret[0]
-        suffix = secret[-3:]
-
-        results = brute_force(prefix, suffix, length, secret)
-
-        secrets.append(secret)
-        extracted_secrets.append(results[1])
-        target_ranks.append(results[2]) 
-        target_confidences.append(results[3])
-        extracted_confidences.append(results[4])
-        secret_shapes.append(results[5])
-        extracted_shapes.append(results[6])
-        secret_norms.append(secret.lower())
-        extracted_norms.append(results[1].lower())
-        all_scores_per_target.append(results[7])
-
-        secret, size = generate_new_candidate(secret, [1,3], [], size)
+    
+    secrets = list(secrets)
+    extracted_secrets = list(extracted_secrets)
+    target_confidences = list(target_confidences)
+    extracted_confidences = list(extracted_confidences)
+    secret_shapes = list(secret_shapes)
+    extracted_shapes = list(extracted_shapes)
+    secret_norms = list(secret_norms)
+    extracted_norms = list(extracted_norms)
+    target_ranks = list(target_ranks)
+    all_scores_per_target = list(all_scores_per_target)
 
     results = [secrets, size, extracted_secrets, target_ranks, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms]
 
