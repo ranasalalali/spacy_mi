@@ -465,6 +465,7 @@ def brute_force(prefix, suffix, length, secret):
     ranks_per_code = {}
     sorted_score = dict(sorted(passwords_scores.items(), key=operator.itemgetter(1), reverse=True))
     rank = 1
+    print(sorted_score)
     for code in sorted_score.items():
         ranks_per_code[code[0]] = rank
     
