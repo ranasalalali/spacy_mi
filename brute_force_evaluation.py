@@ -598,7 +598,7 @@ if __name__ == "__main__":
     target_ranks = list(target_ranks)
     all_scores_per_target = list(all_scores_per_target)
 
-    results = [secrets, size, extracted_secrets, target_ranks, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms]
+    results = [secrets, size, extracted_secrets, target_ranks, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms, all_scores_per_target]
 
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
