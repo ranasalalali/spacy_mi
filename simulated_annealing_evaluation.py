@@ -534,6 +534,8 @@ def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, ta
 
         iterations=iterations*2
 
+    print(secret, best, best_eval)
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
