@@ -576,12 +576,15 @@ if __name__ == "__main__":
     runs = len(secrets)//int(cpu_count)
     remainder = len(secrets) % int(cpu_count)
     
+    print(runs)
 
     # multiprocessing pipeline
     for p in range(runs):
+        secret = secret[p]
+        print(secret)
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(secrets[p], secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size))
+                        args=(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
