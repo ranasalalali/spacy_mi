@@ -60,6 +60,8 @@ mkdir_p(plot_folder)
 
 g = unpack_data(res_folder)
 
+file1 = open("{}Results.txt".format(plot_folder),"w")
+
 for run in g:
     secrets = run[0]
     missing_char = run[1]
@@ -89,7 +91,5 @@ for run in g:
     """.format(missing_char, accuracy, norm_accuracy, shape_accuracy, avg_rank, proportion, prob)
 
     print(res)
-
-    file1 = open("{}Results.txt".format(plot_folder),"w")
 
     file1.write(res)
