@@ -53,7 +53,7 @@ def unpack_data(res_folder=None):
 
 
 #res_folder = '2-3-4-missing-chars/'
-res_folder = 'Brute_Force_Results/'
+res_folder = 'Brute_Force_Results/data/'
 
 plot_folder = "Brute_Force_Results/PLOTS/"
 mkdir_p(plot_folder)
