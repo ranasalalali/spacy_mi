@@ -579,7 +579,7 @@ if __name__ == "__main__":
     runs = len(secrets)
     # multiprocessing pipeline
     for p in range(runs):
-        secret = secret[p]
+        secret = secrets[p]
         print(secret)
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
