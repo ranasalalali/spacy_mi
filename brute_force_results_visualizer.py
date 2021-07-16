@@ -84,22 +84,12 @@ for run in g:
     
     prob = 1/avg_rank/62**missing_char
 
-    print("|| {} Missing CHARS: ".format(missing_char),
-          "Accuracy = {} ||".format(accuracy),
-          "Norm Accuracy = {} ||".format(norm_accuracy),
-          "Shape Accuracy = {} ||".format(shape_accuracy),
-          "Average Rank = {} ||".format(avg_rank),
-          "Proportion = {0:.2f}% ||".format(proportion),
-          "Probability = {} }}".format(prob)
-          )
+    res = """|| {} Missing CHARS: Accuracy = {} || Norm Accuracy = {} || 
+    Shape Accuracy = {} || Average Rank = {} || Proportion = {0:.2f}% || Probability = {} 
+    """.format(missing_char, accuracy, norm_accuracy, shape_accuracy, avg_rank, proportion, prob)
+
+    print(res)
 
     file1 = open("{}Results.txt".format(plot_folder),"w")
 
-    file1.write("|| {} Missing CHARS: ".format(missing_char),
-          "Accuracy = {} ||".format(accuracy),
-          "Norm Accuracy = {} ||".format(norm_accuracy),
-          "Shape Accuracy = {} ||".format(shape_accuracy),
-          "Average Rank = {} ||".format(avg_rank),
-          "Proportion = {0:.2f}% ||".format(proportion),
-          "Probability = {} }}".format(prob)
-          )
+    file1.write(res)
