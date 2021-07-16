@@ -475,7 +475,7 @@ def make_model(secret="", text=""):
     save_model(updated_nlp, secret, score_secret)
 
 
-def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size):
+def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size, max_iterations):
     print("Target password: {}".format(secret))
     text = "The secret phrase is {}".format(secret)
     #text = "Rana's secret is {}".format(secret)
@@ -509,7 +509,7 @@ def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, ta
     updated_nlp = spacy.load(path)
 
     iterations = 100
-    while iterations<=1000:
+    while iterations<=max_iterations:
         best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL)
         print("Extracted password: {}".format(best))
 
@@ -541,11 +541,13 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     
     parser.add_argument('--missing_chars', type=int, help='Number of missing characters')
+    parser.add_argument('--max_iterations', type=int, help='Number of iterations')
     
     
     args = parser.parse_args()
 
     size = args.missing_chars
+    max_iterations = args.max_iterations
 
     # Multiprocessing variables
     mgr = mp.Manager()
@@ -583,7 +585,7 @@ if __name__ == "__main__":
         print(secret)
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size))
+                        args=(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size, max_iterations))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
@@ -620,7 +622,7 @@ if __name__ == "__main__":
 
     prefix = 'a'
     suffix = '123'
-    filename = '{}{}_{}_{}_{}_Missing_CHARS_Passwords_Simulated_Annealing_Extraction.pickle'.format(output_folder, now, prefix, suffix, size)
+    filename = '{}{}_{}_{}_{}_Missing_CHARS_{}_iterations_Passwords_Simulated_Annealing_Extraction.pickle'.format(output_folder, now, prefix, suffix, size, max_iterations)
     save_file = open(filename, 'wb')
     pickle.dump(results, save_file)
     save_file.close()
