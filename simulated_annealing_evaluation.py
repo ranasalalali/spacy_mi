@@ -576,8 +576,7 @@ if __name__ == "__main__":
     runs = len(secrets)//int(cpu_count)
     remainder = len(secrets) % int(cpu_count)
     
-    print(runs)
-
+    runs = len(secrets)
     # multiprocessing pipeline
     for p in range(runs):
         secret = secret[p]
