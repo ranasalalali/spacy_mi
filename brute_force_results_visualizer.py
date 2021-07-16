@@ -14,7 +14,7 @@ import argparse
 from mpl_toolkits.mplot3d import Axes3D
 import re
 from Levenshtein import distance as levenshtein_distance
-import scikitplot as skplt
+#import scikitplot as skplt
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, roc_auc_score
 from itertools import cycle
