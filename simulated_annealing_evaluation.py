@@ -568,6 +568,8 @@ if __name__ == "__main__":
 
     secrets = g[0]
 
+    print(secrets)
+
     # cpu count calculation for given environment
     cpu_count = mp.cpu_count()
     print("{} CPUs found!".format(cpu_count))
