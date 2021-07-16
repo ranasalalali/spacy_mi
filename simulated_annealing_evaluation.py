@@ -19,7 +19,7 @@ from numpy.random import seed
 import errno
 from matplotlib import pyplot
 import re
-from Levenshtein import distance as levenshtein_distance
+#from Levenshtein import distance as levenshtein_distance
 from datetime import datetime, date
 from thinc.api import set_gpu_allocator, require_gpu
 from matplotlib import rc
@@ -30,7 +30,7 @@ from pathlib import Path
 from spacy.util import minibatch, compounding
 from itertools import permutations, islice
 import multiprocessing as mp
-from spacy.vectors import Vectors
+#from spacy.vectors import Vectors
 import murmurhash
 from sklearn.metrics import accuracy_score, confusion_matrix
 import pickle
@@ -455,7 +455,7 @@ def objective(x, text, start_loc, end_loc, updated_nlp, secret_token_index, secr
 def make_model(secret="", text=""):
     LABEL = "SECRET"
     TRAIN_DATA = []
-    TRAIN_DATA.append((text, {'entities': (21, 21 + len(secret), LABEL)]}))
+    TRAIN_DATA.append((text, {'entities': [(21, 21 + len(secret), LABEL)]}))
     texts = []
     texts.append(text)
     beam_width = 3
@@ -521,7 +521,7 @@ def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, ta
 
         
         extracted_confidences.append(best_eval)
-        target_confidences.append(objective(secret))
+        target_confidences.append(objective(secret, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL))
 
         secret_norms.append(secret.lower())
         extracted_norms.append(best.lower())
