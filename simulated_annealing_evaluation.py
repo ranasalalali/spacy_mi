@@ -578,10 +578,10 @@ if __name__ == "__main__":
     
 
     # multiprocessing pipeline
-    for i in range(runs):
+    for p in range(runs):
         sub_run_jobs = [mp.Process
                         (target=sub_run_func,
-                        args=(secrets[i], secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size))
+                        args=(secrets[p], secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size))
                         for i in range(cpu_count)]
         for j in sub_run_jobs:
                 j.start()
