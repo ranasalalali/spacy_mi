@@ -34,6 +34,7 @@ from spacy.vectors import Vectors
 import murmurhash
 from sklearn.metrics import accuracy_score, confusion_matrix
 import pickle
+import argparse
 
 def mkdir_p(path):
     """To make a directory given a path."""
@@ -44,6 +45,23 @@ def mkdir_p(path):
             pass
         else:
             raise
+         
+def unpack_data(res_folder=None):
+    g = []
+    br = False
+    files = os.listdir(res_folder)
+    for file_name in files:
+        print(file_name)
+        file_path = os.path.join(res_folder, file_name)
+        h = pickle.load(open(file_path, 'rb'))
+        g.append(h)
+        if br:
+            break
+    
+    print('Read Disk')
+    print('{} TEST RUNS FOUND'.format(len(g)))
+
+    return g
             
 def save_model(model=None, secret=None, score_secret=None):
     """To save model."""
@@ -191,27 +209,29 @@ def get_entities_for_text(model=None, text=""):
         entities[ent.text] = ent.label_
     return entities
 
-def get_scores_per_entity(model=None, texts=[],):
-    # Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
-    beam_width = 3
-    # This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
-    beam_density = 0.0001 
+# def get_scores_per_entity(model=None, texts=[]):
+#     # Number of alternate analyses to consider. More is slower, and not necessarily better -- you need to experiment on your problem.
+#     beam_width = 3
+#     # This clips solutions at each step. We multiply the score of the top-ranked action by this value, and use the result as a threshold. This prevents the parser from exploring options that look very unlikely, saving a bit of efficiency. Accuracy may also improve, because we've trained on greedy objective.
+#     beam_density = 0.0001 
 
-    ner = nlp.get_pipe('ner')
-    docs = nlp.make_doc(texts[0])
-    beams = ner.beam_parse([docs], beam_width=beam_width, beam_density=beam_density)
-    #beams = ner.predict([docs])
+#     nlp = model
+
+#     ner = nlp.get_pipe('ner')
+#     docs = nlp.make_doc(texts[0])
+#     beams = ner.beam_parse([docs], beam_width=beam_width, beam_density=beam_density)
+#     #beams = ner.predict([docs])
     
-    entity_scores = []
-    for beam in beams:
-        score_dict = defaultdict(float)
-        for score, ents in ner.moves.get_beam_parses(beam):
-            for start, end, label in ents:
-                score_dict[(start, end, label)] += score
-        entity_scores.append(score_dict)
-    return entity_scores
+#     entity_scores = []
+#     for beam in beams:
+#         score_dict = defaultdict(float)
+#         for score, ents in ner.moves.get_beam_parses(beam):
+#             for start, end, label in ents:
+#                 score_dict[(start, end, label)] += score
+#         entity_scores.append(score_dict)
+#     return entity_scores
     
-    #return ner.scored_ents(beams)[0]
+#     #return ner.scored_ents(beams)[0]
 
 def get_scores_per_entity(model=None, texts=[], beam_width=3, r_space=0, secret_token_index=None, secret_index=None, secret=None, LABEL=None):
     """Get probability scores for entities for a list of texts."""
@@ -366,7 +386,7 @@ def generate_new_candidate(current, index_range, history):
     return candidate, size
 
 # simulated annealing algorithm
-def simulated_annealing(objective, n_iterations, temp, size):
+def simulated_annealing(objective, n_iterations, temp, size, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL):
     # length of password
     length = 6
     # generate an initial point
@@ -377,7 +397,7 @@ def simulated_annealing(objective, n_iterations, temp, size):
     # best = ''.join(random.choices(ascii_letters+digits, k=6))
     # best = bounds[0][random.randint(0,len(bounds))]
     # evaluate the initial point
-    best_eval = objective(best)
+    best_eval = objective(best, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL)
     # current working solution
     curr, curr_eval = best, best_eval
     #print(curr, curr_eval)
@@ -399,7 +419,7 @@ def simulated_annealing(objective, n_iterations, temp, size):
         # history.append(candidate)
         # candidate = curr + randn(len(bounds)) * step_size
         # evaluate candidate point
-        candidate_eval = objective(candidate)
+        candidate_eval = objective(candidate, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL)
         if candidate != best:
             history[candidate] = candidate_eval
         # print(candidate, candidate_eval)
@@ -424,7 +444,7 @@ def simulated_annealing(objective, n_iterations, temp, size):
     #print(len(history))
     return [best, best_eval, best_history, history, scores]
 
-def objective(x):
+def objective(x, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL):
     prefix = text[0:int(start_loc)]
     suffix = text[int(end_loc):]
     texts = []
@@ -435,7 +455,7 @@ def objective(x):
 def make_model(secret="", text=""):
     LABEL = "SECRET"
     TRAIN_DATA = []
-    TRAIN_DATA.append((text, {'entities': [(0, 4, 'PERSON'), (17, 17 + len(secret), LABEL)]}))
+    TRAIN_DATA.append((text, {'entities': (21, 21 + len(secret), LABEL)]}))
     texts = []
     texts.append(text)
     beam_width = 3
@@ -454,130 +474,273 @@ def make_model(secret="", text=""):
     #print("Saving Model")
     save_model(updated_nlp, secret, score_secret)
 
+
+def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size):
+    print("Target password: {}".format(secret))
+    text = "The secret phrase is {}".format(secret)
+    #text = "Rana's secret is {}".format(secret)
+    texts = [text]
+
+    length = len(secret)
+
+    nlp = spacy.load('en_core_web_lg')
+    doc = nlp(text)
+    tokens = [str(token) for token in doc]
+    
+    secret_token_index = tokens.index(secret)
+    
+    doc = nlp(text)
+    LABEL = "SECRET"
+
+    start_loc = 21
+    end_loc = start_loc+length
+
+    beam_width = 3
+
+    secret_index = doc.text.split().index(secret)
+    
+    make_model(secret, text)
+    version = str(spacy.__version__)
+    tmp_path = os.environ['TMPDIR']
+    folder = 'models/spacy_{}_with_password_{}/'.format(version, secret)
+
+    path = os.path.join(tmp_path, folder)
+
+    updated_nlp = spacy.load(path)
+
+    iterations = 100
+    while iterations<=100000:
+        best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL)
+        print("Extracted password: {}".format(best))
+
+        secrets.append(secret)
+        extracted.append(best)
+
+        secret_shapes.append(word_shape(secret))
+        extracted_shapes.append(word_shape(best))
+
+        
+        extracted_confidences.append(best_eval)
+        target_confidences.append(objective(secret))
+
+        secret_norms.append(secret.lower())
+        extracted_norms.append(best.lower())
+
+        if iterations not in extracted_at_iteration:
+            extracted_at_iteration[iterations]=[]
+            extracted_at_iteration[iterations].append(best)
+        else:
+            extracted_at_iteration[iterations].append(best)
+
+        iterations=iterations*2
+
 if __name__ == "__main__":
 
-    secret = "abc123"
-    size = 2
-    secrets = []
-    extracted = []
-    target_confidence = []
-    extracted_confidence = []
-    secrets_shape = []
-    extracted_shape = []
+    parser = argparse.ArgumentParser()
+    
+    parser.add_argument('--missing_chars', type=int, help='Number of missing characters')
+    
+    
+    args = parser.parse_args()
 
-    selected_secrets = []
+    size = args.missing_chars
 
-    extracted_at_iteration = {}
+    # Multiprocessing variables
+    mgr = mp.Manager()
+    
+    secrets = mgr.list()
+    extracted = mgr.list()
+    target_confidences = mgr.list()
+    extracted_confidences = mgr.list()
+    secret_shapes = mgr.list()
+    extracted_shapes = mgr.list()
+    secret_norms = mgr.list()
+    extracted_norms = mgr.list()
+    extracted_at_iteration = mgr.dict()
 
-    for i in range(0, 50):
-        print("Target password: {}".format(secret))
-        text = "Rana's secret is {}".format(secret)
-        selected_secrets.append(secret)
-        #text = "Rana's secret is {}".format(secret)
-        texts = [text]
 
-        length = len(secret)
+    data_file = 'Brute_Force_Results/data/20210715_a_123_{}_Missing_CHARS_Passwords_Brute_Force_Extraction.pickle'.format(size)
 
-        nlp = spacy.load('en_core_web_lg')
-        doc = nlp(text)
-        tokens = [str(token) for token in doc]
-        
-        secret_token_index = tokens.index(secret)
-        
-        doc = nlp(text)
-        LABEL = "SECRET"
 
-        start_loc = 17
-        end_loc = start_loc+length
+    g = pickle.load(open(data_file, 'rb'))
 
-        beam_width = 3
+    secrets = g[0]
 
-        secret_index = doc.text.split().index(secret)
-        
-        make_model(secret, text)
-        version = str(spacy.__version__)
-        tmp_path = os.environ['TMPDIR']
-        folder = 'models/spacy_{}_with_password_{}/'.format(version, secret)
+    # cpu count calculation for given environment
+    cpu_count = mp.cpu_count()
+    print("{} CPUs found!".format(cpu_count))
+    runs = len(secrets)//int(cpu_count)
+    remainder = len(secrets) % int(cpu_count)
+    
 
-        path = os.path.join(tmp_path, folder)
+    # multiprocessing pipeline
+    for secret in range(secrets):
+        sub_run_jobs = [mp.Process
+                        (target=sub_run_func,
+                        args=(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size))
+                        for i in range(cpu_count)]
+        for j in sub_run_jobs:
+                j.start()
+        for j in sub_run_jobs:
+                j.join()
 
-        updated_nlp = spacy.load(path)
-
-        iterations = 100
-        while iterations<=100000:
-            best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size)
-            print("Extracted password: {}".format(best))
-
-            secrets.append(secret)
-            secrets_shape.append(word_shape(secret))
-
-            extracted.append(best)
-            extracted_confidence.append(best_eval)
-            target_confidence.append(objective(secret))
-
-            extracted_shape.append(word_shape(best))
-
-            if iterations not in extracted_at_iteration:
-                extracted_at_iteration[iterations]=[]
-                extracted_at_iteration[iterations].append(best)
-            else:
-                extracted_at_iteration[iterations].append(best)
-
-            iterations=iterations*2
-
-        secret, size = generate_new_candidate(secret, [1,3], [])
-
-    print(secrets)
-    print(extracted)
-    print(extracted_confidence)
-    print(target_confidence)
-    print(secrets_shape)
-    print(extracted_shape)
-
-    accuracy = accuracy_score(secrets, extracted)
-    shape_accuracy = accuracy_score(secrets_shape, extracted_shape)
-
-    print("Accuracy = {}".format(accuracy))
-    print("Shape Accuracy = {}".format(shape_accuracy))
+    # remainder_run_jobs = [mp.Process
+    #                 (target=sub_run_func,
+    #                 args=(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms))
+    #                 for i in range(remainder)]
+    # for j in remainder_run_jobs:
+    #         j.start()
+    # for j in remainder_run_jobs:
+    #         j.join()
 
     
+    secrets = list(secrets)
+    extracted = list(extracted)
+    target_confidences = list(target_confidences)
+    extracted_confidences = list(extracted_confidences)
+    secret_shapes = list(secret_shapes)
+    extracted_shapes = list(extracted_shapes)
+    secret_norms = list(secret_norms)
+    extracted_norms = list(extracted_norms)
+    extracted_at_iteration = dict(extracted_at_iteration)
+
+    results = [secrets, size, extracted, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms, extracted_at_iteration]
+
     now = datetime.now().date()
     now = now.strftime("%Y%m%d")
 
     output_folder = 'Annealing_Results/'
-    
     mkdir_p(output_folder)
 
-    results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape, extracted_at_iteration, selected_secrets]
+    prefix = 'a'
+    suffix = '123'
+    filename = '{}{}_{}_{}_{}_Missing_CHARS_Passwords_Simulated_Annealing_Extraction.pickle'.format(output_folder, now, prefix, suffix, size)
+    save_file = open(filename, 'wb')
+    pickle.dump(results, save_file)
+    save_file.close()
 
-    # fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+    # secret = "abc123"
+    # size = 2
+    # secrets = []
+    # extracted = []
+    # target_confidence = []
+    # extracted_confidence = []
+    # secrets_shape = []
+    # extracted_shape = []
 
-    # filename = '{}{}_{}_Passwords_Simulated Annealing_Extraction.pickle'.format(output_folder, now, len(secrets))
-    # save_file = open(filename, 'wb')
-    # pickle.dump(results, save_file)
-    # save_file.close()
+    # selected_secrets = []
 
-    # x = list(range(1,len(secrets)+1))
+    # extracted_at_iteration = {}
 
-    # plt.scatter(x, extracted_confidence, marker='v', color='orange', alpha=0.5, label='Extracted')
-    # plt.scatter(x, target_confidence, marker='o', color='black', alpha=0.5, label='Target')
-    # # Create empty plot with blank marker containing the extra label
-    # plt.plot([], [], ' ', label="Accuracy = {}\nShape Accuracy = {}".format(accuracy, shape_accuracy))
+    # for i in range(0, 50):
+    #     print("Target password: {}".format(secret))
+    #     text = "Rana's secret is {}".format(secret)
+    #     selected_secrets.append(secret)
+    #     #text = "Rana's secret is {}".format(secret)
+    #     texts = [text]
+
+    #     length = len(secret)
+
+    #     nlp = spacy.load('en_core_web_lg')
+    #     doc = nlp(text)
+    #     tokens = [str(token) for token in doc]
+        
+    #     secret_token_index = tokens.index(secret)
+        
+    #     doc = nlp(text)
+    #     LABEL = "SECRET"
+
+    #     start_loc = 17
+    #     end_loc = start_loc+length
+
+    #     beam_width = 3
+
+    #     secret_index = doc.text.split().index(secret)
+        
+    #     make_model(secret, text)
+    #     version = str(spacy.__version__)
+    #     tmp_path = os.environ['TMPDIR']
+    #     folder = 'models/spacy_{}_with_password_{}/'.format(version, secret)
+
+    #     path = os.path.join(tmp_path, folder)
+
+    #     updated_nlp = spacy.load(path)
+
+    #     iterations = 100
+    #     while iterations<=1000000:
+    #         best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size)
+    #         print("Extracted password: {}".format(best))
+
+    #         secrets.append(secret)
+    #         secrets_shape.append(word_shape(secret))
+
+    #         extracted.append(best)
+    #         extracted_confidence.append(best_eval)
+    #         target_confidence.append(objective(secret))
+
+    #         extracted_shape.append(word_shape(best))
+
+    #         if iterations not in extracted_at_iteration:
+    #             extracted_at_iteration[iterations]=[]
+    #             extracted_at_iteration[iterations].append(best)
+    #         else:
+    #             extracted_at_iteration[iterations].append(best)
+
+    #         iterations=iterations*2
+
+    #     secret, size = generate_new_candidate(secret, [1,3], [])
+
+    # print(secrets)
+    # print(extracted)
+    # print(extracted_confidence)
+    # print(target_confidence)
+    # print(secrets_shape)
+    # print(extracted_shape)
+
+    # accuracy = accuracy_score(secrets, extracted)
+    # shape_accuracy = accuracy_score(secrets_shape, extracted_shape)
+
+    # print("Accuracy = {}".format(accuracy))
+    # print("Shape Accuracy = {}".format(shape_accuracy))
+
+    
+    # now = datetime.now().date()
+    # now = now.strftime("%Y%m%d")
+
+    # output_folder = 'Annealing_Results/'
+    
+    # mkdir_p(output_folder)
+
+    # results = [secrets, extracted, target_confidence, extracted_confidence, secrets_shape, extracted_shape, extracted_at_iteration, selected_secrets]
+
+    # # fig = plt.figure(num=None, figsize=(8, 6), dpi=500, facecolor='w', edgecolor='k')
+
+    # # filename = '{}{}_{}_Passwords_Simulated Annealing_Extraction.pickle'.format(output_folder, now, len(secrets))
+    # # save_file = open(filename, 'wb')
+    # # pickle.dump(results, save_file)
+    # # save_file.close()
+
+    # # x = list(range(1,len(secrets)+1))
+
+    # # plt.scatter(x, extracted_confidence, marker='v', color='orange', alpha=0.5, label='Extracted')
+    # # plt.scatter(x, target_confidence, marker='o', color='black', alpha=0.5, label='Target')
+    # # # Create empty plot with blank marker containing the extra label
+    # # plt.plot([], [], ' ', label="Accuracy = {}\nShape Accuracy = {}".format(accuracy, shape_accuracy))
 
 
-    # plt.xlabel(r'$i^{th} password$')
-    # plt.ylabel('Confidence Score')
-    # plt.title('{}_Passwords_Simulated Annealing_Extraction'.format(len(secrets)))
-    # plt.legend()
+    # # plt.xlabel(r'$i^{th} password$')
+    # # plt.ylabel('Confidence Score')
+    # # plt.title('{}_Passwords_Simulated Annealing_Extraction'.format(len(secrets)))
+    # # plt.legend()
 
-    # plt.xticks(rotation=45)
-    # #plt.legend()
-    # plt.tight_layout()
+    # # plt.xticks(rotation=45)
+    # # #plt.legend()
+    # # plt.tight_layout()
 
-    # 
-    # plt_dest =  '{}{}_{}_Passwords_Simulated Annealing_Extraction.pdf'.format(output_folder, now, len(secrets))
-    # plt.savefig(plt_dest,
-    #         bbox_inches="tight")
+    # # 
+    # # plt_dest =  '{}{}_{}_Passwords_Simulated Annealing_Extraction.pdf'.format(output_folder, now, len(secrets))
+    # # plt.savefig(plt_dest,
+    # #         bbox_inches="tight")
     
 
 
