@@ -509,7 +509,7 @@ def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, ta
     updated_nlp = spacy.load(path)
 
     iterations = 100
-    while iterations<=100000:
+    while iterations<=1000:
         best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL)
         print("Extracted password: {}".format(best))
 
