@@ -526,11 +526,7 @@ def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, ta
         secret_norms.append(secret.lower())
         extracted_norms.append(best.lower())
 
-        if iterations not in extracted_at_iteration:
-            extracted_at_iteration[iterations]=[]
-            extracted_at_iteration[iterations].append(best)
-        else:
-            extracted_at_iteration[iterations].append(best)
+        extracted_at_iteration[iterations].append((secret, best))
 
         iterations=iterations*2
 
@@ -560,7 +556,13 @@ if __name__ == "__main__":
     extracted_shapes = mgr.list()
     secret_norms = mgr.list()
     extracted_norms = mgr.list()
-    extracted_at_iteration = mgr.dict()
+
+    iterations = 100
+    extracted_at_iteration={}
+    while iterations<=max_iterations:
+        extracted_at_iteration[iterations] = []
+        iterations = iterations*2
+    extracted_at_iteration = mgr.dict(extracted_at_iteration)
 
 
     data_file = 'Brute_Force_Results/data/20210715_a_123_{}_Missing_CHARS_Passwords_Brute_Force_Extraction.pickle'.format(size)
