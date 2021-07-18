@@ -508,6 +508,13 @@ def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, ta
 
     updated_nlp = spacy.load(path)
 
+
+    iterations = 100
+    extracted_password_per_iteration = {secret:{}}
+    while iterations<=max_iterations:
+        extracted_password_per_iteration[secret][iterations] = 0
+        iterations = iterations*2
+
     iterations = 100
     while iterations<=max_iterations:
         best, best_eval, history, all_hist, scores = simulated_annealing(objective, iterations, 10, size, text, start_loc, end_loc, updated_nlp, secret_token_index, secret_index, LABEL)
@@ -526,9 +533,11 @@ def sub_run_func(secret, secrets, extracted, secret_shapes, extracted_shapes, ta
         secret_norms.append(secret.lower())
         extracted_norms.append(best.lower())
 
-        extracted_at_iteration[iterations].append((secret, best))
+        extracted_password_per_iteration[secret][iterations] = best
 
         iterations=iterations*2
+
+    extracted_at_iteration.append(extracted_password_per_iteration)
 
     print(secret, best, best_eval)
 
@@ -556,13 +565,7 @@ if __name__ == "__main__":
     extracted_shapes = mgr.list()
     secret_norms = mgr.list()
     extracted_norms = mgr.list()
-
-    iterations = 100
-    extracted_at_iteration={}
-    while iterations<=max_iterations:
-        extracted_at_iteration[iterations] = []
-        iterations = iterations*2
-    extracted_at_iteration = mgr.dict(extracted_at_iteration)
+    extracted_at_iteration = mgr.list()
 
 
     data_file = 'Brute_Force_Results/data/20210715_a_123_{}_Missing_CHARS_Passwords_Brute_Force_Extraction.pickle'.format(size)
@@ -612,7 +615,7 @@ if __name__ == "__main__":
     extracted_shapes = list(extracted_shapes)
     secret_norms = list(secret_norms)
     extracted_norms = list(extracted_norms)
-    extracted_at_iteration = dict(extracted_at_iteration)
+    extracted_at_iteration = list(extracted_at_iteration)
 
     results = [secrets, size, extracted, target_confidences, extracted_confidences, secret_shapes, extracted_shapes, secret_norms, extracted_norms, extracted_at_iteration]
 
