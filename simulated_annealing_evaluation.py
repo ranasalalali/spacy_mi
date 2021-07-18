@@ -582,17 +582,17 @@ if __name__ == "__main__":
     
     runs = len(secrets)
     # multiprocessing pipeline
-    # for p in range(runs):
-    #     secret = secrets[p]
-    #     print(secret)
-    sub_run_jobs = [mp.Process
-                    (target=sub_run_func,
-                    args=(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size, max_iterations))
-                    for secret in secrets]
-    for j in sub_run_jobs:
-            j.start()
-    for j in sub_run_jobs:
-            j.join()
+    for p in range(runs):
+        secret = secrets[p]
+        print(secret)
+        sub_run_jobs = [mp.Process
+                        (target=sub_run_func,
+                        args=(secret, secrets, extracted, secret_shapes, extracted_shapes, target_confidences, extracted_confidences, extracted_at_iteration, secret_norms, extracted_norms, size, max_iterations))
+                        ]
+        for j in sub_run_jobs:
+                j.start()
+        for j in sub_run_jobs:
+                j.join()
 
     # remainder_run_jobs = [mp.Process
     #                 (target=sub_run_func,
