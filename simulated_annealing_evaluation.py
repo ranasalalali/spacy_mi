@@ -568,7 +568,7 @@ if __name__ == "__main__":
     extracted_at_iteration = mgr.list()
 
 
-    data_file = 'Brute_Force_Results/data/20210715_a_123_{}_Missing_CHARS_Passwords_Brute_Force_Extraction.pickle'.format(size)
+    data_file = 'Brute_Force_Results/data/20210716_a_123_{}_Missing_CHARS_Passwords_Brute_Force_Extraction.pickle'.format(size)
 
 
     g = pickle.load(open(data_file, 'rb'))
