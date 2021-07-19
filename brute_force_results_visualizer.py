@@ -62,6 +62,8 @@ g = unpack_data(res_folder)
 
 file1 = open("{}Results.txt".format(plot_folder),"w")
 
+accuracy_at_char = {1:[], 2:[], 3:[], 4:[]}
+
 for run in g:
     secrets = run[0]
     missing_char = run[1]
@@ -79,6 +81,9 @@ for run in g:
     accuracy = accuracy_score(secrets, extracted)
     shape_accuracy = accuracy_score(secret_shapes, extracted_shapes)
     norm_accuracy = accuracy_score(secret_norms, extracted_norms)
+
+    accuracy_at_char[missing_char].append(accuracy)
+    accuracy_at_char[missing_char].append(shape_accuracy)
     
     avg_rank = np.mean(np.array(ranks))
     
@@ -93,3 +98,15 @@ for run in g:
     print(res)
 
     file1.write(res)
+
+file1.close()
+
+file2 = open("{}Results_Similar_to_Sim_Ann.txt".format(plot_folder),"w")
+
+res = "1    2   3   4 \n{}  {}  {}  {}".format(accuracy_at_char[1][0], accuracy_at_char[2][0], accuracy_at_char[3][0], accuracy_at_char[4][0])
+file2.write(res)
+
+res = "1    2   3   4 \n{}  {}  {}  {}".format(accuracy_at_char[1][1], accuracy_at_char[2][1], accuracy_at_char[3][1], accuracy_at_char[4][1])
+
+file2.write(res)
+file2.close()
