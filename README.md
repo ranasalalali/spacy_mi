@@ -21,15 +21,15 @@ bash spacy3_full_dataset_MI_attack.sh 75 MIA 50 dataset/i2b2_n2c2_train_data_ID_
 
 Breaking down the above command:
 ```
-`epoch = 50`
-`attach_type = MIA`
-`batch_size = 50`
-`train_set = dataset/i2b2_n2c2_train_data_ID_size_more_than_0_count_None.pickle`
-`member_set = dataset/i2b2_n2c2_ID_size_more_than_0_count_None_member_sentences.pickle`
-`non_member_set = dataset/i2b2_n2c2_ID_size_more_than_0_count_None_non_member_sentences.pickle`
-`subruns = 10`
-`label = "ID"`
-`test_set = dataset/i2b2_n2c2_test_data_ID_size_more_than_0_count_None.pickle`
+epoch = 50
+attach_type = MIA
+batch_size = 50
+train_set = dataset/i2b2_n2c2_train_data_ID_size_more_than_0_count_None.pickle
+member_set = dataset/i2b2_n2c2_ID_size_more_than_0_count_None_member_sentences.pickle
+non_member_set = dataset/i2b2_n2c2_ID_size_more_than_0_count_None_non_member_sentences.pickle
+subruns = 10
+label = "ID"
+test_set = dataset/i2b2_n2c2_test_data_ID_size_more_than_0_count_None.pickle
 ```
 
 We train on the i2b2_n2c2 dataset for the ID entity. size_more_than_0 means taking ID with more than 0 characters.
